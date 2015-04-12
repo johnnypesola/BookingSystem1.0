@@ -5,9 +5,11 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using BookingSystem.Models;
+using System.Web.Http.Cors;
 
 namespace BookingSystem.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class BookingController : ApiController
     {
         // Set up Service.

@@ -1,12 +1,25 @@
 'use strict';
 
-// Declare app level module which depends on views, and components
-angular.module('myApp', [
-  'ngRoute',
-  'myApp.view1',
-  'myApp.view2',
-  'myApp.version'
-]).
-config(['$routeProvider', function($routeProvider) {
-  $routeProvider.otherwise({redirectTo: '/view1'});
-}]);
+(function() {
+
+    var BookingSystem;
+
+    // Declare app level module which depends on views, and components
+    BookingSystem = angular.module('bookingSystem', [
+      'ngRoute',
+      'bookingSystem.startPage',
+      'bookingSystem.version'
+
+    ]);
+
+
+    // Declare basic routes
+    BookingSystem.config(function($routeProvider) {
+        $routeProvider.
+            // Startpage
+            when('/', {
+                templateUrl: 'components/start/startView.html'
+            })
+    });
+
+})();
