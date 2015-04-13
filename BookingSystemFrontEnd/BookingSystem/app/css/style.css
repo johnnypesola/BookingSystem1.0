@@ -6,7 +6,10 @@ body {
 
 header {
     background: #374256;
-    height: 60px;
+    min-height: 60px;
+    position: relative;
+
+    padding: 0 180px 0 0;
 
     -webkit-box-shadow: 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
     -moz-box-shadow:    0px 0px 5px 0px rgba(50, 50, 50, 0.75);
@@ -20,6 +23,7 @@ header {
         line-height: 60px;
         background: url('../img/icons/logo.svg') left no-repeat;
         padding: 0 0 0 50px;
+        position: relative;
         color: #FFFFFF;
         font-weight: normal;
         height: inherit;
@@ -55,22 +59,115 @@ header {
         height: 50px;
     }
 
+    header .header-button-add:hover, header .header-button-logout:hover, header .header-button-search:hover {
+        cursor: pointer;
+        background-color: #485367;
+    }
+
+    header nav {
+        display: inline-block;
+        color: #FFFFFF;
+        margin: 0 0 0 10px;
+    }
+
+        header nav ul {
+            margin: 8px 0 0 0;
+            padding: 0;
+            display: block;
+            border-left: 1px solid #263145;
+        }
+
+            header nav ul li {
+                display: inline-block;
+                margin: 0;
+                padding: 14px 10px;
+                /*border-left: 1px solid #485367;*/
+                border-right: 1px solid #263145;
+                border-top: 1px solid #263145;
+                border-bottom: 1px solid #263145;
+            }
+
+            header nav ul li:hover {
+                cursor: pointer;
+                background: #485367;
+            }
+
+            header nav ul li.active {
+                background: #232A3D;
+            }
+
 section.content-container {
+    float: left;
+    width: 600px;
     line-height: 25px;
     margin: 20px;
     padding: 15px;
     background: #FFFFFF;
 
-    -webkit-box-shadow: 0px 0px 2px 0px rgba(50, 50, 50, 0.1);
-    -moz-box-shadow:    0px 0px 2px 0px rgba(50, 50, 50, 0.1);
-    box-shadow:         0px 0px 2px 0px rgba(50, 50, 50, 0.1);
+    -webkit-box-shadow: 0px 0px 2px 0px rgba(50, 50, 50, 0.4);
+    -moz-box-shadow:    0px 0px 2px 0px rgba(50, 50, 50, 0.4);
+    box-shadow:         0px 0px 2px 0px rgba(50, 50, 50, 0.4);
 }
 
     section.content-container h2 {
         font-weight: normal;
         margin: 0 0 10px 0;
-        padding: 0 0 8px 0;
+        padding: 0 0 10px 0;
         color: #73B0B5;
         /*color: #E9A642;*/
         border-bottom: 1px solid #EEEEEE;
     }
+
+    section.content-container .list-table {
+        width: 100%;
+        font-size: 13px;
+        border: 1px solid #E0E0E0;
+        border-right: none;
+        border-collapse: collapse;
+    }
+
+    section.content-container .list-table tr:nth-child(odd) td {
+        background-color: #F8F8F8;
+    }
+
+    section.content-container .list-table tr:nth-child(even) td {
+        background-color: #FFFFFF;
+    }
+
+    section.content-container .list-table th {
+        font-weight: normal;
+        text-align: left;
+        padding: 0 0 0 3px;
+        border: 1px solid #E0E0E0;
+        text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
+        background: #E0E0E0; /* Old browsers */
+        background: -moz-linear-gradient(top,  #F8F8F8 0%, #E0E0E0 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#F8F8F8), color-stop(100%,#E0E0E0)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #F8F8F8 0%,#E0E0E0 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #F8F8F8 0%,#E0E0E0 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #F8F8F8 0%,#E0E0E0 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #F8F8F8 0%,#E0E0E0 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#F8F8F8', endColorstr='#E0E0E0',GradientType=0 ); /* IE6-9 */
+    }
+
+    section.content-container .list-table th a {
+        margin: 0;
+        display: block;
+        padding: 5px 5px;
+        border-radius: 0;
+        background: none;
+        color: #000000;
+    }
+
+    section.content-container .list-table th a:hover {
+        background: #DDEEEE;
+    }
+
+    section.content-container .list-table td {
+        padding: 1px 5px;
+        border-right: 1px solid #E0E0E0;
+    }
+
+.align-right {
+    text-align: right;
+}

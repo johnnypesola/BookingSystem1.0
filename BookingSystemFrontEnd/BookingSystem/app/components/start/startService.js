@@ -10,7 +10,7 @@ bookings.factory('bookings', function($http){
         list: function (callback){
             $http({
                 method: 'GET',
-                url: 'http://www.pesola.se:8080/BookingSystem/api/Booking',
+                url: 'http://192.168.1.4:8080/BookingSystem/api/Booking',
                 cache: false
             }).success(callback);
         }
