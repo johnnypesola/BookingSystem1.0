@@ -3,7 +3,7 @@
  */
 
 (function(){
-    var startPage =  angular.module('bookingSystem.startPage', ['bookingSystem.bookings']);
+    var startPage =  angular.module('bookingSystem.startPage', ['bookingSystem.bookings', 'bookingSystem.customFilters']);
 
     // Routes for startPage
     startPage.config(function($routeProvider) {

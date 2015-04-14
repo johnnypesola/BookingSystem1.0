@@ -6,10 +6,9 @@
 
     // Declare app level module which depends on views, and components
     BookingSystem = angular.module('bookingSystem', [
-      'ngRoute',
-      'bookingSystem.startPage',
-      'bookingSystem.version'
-
+        'ngRoute',
+        'bookingSystem.startPage',
+        'bookingSystem.version'
     ]);
 
 

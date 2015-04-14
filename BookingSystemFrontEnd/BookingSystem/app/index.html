@@ -30,12 +30,134 @@
           <a class="header-button-search" href="#"></a>
           <a class="header-button-logout" href="#"></a>
 
-          <nav>
+          <nav class="main-menu">
               <ul>
                   <li class="active">Bokningar</li><li>Lokaler</li><li>Möbleringar</li><li>Användare</li><li>Resurser</li><li>Mat</li><li>Kunder</li>
               </ul>
           </nav>
       </header>
+      <nav class="sub-menu">
+          <ul>
+              <li class="active">Bokningstillfällen</li><li>Lokalbokningar</li><li>Matbokningar</li><li>Matbokningar</li><li>Resursbokningar</li>
+          </ul>
+      </nav>
+
+      <section class="add-form-container" style="display: none;">
+          <h3>Skapa ny</h3>
+          <div class="categories">
+              <label class="bg-beige active">
+                  <input type="checkbox" checked> Bokningstillfälle
+              </label>
+              <label class="bg-dark-blue">
+                  <input type="checkbox"> Lokalbokning
+              </label>
+              <label class="bg-dark-green">
+                  <input type="checkbox"> Matbokning
+              </label>
+              <label class="bg-light-green">
+                  <input type="checkbox"> Resursbokning
+              </label>
+              <label class="bg-light-blue">
+                  <input type="checkbox"> Resurs
+              </label>
+              <label class="bg-magenta">
+                  <input type="checkbox"> Möblering
+              </label>
+              <label class="bg-orange">
+                  <input type="checkbox"> Lokalmöblering
+              </label>
+              <label class="bg-dark-purple">
+                  <input type="checkbox"> Kund
+              </label>
+              <label class="bg-red">
+                  <input type="checkbox"> Användare
+              </label>
+              <label class="bg-yellow">
+                  <input type="checkbox"> Maträtt
+              </label>
+              <label class="bg-light-purple">
+                  <input type="checkbox"> Lokal
+              </label>
+          </div>
+
+          <h3>Efter värdet</h3>
+          <div>
+              <input type="text">
+          </div>
+
+          <h3>Från och med</h3>
+          <div>
+              <input type="date">
+          </div>
+
+          <h3>Till och med</h3>
+          <div>
+              <input type="date">
+          </div>
+
+          <a class="close" href="#"></a>
+          <input type="submit" value="Skapa">
+      </section>
+
+      <section class="search-form-container" style="display: none;">
+          <h3>Sök igenom</h3>
+          <div class="categories">
+              <label class="bg-beige active">
+                  <input type="checkbox" checked> Bokningstillfällen
+              </label>
+              <label class="bg-dark-blue">
+                  <input type="checkbox"> Lokalbokningar
+              </label>
+              <label class="bg-dark-green">
+                  <input type="checkbox"> Matbokningar
+              </label>
+              <label class="bg-light-green">
+                  <input type="checkbox"> Resursbokningar
+              </label>
+              <label class="bg-light-blue">
+                  <input type="checkbox"> Resurser
+              </label>
+              <label class="bg-magenta">
+                  <input type="checkbox"> Möbleringar
+              </label>
+              <label class="bg-orange">
+                  <input type="checkbox"> Lokalmöbleringar
+              </label>
+              <label class="bg-dark-purple">
+                  <input type="checkbox"> Kunder
+              </label>
+              <label class="bg-red">
+                  <input type="checkbox"> Användare
+              </label>
+              <label class="bg-yellow">
+                  <input type="checkbox"> Maträtter
+              </label>
+              <label class="bg-light-purple">
+                  <input type="checkbox"> Lokaler
+              </label>
+          </div>
+
+          <h3>Efter värdet</h3>
+          <div>
+            <input type="text">
+          </div>
+
+          <h3>Från och med</h3>
+          <div>
+              <input type="date">
+          </div>
+
+          <h3>Till och med</h3>
+          <div>
+              <input type="date">
+          </div>
+
+          <a class="close" href="#"></a>
+          <input type="submit" value="Genomför Sökning">
+      </section>
+
+      <section class="log-out-container">
+      </section>
 
       <section class="content-container" ng-view>
 
@@ -54,6 +176,9 @@
         <!-- Start view -->
         <script src="components/start/startController.js"></script>
         <script src="components/start/startService.js"></script>
+
+        <!-- Shared -->
+        <script src="shared/customFilters.js"></script>
 
         <script src="components/version/version.js"></script>
         <script src="components/version/version-directive.js"></script>
