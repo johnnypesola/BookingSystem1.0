@@ -24,7 +24,7 @@
           <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
 
-      <header>
+      <header ng-controller="HeaderController">
           <h1>Bokningssystemet</h1>
           <a class="header-button-add" href="#"></a>
           <a class="header-button-search" href="#"></a>
@@ -32,15 +32,19 @@
 
           <nav class="main-menu">
               <ul>
-                  <li class="active">Bokningar</li><li>Lokaler</li><li>Möbleringar</li><li>Användare</li><li>Resurser</li><li>Mat</li><li>Kunder</li>
+                  <li ng-repeat="menu in menus" ng-class="{active: $index == selectedMainMenu}">
+                      <a href="" ng-click="selectMainMenu($index)">{{menu.title}}</a>
+                  </li>
+              </ul>
+          </nav>
+          <nav class="sub-menu">
+              <ul>
+                  <li ng-repeat="subMenu in activeSubMenus" ng-class="{active: $index == selectedSubMenu}">
+                      <a href="#/{{subMenu.location}}" ng-click="selectSubMenu($index)">{{subMenu.title}}</a>
+                  </li>
               </ul>
           </nav>
       </header>
-      <nav class="sub-menu">
-          <ul>
-              <li class="active">Bokningstillfällen</li><li>Lokalbokningar</li><li>Matbokningar</li><li>Matbokningar</li><li>Resursbokningar</li>
-          </ul>
-      </nav>
 
       <section class="add-form-container" style="display: none;">
           <h3>Skapa ny</h3>
@@ -159,6 +163,7 @@
       <section class="log-out-container">
       </section>
 
+
       <section class="content-container" ng-view>
 
       </section>
@@ -177,8 +182,12 @@
         <script src="components/start/startController.js"></script>
         <script src="components/start/startService.js"></script>
 
+        <!-- Booking -->
+        <script src="components/booking/bookingController.js"></script>
+
         <!-- Shared -->
         <script src="shared/customFilters.js"></script>
+        <script src="components/header/headerController.js"></script>
 
         <script src="components/version/version.js"></script>
         <script src="components/version/version-directive.js"></script>

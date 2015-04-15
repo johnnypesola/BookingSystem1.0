@@ -16,7 +16,6 @@
         bookings.list(function(bookings) {
             $scope.bookings = bookings;
         });
-
     })
 
 })();
