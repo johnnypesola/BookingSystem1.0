@@ -1,0 +1,24 @@
+<div class="calendar-container" ng-controller="CalendarCtrl">
+    <a href="" class="prev-month" ng-click="changeToPreviousMonth()">&#8592;</a>
+    <h3>{{datedata.currentMonthName}} {{datedata.currentYear}}</h3>
+    <a href="" class="next-month" ng-click="changeToNextMonth()">&#8594;</a>
+
+    <div class="calendar-day-names">
+        <span>Mån</span>
+        <span>Tis</span>
+        <span>Ons</span>
+        <span>Tor</span>
+        <span>Fre</span>
+        <span>Lör</span>
+        <span>Sön</span>
+    </div>
+    <!--<a href="" class="inactive">30</a>
+            <a href="" class="active">3</a>
+        <a href="" class="has-events">4</a>
+    -->
+    <div class="calendar-day-numbers" ng-repeat="day in datedata.calendarDays">
+        <a href="" ng-class="{inactive: day.inactive}">
+            {{day.num}}
+        </a>
+    </div>
+</div>

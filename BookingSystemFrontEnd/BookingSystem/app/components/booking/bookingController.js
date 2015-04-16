@@ -3,7 +3,7 @@
  */
 
 (function(){
-    var booking =  angular.module('bookingSystem.booking', ['bookingSystem.bookings', 'bookingSystem.customFilters']);
+    var booking =  angular.module('bookingSystem.booking', ['bookingSystem.bookings', 'bookingSystem.customFilters', 'booking.calendarDirective']);
 
     // Routes for startPage
     booking.config(function($routeProvider) {

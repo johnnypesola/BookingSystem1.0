@@ -1,3 +1,7 @@
+html {
+    overflow-y: scroll;
+}
+
 body {
     background: #F2F1EF;
     /*font-family: 'Open Sans', sans-serif;*/
@@ -470,15 +474,22 @@ section.content-container {
             height: 32px;
             background: url('../img/icons/appearence_icons.svg') left;
         }
+            section.content-container .appearance-icons-container a:first-child {
+                border-bottom-left-radius: 5px;
+                border-top-left-radius: 5px;
+            }
+
             section.content-container .appearance-icons-container a:last-child {
                 border: none;
+                border-bottom-right-radius: 5px;
+                border-top-right-radius: 5px;
             }
 
             section.content-container .appearance-icons-container a.calendar {
             }
 
             section.content-container .appearance-icons-container a.list {
-                background-position: -33px 0;
+                background-position: -34px 0;
             }
 
             section.content-container .appearance-icons-container a.map {
@@ -486,7 +497,7 @@ section.content-container {
             }
 
             section.content-container .appearance-icons-container a:hover {
-                background-color: rgba(255, 255, 255, 1);
+                background-color: #FFD77F;
             }
 
 .align-right {
