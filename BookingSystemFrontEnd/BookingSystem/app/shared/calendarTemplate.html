@@ -1,7 +1,7 @@
-<div class="calendar-container" ng-controller="CalendarCtrl">
-    <a href="" class="prev-month" ng-click="changeToPreviousMonth()">&#8592;</a>
+<div class="calendar-container">
+    <a booking-calendar-change-month-button direction="prev" class="prev-month">&#8592;</a>
     <h3>{{datedata.currentMonthName}} {{datedata.currentYear}}</h3>
-    <a href="" class="next-month" ng-click="changeToNextMonth()">&#8594;</a>
+    <a booking-calendar-change-month-button direction="next" class="next-month">&#8594;</a>
 
     <div class="calendar-day-names">
         <span>Mån</span>
@@ -17,8 +17,8 @@
         <a href="" class="has-events">4</a>
     -->
     <div class="calendar-day-numbers" ng-repeat="day in datedata.calendarDays">
-        <a href="" ng-class="{inactive: day.inactive}">
-            {{day.num}}
+        <a href="" booking-calendar-day number="{{day.number}}" ng-class="day.cssClassName">
+            {{day.number}}
         </a>
     </div>
 </div>
