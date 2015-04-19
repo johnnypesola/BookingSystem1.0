@@ -3,20 +3,33 @@
  */
 
 (function(){
-    var startPage =  angular.module('bookingSystem.startPage', ['bookingSystem.bookingServices', 'bookingSystem.customFilters']);
+
+    // Declare module
+    angular.module('bookingSystem.startPage',
+
+        // Dependencies
+        [
+            'bookingSystem.bookingServices',
+            'bookingSystem.customFilters'
+        ]
+    )
 
     // Routes for startPage
-    startPage.config(function($routeProvider) {
+    .config(function($routeProvider) {
 
-    });
+    })
 
     // Controller
-    startPage.controller('BookingsController', function($scope, Booking){
+    .controller('BookingsController', function($scope, Booking){
 
+        $scope.bookings = Booking.query();
+
+        /*
         Booking.list(function(bookings) {
             $scope.bookings = bookings;
         });
-    })
+        */
+    });
 
 })();
 

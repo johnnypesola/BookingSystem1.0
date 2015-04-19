@@ -3,8 +3,15 @@
  */
 
 (function(){
-    angular.module('booking.calendarDirective', [])
-        .directive('bookingCalendar', function($http) {
+    // Declare module
+    angular.module('bookingSystem.calendarDirective',
+
+        // Dependencies
+        [
+            'bookingSystem.bookingServices'
+        ])
+
+        .directive('bookingCalendar', ['Booking', function(Booking) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -18,7 +25,8 @@
         /* Declare variables START */
                     var i, currentYear, currentMonth, currentMonthName, currentMonthDay, currentMonthDayName,
                         currentMonthNumberOfDays, currentMonthStartDateObj, currentMonthEndDateObj, currentMonthStartWeekDay,
-                        currentMonthEndWeekDay, prevMonthNumberOfDays, currentMonthStartTime, currentMonthEndTime, todayMonth,
+                        currentMonthEndWeekDay, prevMonthNumberOfDays, currentMonthStartTime, currentMonthEndTime,
+                        currentDateObj, selectedMonth, selectedDay,
 
                         calendarDaysArray = [],
 
@@ -27,16 +35,11 @@
 
                         dayNamesArray = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
 
-                    // Init date to now
-                    var currentDateObj = new Date();
-                    var todayMonth = currentDateObj.getMonth();
-                    var todayDay = currentDateObj.getDate();
-
         /* Declare variables END */
 
         /* Private methods START */
 
-                    var initVariables = function (){
+                    var initDateVariables = function (){
 
                         currentYear = currentDateObj.getFullYear();
                         currentMonth = currentDateObj.getMonth();
@@ -58,7 +61,7 @@
                     };
 
                     var isToday = function(dayNumber) {
-                        return (todayMonth === currentMonth && todayDay === dayNumber);
+                        return (selectedMonth === currentMonth && selectedDay === dayNumber);
                     };
 
                     var prepareCalendarDays = function (){
@@ -97,6 +100,7 @@
 
                     // Make public variables accessible in template
                     var addVarsToScope = function () {
+
                         $scope.datedata = {
                             currentYear: currentYear,
                             currentMonth: currentMonth,
@@ -105,6 +109,7 @@
                             currentMonthNumberOfDays: currentMonthNumberOfDays,
                             calendarDays: calendarDaysArray
                         };
+
                     };
         /* Private methods END */
 
@@ -113,7 +118,7 @@
                     $scope.changeToPreviousMonth = function(){
                         currentDateObj = new Date(currentYear, currentMonth - 1);
 
-                        initVariables();
+                        initDateVariables();
                         prepareCalendarDays();
                         addVarsToScope();
                     };
@@ -121,9 +126,34 @@
                     $scope.changeToNextMonth = function(){
                         currentDateObj = new Date(currentYear, currentMonth + 1);
 
-                        initVariables();
+                        initDateVariables();
                         prepareCalendarDays();
                         addVarsToScope();
+                    };
+
+                    $scope.changeToDay = function($element, $attrs, event){
+
+                        var clickedDayElement = angular.element(event.target);
+
+                        // Only apply click events to this months date
+                        if(!clickedDayElement.hasClass('inactive')) {
+
+                            // Change selected date variables
+                            currentDateObj = new Date(currentYear, currentMonth, $attrs.number);
+                            selectedMonth = currentDateObj.getMonth();
+                            selectedDay = currentDateObj.getDate();
+
+                            // Prevent url change
+                            event.preventDefault();
+
+                            // Change bound calendar model data
+                            initDateVariables();
+                            prepareCalendarDays();
+                            addVarsToScope();
+
+                            // Fetch data
+                            $scope.datedata.bookings = Booking.queryPeriod({date: currentDateObj.getYearsMonthsDays()});
+                        }
                     };
 
         /* Public methods END */
@@ -131,7 +161,12 @@
 
         /* Initialization START */
 
-                    initVariables();
+                    // Init date to now
+                    currentDateObj = new Date();
+                    selectedMonth = currentDateObj.getMonth();
+                    selectedDay = currentDateObj.getDate();
+
+                    initDateVariables();
                     prepareCalendarDays();
                     addVarsToScope();
 
@@ -139,7 +174,7 @@
 
                 }
             };
-        })
+        }])
         .directive('bookingCalendarChangeMonthButton', function() {
             return {
                 restrict: 'A',
@@ -165,11 +200,12 @@
         .directive('bookingCalendarDay', function() {
             return {
                 restrict: 'A',
+                replace: false,
                 scope: false,
                 controller: function($scope, $element, $attrs) {
 
-                    $element.bind('click', function() {
-                        console.log($attrs.number);
+                    $element.bind('click', function(event) {
+                        $scope.changeToDay($element, $attrs, event);
                     });
                 }
             }

@@ -1,26 +1,28 @@
-<h2>Lista över Bokningstillfällen</h2>
-<div class="appearance-icons-container">
-    <a class="calendar" href="#/bokningstillfallen/kalender"></a>
-    <a class="list" href="#/bokningstillfallen/lista"></a>
-</div>
-<table class="list-table" ng-controller="BookingCtrl">
-    <tr>
-        <th>Kund</th>
-        <th>Provisorisk</th>
-        <th>Personer</th>
-        <th>Anteckningar</th>
-        <th>Ansvarig</th>
-        <th>Bokningspris</th>
-        <th>Rabatt</th>
+<section class="content-container">
+    <h2>Lista över Bokningstillfällen</h2>
+    <div class="appearance-icons-container">
+        <a class="calendar" href="#/bokningstillfallen/kalender"></a>
+        <a class="list" href="#/bokningstillfallen/lista"></a>
+    </div>
+    <table class="list-table" ng-controller="BookingCtrl">
+        <tr>
+            <th>Kund</th>
+            <th>Provisorisk</th>
+            <th>Personer</th>
+            <th>Anteckningar</th>
+            <th>Ansvarig</th>
+            <th>Bokningspris</th>
+            <th>Rabatt</th>
 
-    </tr>
-    <tr ng-repeat="booking in bookings">
-        <td>{{booking.CustomerName}}</td>
-        <td>{{booking.Provisional}}</td>
-        <td class="align-right">{{booking.NumberOfPeople}} st</td>
-        <td>{{booking.Notes}}</td>
-        <td>{{booking.ResponsibleUserId}}</td>
-        <td class="align-right">{{booking.CalculatedBookingPrice | kr }}</td>
-        <td class="align-right">{{booking.Discount | percentage }}</td>
-    </tr>
-</table>
+        </tr>
+        <tr ng-repeat="booking in bookings">
+            <td>{{booking.CustomerName}}</td>
+            <td>{{booking.Provisional}}</td>
+            <td class="align-right">{{booking.NumberOfPeople}} st</td>
+            <td>{{booking.Notes}}</td>
+            <td>{{booking.ResponsibleUserId}}</td>
+            <td class="align-right">{{booking.CalculatedBookingPrice | kr }}</td>
+            <td class="align-right">{{booking.Discount | percentage }}</td>
+        </tr>
+    </table>
+</section>

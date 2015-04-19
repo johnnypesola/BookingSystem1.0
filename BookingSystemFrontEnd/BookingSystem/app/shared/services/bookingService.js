@@ -3,18 +3,25 @@
  */
 
 (function(){
+    // Declare module
+    angular.module('bookingSystem.bookingServices',
 
-    angular.module('bookingSystem.bookingServices', ['ngResource'])
+        // Dependencies
+        [
+            'ngResource'
+        ])
+
         .factory('Booking', function($resource){
 
-            return $resource('http://192.168.1.4:8080/BookingSystem/api/Booking/:id',
+            return $resource('http://192.168.1.4:8080/BookingSystem/api/Booking',
                 {},
                 {
                     queryPeriod: {
+                        url: 'http://192.168.1.4:8080/BookingSystem/api/Booking/day/:date',
                         id: '@id',
                         method: 'GET',
                         isArray: true,
-                        params: {from: '2015-01-01', to: '2015-12-24'}}
+                        params: {date: '@date'}}
                 });
             /*
              query: function (callback){

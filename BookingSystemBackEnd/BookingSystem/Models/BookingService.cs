@@ -63,19 +63,12 @@ namespace BookingSystem.Models
             return BookingDAL.GetBookings();
         }
 
-        public IQueryable<Booking> GetBookingsForPeriod(string sortColumns, int maximumRows, int startRowIndex, out int TotalRowCount, DateTime startTime, DateTime endTime)
+        public IQueryable<BookingContainer> GetBookingsForPeriod(DateTime startTime, DateTime endTime)
         {
-            // Calculate correct startpageIndex
-            int startPageIndex = (startRowIndex / maximumRows) + 1;
-
-            // Sort columns
-            string sortColumnNames = (sortColumns != null ? sortColumns.Split(',')[0] : "");
-
-            return BookingDAL.GetBookingsPageWise(sortColumnNames, maximumRows, startPageIndex, out TotalRowCount, startTime, endTime).AsQueryable();
+            return BookingDAL.GetBookingsForPeriod(startTime, endTime).AsQueryable();
         }
 
-
-        public IQueryable<Booking> GetBookingsPageWise(string sortColumns, int maximumRows, int startRowIndex, out int TotalRowCount)
+        public IQueryable<Booking> GetBookingsPageWise(string sortColumns, int maximumRows, int startRowIndex)
         {
             // Calculate correct startpageIndex
             int startPageIndex = (startRowIndex / maximumRows) + 1;
@@ -84,7 +77,7 @@ namespace BookingSystem.Models
             string sortColumnNames = (sortColumns != null ? sortColumns.Split(',')[0] : "");
 
             // Get bookings from DAL
-            return BookingDAL.GetBookingsPageWise(sortColumnNames, maximumRows, startPageIndex, out TotalRowCount).AsQueryable();
+            return BookingDAL.GetBookingsPageWise(sortColumnNames, maximumRows, startPageIndex).AsQueryable();
         }
 
         public void SaveBooking(Booking booking)

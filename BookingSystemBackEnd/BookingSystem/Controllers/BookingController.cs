@@ -16,6 +16,7 @@ namespace BookingSystem.Controllers
         BookingService bookingService = new BookingService();       
 
         // GET single booking
+        //api/Booking/[id]
         public IHttpActionResult GetBooking(int id)
         {
             var booking = bookingService.GetBooking(id);
@@ -27,6 +28,7 @@ namespace BookingSystem.Controllers
         }
 
         // GET all bookings
+        //api/Booking
         public IHttpActionResult GetAllBookings()
         {
             var bookings = bookingService.GetBookings();
@@ -37,6 +39,26 @@ namespace BookingSystem.Controllers
             }
 
             return Ok(bookings);
+        }
+
+        [Route("api/Booking/day/{date:datetime?}")]
+        [AcceptVerbs("GET", "POST")]
+        public IHttpActionResult Get(string date)
+        {
+            DateTime startTime, endTime;
+
+            startTime = Convert.ToDateTime(date).StartOfDay();
+            endTime = Convert.ToDateTime(date).EndOfDay();
+
+            var bookings = bookingService.GetBookingsForPeriod(startTime, endTime);
+            if (bookings == null)
+            {
+                return NotFound();
+            }
+            return Ok(bookings);
+
+            //return "hello " + date;
+
         }
     }
 }

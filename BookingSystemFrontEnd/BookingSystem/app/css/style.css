@@ -344,6 +344,10 @@ section.content-container {
         text-align: center;
     }
 
+        section.content-container .calendar-container .list-table {
+            margin: 20px 0 0 0;
+        }
+
         section.content-container .calendar-container h3 {
             margin: 7px 0 14px 0;
             display: inline-block;
@@ -387,6 +391,10 @@ section.content-container {
             padding: 0;
             margin: 0 auto;
         }
+
+            section.content-container .calendar-container div.calendar-day-numbers {
+                overflow: auto;
+            }
 
             section.content-container .calendar-container div.calendar-day-numbers a {
                 text-decoration: none;

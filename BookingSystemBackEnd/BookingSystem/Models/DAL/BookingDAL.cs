@@ -142,7 +142,7 @@ namespace BookingSystem.Models
             }
         }
 
-        public IEnumerable<Booking> GetBookingsPageWise(string sortColumn, int pageSize, int pageIndex, out int totalRowCount, DateTime? startTime = null, DateTime? endTime = null)
+        public IEnumerable<Booking> GetBookingsPageWise(string sortColumn, int pageSize, int pageIndex, DateTime? startTime = null, DateTime? endTime = null)
         {
             // Create connection object
             using (this.CreateConnection())
@@ -200,7 +200,68 @@ namespace BookingSystem.Models
                     }
 
                     // Get total row count
-                    totalRowCount = Convert.ToInt32(cmd.Parameters["@TotalRowCount"].Value);
+                    //totalRowCount = Convert.ToInt32(cmd.Parameters["@TotalRowCount"].Value);
+
+                    // Remove unused list rows, free memory.
+                    bookingsReturnList.TrimExcess();
+
+                    // Return list
+                    return bookingsReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public IEnumerable<BookingContainer> GetBookingsForPeriod(DateTime startTime, DateTime endTime)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List<BookingContainer> bookingsReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    bookingsReturnList = new List<BookingContainer>(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup("appSchema.usp_BookingsForPeriod", DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add("@StartTime", SqlDbType.SmallDateTime).Value = startTime;
+                    cmd.Parameters.Add("@EndTime", SqlDbType.SmallDateTime).Value = endTime;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Booking object from database values and add to list
+                            bookingsReturnList.Add(new BookingContainer
+                            {
+                                BookingId = reader.GetSafeInt32(reader.GetOrdinal("BookingId")),
+                                BookingName = reader.GetSafeString(reader.GetOrdinal("BookingName")),
+                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
+                                Provisional = reader.GetBoolean(reader.GetOrdinal("Provisional")),
+                                CustomerName = reader.GetSafeString(reader.GetOrdinal("CustomerName")),
+                                CustomerId = reader.GetSafeInt32(reader.GetOrdinal("CustomerId")),
+                                TypeName = reader.GetSafeString(reader.GetOrdinal("TypeName")),
+                                Type = reader.GetSafeString(reader.GetOrdinal("Type")),
+                                TypeId = reader.GetSafeInt32(reader.GetOrdinal("TypeId")),
+                                Count = reader.GetSafeInt32(reader.GetOrdinal("Count")),
+                                StartTime = reader.GetSafeString(reader.GetOrdinal("StartTime")),
+                                EndTime = reader.GetSafeString(reader.GetOrdinal("EndTime"))
+                            });
+                        }
+                    }
 
                     // Remove unused list rows, free memory.
                     bookingsReturnList.TrimExcess();

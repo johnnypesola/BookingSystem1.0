@@ -1,4 +1,4 @@
-<div class="calendar-container">
+<section class="calendar-container">
     <a booking-calendar-change-month-button direction="prev" class="prev-month">&#8592;</a>
     <h3>{{datedata.currentMonthName}} {{datedata.currentYear}}</h3>
     <a booking-calendar-change-month-button direction="next" class="next-month">&#8594;</a>
@@ -16,9 +16,38 @@
             <a href="" class="active">3</a>
         <a href="" class="has-events">4</a>
     -->
-    <div class="calendar-day-numbers" ng-repeat="day in datedata.calendarDays">
-        <a href="" booking-calendar-day number="{{day.number}}" ng-class="day.cssClassName">
+    <div class="calendar-day-numbers">
+        <a href="" ng-repeat="day in datedata.calendarDays" booking-calendar-day number="{{day.number}}" index="{{day.index}}" ng-class="day.cssClassName">
             {{day.number}}
         </a>
+
     </div>
-</div>
+
+    <table class="list-table">
+        <tr>
+            <th>Bokningsnamn</th>
+            <th>Provisorisk</th>
+            <th>Kund</th>
+            <th>Personer</th>
+            <th>Typ</th>
+            <th>Typnamn</th>
+            <th>Antal</th>
+            <th>Starttid</th>
+            <th>Sluttid</th>
+
+        </tr>
+        <tr ng-repeat="booking in datedata.bookings">
+            <td>{{booking.BookingName}}</td>
+            <td>{{booking.Provisional}}</td>
+            <td>{{booking.CustomerName}}</td>
+            <td class="align-right">{{booking.NumberOfPeople}} st</td>
+            <td>{{booking.Type}}</td>
+            <td>{{booking.TypeName}}</td>
+            <td>{{booking.Count}}</td>
+            <td>{{booking.StartTime}}</td>
+            <td>{{booking.EndTime}}</td>
+            <!--<td class="align-right">{{booking.CalculatedBookingPrice | kr }}</td>
+            <td class="align-right">{{booking.Discount | percentage }}</td>-->
+        </tr>
+    </table>
+</section>
