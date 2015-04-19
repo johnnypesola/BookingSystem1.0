@@ -19,13 +19,13 @@
         // Startpage
         $routeProvider.
             when('/', {
-                templateUrl: 'components/start/startView.html'
+                templateUrl: 'controllers/start/startCtrl.html'
             }).
             when('/bokningstillfallen/lista', {
-                templateUrl: 'components/booking/bookingListView.html'
+                templateUrl: 'controllers/booking/bookingListCtrl.html'
             }).
             when('/bokningstillfallen/kalender', {
-                templateUrl: 'components/booking/bookingCalendarView.html'
+                templateUrl: 'controllers/booking/bookingCalendarView.html'
             });
     });
 

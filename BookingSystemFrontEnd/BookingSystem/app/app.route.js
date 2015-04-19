@@ -9,7 +9,7 @@ var BookingSystem = angular.module('bookingSystem', ['ngRoute']);
 BookingSystem.config(function($routeProvider) {
     $routeProvider.
         when('/', {
-            templateUrl: 'components/start/startView.html',
+            templateUrl: 'controllers/start/startCtrl.html',
             controller: 'BookingsController'
         }).
         otherwise({

@@ -8,14 +8,14 @@
             return {
                 restrict: 'E',
                 replace: true,
-                templateUrl: 'shared/calendarTemplate.html',
+                templateUrl: 'shared/directives/calendarDirective.html',
                 scope: true,
                 link: function(){
 
                 },
                 controller: function($scope, $element, $attrs) {
 
-                /* Declare variables START */
+        /* Declare variables START */
                     var i, currentYear, currentMonth, currentMonthName, currentMonthDay, currentMonthDayName,
                         currentMonthNumberOfDays, currentMonthStartDateObj, currentMonthEndDateObj, currentMonthStartWeekDay,
                         currentMonthEndWeekDay, prevMonthNumberOfDays, currentMonthStartTime, currentMonthEndTime, todayMonth,
@@ -32,9 +32,9 @@
                     var todayMonth = currentDateObj.getMonth();
                     var todayDay = currentDateObj.getDate();
 
-                    /* Declare variables END */
+        /* Declare variables END */
 
-                /* Private methods START */
+        /* Private methods START */
 
                     var initVariables = function (){
 
@@ -106,9 +106,9 @@
                             calendarDays: calendarDaysArray
                         };
                     };
-                /* Private methods END */
+        /* Private methods END */
 
-                /* Public methods START */
+        /* Public methods START */
 
                     $scope.changeToPreviousMonth = function(){
                         currentDateObj = new Date(currentYear, currentMonth - 1);
@@ -125,16 +125,18 @@
                         prepareCalendarDays();
                         addVarsToScope();
                     };
-                /* Public methods END */
+
+        /* Public methods END */
 
 
-                /* Initialization START */
+        /* Initialization START */
 
                     initVariables();
                     prepareCalendarDays();
                     addVarsToScope();
 
-                /* Initialization END */
+        /* Initialization END */
+
                 }
             };
         })
@@ -147,7 +149,7 @@
 
                     if($attrs.direction === 'next') {
                         $element.bind('click', function(){
-                           $scope.changeToNextMonth();
+                            $scope.changeToNextMonth();
                             $scope.$digest();
                         });
                     }
