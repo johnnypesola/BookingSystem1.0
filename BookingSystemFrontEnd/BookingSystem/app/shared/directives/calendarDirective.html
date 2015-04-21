@@ -23,7 +23,7 @@
 
     </div>
 
-    <table class="list-table">
+    <table class="list-table" ng-show="datedata.bookings.length">
         <tr>
             <th>Bokningsnamn</th>
             <th>Provisorisk</th>
@@ -44,8 +44,8 @@
             <td>{{booking.Type}}</td>
             <td>{{booking.TypeName}}</td>
             <td>{{booking.Count}}</td>
-            <td>{{booking.StartTime}}</td>
-            <td>{{booking.EndTime}}</td>
+            <td class="date">{{booking.StartTime}}</td>
+            <td class="date">{{booking.EndTime}}</td>
             <!--<td class="align-right">{{booking.CalculatedBookingPrice | kr }}</td>
             <td class="align-right">{{booking.Discount | percentage }}</td>-->
         </tr>

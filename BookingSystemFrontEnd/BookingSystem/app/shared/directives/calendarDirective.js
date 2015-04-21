@@ -28,7 +28,7 @@
                         currentMonthEndWeekDay, prevMonthNumberOfDays, currentMonthStartTime, currentMonthEndTime,
                         currentDateObj, selectedMonth, selectedDay,
 
-                        calendarDaysArray = [],
+                        calendarDaysArray = [], bookingsForMonthArray = [],
 
                         monthNamesArray = ["Januari", "Februari", "Mars", "April", "Maj", "Juni",
                             "Juli", "Augusti", "September", "Oktober", "November", "December"],
@@ -60,8 +60,25 @@
                         currentMonthEndTime = currentMonthEndDateObj.getTime() / 1000;
                     };
 
+                    // Check if specific day is today.
                     var isToday = function(dayNumber) {
                         return (selectedMonth === currentMonth && selectedDay === dayNumber);
+                    };
+
+                    // Check if a specific day has bookings
+                    var dayHasBookings = function(dayNumber) {
+
+                        // Loop through bookings for month
+                        return  bookingsForMonthArray.some(function(element){
+                            var _startDay = element.StartTime.getDate(),
+                                _endDay = element.EndTime.getDate();
+
+                            // Check if days overlap
+                            return (
+                                _startDay == dayNumber || _endDay == dayNumber || // Days match
+                                _startDay < dayNumber && _endDay > dayNumber // Overlaps
+                            )
+                        });
                     };
 
                     var prepareCalendarDays = function (){
@@ -82,9 +99,11 @@
                             calendarDaysArray.push(
                                 {
                                     number: i,
-                                    cssClassName: ( isToday(i) ? 'active' : '')
+                                    cssClassName: ( isToday(i) ? 'active' : ( dayHasBookings(i) ? 'has-events' : ''))
                                 }
                             );
+
+                            // console.log(dayHasBookings(i));
                         }
 
                         // Add calendar days for next month
@@ -96,6 +115,30 @@
                                 }
                             );
                         }
+                    };
+
+                    var getBookingsForMonth = function(callback) {
+                        var returnResource;
+
+                        // Get bookings
+                        bookingsForMonthArray = Booking.queryPeriod(
+                            {
+                                fromDate: currentMonthStartDateObj.BookingSystemGetYearsMonthsDays(),
+                                toDate: currentMonthEndDateObj.BookingSystemGetYearsMonthsDays(),
+                                type: 'all'
+                            }
+                        );
+
+                        // Convert date strings to date objects
+                        bookingsForMonthArray.$promise.then(function(bookings){
+                                bookings.forEach(function(element, index, array){
+                                    element.StartTime = new Date(element.StartTime);
+                                    element.EndTime = new Date(element.EndTime);
+                                });
+
+                                // Execute callback
+                                callback();
+                            });
                     };
 
                     // Make public variables accessible in template
@@ -111,6 +154,17 @@
                         };
 
                     };
+
+                    var updateCalendarContent = function() {
+
+                        initDateVariables();
+
+                        getBookingsForMonth(function(){
+                            prepareCalendarDays();
+                            addVarsToScope();
+                        });
+                    };
+
         /* Private methods END */
 
         /* Public methods START */
@@ -118,17 +172,13 @@
                     $scope.changeToPreviousMonth = function(){
                         currentDateObj = new Date(currentYear, currentMonth - 1);
 
-                        initDateVariables();
-                        prepareCalendarDays();
-                        addVarsToScope();
+                        updateCalendarContent();
                     };
 
                     $scope.changeToNextMonth = function(){
                         currentDateObj = new Date(currentYear, currentMonth + 1);
 
-                        initDateVariables();
-                        prepareCalendarDays();
-                        addVarsToScope();
+                        updateCalendarContent();
                     };
 
                     $scope.changeToDay = function($element, $attrs, event){
@@ -152,7 +202,7 @@
                             addVarsToScope();
 
                             // Fetch data
-                            $scope.datedata.bookings = Booking.queryPeriod({date: currentDateObj.getYearsMonthsDays()});
+                            $scope.datedata.bookings = Booking.queryDay({date: currentDateObj.BookingSystemGetYearsMonthsDays()});
                         }
                     };
 
@@ -166,9 +216,7 @@
                     selectedMonth = currentDateObj.getMonth();
                     selectedDay = currentDateObj.getDate();
 
-                    initDateVariables();
-                    prepareCalendarDays();
-                    addVarsToScope();
+                    updateCalendarContent();
 
         /* Initialization END */
 

@@ -23,6 +23,9 @@ namespace BookingSystem
 
         public const string TIME_REGEXP = @"^[0-9]{2}:[0-9]{2}$*";
 
+        // Special validation
+        public const string BOOKING_TYPE_REGEXP = @"^(location|resource|meal|all)";
+
         // Generic validation method (<T> declares its generic)
         public static bool Validate<T>(this T instance, out ICollection<ValidationResult> validationResults)
         {

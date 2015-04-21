@@ -305,8 +305,8 @@ section.content-container {
 
     section.content-container .list-table th {
         font-weight: normal;
-        text-align: left;
-        padding: 0 0 0 3px;
+        text-align: center;
+        padding: 0;
         border: 1px solid #E0E0E0;
         text-shadow: 1px 1px 0px rgba(255, 255, 255, 1);
         background: #E0E0E0; /* Old browsers */
@@ -335,6 +335,12 @@ section.content-container {
     section.content-container .list-table td {
         padding: 1px 5px;
         border-right: 1px solid #E0E0E0;
+        line-height: 18px;
+    }
+
+    section.content-container .list-table td.date {
+        font-size: 10px;
+        width: 50px;
     }
 
     section.content-container .calendar-container {

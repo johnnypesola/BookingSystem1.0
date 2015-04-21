@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using BookingSystem.Models;
 using System.Web.Http.Cors;
+using System.Text.RegularExpressions;
 
 namespace BookingSystem.Controllers
 {
@@ -19,7 +20,7 @@ namespace BookingSystem.Controllers
         //api/Booking/[id]
         public IHttpActionResult GetBooking(int id)
         {
-            var booking = bookingService.GetBooking(id);
+            Booking booking = bookingService.GetBooking(id);
             if (booking == null)
             {
                 return NotFound();
@@ -31,7 +32,7 @@ namespace BookingSystem.Controllers
         //api/Booking
         public IHttpActionResult GetAllBookings()
         {
-            var bookings = bookingService.GetBookings();
+            IEnumerable<Booking> bookings = bookingService.GetBookings();
 
             if(bookings == null)
             {
@@ -41,6 +42,7 @@ namespace BookingSystem.Controllers
             return Ok(bookings);
         }
 
+        // Get detailed bookings for day
         [Route("api/Booking/day/{date:datetime?}")]
         [AcceptVerbs("GET", "POST")]
         public IHttpActionResult Get(string date)
@@ -50,15 +52,40 @@ namespace BookingSystem.Controllers
             startTime = Convert.ToDateTime(date).StartOfDay();
             endTime = Convert.ToDateTime(date).EndOfDay();
 
-            var bookings = bookingService.GetBookingsForPeriod(startTime, endTime);
+            IEnumerable<BookingContainer> bookings = bookingService.GetBookingsForPeriod(startTime, endTime);
+
             if (bookings == null)
             {
                 return NotFound();
             }
             return Ok(bookings);
+        }
 
-            //return "hello " + date;
+        // Get info if there are any bookings for a period
+        [Route("api/Booking/period/{fromdate:datetime}/{todate:datetime}/{type}")]
+        [AcceptVerbs("GET", "POST")]
+        public IHttpActionResult Get(string fromdate, string todate, string type)
+        {
+            DateTime startTime, endTime;
+            Regex typeRegex;
 
+            startTime = Convert.ToDateTime(fromdate);
+            endTime = Convert.ToDateTime(todate);
+
+            // Try to validate type
+            typeRegex = new Regex(ValidationExtensions.BOOKING_TYPE_REGEXP);
+            if(!typeRegex.IsMatch(type))
+            {
+                return NotFound();
+            }
+
+            // Get bookings
+            var bookings = bookingService.CheckDayBookingsForPeriod(startTime, endTime, type);
+            if (bookings == null)
+            {
+                return NotFound();
+            }
+            return Ok(bookings);
         }
     }
 }

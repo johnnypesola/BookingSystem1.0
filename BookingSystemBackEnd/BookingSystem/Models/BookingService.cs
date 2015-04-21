@@ -68,6 +68,11 @@ namespace BookingSystem.Models
             return BookingDAL.GetBookingsForPeriod(startTime, endTime).AsQueryable();
         }
 
+        public IEnumerable<CalendarBookingDay> CheckDayBookingsForPeriod(DateTime startTime, DateTime endTime, String type)
+        {
+            return BookingDAL.CheckDayBookingsForPeriod(startTime, endTime, type);
+        }
+
         public IQueryable<Booking> GetBookingsPageWise(string sortColumns, int maximumRows, int startRowIndex)
         {
             // Calculate correct startpageIndex
