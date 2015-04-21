@@ -1,7 +1,7 @@
 <section class="calendar-container">
-    <a booking-calendar-change-month-button direction="prev" class="prev-month">&#8592;</a>
+    <a change-month-button direction="prev" class="prev-month">&#8592;</a>
     <h3>{{datedata.currentMonthName}} {{datedata.currentYear}}</h3>
-    <a booking-calendar-change-month-button direction="next" class="next-month">&#8594;</a>
+    <a change-month-button direction="next" class="next-month">&#8594;</a>
 
     <div class="calendar-day-names">
         <span>Mån</span>
@@ -20,13 +20,12 @@
         <a href="" ng-repeat="day in datedata.calendarDays" booking-calendar-day number="{{day.number}}" index="{{day.index}}" ng-class="day.cssClassName">
             {{day.number}}
         </a>
-
     </div>
 
     <table class="list-table" ng-show="datedata.bookings.length">
         <tr>
             <th>Bokningsnamn</th>
-            <th>Provisorisk</th>
+            <th>Preliminär</th>
             <th>Kund</th>
             <th>Personer</th>
             <th>Typ</th>
@@ -38,14 +37,14 @@
         </tr>
         <tr ng-repeat="booking in datedata.bookings">
             <td>{{booking.BookingName}}</td>
-            <td>{{booking.Provisional}}</td>
+            <td>{{booking.Provisional | boolean}}</td>
             <td>{{booking.CustomerName}}</td>
-            <td class="align-right">{{booking.NumberOfPeople}} st</td>
-            <td>{{booking.Type}}</td>
+            <td class="align-right">{{booking.NumberOfPeople | count}}</td>
+            <td>{{booking.Type | bookingType}}</td>
             <td>{{booking.TypeName}}</td>
-            <td>{{booking.Count}}</td>
-            <td class="date">{{booking.StartTime}}</td>
-            <td class="date">{{booking.EndTime}}</td>
+            <td>{{booking.Count | count}}</td>
+            <td class="date">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+            <td class="date">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
             <!--<td class="align-right">{{booking.CalculatedBookingPrice | kr }}</td>
             <td class="align-right">{{booking.Discount | percentage }}</td>-->
         </tr>

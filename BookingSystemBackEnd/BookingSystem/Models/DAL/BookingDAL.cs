@@ -257,8 +257,8 @@ namespace BookingSystem.Models
                                 Type = reader.GetSafeString(reader.GetOrdinal("Type")),
                                 TypeId = reader.GetSafeInt32(reader.GetOrdinal("TypeId")),
                                 Count = reader.GetSafeInt32(reader.GetOrdinal("Count")),
-                                StartTime = reader.GetSafeString(reader.GetOrdinal("StartTime")),
-                                EndTime = reader.GetSafeString(reader.GetOrdinal("EndTime"))
+                                StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
+                                EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime"))
                             });
                         }
                     }
@@ -311,8 +311,8 @@ namespace BookingSystem.Models
                                 new CalendarBookingDay
                                 {
                                     // Create new Booking object from database values and add to list
-                                    StartTime = reader.GetSafeString(reader.GetOrdinal("StartTime")),
-                                    EndTime = reader.GetSafeString(reader.GetOrdinal("EndTime")),
+                                    StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
+                                    EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
                                     Type = reader.GetSafeString(reader.GetOrdinal("Type"))
                                 }
                             );

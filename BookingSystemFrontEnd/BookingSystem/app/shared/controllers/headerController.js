@@ -41,10 +41,10 @@
                 ]
             },
             {
-                title: "Lokaler",
+                title: "Lokaler / Platser",
                 submenus: [
                     {
-                        title: "Lokaler",
+                        title: "Lokaler / Platser",
                         location: "lokaler"
                     },
                     {

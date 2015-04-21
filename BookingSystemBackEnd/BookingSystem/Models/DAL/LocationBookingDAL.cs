@@ -95,8 +95,8 @@ namespace BookingSystem.Models
                                 new CalendarBookingDay
                                 {
                                     // Create new Booking object from database values and add to list
-                                    StartTime = reader.GetSafeString(StarTimeIndex),
-                                    EndTime = reader.GetSafeString(EndTimeIndex)
+                                    StartTime = reader.GetSafeDateTime(StarTimeIndex),
+                                    EndTime = reader.GetSafeDateTime(EndTimeIndex)
                                 }
                             );
                         }

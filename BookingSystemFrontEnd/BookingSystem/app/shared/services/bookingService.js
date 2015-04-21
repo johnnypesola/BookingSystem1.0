@@ -13,6 +13,14 @@
 
         .factory('Booking', function($resource){
 
+            // Functions
+            var parseDates = function(response){
+                response.forEach(function(element, index, array){
+                    element.StartTime = new Date(element.StartTime);
+                    element.EndTime = new Date(element.EndTime);
+                });
+            };
+
             return $resource('http://192.168.1.4:8080/BookingSystem/api/Booking',
                 {},
                 {
@@ -28,8 +36,20 @@
                     },
 
                     // Get bookings for a specified period
-                    queryPeriod: {
-                        url: 'http://192.168.1.4:8080/BookingSystem/api/Booking/period/:fromDate/:toDate/:type',
+                    queryLessForPeriod: {
+                        url: 'http://192.168.1.4:8080/BookingSystem/api/Booking/period/:fromDate/:toDate/:type/less',
+                        id: '@id',
+                        method: 'GET',
+                        isArray: true,
+                        params: {
+                            fromDate: '@fromDate',
+                            toDate: '@toDate',
+                            type: '@type' // What kind of bookings to get. Allowed values: meal, resource, location
+                        }
+                    },
+                    // Get bookings for a specified period
+                    queryMoreForPeriod: {
+                        url: 'http://192.168.1.4:8080/BookingSystem/api/Booking/period/:fromDate/:toDate/:type/more',
                         id: '@id',
                         method: 'GET',
                         isArray: true,
@@ -40,6 +60,8 @@
                         }
                     }
                 });
+
+
             /*
              query: function (callback){
              $http({

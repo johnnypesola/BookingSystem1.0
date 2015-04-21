@@ -29,6 +29,14 @@
             });
     });
 
-    // Menu code test
+    // Automatically convert all $http ISO 6801 date strings to date objects from backend (affected: $http $provider).
+    BookingSystem.config(["$httpProvider", function ($httpProvider) {
+        $httpProvider.defaults.transformResponse.push(function(responseData){
+
+            var dateObj = new Date();
+            dateObj.convertDateStringsToDates(responseData);
+            return responseData;
+        });
+    }]);
 
 })();

@@ -62,15 +62,15 @@ namespace BookingSystem.Controllers
         }
 
         // Get info if there are any bookings for a period
-        [Route("api/Booking/period/{fromdate:datetime}/{todate:datetime}/{type}")]
+        [Route("api/Booking/period/{fromDate:datetime}/{toDate:datetime}/{type}/{moreOrLess}")]
         [AcceptVerbs("GET", "POST")]
-        public IHttpActionResult Get(string fromdate, string todate, string type)
+        public IHttpActionResult Get(string fromDate, string toDate, string type, String moreOrLess)
         {
             DateTime startTime, endTime;
             Regex typeRegex;
 
-            startTime = Convert.ToDateTime(fromdate);
-            endTime = Convert.ToDateTime(todate);
+            startTime = Convert.ToDateTime(fromDate);
+            endTime = Convert.ToDateTime(toDate);
 
             // Try to validate type
             typeRegex = new Regex(ValidationExtensions.BOOKING_TYPE_REGEXP);
@@ -79,13 +79,43 @@ namespace BookingSystem.Controllers
                 return NotFound();
             }
 
-            // Get bookings
-            var bookings = bookingService.CheckDayBookingsForPeriod(startTime, endTime, type);
-            if (bookings == null)
+            // Check how much data is requested
+            if(moreOrLess == "more")
+            {
+                // Get bookings
+                IEnumerable<BookingContainer> bookings = bookingService.GetBookingsForPeriod(startTime, endTime);
+
+                if (bookings == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(bookings);
+            }
+            else if(moreOrLess == "less")
+            {
+                // Get bookings
+                IEnumerable<CalendarBookingDay> bookings = bookingService.CheckDayBookingsForPeriod(startTime, endTime, type);
+
+                if (bookings == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(bookings);
+            }
+            else
             {
                 return NotFound();
             }
-            return Ok(bookings);
+        }
+
+        // Test route
+        [Route("api/Booking/test")]
+        [AcceptVerbs("GET", "POST")]
+        public IHttpActionResult Get()
+        {
+            return Ok(new DateTime());
         }
     }
 }

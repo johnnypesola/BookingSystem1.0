@@ -26,14 +26,7 @@
                     var i, currentYear, currentMonth, currentMonthName, currentMonthDay, currentMonthDayName,
                         currentMonthNumberOfDays, currentMonthStartDateObj, currentMonthEndDateObj, currentMonthStartWeekDay,
                         currentMonthEndWeekDay, prevMonthNumberOfDays, currentMonthStartTime, currentMonthEndTime,
-                        currentDateObj, selectedMonth, selectedDay,
-
-                        calendarDaysArray = [], bookingsForMonthArray = [],
-
-                        monthNamesArray = ["Januari", "Februari", "Mars", "April", "Maj", "Juni",
-                            "Juli", "Augusti", "September", "Oktober", "November", "December"],
-
-                        dayNamesArray = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
+                        currentDateObj, selectedMonth, selectedDay;
 
         /* Declare variables END */
 
@@ -43,9 +36,9 @@
 
                         currentYear = currentDateObj.getFullYear();
                         currentMonth = currentDateObj.getMonth();
-                        currentMonthName = monthNamesArray[currentMonth];
+                        currentMonthName = currentDateObj.monthNamesArray[currentMonth];
                         currentMonthDay = currentDateObj.getDate();
-                        currentMonthDayName = dayNamesArray[currentMonthDay];
+                        currentMonthDayName = currentDateObj.dayNamesArray[currentMonthDay];
                         currentMonthNumberOfDays = new Date(currentYear, currentMonth + 1, 0).getDate();
 
                         currentMonthStartDateObj = new Date(currentYear, currentMonth, 1);
@@ -55,9 +48,6 @@
                         currentMonthEndWeekDay = (currentMonthEndDateObj.getDay() === 0 ? 7 : currentMonthEndDateObj.getDay());
 
                         prevMonthNumberOfDays = new Date(currentYear, currentMonth, 0).getDate();
-
-                        currentMonthStartTime = currentMonthStartDateObj.getTime() / 1000;
-                        currentMonthEndTime = currentMonthEndDateObj.getTime() / 1000;
                     };
 
                     // Check if specific day is today.
@@ -121,7 +111,7 @@
                         var returnResource;
 
                         // Get bookings
-                        bookingsForMonthArray = Booking.queryPeriod(
+                        bookingsForMonthArray = Booking.queryLessForPeriod(
                             {
                                 fromDate: currentMonthStartDateObj.BookingSystemGetYearsMonthsDays(),
                                 toDate: currentMonthEndDateObj.BookingSystemGetYearsMonthsDays(),
@@ -131,14 +121,10 @@
 
                         // Convert date strings to date objects
                         bookingsForMonthArray.$promise.then(function(bookings){
-                                bookings.forEach(function(element, index, array){
-                                    element.StartTime = new Date(element.StartTime);
-                                    element.EndTime = new Date(element.EndTime);
-                                });
 
-                                // Execute callback
-                                callback();
-                            });
+                            // Execute callback
+                            callback();
+                        });
                     };
 
                     // Make public variables accessible in template
@@ -223,7 +209,7 @@
                 }
             };
         }])
-        .directive('bookingCalendarChangeMonthButton', function() {
+        .directive('changeMonthButton', function() {
             return {
                 restrict: 'A',
                 replace: false,

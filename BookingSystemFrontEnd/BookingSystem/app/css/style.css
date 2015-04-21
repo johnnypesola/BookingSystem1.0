@@ -343,7 +343,8 @@ section.content-container {
         width: 50px;
     }
 
-    section.content-container .calendar-container {
+    section.content-container .calendar-container,
+    section.content-container .list-container {
         position: relative;
         /*border: 1px solid #E0E0E0;*/
         /*float: left;*/
@@ -354,12 +355,14 @@ section.content-container {
             margin: 20px 0 0 0;
         }
 
-        section.content-container .calendar-container h3 {
+        section.content-container h3 {
             margin: 7px 0 14px 0;
             display: inline-block;
         }
 
-        section.content-container .calendar-container a.next-month, section.content-container .calendar-container a.prev-month {
+        section.content-container a.next-month,
+        section.content-container a.prev-month
+        {
             font-size: 26px;
             display: inline-block;
             text-decoration: none;
@@ -378,17 +381,17 @@ section.content-container {
             box-shadow:         inset 0px 0px 8px 0px rgba(0, 0, 0, 0.05);
         }
 
-        section.content-container .calendar-container a:hover, section.content-container .calendar-container a.prev-month:hover {
+        section.content-container a.next-month:hover, section.content-container a.prev-month:hover {
             cursor: pointer;
             background-color: #FFD77F;
         }
 
 
-        section.content-container .calendar-container a.prev-month {
+        section.content-container a.prev-month {
             left: 6px;
         }
 
-        section.content-container .calendar-container a.next-month {
+        section.content-container a.next-month {
             right: 6px;
         }
 
@@ -516,6 +519,10 @@ section.content-container {
 
 .align-right {
     text-align: right;
+}
+
+.align-center {
+    text-align: center;
 }
 
 /* Colors */
