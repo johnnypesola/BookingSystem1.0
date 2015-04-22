@@ -11,7 +11,7 @@
             'ngResource'
         ])
 
-        .factory('Booking', function($resource){
+        .factory('Booking', function($resource, API_URL){
 
             // Functions
             var parseDates = function(response){
@@ -21,12 +21,12 @@
                 });
             };
 
-            return $resource('http://192.168.1.4:8080/BookingSystem/api/Booking',
+            return $resource(API_URL + 'Booking',
                 {},
                 {
                     // Get bookings for specified day
                     queryDay: {
-                        url: 'http://192.168.1.4:8080/BookingSystem/api/Booking/day/:date',
+                        url: API_URL + 'Booking/day/:date',
                         id: '@id',
                         method: 'GET',
                         isArray: true,
@@ -37,7 +37,7 @@
 
                     // Get bookings for a specified period
                     queryLessForPeriod: {
-                        url: 'http://192.168.1.4:8080/BookingSystem/api/Booking/period/:fromDate/:toDate/:type/less',
+                        url: API_URL + 'Booking/period/:fromDate/:toDate/:type/less',
                         id: '@id',
                         method: 'GET',
                         isArray: true,
@@ -49,7 +49,7 @@
                     },
                     // Get bookings for a specified period
                     queryMoreForPeriod: {
-                        url: 'http://192.168.1.4:8080/BookingSystem/api/Booking/period/:fromDate/:toDate/:type/more',
+                        url: API_URL + 'Booking/period/:fromDate/:toDate/:type/more',
                         id: '@id',
                         method: 'GET',
                         isArray: true,

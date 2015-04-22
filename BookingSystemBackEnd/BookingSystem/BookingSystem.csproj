@@ -90,6 +90,7 @@
     <Compile Include="App_Extensions\ValidationExtensions.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\FurnituringController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -97,13 +98,16 @@
     <Compile Include="Models\BLL\BookingContainer.cs" />
     <Compile Include="Models\BLL\CalendarBookingDay.cs" />
     <Compile Include="Models\BLL\Customer.cs" />
+    <Compile Include="Models\BLL\Furnituring.cs" />
     <Compile Include="Models\BLL\Location.cs" />
     <Compile Include="Models\BookingService.cs" />
     <Compile Include="Models\DAL\BookingDAL.cs" />
     <Compile Include="Models\DAL\CustomerDAL.cs" />
     <Compile Include="Models\DAL\DALBase.cs" />
+    <Compile Include="Models\DAL\FurnituringDAL.cs" />
     <Compile Include="Models\DAL\LocationBookingDAL.cs" />
     <Compile Include="Models\DAL\LocationDAL.cs" />
+    <Compile Include="Models\FurnituringService.cs" />
     <Compile Include="Models\LocationBookingService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

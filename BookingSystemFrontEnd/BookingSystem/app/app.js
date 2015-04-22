@@ -10,23 +10,32 @@
         'bookingSystem.startPage',
         'bookingSystem.version',
         'bookingSystem.header',
-        'bookingSystem.booking'
+        'bookingSystem.booking',
+        'bookingSystem.furnituring'
     ]);
 
+    // Define API url, used in services
+    BookingSystem.constant('API_URL', 'http://192.168.1.4:8080/BookingSystem/api/');
 
     // Declare basic routes
     BookingSystem.config(function($routeProvider) {
-        // Startpage
+
         $routeProvider.
+            // Startpage
             when('/', {
                 templateUrl: 'controllers/start/startCtrl.html'
             }).
+            // Bookings
             when('/bokningstillfallen/lista', {
                 templateUrl: 'controllers/booking/bookingListCtrl.html'
             }).
             when('/bokningstillfallen/kalender', {
                 templateUrl: 'controllers/booking/bookingCalendarView.html'
+            }).
+            when('/mobleringar/lista', {
+                templateUrl: 'controllers/furnituring/furnituringListCtrl.html'
             });
+
     });
 
     // Automatically convert all $http ISO 6801 date strings to date objects from backend (affected: $http $provider).

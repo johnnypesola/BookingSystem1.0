@@ -28,15 +28,15 @@
                     },
                     {
                         title: "Lokalbokningar",
-                        location: "lokalbokningar"
+                        location: "lokalbokningar/lista"
                     },
                     {
                         title: "Matbokningar",
-                        location: "matbokningar"
+                        location: "matbokningar/lista"
                     },
                     {
                         title: "Resursbokningar",
-                        location: "resursbokningar"
+                        location: "resursbokningar/lista"
                     }
                 ]
             },
@@ -45,16 +45,22 @@
                 submenus: [
                     {
                         title: "Lokaler / Platser",
-                        location: "lokaler"
+                        location: "lokaler/lista"
                     },
                     {
                         title: "Lokalmöbleringar",
-                        location: "lokalmobleringar"
+                        location: "lokalmobleringar/lista"
                     }
                 ]
             },
             {
-                title: "Möbleringar"
+                title: "Möbleringar",
+                submenus: [
+                    {
+                        title: "Möbleringar",
+                        location: "mobleringar/lista"
+                    }
+                ]
             },
             {
                 title: "Användare"

@@ -1,0 +1,18 @@
+<section class="content-container" ng-controller="FurnituringCtrl">
+    <h2>Lista över Möbleringar</h2>
+    <div class="appearance-icons-container">
+        <a class="list" href="#/mobleringar/lista"></a>
+    </div>
+
+    <section class="list-container">
+
+        <table class="list-table">
+            <tr>
+                <th>Möbleringsnamn</th>
+            </tr>
+            <tr ng-repeat="furnituring in furniturings">
+                <td>{{furnituring.Name}}</td>
+            </tr>
+        </table>
+    </section>
+</section>

@@ -8,54 +8,57 @@ namespace BookingSystem.Models
 {
     public class Booking
     {
-        [Required(ErrorMessage = "BokningsId måste anges.")]
-        [Range(0, int.MaxValue, ErrorMessage = "BokningsId befinner sig utanför gränsvärdena.")]
+        [Required(ErrorMessage = "BookingId is required.")]
+        [Range(0, int.MaxValue, ErrorMessage = "BookingId is out of range.")]
         public int BookingId { get; set; }
 
-        [StringLength(50, ErrorMessage = "Namn får inte överstiga 50 tecken.")]
-        [RegularExpression(ValidationExtensions.TEXT_FIELD_REGEXP, ErrorMessage = "Namnet får endast innehåll alfanumreriska tecken och följande specialtecken: &_-.,@")]
+        [StringLength(50, ErrorMessage = "Name must not exceed 50 chars.")]
+        [RegularExpression(ValidationExtensions.TEXT_FIELD_REGEXP, ErrorMessage = "Name must be alphanumeric and may also contain the following chars: &_-.,@")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Bokningstyp Id måste anges.")]
-        [Range(0, int.MaxValue, ErrorMessage = "Bokningstyp Id:t befinner sig utanför gränsvärdena.")]
+        [Required(ErrorMessage = "BookingTypeId is required.")]
+        [Range(0, int.MaxValue, ErrorMessage = "BookingTypeId is out of range.")]
         public int BookingTypeId { get; set; }
 
-        [Required(ErrorMessage = "Kund Id måste anges.")]
-        [Range(0, int.MaxValue, ErrorMessage = "KundId befinner sig utanför gränsvärdena.")]
+        [Required(ErrorMessage = "CustomerId is required.")]
+        [Range(0, int.MaxValue, ErrorMessage = "CustomerId is out of range.")]
         public int CustomerId { get; set; }
 
-        [Required(ErrorMessage = "Värde för preliminärbokning måste anges.")]
+        [Required(ErrorMessage = "Provisional is required.")]
         public bool Provisional { get; set; }
 
-        [Required(ErrorMessage = "Antal personer måste anges.")]
-        [Range(0, 32767, ErrorMessage = "Antal personer är utanför gränsvärdena.")]
+        [Required(ErrorMessage = "NumberOfPeople is required.")]
+        [Range(0, Int16.MaxValue, ErrorMessage = "NumberOfPeopleis out of range.")]
         public int NumberOfPeople { get; set; }
 
-        [Range(0, 1, ErrorMessage = "Rabatt är utanför gränsvärderna.")]
+        [Range(0, 1, ErrorMessage = "Discount is out of range.")]
         public decimal Discount { get; set; }
 
-        [StringLength(200, ErrorMessage = "Anteckningar får inte överstiga 200 tecken.")]
-        [RegularExpression(ValidationExtensions.TEXT_FIELD_REGEXP, ErrorMessage = "Anteckningar får endast innehåll alfanumreriska tecken och följande specialtecken: &_-.,@")]
+        [StringLength(200, ErrorMessage = "Notes must not exceed 200 chars.")]
+        [RegularExpression(ValidationExtensions.TEXT_FIELD_REGEXP, ErrorMessage = "Notes must be alphanumeric and may also contain the following chars: &_-.,@")]
         public string Notes { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Skapad av AnvändarId:t befinner sig utanför gränsvärdena.")]
+        [Range(0, int.MaxValue, ErrorMessage = "CreatedByUserId is out of range.")]
         public int CreatedByUserId { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Redigerad av AnvändarId:t befinner sig utanför gränsvärdena.")]
+        [Range(0, int.MaxValue, ErrorMessage = "ModifiedByUserId is out of range.")]
         public int ModifiedByUserId { get; set; }
 
-        [Range(0, int.MaxValue, ErrorMessage = "Ansvarig AnvändarId:t befinner sig utanför gränsvärdena.")]
+        [Range(0, int.MaxValue, ErrorMessage = "ResponsibleUserId is out of range.")]
         public int ResponsibleUserId { get; set; }
 
         // Extra datafields retrieved from database/stored procedure
-        [StringLength(50, ErrorMessage = "Kundnamn får inte överstiga 50 tecken.")]
+        [StringLength(50, ErrorMessage = "CustomerName must not exceed 50 chars.")]
         public string CustomerName { get; set; }
 
-        [Range(0, 32767, ErrorMessage = "Max antal personer är utanför gränsvärdena.")]
+        [Range(0, Int16.MaxValue, ErrorMessage = "MaxPeople is out of range.")]
         public int MaxPeople { get; set; }
 
         public decimal CalculatedBookingPrice { get; set; }
 
         public decimal TotalBookingValue { get; set; }
+
+        [Range(0, Int16.MaxValue, ErrorMessage = "PayMethodId is out of range.")]
+        public int PayMethodId { get; set; }
     }
 }

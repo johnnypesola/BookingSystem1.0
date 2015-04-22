@@ -12,7 +12,7 @@ namespace BookingSystem.Models
     {
     // Fields
         static private string _connectionString;
-        protected const string DAL_ERROR_MSG = "Ett fel inträffade i datalagret.";
+        protected const string DAL_ERROR_MSG = "An error occured in DAL.";
 
     // Properties
         static protected SqlConnection connection { get; set; }

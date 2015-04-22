@@ -16,21 +16,8 @@ namespace BookingSystem.Controllers
         // Set up Service.
         BookingService bookingService = new BookingService();       
 
-        // GET single booking
-        //api/Booking/[id]
-        public IHttpActionResult GetBooking(int id)
-        {
-            Booking booking = bookingService.GetBooking(id);
-            if (booking == null)
-            {
-                return NotFound();
-            }
-            return Ok(booking);
-        }
-
-        // GET all bookings
-        //api/Booking
-        public IHttpActionResult GetAllBookings()
+        // GET: api/Booking
+        public IHttpActionResult Get()
         {
             IEnumerable<Booking> bookings = bookingService.GetBookings();
 
@@ -40,6 +27,17 @@ namespace BookingSystem.Controllers
             }
 
             return Ok(bookings);
+        }
+
+        // GET: api/Booking/5
+        public IHttpActionResult Get(int id)
+        {
+            Booking booking = bookingService.GetBooking(id);
+            if (booking == null)
+            {
+                return NotFound();
+            }
+            return Ok(booking);
         }
 
         // Get detailed bookings for day
@@ -110,12 +108,39 @@ namespace BookingSystem.Controllers
             }
         }
 
-        // Test route
-        [Route("api/Booking/test")]
-        [AcceptVerbs("GET", "POST")]
-        public IHttpActionResult Get()
+        // POST api/Booking
+        public IHttpActionResult Post(Booking booking)
         {
-            return Ok(new DateTime());
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
+            // Try to save booking
+            try
+            {
+                bookingService.SaveBooking(booking);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            // Respond that the booking was created and redirect
+            return CreatedAtRoute("DefaultApi", new { id = booking.BookingId }, booking);
+
         }
+
+        // PUT: api/Booking/5
+        public void Put(int id, [FromBody]string value)
+        {
+        }
+
+        // DELETE: api/Booking/5
+        public void Delete(int id)
+        {
+        }
+
     }
 }
