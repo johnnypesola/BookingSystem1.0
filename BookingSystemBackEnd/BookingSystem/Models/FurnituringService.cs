@@ -30,7 +30,7 @@ namespace BookingSystem.Models
         {
             if (FurnituringId < 0)
             {
-                throw new ApplicationException("Invalid FunituringId");
+                throw new FormatException("Invalid FunituringId");
             }
 
             // Check that the Furnituring exists before deletion
@@ -39,7 +39,7 @@ namespace BookingSystem.Models
             // If there is no Furnituring
             if (Furnituring == null)
             {
-                throw new ApplicationException("Furnituring does not exist");
+                throw new DataBaseEntryNotFoundException("Furnituring does not exist");
             }
 
             // Delete Furnituring

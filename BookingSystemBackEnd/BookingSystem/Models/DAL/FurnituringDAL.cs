@@ -27,8 +27,12 @@ namespace BookingSystem.Models
                     // Try to delete Furnituring from database.
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception exception)
                 {
+                    if (exception.Message == "Foreign key references exists")
+                    {
+                        throw new ApprovedDataBaseException(exception.Message);
+                    }
                     // Throw exception
                     throw new ApplicationException(DAL_ERROR_MSG);
                 }
@@ -147,7 +151,7 @@ namespace BookingSystem.Models
                     cmd.ExecuteNonQuery();
 
                     // Place database insert id into Furnituring object.
-                    Furnituring.FurnituringId = (int)cmd.Parameters["@InsertId"].Value;
+                    Furnituring.FurnituringId = (Int16)cmd.Parameters["@InsertId"].Value;
                 }
                 catch
                 {

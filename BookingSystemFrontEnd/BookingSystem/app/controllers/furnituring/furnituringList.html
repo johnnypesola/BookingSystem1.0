@@ -1,4 +1,4 @@
-<section class="content-container" ng-controller="FurnituringCtrl">
+<section class="content-container" ng-controller="FurnituringListCtrl">
     <h2>Lista över Möbleringar</h2>
     <div class="appearance-icons-container">
         <a class="list" href="#/mobleringar/lista"></a>
@@ -9,9 +9,15 @@
         <table class="list-table">
             <tr>
                 <th>Möbleringsnamn</th>
+                <th></th>
             </tr>
             <tr ng-repeat="furnituring in furniturings">
-                <td>{{furnituring.Name}}</td>
+                <td>
+                    {{furnituring.Name}}
+                </td>
+                <td class="align-right">
+                    <div item-action-buttons="furnituring.FurnituringId"></div>
+                </td>
             </tr>
         </table>
     </section>

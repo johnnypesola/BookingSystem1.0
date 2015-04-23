@@ -11,8 +11,8 @@
 
     });
 
-    // Controller
-    header.controller('HeaderController', function($scope){
+    // Header Controller
+    header.controller('HeaderCtrl', function($scope){
 
         // Init values
         $scope.selectedSubMenu = 0;
@@ -96,6 +96,8 @@
             $scope.selectedSubMenu = index;
         };
 
+
+
         // Watch changes on selectedMainMenu variable
         /*
         $scope.$watch('selectedMainMenu', function() {
@@ -105,7 +107,37 @@
 
         });
         */
-    })
+    });
+
+
+    // Flash Message Controller
+    header.controller('FlashMessageCtrl', function($rootScope, $scope){
+
+        $scope.hideMessage = function(){
+            $scope.messageVisible = false;
+        };
+
+        $rootScope.$watch('FlashMessage', function(newValue, oldValue) {
+
+            // Check that the value contains data
+            if ((typeof(newValue) !== 'undefined') && (newValue !== null)) {
+                // Add class
+                if(newValue.type === 'error'){
+                    $scope.messageClass = 'error';
+                }
+                else if(newValue.type === 'success'){
+                    $scope.messageClass = 'success';
+                }
+                else if(newValue.type === 'warning'){
+                    $scope.messageClass = 'warning';
+                }
+
+                // Add message
+                $scope.messageText = newValue.message;
+                $scope.messageVisible = true;
+            }
+        });
+    });
 })();
 
 

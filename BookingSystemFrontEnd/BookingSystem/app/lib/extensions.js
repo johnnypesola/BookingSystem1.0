@@ -70,5 +70,3 @@ Date.prototype.monthNamesArray = ["Januari", "Februari", "Mars", "April", "Maj",
 
 // Day names
 Date.prototype.dayNamesArray = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];
-
-

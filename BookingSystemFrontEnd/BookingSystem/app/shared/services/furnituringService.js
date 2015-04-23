@@ -13,7 +13,10 @@
 
         .factory('Furnituring', function($resource, API_URL){
 
-            return $resource(API_URL + 'Furnituring');
+            return $resource(
+                API_URL + 'Furnituring/:furnituringId',
+                {furnituringId: '@furnituringId'}
+            );
 
             /*
              query: function (callback){

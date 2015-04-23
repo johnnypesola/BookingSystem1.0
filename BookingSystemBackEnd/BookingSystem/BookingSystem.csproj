@@ -87,6 +87,7 @@
   <ItemGroup>
     <Compile Include="App_Extensions\DALExtensions.cs" />
     <Compile Include="App_Extensions\DateExtensions.cs" />
+    <Compile Include="App_Extensions\ExceptionExtensions.cs" />
     <Compile Include="App_Extensions\ValidationExtensions.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BookingController.cs" />

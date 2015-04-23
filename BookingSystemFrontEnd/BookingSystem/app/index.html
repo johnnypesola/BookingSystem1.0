@@ -24,7 +24,7 @@
           <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
 
-      <header ng-controller="HeaderController">
+      <header ng-controller="HeaderCtrl">
           <h1>Bokningssystemet</h1>
           <a class="header-button-add" href="#"></a>
           <a class="header-button-search" href="#"></a>
@@ -163,6 +163,12 @@
       <section class="log-out-container">
       </section>
 
+      <section class="flash-message-container" ng-controller="FlashMessageCtrl" ng-show="messageVisible">
+          <div class="{{messageClass}}">
+              {{messageText}}
+              <a href="" ng-click="hideMessage()">&#215;</a>
+          </div>
+      </section>
 
       <section class="main-content-container" ng-view>
 
@@ -183,10 +189,10 @@
         <script src="controllers/start/startCtrl.js"></script>
 
         <!-- Booking -->
-        <script src="controllers/booking/bookingListCtrl.js"></script>
+        <script src="controllers/booking/bookingCtrl.js"></script>
 
         <!-- Furnituring -->
-        <script src="controllers/furnituring/furnituringListCtrl.js"></script>
+        <script src="controllers/furnituring/furnituringCtrl.js"></script>
 
         <!-- Shared -->
         <script src="shared/services/furnituringService.js"></script>
@@ -194,6 +200,7 @@
 
         <script src="shared/filters/customFilters.js"></script>
         <script src="shared/directives/calendarDirective.js"></script>
+        <script src="shared/directives/itemActionButtonsDirective.js"></script>
         <script src="shared/controllers/headerController.js"></script>
 
         <script src="components/version/version.js"></script>

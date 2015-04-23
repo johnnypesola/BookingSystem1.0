@@ -21,22 +21,35 @@
     BookingSystem.config(function($routeProvider) {
 
         $routeProvider.
+
             // Startpage
             when('/', {
                 templateUrl: 'controllers/start/startCtrl.html'
             }).
+
             // Bookings
             when('/bokningstillfallen/lista', {
-                templateUrl: 'controllers/booking/bookingListCtrl.html'
+                templateUrl: 'controllers/booking/bookingList.html'
             }).
             when('/bokningstillfallen/kalender', {
-                templateUrl: 'controllers/booking/bookingCalendarView.html'
+                templateUrl: 'controllers/booking/bookingCalendar.html'
             }).
+
+            // Furniturings
             when('/mobleringar/lista', {
-                templateUrl: 'controllers/furnituring/furnituringListCtrl.html'
+                templateUrl: 'controllers/furnituring/furnituringList.html'
+            }).
+            when('/mobleringar/radera/:furnituringId', {
+                templateUrl: 'controllers/furnituring/furnituringDelete.html'
             });
+            /*.
+            otherwise({
+                redirectTo: '/mobleringar/lista'
+            })*/
 
     });
+
+
 
     // Automatically convert all $http ISO 6801 date strings to date objects from backend (affected: $http $provider).
     BookingSystem.config(["$httpProvider", function ($httpProvider) {
@@ -47,5 +60,4 @@
             return responseData;
         });
     }]);
-
 })();
