@@ -306,7 +306,7 @@ section.flash-message-container {
         background: rgba(255,255,255,0.5);
         text-decoration: none;
         position: absolute;
-        right: 10px;
+        right: 12px;
         top: 12px;
         padding: 0 6px 1px 6px;
         line-height: 18px;
@@ -320,7 +320,7 @@ section.flash-message-container {
     section.flash-message-container div {
         position: relative;
 
-        padding: 10px 35px 10px 10px;
+        padding: 10px 40px 10px 10px;
         display: inline-block;
         margin: 10px;
         border-radius: 3px;

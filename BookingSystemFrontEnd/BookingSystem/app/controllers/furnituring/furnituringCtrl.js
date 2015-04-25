@@ -90,7 +90,7 @@
                     ){
                         $rootScope.FlashMessage = {
                             type: 'error',
-                            message:    'Möbleringen kan inte tas bort eftersom det finns' +
+                            message:    'Möbleringen kan inte raderas eftersom det finns' +
                                         ' en lokalbokning eller en lokalmöblering som refererar till möbleringen'
                         };
                     }

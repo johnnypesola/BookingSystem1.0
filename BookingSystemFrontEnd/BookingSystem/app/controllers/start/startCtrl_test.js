@@ -2,7 +2,7 @@
  * Created by jopes on 2015-04-13.
  */
 'use strict';
-
+/*
 describe('BookingsController', function(){
     var scope;//we'll use this scope in our tests
 
@@ -23,3 +23,5 @@ describe('BookingsController', function(){
         expect(true).toBe(true);
     });
 });
+
+    */
