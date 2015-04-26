@@ -21,62 +21,56 @@
 
     // Controller
     .controller('BookingCtrl', function($scope, Booking){
-
-
-            var currentYear, currentMonth, currentMonthName, currentMonthDay, currentMonthDayName,
-                currentMonthNumberOfDays, currentMonthStartDateObj, currentMonthEndDateObj, currentMonthStartWeekDay,
-                currentMonthEndWeekDay, prevMonthNumberOfDays, currentMonthStartTime, currentMonthEndTime, currentDateObj;
+            var that = this;
+            var currentDateObj;
 
         /* Private methods START */
 
-            var initDateVariables = function () {
-                currentYear = currentDateObj.getFullYear();
-                currentMonth = currentDateObj.getMonth();
-                currentMonthName = currentDateObj.monthNamesArray[currentMonth];
-                currentMonthDayName = currentDateObj.dayNamesArray[currentMonthDay];
-                currentMonthNumberOfDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+            that.initDateVariables = function () {
+                that.currentYear = currentDateObj.getFullYear();
+                that.currentMonth = currentDateObj.getMonth();
+                that.currentMonthName = currentDateObj.monthNamesArray[that.currentMonth];
+                that.currentMonthNumberOfDays = new Date(that.currentYear, that.currentMonth + 1, 0).getDate();
 
-                currentMonthStartDateObj = new Date(currentYear, currentMonth, 1);
-                currentMonthEndDateObj = new Date(currentYear, currentMonth, currentMonthNumberOfDays);
+                that.currentMonthStartDateObj = new Date(that.currentYear, that.currentMonth, 1);
+                that.currentMonthEndDateObj = new Date(that.currentYear, that.currentMonth, that.currentMonthNumberOfDays);
             };
 
             // Get bookings
-            var getBookings = function(){
+            that.getBookings = function(){
                 $scope.bookings = Booking.queryMoreForPeriod(
                     {
-                        fromDate: currentMonthStartDateObj.BookingSystemGetYearsMonthsDays(),
-                        toDate: currentMonthEndDateObj.BookingSystemGetYearsMonthsDays(),
+                        fromDate: that.currentMonthStartDateObj.BookingSystemGetYearsMonthsDays(),
+                        toDate: that.currentMonthEndDateObj.BookingSystemGetYearsMonthsDays(),
                         type: 'all'
                     }
                 );
             };
 
             // Make public variables accessible in template
-            var addVarsToScope = function () {
+            that.addVarsToScope = function () {
 
-                $scope.currentYear = currentYear;
-                $scope.currentMonthName = currentMonthName;
+                $scope.currentYear = that.currentYear;
+                $scope.currentMonthName = that.currentMonthName;
             };
 
         /* Private methods END */
 
-
-
-            /* Public methods START */
+        /* Public methods START */
             $scope.changeToPreviousMonth = function(){
-                currentDateObj = new Date(currentYear, currentMonth - 1);
+                currentDateObj = new Date(that.currentYear, that.currentMonth - 1);
 
-                initDateVariables();
-                getBookings();
-                addVarsToScope();
+                that.initDateVariables();
+                that.getBookings();
+                that.addVarsToScope();
             };
 
             $scope.changeToNextMonth = function(){
-                currentDateObj = new Date(currentYear, currentMonth + 1);
+                currentDateObj = new Date(that.currentYear, that.currentMonth + 1);
 
-                initDateVariables();
-                getBookings();
-                addVarsToScope();
+                that.initDateVariables();
+                that.getBookings();
+                that.addVarsToScope();
             };
 
 
@@ -85,9 +79,9 @@
             // Init date to now
             currentDateObj = new Date();
 
-            initDateVariables();
-            getBookings();
-            addVarsToScope();
+            that.initDateVariables();
+            that.getBookings();
+            that.addVarsToScope();
 
             /* Initialization END */
     });

@@ -12,7 +12,8 @@ module.exports = function(config){
         'app/view*/**/*.js',
         'app/shared/**/*.js',
         'app/controllers/**/*.js',
-        'app/*.js'
+        'app/*.js',
+        'app/lib/extensions.js'
     ],
 
     autoWatch : true,
@@ -31,6 +32,13 @@ module.exports = function(config){
     junitReporter : {
       outputFile: 'test_out/unit.xml',
       suite: 'unit'
+    },
+
+    client: {
+      captureConsole: true,
+      mocha: {
+          bail: true
+      }
     }
 
   });
