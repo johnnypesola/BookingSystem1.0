@@ -108,7 +108,7 @@
             );
 
             // Convert date strings to date objects
-            that.bookingsForMonthArray.$promise.then(function(bookings){
+            that.bookingsForMonthArray.$promise.then(function(){
 
                 // Execute callback
                 callback();

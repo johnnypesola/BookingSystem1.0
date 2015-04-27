@@ -4,15 +4,15 @@
     // Controller
 
 (function(){
-    var header =  angular.module('bookingSystem.header', []);
+    angular.module('bookingSystem.header', [])
 
     // Routes for startPage
-    header.config(function($routeProvider) {
+    .config(function($routeProvider) {
 
-    });
+    })
 
     // Header Controller
-    header.controller('HeaderCtrl', function($scope){
+    .controller('HeaderCtrl', function($scope){
 
         // Init values
         $scope.selectedSubMenu = 0;
@@ -107,11 +107,11 @@
 
         });
         */
-    });
+    })
 
 
     // Flash Message Controller
-    header.controller('FlashMessageCtrl', function($rootScope, $scope){
+    .controller('FlashMessageCtrl', function($rootScope, $scope){
 
         $scope.hideMessage = function(){
             $scope.messageVisible = false;
