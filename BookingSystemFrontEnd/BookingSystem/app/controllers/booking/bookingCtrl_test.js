@@ -3,8 +3,7 @@
  */
 
 
-/* Mock service test END */
-describe('bookingSystem.booking module', function() {
+describe('module: bookingSystem.booking', function() {
 
     // Load app
     beforeEach(module('bookingSystem'));
@@ -106,6 +105,10 @@ describe('bookingSystem.booking module', function() {
             // Exec method to be tested
             BookingCtrl.getBookings();
 
+            // Check that service method has been called
+            expect(_Booking_.queryMoreForPeriod).toHaveBeenCalled();
+
+            // Check that the data after call is correct.
             expect($scope.bookings).toEqual(queryMoreForPeriodBookingsJSON);
         }));
 

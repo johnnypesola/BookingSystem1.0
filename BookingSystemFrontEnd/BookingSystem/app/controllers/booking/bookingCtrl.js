@@ -85,5 +85,4 @@
 
             /* Initialization END */
     });
-
 })();
