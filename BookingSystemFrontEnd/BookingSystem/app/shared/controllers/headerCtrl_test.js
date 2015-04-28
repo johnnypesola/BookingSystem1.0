@@ -105,12 +105,12 @@ describe('module: bookingSystem.header FlashMessageCtrl', function() {
             // Set rootscope flashmessage object
             $rootScope.FlashMessage = {
                 type: 'error',
-                message: 'message'
+                message: 'error message'
             };
 
             $rootScope.$digest();
 
-            expect($scope.messageText).toEqual('message');
+            expect($scope.messageText).toEqual('error message');
             expect($scope.messageVisible).toEqual(true);
 
         }));
@@ -119,12 +119,12 @@ describe('module: bookingSystem.header FlashMessageCtrl', function() {
             // Set rootscope flashmessage object
             $rootScope.FlashMessage = {
                 type: 'success',
-                message: 'message'
+                message: 'success message'
             };
 
             $rootScope.$digest();
 
-            expect($scope.messageText).toEqual('message');
+            expect($scope.messageText).toEqual('success message');
             expect($scope.messageVisible).toEqual(true);
 
         }));
@@ -133,13 +133,24 @@ describe('module: bookingSystem.header FlashMessageCtrl', function() {
             // Set rootscope flashmessage object
             $rootScope.FlashMessage = {
                 type: 'warning',
-                message: 'message'
+                message: 'warning message'
             };
 
             $rootScope.$digest();
 
-            expect($scope.messageText).toEqual('message');
+            expect($scope.messageText).toEqual('warning message');
             expect($scope.messageVisible).toEqual(true);
+
+        }));
+
+        it('should have correct scope variables after $rootScope.FlashMessage object is defined with empty object', inject(function($rootScope, $controller) {
+            // Set rootscope flashmessage object
+            $rootScope.FlashMessage = {};
+
+            $rootScope.$digest();
+
+            expect($scope.messageText).toBeUndefined();
+            expect($scope.messageVisible).toBeUndefined();
 
         }));
 

@@ -120,15 +120,15 @@
         $rootScope.$watch('FlashMessage', function(newValue, oldValue) {
 
             // Check that the value contains data
-            if ((typeof(newValue) !== 'undefined') && (newValue !== null)) {
+            if ((typeof(newValue) !== 'undefined') && (newValue !== null) && (typeof newValue.type !== 'undefined')) {
                 // Add class
                 if(newValue.type === 'error'){
                     $scope.messageClass = 'error';
                 }
-                else if(newValue.type === 'success'){
+                if(newValue.type === 'success'){
                     $scope.messageClass = 'success';
                 }
-                else if(newValue.type === 'warning'){
+                if(newValue.type === 'warning'){
                     $scope.messageClass = 'warning';
                 }
 

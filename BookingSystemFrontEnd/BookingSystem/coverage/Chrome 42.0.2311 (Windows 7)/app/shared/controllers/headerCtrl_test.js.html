@@ -15,10 +15,10 @@
 <div class="header high">
     <h1>Code coverage report for <span class="entity">./app/shared/controllers/headerCtrl_test.js</span></h1>
     <h2>
-        Statements: <span class="metric">100% <small>(53 / 53)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(58 / 58)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">100% <small>(13 / 13)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">100% <small>(53 / 53)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(14 / 14)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(58 / 58)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/shared/controllers/</a> &#187; headerCtrl_test.js</div>
@@ -176,7 +176,18 @@
 149
 150
 151
-152</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -263,25 +274,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-yes">4</span>
-<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">5</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -290,7 +287,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -313,6 +310,31 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -434,12 +456,12 @@ describe('module: bookingSystem.header FlashMessageCtrl', function() {
             // Set rootscope flashmessage object
             $rootScope.FlashMessage = {
                 type: 'error',
-                message: 'message'
+                message: 'error message'
             };
 &nbsp;
             $rootScope.$digest();
 &nbsp;
-            expect($scope.messageText).toEqual('message');
+            expect($scope.messageText).toEqual('error message');
             expect($scope.messageVisible).toEqual(true);
 &nbsp;
         }));
@@ -448,12 +470,12 @@ describe('module: bookingSystem.header FlashMessageCtrl', function() {
             // Set rootscope flashmessage object
             $rootScope.FlashMessage = {
                 type: 'success',
-                message: 'message'
+                message: 'success message'
             };
 &nbsp;
             $rootScope.$digest();
 &nbsp;
-            expect($scope.messageText).toEqual('message');
+            expect($scope.messageText).toEqual('success message');
             expect($scope.messageVisible).toEqual(true);
 &nbsp;
         }));
@@ -462,13 +484,24 @@ describe('module: bookingSystem.header FlashMessageCtrl', function() {
             // Set rootscope flashmessage object
             $rootScope.FlashMessage = {
                 type: 'warning',
-                message: 'message'
+                message: 'warning message'
             };
 &nbsp;
             $rootScope.$digest();
 &nbsp;
-            expect($scope.messageText).toEqual('message');
+            expect($scope.messageText).toEqual('warning message');
             expect($scope.messageVisible).toEqual(true);
+&nbsp;
+        }));
+&nbsp;
+        it('should have correct scope variables after $rootScope.FlashMessage object is defined with empty object', inject(function($rootScope, $controller) {
+            // Set rootscope flashmessage object
+            $rootScope.FlashMessage = {};
+&nbsp;
+            $rootScope.$digest();
+&nbsp;
+            expect($scope.messageText).toBeUndefined();
+            expect($scope.messageVisible).toBeUndefined();
 &nbsp;
         }));
 &nbsp;
@@ -483,7 +516,7 @@ describe('module: bookingSystem.header FlashMessageCtrl', function() {
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Apr 28 2015 00:19:28 GMT+0200 (Västeuropa, sommartid)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Apr 29 2015 00:26:42 GMT+0200 (Västeuropa, sommartid)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

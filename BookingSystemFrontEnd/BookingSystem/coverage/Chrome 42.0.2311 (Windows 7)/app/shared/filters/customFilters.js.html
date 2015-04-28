@@ -12,13 +12,13 @@
     </style>
 </head>
 <body>
-<div class="header low">
+<div class="header high">
     <h1>Code coverage report for <span class="entity">./app/shared/filters/customFilters.js</span></h1>
     <h2>
-        Statements: <span class="metric">26.32% <small>(5 / 19)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">0% <small>(0 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">36.36% <small>(4 / 11)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">26.32% <small>(5 / 19)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">100% <small>(20 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(8 / 8)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(11 / 11)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(20 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/shared/filters/</a> &#187; customFilters.js</div>
@@ -73,7 +73,9 @@
 46
 47
 48
-49</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+49
+50
+51</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -82,42 +84,44 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">2</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -129,43 +133,45 @@
     angular.module('bookingSystem.customFilters', [])
 &nbsp;
         // Custom filters
-        .filter('kr', <span class="fstat-no" title="function not covered" >function() {</span>
-<span class="cstat-no" title="statement not covered" >            return <span class="fstat-no" title="function not covered" >function (text) {</span></span>
-<span class="cstat-no" title="statement not covered" >                text = text.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");</span>
-<span class="cstat-no" title="statement not covered" >                var t = text + ' kr';</span>
-<span class="cstat-no" title="statement not covered" >                return t;</span>
+        .filter('kr', function() {
+            return function (text) {
+                text = text.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");
+                var t = text + ' kr';
+                return t;
             };
         })
 &nbsp;
-        .filter('percentage', ['$filter', <span class="fstat-no" title="function not covered" >function ($filter) {</span>
-<span class="cstat-no" title="statement not covered" >            return <span class="fstat-no" title="function not covered" >function (input, decimals) {</span></span>
-<span class="cstat-no" title="statement not covered" >                return $filter('number')(input * 100, decimals) + '%';</span>
+        .filter('percentage', ['$filter', function ($filter) {
+            return function (input) {
+                return $filter('number')(input * 100, 0) + '%';
             };
         }])
 &nbsp;
         .filter('boolean', function() {
-            return <span class="fstat-no" title="function not covered" >function(text) {</span>
-<span class="cstat-no" title="statement not covered" >                return (text === 'true' ? 'Ja' : 'Nej');</span>
+            return function(text) {
+                return (text === 'true' ? 'Ja' : 'Nej');
             }
         })
 &nbsp;
         .filter('count', function() {
-            return <span class="fstat-no" title="function not covered" >function(text) {</span>
-<span class="cstat-no" title="statement not covered" >                return text + ' st';</span>
+            return function(text) {
+                return text + ' st';
             }
         })
 &nbsp;
         .filter('bookingType', function() {
-            return <span class="fstat-no" title="function not covered" >function(text) {</span>
-<span class="cstat-no" title="statement not covered" >                if(text === 'Resource'){</span>
-<span class="cstat-no" title="statement not covered" >                    return 'Resurs';</span>
+            return function(text) {
+                if(text === 'Resource'){
+                    return 'Resurs';
                 }
-<span class="cstat-no" title="statement not covered" >                if(text === 'Meal'){</span>
-<span class="cstat-no" title="statement not covered" >                    return 'Måltid';</span>
+                if(text === 'Meal'){
+                    return 'Måltid';
                 }
-<span class="cstat-no" title="statement not covered" >                if(text === 'Location'){</span>
-<span class="cstat-no" title="statement not covered" >                    return 'Plats';</span>
+                if(text === 'Location'){
+                    return 'Plats';
                 }
+&nbsp;
+                return text;
             }
         })
 &nbsp;
@@ -174,7 +180,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue Apr 28 2015 00:19:28 GMT+0200 (Västeuropa, sommartid)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Wed Apr 29 2015 00:26:42 GMT+0200 (Västeuropa, sommartid)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>
