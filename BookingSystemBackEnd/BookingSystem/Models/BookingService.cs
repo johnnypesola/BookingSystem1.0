@@ -6,7 +6,7 @@ using System.Web;
 
 namespace BookingSystem.Models
 {
-    public class BookingService
+    public class BookingService : IBookingService
     {
 
         // Fields
@@ -22,12 +22,12 @@ namespace BookingSystem.Models
         }
 
         // Methods
-        public void BookingDelete(Booking booking)
+        public void Delete(Booking booking)
         {
-            BookingDelete(booking.BookingId);
+            Delete(booking.BookingId);
         }
 
-        public void BookingDelete(int bookingId)
+        public void Delete(int bookingId)
         {
             if (bookingId < 0)
             {
@@ -48,7 +48,7 @@ namespace BookingSystem.Models
 
         }
 
-        public Booking GetBooking(int bookingId)
+        public Booking Get(int bookingId)
         {
             if (bookingId < 0)
             {
@@ -58,22 +58,22 @@ namespace BookingSystem.Models
             return BookingDAL.GetBookingById(bookingId);
         }
 
-        public IEnumerable<Booking> GetBookings()
+        public IEnumerable<Booking> Get()
         {
             return BookingDAL.GetBookings();
         }
 
-        public IQueryable<BookingContainer> GetBookingsForPeriod(DateTime startTime, DateTime endTime)
+        public IQueryable<BookingContainer> GetForPeriod(DateTime startTime, DateTime endTime)
         {
             return BookingDAL.GetBookingsForPeriod(startTime, endTime).AsQueryable();
         }
 
-        public IEnumerable<CalendarBookingDay> CheckDayBookingsForPeriod(DateTime startTime, DateTime endTime, String type)
+        public IEnumerable<CalendarBookingDay> CheckDaysForPeriod(DateTime startTime, DateTime endTime, String type)
         {
             return BookingDAL.CheckDayBookingsForPeriod(startTime, endTime, type);
         }
 
-        public IQueryable<Booking> GetBookingsPageWise(string sortColumns, int maximumRows, int startRowIndex)
+        public IQueryable<Booking> GetPageWise(string sortColumns, int maximumRows, int startRowIndex)
         {
             // Calculate correct startpageIndex
             int startPageIndex = (startRowIndex / maximumRows) + 1;
@@ -85,7 +85,7 @@ namespace BookingSystem.Models
             return BookingDAL.GetBookingsPageWise(sortColumnNames, maximumRows, startPageIndex).AsQueryable();
         }
 
-        public void SaveBooking(Booking booking)
+        public void Save(Booking booking)
         {
             // Preparare validation return data
             ICollection<ValidationResult> validationResults;

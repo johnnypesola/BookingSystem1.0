@@ -95,6 +95,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IBookingService.cs" />
     <Compile Include="Models\BLL\Booking.cs" />
     <Compile Include="Models\BLL\BookingContainer.cs" />
     <Compile Include="Models\BLL\CalendarBookingDay.cs" />

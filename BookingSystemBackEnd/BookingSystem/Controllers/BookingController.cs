@@ -13,13 +13,25 @@ namespace BookingSystem.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class BookingController : ApiController
     {
-        // Set up Service.
-        BookingService bookingService = new BookingService();       
+        public IBookingService bookingService;
+
+        // Constructor
+        public BookingController(IBookingService testService = null)
+        {
+            // Set up Service.
+            if (testService != null)
+            {
+                bookingService = testService;
+            } else {
+                bookingService = new BookingService();
+            }
+            //bookingService = testService as BookingService ?? new BookingService();
+        }
 
         // GET: api/Booking
         public IHttpActionResult Get()
         {
-            IEnumerable<Booking> bookings = bookingService.GetBookings();
+            IEnumerable<Booking> bookings = bookingService.Get();
 
             if(bookings == null)
             {
@@ -32,7 +44,7 @@ namespace BookingSystem.Controllers
         // GET: api/Booking/5
         public IHttpActionResult Get(int id)
         {
-            Booking booking = bookingService.GetBooking(id);
+            Booking booking = bookingService.Get(id);
             if (booking == null)
             {
                 return NotFound();
@@ -50,7 +62,7 @@ namespace BookingSystem.Controllers
             startTime = Convert.ToDateTime(date).StartOfDay();
             endTime = Convert.ToDateTime(date).EndOfDay();
 
-            IEnumerable<BookingContainer> bookings = bookingService.GetBookingsForPeriod(startTime, endTime);
+            IEnumerable<BookingContainer> bookings = bookingService.GetForPeriod(startTime, endTime);
 
             if (bookings == null)
             {
@@ -81,7 +93,7 @@ namespace BookingSystem.Controllers
             if(moreOrLess == "more")
             {
                 // Get bookings
-                IEnumerable<BookingContainer> bookings = bookingService.GetBookingsForPeriod(startTime, endTime);
+                IEnumerable<BookingContainer> bookings = bookingService.GetForPeriod(startTime, endTime);
 
                 if (bookings == null)
                 {
@@ -93,7 +105,7 @@ namespace BookingSystem.Controllers
             else if(moreOrLess == "less")
             {
                 // Get bookings
-                IEnumerable<CalendarBookingDay> bookings = bookingService.CheckDayBookingsForPeriod(startTime, endTime, type);
+                IEnumerable<CalendarBookingDay> bookings = bookingService.CheckDaysForPeriod(startTime, endTime, type);
 
                 if (bookings == null)
                 {
@@ -120,7 +132,7 @@ namespace BookingSystem.Controllers
             // Try to save booking
             try
             {
-                bookingService.SaveBooking(booking);
+                bookingService.Save(booking);
             }
             catch
             {
@@ -138,8 +150,30 @@ namespace BookingSystem.Controllers
         }
 
         // DELETE: api/Booking/5
-        public void Delete(int id)
+        public IHttpActionResult Delete(int id)
         {
+            try
+            {
+                bookingService.Delete(id);
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ApprovedDataBaseException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
         }
 
     }
