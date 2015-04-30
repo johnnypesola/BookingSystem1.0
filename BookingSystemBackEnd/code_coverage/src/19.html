@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\LocationBookingService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class LocationBookingService
+    {
+        // Fields
+        private LocationBookingDAL _locationBookingDAL;
+
+        // Properties
+        private LocationBookingDAL LocationBookingDAL
+        {
+            get
+            {
+                return _locationBookingDAL ?? (_locationBookingDAL = new LocationBookingDAL());
+            }
+        }
+
+        public IEnumerable&lt;CalendarBookingDay&gt; CheckDayBookingsForPeriod(DateTime startTime, DateTime endTime)
+        {
+            return LocationBookingDAL.CheckDayBookingsForPeriod(startTime, endTime);
+        }
+    }
+
+    /*
+     *                 // Check that the location is not allready booked/busy.
+                if (BookingDAL.IsLocationBooked(booking))
+                {
+                    throw new ApplicationException(&quot;Lokalen &#228;r tyv&#228;rr redan bokad under denna tillf&#228;lle.&quot;);
+                }
+     */
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[17,13,17,14,0],[18,17,18,96,0],[19,13,19,14,0],[23,9,23,10,0],[24,13,24,85,0],[25,9,25,10,0]]);
+    </script>
+  </body>
+</html>

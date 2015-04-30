@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\App_Extensions\DALExtensions.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem
+{
+    public static class DALExtensions
+    {
+        // Custom Safe SqlDataReader methods, with null checks
+        public static string GetSafeString(this SqlDataReader reader, int columnIndex)
+        {
+            return (!reader.IsDBNull(columnIndex) ? reader.GetString(columnIndex) : String.Empty);
+        }
+
+        public static int GetSafeInt32(this SqlDataReader reader, int columnIndex)
+        {
+            return (!reader.IsDBNull(columnIndex) ? reader.GetInt32(columnIndex) : 0);
+        }
+
+        public static int GetSafeInt16(this SqlDataReader reader, int columnIndex)
+        {
+            return (!reader.IsDBNull(columnIndex) ? reader.GetInt16(columnIndex) : 0);
+        }
+
+        public static decimal GetSafeDecimal(this SqlDataReader reader, int columnIndex)
+        {
+            return (!reader.IsDBNull(columnIndex) ? reader.GetDecimal(columnIndex) : 0);
+        }
+
+        public static double GetSafeDouble(this SqlDataReader reader, int columnIndex)
+        {
+            return (!reader.IsDBNull(columnIndex) ? reader.GetDouble(columnIndex) : 0);
+        }
+
+        public static DateTime GetSafeDateTime(this SqlDataReader reader, int columnIndex)
+        {
+            return (!reader.IsDBNull(columnIndex) ? reader.GetDateTime(columnIndex) : new DateTime() );
+        }
+
+        public static bool GetBoolean(this SqlDataReader reader, int columnIndex)
+        {
+            return (!reader.IsDBNull(columnIndex) ? reader.GetBoolean(columnIndex) : false);
+        }
+
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[33,9,33,10,0],[34,13,34,88,0],[35,9,35,10,0],[43,9,43,10,0],[44,13,44,93,0],[45,9,45,10,0],[13,9,13,10,1],[14,13,14,99,1],[15,9,15,10,1],[18,9,18,10,1],[19,13,19,87,1],[20,9,20,10,1],[23,9,23,10,1],[24,13,24,87,1],[25,9,25,10,1],[28,9,28,10,1],[29,13,29,89,1],[30,9,30,10,1],[38,9,38,10,1],[39,13,39,104,1],[40,9,40,10,1]]);
+    </script>
+  </body>
+</html>

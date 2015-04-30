@@ -41,6 +41,33 @@
             /* Initialization END */
     })
 
+    // Edit Controller
+    .controller('FurnituringEditCtrl', function($scope, $routeParams, $location, $rootScope, Furnituring){
+
+        /* Private methods START */
+
+
+        /* Private methods END */
+
+
+
+        /* Public methods START */
+
+
+        /* Public methods END */
+
+
+        /* Initialization START */
+
+        $scope.furnituring = Furnituring.get(
+            {
+                furnituringId: $routeParams.furnituringId
+            }
+        );
+
+        /* Initialization END */
+    })
+
     // Delete Controller
     .controller('FurnituringDeleteCtrl', function($scope, $routeParams, Furnituring, $location, $rootScope){
 

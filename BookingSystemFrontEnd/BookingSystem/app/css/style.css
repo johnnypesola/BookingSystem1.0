@@ -355,6 +355,14 @@ section.content-container {
         border-bottom: 1px solid #EEEEEE;
     }
 
+    section.content-container form {
+
+    }
+
+        section.content-container form input {
+
+        }
+
     section.content-container .list-table {
         width: 100%;
         font-size: 13px;

@@ -42,6 +42,9 @@
             }).
             when('/mobleringar/radera/:furnituringId', {
                 templateUrl: 'controllers/furnituring/furnituringDelete.html'
+            }).
+            when('/mobleringar/redigera/:furnituringId', {
+                templateUrl: 'controllers/furnituring/furnituringEdit.html'
             });
             /*.
             otherwise({

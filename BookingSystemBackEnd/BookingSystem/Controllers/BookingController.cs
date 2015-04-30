@@ -16,6 +16,12 @@ namespace BookingSystem.Controllers
         public IBookingService bookingService;
 
         // Constructor
+        public BookingController()
+        {
+            bookingService = new BookingService();
+        }
+
+        // Constructor for testing (mocking service)
         public BookingController(IBookingService testService = null)
         {
             // Set up Service.
@@ -25,7 +31,6 @@ namespace BookingSystem.Controllers
             } else {
                 bookingService = new BookingService();
             }
-            //bookingService = testService as BookingService ?? new BookingService();
         }
 
         // GET: api/Booking

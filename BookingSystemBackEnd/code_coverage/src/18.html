@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\FurnituringService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class FurnituringService
+    {
+        // Fields
+        private FurnituringDAL _furnituringDAL;
+
+        // Properties
+        private FurnituringDAL FurnituringDAL
+        {
+            get
+            {
+                return _furnituringDAL ?? (_furnituringDAL = new FurnituringDAL());
+            }
+        }
+
+        // Methods
+        public void FurnituringDelete(Furnituring Furnituring)
+        {
+            FurnituringDelete(Furnituring.FurnituringId);
+        }
+
+        public void FurnituringDelete(int FurnituringId)
+        {
+            if (FurnituringId &lt; 0)
+            {
+                throw new FormatException(&quot;Invalid FunituringId&quot;);
+            }
+
+            // Check that the Furnituring exists before deletion
+            Furnituring Furnituring = FurnituringDAL.GetFurnituringById(FurnituringId);
+
+            // If there is no Furnituring
+            if (Furnituring == null)
+            {
+                throw new DataBaseEntryNotFoundException(&quot;Furnituring does not exist&quot;);
+            }
+
+            // Delete Furnituring
+            FurnituringDAL.DeleteFurnituring(FurnituringId);
+
+        }
+
+        public Furnituring GetFurnituring(int FurnituringId)
+        {
+            if (FurnituringId &lt; 0)
+            {
+                throw new ApplicationException(&quot;Invalid FurnituringId&quot;);
+            }
+
+            return FurnituringDAL.GetFurnituringById(FurnituringId);
+        }
+
+        public IEnumerable&lt;Furnituring&gt; GetFurniturings()
+        {
+            return FurnituringDAL.GetFurniturings();
+        }
+
+
+        public void SaveFurnituring(Furnituring Furnituring)
+        {
+            // Preparare validation return data
+            ICollection&lt;ValidationResult&gt; validationResults;
+
+            // Try to validate given data
+            if (Furnituring.Validate(out validationResults))
+            {
+                // If a new Furnituring should be created
+                if (Furnituring.FurnituringId == 0)
+                {
+                    FurnituringDAL.InsertFurnituring(Furnituring);
+                }
+                // Existing Furnituring should be updated
+                else
+                {
+                    // Check that the Furnituring exists before update
+                    if (FurnituringDAL.GetFurnituringById(Furnituring.FurnituringId) == null)
+                    {
+                        throw new ApplicationException(&quot;Furnituring does not exist&quot;);
+                    }
+
+                    // Update Furnituring
+                    FurnituringDAL.UpdateFurnituring(Furnituring);
+                }
+            }
+            // Validation failed
+            else
+            {
+                // Create exception
+                ApplicationException exception = new ApplicationException(&quot;Furnituring object contained invalid values.&quot;);
+
+                // Add validation data to exception.
+                exception.Data.Add(&quot;ValidationResults&quot;, validationResults);
+
+                throw exception;
+            }
+        }
+
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[25,9,25,10,0],[26,13,26,58,0],[27,9,27,10,0],[30,9,30,10,0],[31,13,31,35,0],[32,13,32,14,0],[33,17,33,67,0],[37,13,37,88,0],[40,13,40,37,0],[41,13,41,14,0],[42,17,42,88,0],[46,13,46,61,0],[48,9,48,10,0],[53,13,53,14,0],[54,17,54,73,0],[67,9,67,10,0],[72,13,72,61,0],[73,13,73,14,0],[75,17,75,52,0],[76,17,76,18,0],[77,21,77,67,0],[78,17,78,18,0],[81,17,81,18,0],[83,21,83,94,0],[84,21,84,22,0],[85,25,85,86,0],[89,21,89,67,0],[90,17,90,18,0],[91,13,91,14,0],[94,13,94,14,0],[96,17,96,123,0],[99,17,99,76,0],[101,17,101,33,0],[103,9,103,10,0],[18,13,18,14,1],[19,17,19,84,1],[20,13,20,14,1],[51,9,51,10,1],[52,13,52,35,1],[57,13,57,69,1],[58,9,58,10,1],[61,9,61,10,1],[62,13,62,53,1],[63,9,63,10,1]]);
+    </script>
+  </body>
+</html>

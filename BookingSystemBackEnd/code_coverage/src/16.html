@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\DAL\LocationBookingDAL.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class LocationBookingDAL : DALBase
+    {
+        public bool IsLocationBooked(Booking booking)
+        {
+         
+            
+            //// Create connection object
+            //using (this.CreateConnection())
+            //{
+            //    try
+            //    {
+            //        SqlCommand cmd;
+
+            //        // Connect to database and execute given stored procedure
+            //        cmd = this.Setup(&quot;appSchema.usp_LocationBookedCheck&quot;, DALOptions.closedConnection);
+
+            //        // Add parameters for Stored procedure
+            //        if (booking.BookingId &gt; 0)
+            //        {
+            //            cmd.Parameters.Add(&quot;@BookingId&quot;, SqlDbType.Int).Value = booking.BookingId;
+            //        }
+            //        cmd.Parameters.Add(&quot;@LocationId&quot;, SqlDbType.Int).Value = booking.LocationId;
+            //        cmd.Parameters.Add(&quot;@StartDate&quot;, SqlDbType.VarChar, 10).Value = booking.StartDate;
+            //        cmd.Parameters.Add(&quot;@StartTime&quot;, SqlDbType.VarChar, 5).Value = booking.StartTime;
+            //        cmd.Parameters.Add(&quot;@EndDate&quot;, SqlDbType.VarChar, 10).Value = booking.EndDate;
+            //        cmd.Parameters.Add(&quot;@EndTime&quot;, SqlDbType.VarChar, 5).Value = booking.EndTime;
+
+            //        // Open DB connection
+            //        connection.Open();
+
+            //        // Get and evaluate response from stored procedure
+            //        object returnValue = cmd.ExecuteScalar();
+
+            //        if (returnValue.ToString() == &quot;1&quot;)
+            //        {
+            //            return true;
+            //        }
+
+            //        return false;
+            //    }
+            //    catch
+            //    {
+            //        throw new ApplicationException(DAL_ERROR_MSG);
+            //    }
+            //}
+
+            return false;
+        }
+
+        public IEnumerable&lt;CalendarBookingDay&gt; CheckDayBookingsForPeriod(DateTime startTime, DateTime endTime)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    // Declare List of objects
+                    List&lt;CalendarBookingDay&gt; calendarBookingDayReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    calendarBookingDayReturnList = new List&lt;CalendarBookingDay&gt;(100);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_BookingCheckDays&quot;, DALOptions.closedConnection);
+
+                    // Add parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@StartTime&quot;, SqlDbType.SmallDateTime).Value = startTime;
+                    cmd.Parameters.Add(&quot;@EndTime&quot;, SqlDbType.SmallDateTime).Value = endTime;
+
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get column indexes from known column names. Does not matter if columns change order.
+                        int StarTimeIndex = reader.GetOrdinal(&quot;StartTime&quot;);
+                        int EndTimeIndex = reader.GetOrdinal(&quot;EndTime&quot;);
+
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            calendarBookingDayReturnList.Add(
+                                new CalendarBookingDay
+                                {
+                                    // Create new Booking object from database values and add to list
+                                    StartTime = reader.GetSafeDateTime(StarTimeIndex),
+                                    EndTime = reader.GetSafeDateTime(EndTimeIndex)
+                                }
+                            );
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    calendarBookingDayReturnList.TrimExcess();
+
+                    // Return list
+                    return calendarBookingDayReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[13,9,13,10,0],[56,13,56,26,0],[57,9,57,10,0],[60,9,60,10,0],[62,13,62,18,0],[63,13,63,14,0],[65,17,65,18,0],[71,21,71,86,0],[74,21,74,101,0],[77,21,77,97,0],[78,21,78,93,0],[82,21,82,39,0],[85,28,85,70,0],[86,21,86,22,0],[88,25,88,76,0],[89,25,89,73,0],[93,25,93,26,0],[94,29,101,31,0],[102,25,102,26,0],[92,25,92,46,0],[103,21,103,22,0],[106,21,106,63,0],[109,21,109,57,0],[111,17,111,22,0],[112,17,112,18,0],[113,21,113,67,0],[116,9,116,10,0]]);
+    </script>
+  </body>
+</html>

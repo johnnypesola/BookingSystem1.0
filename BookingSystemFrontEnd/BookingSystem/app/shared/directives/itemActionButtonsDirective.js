@@ -52,6 +52,16 @@
                         $location.path( objectType + "/radera/" + $scope.id );
                     };
 
+                    $scope.redirectToEditPage = function(){
+
+                        var objectType;
+
+                        // Get type of object to redirect to
+                        objectType = $location.path().split('/')[1];
+
+                        $location.path( objectType + "/redigera/" + $scope.id );
+                    };
+
         /* Public methods END */
 
         /* Initialization START */

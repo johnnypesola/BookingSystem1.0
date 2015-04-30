@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Controllers\FurnituringController.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using BookingSystem.Models;
+using System.Web.Http.Cors;
+
+namespace BookingSystem.Controllers
+{
+    [EnableCors(origins: &quot;*&quot;, headers: &quot;*&quot;, methods: &quot;*&quot;)]
+    public class FurnituringController : ApiController
+    {
+
+        // Set up Service.
+        FurnituringService furnituringService = new FurnituringService();  
+
+        // GET: api/Furnituring
+        public IHttpActionResult Get()
+        {
+            IEnumerable&lt;Furnituring&gt; furniturings = furnituringService.GetFurniturings();
+
+            if (furniturings == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(furniturings);
+        }
+
+        // GET: api/Furnituring/5
+        public IHttpActionResult Get(int id)
+        {
+            Furnituring furnituring = furnituringService.GetFurnituring(id);
+            if (furnituring == null)
+            {
+                return NotFound();
+            }
+            return Ok(furnituring);
+        }
+
+        // POST: api/Furnituring
+        public IHttpActionResult Post(Furnituring furnituring)
+        {
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Try to save furnituring
+            try
+            {
+                furnituringService.SaveFurnituring(furnituring);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            // Respond that the booking was created and redirect
+            return CreatedAtRoute(&quot;DefaultApi&quot;, new { id = furnituring.FurnituringId }, furnituring);
+        }
+
+        // PUT: api/Furnituring/5
+        public IHttpActionResult Put(Furnituring furnituring)
+        {
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return InternalServerError();
+        }
+
+        // DELETE: api/Furnituring/5
+        public IHttpActionResult Delete(int id)
+        {
+            try
+            {
+                furnituringService.FurnituringDelete(id);
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ApprovedDataBaseException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[25,13,25,14,0],[26,17,26,35,0],[40,13,40,36,0],[45,9,45,10,0],[47,13,47,37,0],[48,13,48,14,0],[49,17,49,47,0],[54,13,54,14,0],[55,17,55,65,0],[56,13,56,14,0],[57,13,57,18,0],[58,13,58,14,0],[59,17,59,46,0],[63,13,63,102,0],[64,9,64,10,0],[68,9,68,10,0],[70,13,70,37,0],[71,13,71,14,0],[72,17,72,47,0],[75,13,75,42,0],[76,9,76,10,0],[80,9,80,10,0],[82,13,82,14,0],[83,17,83,58,0],[84,13,84,14,0],[85,13,85,36,0],[86,13,86,14,0],[87,17,87,37,0],[89,13,89,51,0],[90,13,90,14,0],[91,17,91,35,0],[93,13,93,56,0],[94,13,94,14,0],[95,17,95,54,0],[97,13,97,18,0],[98,13,98,14,0],[99,17,99,46,0],[102,13,102,25,0],[103,9,103,10,0],[21,9,21,10,1],[22,13,22,90,1],[24,13,24,38,1],[29,13,29,37,1],[30,9,30,10,1],[34,9,34,10,1],[35,13,35,77,1],[36,13,36,37,1],[37,13,37,14,1],[38,17,38,35,1],[41,9,41,10,1],[17,9,17,74,1]]);
+    </script>
+  </body>
+</html>
