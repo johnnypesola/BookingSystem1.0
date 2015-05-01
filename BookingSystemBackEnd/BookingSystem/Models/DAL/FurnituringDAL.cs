@@ -31,7 +31,7 @@ namespace BookingSystem.Models
                 {
                     if (exception.Message == "Foreign key references exists")
                     {
-                        throw new ApprovedDataBaseException(exception.Message);
+                        throw new ApprovedException(exception.Message);
                     }
                     // Throw exception
                     throw new ApplicationException(DAL_ERROR_MSG);
@@ -153,8 +153,13 @@ namespace BookingSystem.Models
                     // Place database insert id into Furnituring object.
                     Furnituring.FurnituringId = (Int16)cmd.Parameters["@InsertId"].Value;
                 }
-                catch
+                catch (Exception exception)
                 {
+                    if (exception.Message == "There is allready a furnituring with the given name.")
+                    {
+                        throw new ApprovedException(exception.Message);
+                    }
+                    // Throw exception
                     throw new ApplicationException(DAL_ERROR_MSG);
                 }
             }
@@ -173,6 +178,7 @@ namespace BookingSystem.Models
                     cmd = this.Setup("appSchema.usp_FurnituringUpdate", DALOptions.closedConnection);
 
                     // Add in parameters for Stored procedure
+                    cmd.Parameters.Add("@FurnituringId", SqlDbType.SmallInt).Value = Furnituring.FurnituringId;
                     cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = Furnituring.Name;
 
                     // Open DB connection
@@ -181,8 +187,12 @@ namespace BookingSystem.Models
                     // Execute insert to database
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception exception)
                 {
+                    if (exception.Message == "There is allready a Furnituring with the given name.")
+                    {
+                        throw new ApprovedException(exception.Message);
+                    }
                     // Throw exception
                     throw new ApplicationException(DAL_ERROR_MSG);
                 }

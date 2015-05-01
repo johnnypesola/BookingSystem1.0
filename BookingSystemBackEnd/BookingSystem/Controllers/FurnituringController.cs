@@ -54,13 +54,21 @@ namespace BookingSystem.Controllers
             {
                 furnituringService.SaveFurnituring(furnituring);
             }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
             catch
             {
                 return InternalServerError();
             }
 
             // Respond that the booking was created and redirect
-            return CreatedAtRoute("DefaultApi", new { id = furnituring.FurnituringId }, furnituring);
+            return Ok(furnituring); //CreatedAtRoute("DefaultApi", new { id = furnituring.FurnituringId }, furnituring);
         }
 
         // PUT: api/Furnituring/5
@@ -90,7 +98,7 @@ namespace BookingSystem.Controllers
             {
                 return NotFound();
             }
-            catch (ApprovedDataBaseException exception)
+            catch (ApprovedException exception)
             {
                 return BadRequest(exception.Message);
             }

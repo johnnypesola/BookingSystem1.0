@@ -20,7 +20,7 @@
     })
 
     // Controller
-    .controller('BookingCtrl', function($scope, Booking){
+    .controller('BookingCtrl', function($scope, Booking, $rootScope){
             var that = this;
             var currentDateObj;
 
@@ -38,13 +38,26 @@
 
             // Get bookings
             that.getBookings = function(){
-                $scope.bookings = Booking.queryMoreForPeriod(
+
+                // Store bookigns in private variable
+                var bookings = Booking.queryMoreForPeriod(
                     {
                         fromDate: that.currentMonthStartDateObj.BookingSystemGetYearsMonthsDays(),
                         toDate: that.currentMonthEndDateObj.BookingSystemGetYearsMonthsDays(),
                         type: 'all'
-                    }
-                );
+                    });
+
+                // In case bookings cannot be fetched, display an error to user.
+                bookings.$promise.catch(function(){
+
+                    $rootScope.FlashMessage = {
+                        type: 'error',
+                        message: 'Bokningarna kunde inte hämtas, var god försök igen.'
+                    };
+                });
+
+                // Display bookings to user
+                $scope.bookings = bookings;
             };
 
             // Make public variables accessible in template

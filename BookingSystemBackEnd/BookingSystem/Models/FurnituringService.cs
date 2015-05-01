@@ -82,7 +82,7 @@ namespace BookingSystem.Models
                     // Check that the Furnituring exists before update
                     if (FurnituringDAL.GetFurnituringById(Furnituring.FurnituringId) == null)
                     {
-                        throw new ApplicationException("Furnituring does not exist");
+                        throw new DataBaseEntryNotFoundException();
                     }
 
                     // Update Furnituring

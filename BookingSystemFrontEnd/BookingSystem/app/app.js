@@ -12,11 +12,12 @@
         'bookingSystem.version',
         'bookingSystem.header',
         'bookingSystem.booking',
-        'bookingSystem.furnituring'
+        'bookingSystem.furnituring',
+        'bookingSystem.loadingDirective'
     ]);
 
     // Define API url, used in services
-    BookingSystem.constant('API_URL', 'http://192.168.1.4:8080/BookingSystem/api/');
+    BookingSystem.constant('API_URL', 'http://localhost:6796/api/'); // 'http://192.168.1.4:8080/BookingSystem/api/');
 
     // Declare basic routes
     BookingSystem.config(function($routeProvider) {
@@ -45,6 +46,9 @@
             }).
             when('/mobleringar/redigera/:furnituringId', {
                 templateUrl: 'controllers/furnituring/furnituringEdit.html'
+            }).
+            when('/mobleringar/skapa', {
+                templateUrl: 'controllers/furnituring/furnituringCreate.html'
             });
             /*.
             otherwise({

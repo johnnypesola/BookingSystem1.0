@@ -12,7 +12,7 @@
         ])
 
     // Directive specific controllers START
-        .controller('BookingCalendarCtrl', function($scope, $element, $attrs, Booking) {
+        .controller('BookingCalendarCtrl', function($scope, $element, $attrs, Booking, $rootScope) {
 
         /* Declare variables START */
         var that = this;
@@ -107,6 +107,17 @@
                 }
             );
 
+
+
+            // In case bookings cannot be fetched, display an error to user.
+            that.bookingsForMonthArray.$promise.catch(function(){
+
+                $rootScope.FlashMessage = {
+                    type: 'error',
+                    message: 'Bokningarna kunde inte hämtas, var god försök igen.'
+                };
+            });
+
             // Convert date strings to date objects
             that.bookingsForMonthArray.$promise.then(function(){
 
@@ -179,7 +190,18 @@
                 that.addVarsToScope();
 
                 // Fetch data
-                $scope.datedata.bookings = Booking.queryDay({date: that.currentDateObj.BookingSystemGetYearsMonthsDays()});
+                bookings = Booking.queryDay({date: that.currentDateObj.BookingSystemGetYearsMonthsDays()});
+
+                // In case bookings cannot be fetched, display an error to user.
+                bookings.$promise.catch(function(){
+
+                    $rootScope.FlashMessage = {
+                        type: 'error',
+                        message: 'Bokningarna kunde inte hämtas, var god försök igen.'
+                    };
+                });
+
+                $scope.datedata.bookings = bookings;
             }
         };
 

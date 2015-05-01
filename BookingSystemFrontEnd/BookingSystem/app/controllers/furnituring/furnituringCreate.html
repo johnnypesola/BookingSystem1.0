@@ -1,5 +1,5 @@
-<section class="content-container" ng-controller="FurnituringEditCtrl">
-    <h2>Redigera möblering</h2>
+<section class="content-container" ng-controller="FurnituringCreateCtrl">
+    <h2>Skapa möblering</h2>
     <div class="page-header-icons-container">
         <a class="list" href="#/mobleringar/lista"></a>
         <a class="add" href="#/mobleringar/skapa"></a>
@@ -9,7 +9,7 @@
         <label>Namn</label>
         <input type="text" name="name" ng-model="furnituring.Name" required>
 
-        <button ng-click="save()">Spara</button>
+        <button ng-click="save()">Skapa</button>
         <button ng-click="abort()">Avbryt</button>
 
     </form>

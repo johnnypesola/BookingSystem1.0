@@ -169,7 +169,7 @@ namespace BookingSystem.Controllers
             {
                 return NotFound();
             }
-            catch (ApprovedDataBaseException exception)
+            catch (ApprovedException exception)
             {
                 return BadRequest(exception.Message);
             }

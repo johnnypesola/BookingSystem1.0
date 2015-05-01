@@ -16,14 +16,14 @@ namespace BookingSystem
             : base(message, inner){}
     }
 
-    public class ApprovedDataBaseException : Exception
+    public class ApprovedException : Exception
     {
-        public ApprovedDataBaseException() { }
+        public ApprovedException() { }
 
-        public ApprovedDataBaseException(string message)
+        public ApprovedException(string message)
             : base(message) { }
 
-        public ApprovedDataBaseException(string message, Exception inner)
+        public ApprovedException(string message, Exception inner)
             : base(message, inner) { }
     }
 }

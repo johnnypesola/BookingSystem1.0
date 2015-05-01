@@ -1,8 +1,16 @@
 <section class="content-container" ng-controller="BookingCtrl">
-    <h2>Lista över Bokningstillfällen</h2>
-    <div class="appearance-icons-container">
+
+    <h2>
+        Lista över Bokningstillfällen
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <div class="page-header-icons-container">
         <a class="calendar" href="#/bokningstillfallen/kalender"></a>
         <a class="list" href="#/bokningstillfallen/lista"></a>
+        <!--
+        <a class="map" href="#/bokningstillfallen/lista"></a>
+        <a class="add" href="#/bokningstillfallen/lista"></a>
+        -->
     </div>
 
     <section class="list-container">
@@ -10,7 +18,6 @@
         <a change-month-button direction="prev" class="prev-month">&#8592;</a>
         <h3>{{currentMonthName}} {{currentYear}}</h3>
         <a change-month-button direction="next" class="next-month">&#8594;</a>
-
 
         <table class="list-table">
             <tr>

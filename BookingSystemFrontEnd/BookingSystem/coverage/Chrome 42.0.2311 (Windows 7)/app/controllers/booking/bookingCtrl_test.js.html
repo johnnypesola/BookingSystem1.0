@@ -12,13 +12,13 @@
     </style>
 </head>
 <body>
-<div class="header high">
+<div class="header medium">
     <h1>Code coverage report for <span class="entity">./app/controllers/booking/bookingCtrl_test.js</span></h1>
     <h2>
-        Statements: <span class="metric">95.65% <small>(44 / 46)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">73.91% <small>(34 / 46)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Functions: <span class="metric">83.33% <small>(10 / 12)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">95.65% <small>(44 / 46)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">73.91% <small>(34 / 46)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/controllers/booking/</a> &#187; bookingCtrl_test.js</div>
@@ -179,7 +179,7 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">6</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -203,12 +203,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -228,7 +228,10 @@
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -237,7 +240,10 @@
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
@@ -246,16 +252,10 @@
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -324,10 +324,10 @@ describe('module: bookingSystem.booking', function() {
         var testDateVars = function() {
             expect($scope.currentYear).toEqual(testCurrentDateObj.getFullYear());
             expect(BookingCtrl.currentMonth).toEqual(testCurrentDateObj.getMonth());
-            expect($scope.currentMonthName).toEqual(testCurrentDateObj.monthNamesArray[testCurrentDateObj.getMonth()]);
-            expect(BookingCtrl.currentMonthNumberOfDays).toEqual(new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth() + 1, 0).getDate());
-            expect(BookingCtrl.currentMonthStartDateObj).toEqual(new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth(), 1));
-            expect(BookingCtrl.currentMonthEndDateObj).toEqual(new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth(), BookingCtrl.currentMonthNumberOfDays));
+<span class="cstat-no" title="statement not covered" >            expect($scope.currentMonthName).toEqual(testCurrentDateObj.monthNamesArray[testCurrentDateObj.getMonth()]);</span>
+<span class="cstat-no" title="statement not covered" >            expect(BookingCtrl.currentMonthNumberOfDays).toEqual(new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth() + 1, 0).getDate());</span>
+<span class="cstat-no" title="statement not covered" >            expect(BookingCtrl.currentMonthStartDateObj).toEqual(new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth(), 1));</span>
+<span class="cstat-no" title="statement not covered" >            expect(BookingCtrl.currentMonthEndDateObj).toEqual(new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth(), BookingCtrl.currentMonthNumberOfDays));</span>
         };
 &nbsp;
     // Tests START
@@ -347,10 +347,10 @@ describe('module: bookingSystem.booking', function() {
             $scope.changeToNextMonth();
 &nbsp;
             // Change testCurrentDateObj variable to next month.
-            testCurrentDateObj = new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth() + 1);
+<span class="cstat-no" title="statement not covered" >            testCurrentDateObj = new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth() + 1);</span>
 &nbsp;
             // Test date values
-            testDateVars();
+<span class="cstat-no" title="statement not covered" >            testDateVars();</span>
         }));
 &nbsp;
         it('should have correct (date) variables after changeToPreviousMonth() method', inject(function($controller, _Booking_) {
@@ -359,10 +359,10 @@ describe('module: bookingSystem.booking', function() {
             $scope.changeToPreviousMonth();
 &nbsp;
             // Change testCurrentDateObj variable to next month.
-            testCurrentDateObj = new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth() - 1);
+<span class="cstat-no" title="statement not covered" >            testCurrentDateObj = new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth() - 1);</span>
 &nbsp;
             // Test date values
-            testDateVars();
+<span class="cstat-no" title="statement not covered" >            testDateVars();</span>
         }));
 &nbsp;
         it('should have correct booking data after getBookings() method', inject(function($controller, _Booking_) {
@@ -371,10 +371,10 @@ describe('module: bookingSystem.booking', function() {
             BookingCtrl.getBookings();
 &nbsp;
             // Check that service method has been called
-            expect(_Booking_.queryMoreForPeriod).toHaveBeenCalled();
+<span class="cstat-no" title="statement not covered" >            expect(_Booking_.queryMoreForPeriod).toHaveBeenCalled();</span>
 &nbsp;
             // Check that the data after call is correct.
-            expect($scope.bookings).toEqual(queryMoreForPeriodBookingsJSON);
+<span class="cstat-no" title="statement not covered" >            expect($scope.bookings).toEqual(queryMoreForPeriodBookingsJSON);</span>
         }));
 &nbsp;
     // Tests END
@@ -387,7 +387,7 @@ describe('module: bookingSystem.booking', function() {
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Apr 30 2015 17:39:14 GMT+0200 (Västeuropa, sommartid)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Fri May 01 2015 15:34:00 GMT+0200 (Västeuropa, sommartid)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>
