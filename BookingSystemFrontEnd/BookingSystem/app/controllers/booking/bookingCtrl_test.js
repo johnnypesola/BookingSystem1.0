@@ -18,44 +18,51 @@ describe('module: bookingSystem.booking', function() {
     var testCurrentDateObj;
     var $scope;
     var $location;
-    var getBookingsJSON = {"BookingId":7,"Name":"","BookingTypeId":0,"CustomerId":1,"Provisional":false,"NumberOfPeople":10,"Discount":0.00,"Notes":"","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Atlas Copco","MaxPeople":0,"CalculatedBookingPrice":1.0,"TotalBookingValue":0.0,"PayMethodId":0};
-    var queryBookingsJSON = [{"BookingId":7,"Name":"","BookingTypeId":0,"CustomerId":1,"Provisional":false,"NumberOfPeople":10,"Discount":0.00,"Notes":"","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Atlas Copco","MaxPeople":0,"CalculatedBookingPrice":1.0,"TotalBookingValue":0.0,"PayMethodId":0},{"BookingId":10,"Name":"","BookingTypeId":0,"CustomerId":1,"Provisional":false,"NumberOfPeople":10,"Discount":0.00,"Notes":"","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Atlas Copco","MaxPeople":0,"CalculatedBookingPrice":26.0,"TotalBookingValue":0.0,"PayMethodId":0},{"BookingId":29,"Name":"","BookingTypeId":0,"CustomerId":1,"Provisional":false,"NumberOfPeople":10,"Discount":0.00,"Notes":"","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Atlas Copco","MaxPeople":0,"CalculatedBookingPrice":5.0,"TotalBookingValue":0.0,"PayMethodId":0},{"BookingId":58,"Name":"","BookingTypeId":0,"CustomerId":9,"Provisional":false,"NumberOfPeople":123,"Discount":0.00,"Notes":"En anteckning","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Kajsa Anka","MaxPeople":0,"CalculatedBookingPrice":2.0,"TotalBookingValue":0.0,"PayMethodId":0},{"BookingId":60,"Name":"","BookingTypeId":0,"CustomerId":1,"Provisional":false,"NumberOfPeople":300,"Discount":0.00,"Notes":"","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Atlas Copco","MaxPeople":0,"CalculatedBookingPrice":23.0,"TotalBookingValue":0.0,"PayMethodId":0},{"BookingId":61,"Name":"","BookingTypeId":0,"CustomerId":3,"Provisional":false,"NumberOfPeople":20,"Discount":0.00,"Notes":"hej","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Fagersta kommun","MaxPeople":0,"CalculatedBookingPrice":98.0,"TotalBookingValue":0.0,"PayMethodId":0}];
-    var queryMoreForPeriodBookingsJSON = [{"StartTime":"2015-04-01T00:00:00","EndTime":"2015-04-01T00:00:00","Type":"location"}];
 
     // Mock booking service module
     beforeEach(function () {
-        module({
-            Booking: {
+        module(function($provide) {
+            $provide.factory('Booking', function($q) {
+                return {
                     get : jasmine.createSpy('get').andCallFake(function() {
-                        return getBookingsJSON
+
+                        // Generate a promise object for mocked return data.
+                        return TestHelper.addPromiseToObject(TestHelper.JSON.getBookings, $q);
                     }),
-                    query : jasmine.createSpy('get').andCallFake(function() {
-                        return queryBookingsJSON
+                    query : jasmine.createSpy('query').andCallFake(function() {
+
+                        // Generate a promise object for mocked return data.
+                        return TestHelper.addPromiseToObject(TestHelper.JSON.queryBookings, $q);
                     }),
-                    queryMoreForPeriod : jasmine.createSpy('get').andCallFake(function() {
-                        return queryMoreForPeriodBookingsJSON
+                    queryMoreForPeriod : jasmine.createSpy('queryMoreForPeriod').andCallFake(function() {
+
+                        // Generate a promise object for mocked return data.
+                        return TestHelper.addPromiseToObject(TestHelper.JSON.queryMoreForPeriodBookings, $q);
                     })
                 }
+            });
         });
     });
 
+    // Shared testing function. avoid DRY
 
     // Init root test variables
-    beforeEach(inject(function($controller, _Booking_, _$location_) {
+    beforeEach(inject(function($controller, _Booking_, _$location_, $rootScope) {
         $location = _$location_;
-        $scope = {};
+        $scope = $rootScope;
         testCurrentDateObj = new Date();
 
         BookingCtrl = $controller('BookingCtrl', {
             $scope: $scope,
-            Booking: _Booking_
+            Booking: _Booking_,
+            $rootScope: $rootScope
         });
     }));
 
     // Actual tests
     describe('BookingCtrl controller', function(){
 
-    // Shared testing function. avoid DRY
+        // Shared testing function. avoid DRY
         var testDateVars = function() {
             expect($scope.currentYear).toEqual(testCurrentDateObj.getFullYear());
             expect(BookingCtrl.currentMonth).toEqual(testCurrentDateObj.getMonth());
@@ -65,8 +72,10 @@ describe('module: bookingSystem.booking', function() {
             expect(BookingCtrl.currentMonthEndDateObj).toEqual(new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth(), BookingCtrl.currentMonthNumberOfDays));
         };
 
-    // Tests START
+        // Tests START
         it('should have correct initialization (date) variables', inject(function($controller, _Booking_) {
+
+            $scope.$digest();
 
             // Test if key variables are defined
             expect(BookingCtrl).toBeDefined();
@@ -74,6 +83,7 @@ describe('module: bookingSystem.booking', function() {
 
             // Test date init values
             testDateVars();
+
         }));
 
         it('should have correct (date) variables after changeToNextMonth() method', inject(function($controller, _Booking_) {
@@ -109,11 +119,9 @@ describe('module: bookingSystem.booking', function() {
             expect(_Booking_.queryMoreForPeriod).toHaveBeenCalled();
 
             // Check that the data after call is correct.
-            expect($scope.bookings).toEqual(queryMoreForPeriodBookingsJSON);
+            expect($scope.bookings).toEqual(TestHelper.JSON.queryMoreForPeriodBookings);
         }));
 
-    // Tests END
+        // Tests END
     });
-
-
 });

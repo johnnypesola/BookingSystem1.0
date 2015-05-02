@@ -10,6 +10,7 @@ module.exports = function(config){
         'app/bower_components/angular-resource/angular-resource.js',
         'app/components/**/*.js',
         //'app/view*/**/*.js',
+        'karma_test_includes/*.js',
         'app/shared/**/*.js',
         'app/controllers/**/*.js',
         'app/shared/directives/**/*.js',

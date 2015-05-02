@@ -40,7 +40,7 @@
             that.getBookings = function(){
 
                 // Store bookigns in private variable
-                var bookings = Booking.queryMoreForPeriod(
+                that.bookings = Booking.queryMoreForPeriod(
                     {
                         fromDate: that.currentMonthStartDateObj.BookingSystemGetYearsMonthsDays(),
                         toDate: that.currentMonthEndDateObj.BookingSystemGetYearsMonthsDays(),
@@ -48,7 +48,7 @@
                     });
 
                 // In case bookings cannot be fetched, display an error to user.
-                bookings.$promise.catch(function(){
+                that.bookings.$promise.catch(function(){
 
                     $rootScope.FlashMessage = {
                         type: 'error',
@@ -57,7 +57,7 @@
                 });
 
                 // Display bookings to user
-                $scope.bookings = bookings;
+                $scope.bookings = that.bookings;
             };
 
             // Make public variables accessible in template

@@ -55,9 +55,11 @@
     // Create Controller
     .controller('FurnituringCreateCtrl', function($scope, $routeParams, $location, $rootScope, Furnituring){
 
+            var that = this;
+
         /* Private methods START */
 
-        var redirectToListPage = function(){
+        that.redirectToListPage = function(){
             var objectType;
 
             objectType = $location.path().split('/')[1];
@@ -72,7 +74,7 @@
 
         // Abort creating
         $scope.abort = function(){
-            redirectToListPage();
+            that.redirectToListPage();
         };
 
         // Save furnituring
@@ -95,7 +97,7 @@
                         message: 'Möbleringen "' + $scope.furnituring.Name + '" skapades med ett lyckat resultat'
                     };
 
-                    redirectToListPage();
+                    that.redirectToListPage();
 
                 // Something went wrong
                 }).catch(function(response) {
@@ -103,12 +105,12 @@
                     // If there there was a foreign key reference
                     if (
                         response.status == 400 &&
-                        response.data.Message !== 'undefined' &&
+                        typeof response.data.Message !== 'undefined' &&
                         response.data.Message === 'There is allready a Furnituring with the given name.'
                     ){
                         $rootScope.FlashMessage = {
                             type: 'error',
-                            message:    'Det finns redan en möblering som heter "' + $scope.furnituring.Name +
+                            message: 'Det finns redan en möblering som heter "' + $scope.furnituring.Name +
                             '". Två möbleringar kan inte heta lika.'
                         };
                     }
@@ -134,9 +136,11 @@
     // Edit Controller
     .controller('FurnituringEditCtrl', function($scope, $routeParams, $location, $rootScope, Furnituring){
 
+            var that = this;
+
         /* Private methods START */
 
-            var redirectToListPage = function(){
+            that.redirectToListPage = function(){
                 var objectType;
 
                 objectType = $location.path().split('/')[1];
@@ -151,7 +155,7 @@
 
             // Abort editing
             $scope.abort = function(){
-                redirectToListPage();
+                that.redirectToListPage();
             };
 
             // Save furnituring
@@ -173,7 +177,7 @@
                             message: 'Möbleringen "' + $scope.furnituring.Name + '" sparades med ett lyckat resultat'
                         };
 
-                        redirectToListPage();
+                        that.redirectToListPage();
 
                     // Something went wrong
                     }).catch(function(response) {
@@ -206,7 +210,7 @@
                                 message: 'Möbleringen "' + $scope.furnituring.Name + '" existerar inte längre. Hann kanske någon radera den?'
                             };
 
-                            redirectToListPage();
+                            that.redirectToListPage();
                         }
                     });
             };
@@ -239,9 +243,11 @@
     // Delete Controller
     .controller('FurnituringDeleteCtrl', function($scope, $routeParams, Furnituring, $location, $rootScope){
 
+            var that = this;
+
         /* Private methods START */
 
-            var redirectToListPage = function(){
+            that.redirectToListPage = function(){
                 var objectType;
 
                 objectType = $location.path().split('/')[1];
@@ -260,7 +266,7 @@
                 // Delete furnituring
                 Furnituring.delete(
                     {
-                        furnituringId: $routeParams.furnituringId
+                        FurnituringId: $routeParams.furnituringId
                     }
                 ).$promise
 
@@ -272,7 +278,7 @@
                             message: 'Möbleringen "' + $scope.furnituring.Name + '" raderades med ett lyckat resultat'
                         };
 
-                        redirectToListPage();
+                        that.redirectToListPage();
                     })
                     // Something went wrong
                     .catch(function(response) {
@@ -291,7 +297,7 @@
                         }
 
                         // If there was a problem with the in-data
-                        else if (response.status == 400){
+                        else if (response.status == 400 || response.status == 500){
                             $rootScope.FlashMessage = {
                                 type: 'error',
                                 message: 'Ett oväntat fel uppstod när möbleringen skulle tas bort'
@@ -306,13 +312,13 @@
                             };
                         }
 
-                    redirectToListPage();
+                    that.redirectToListPage();
                 });
             };
 
             // Abort deletion
             $scope.abort = function(){
-                redirectToListPage();
+                that.redirectToListPage();
             };
 
         /* Public methods END */

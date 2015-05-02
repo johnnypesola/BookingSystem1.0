@@ -21,11 +21,6 @@ describe('directive: calendarDirective', function() {
     var $scope;
     var q;
     var $location;
-    var getBookingsJSON = {"BookingId":7,"Name":"","BookingTypeId":0,"CustomerId":1,"Provisional":false,"NumberOfPeople":10,"Discount":0.00,"Notes":"","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Atlas Copco","MaxPeople":0,"CalculatedBookingPrice":1.0,"TotalBookingValue":0.0,"PayMethodId":0};
-    var queryBookingsJSON = [{"BookingId":7,"Name":"","BookingTypeId":0,"CustomerId":1,"Provisional":false,"NumberOfPeople":10,"Discount":0.00,"Notes":"","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Atlas Copco","MaxPeople":0,"CalculatedBookingPrice":1.0,"TotalBookingValue":0.0,"PayMethodId":0},{"BookingId":10,"Name":"","BookingTypeId":0,"CustomerId":1,"Provisional":false,"NumberOfPeople":10,"Discount":0.00,"Notes":"","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Atlas Copco","MaxPeople":0,"CalculatedBookingPrice":26.0,"TotalBookingValue":0.0,"PayMethodId":0},{"BookingId":29,"Name":"","BookingTypeId":0,"CustomerId":1,"Provisional":false,"NumberOfPeople":10,"Discount":0.00,"Notes":"","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Atlas Copco","MaxPeople":0,"CalculatedBookingPrice":5.0,"TotalBookingValue":0.0,"PayMethodId":0},{"BookingId":58,"Name":"","BookingTypeId":0,"CustomerId":9,"Provisional":false,"NumberOfPeople":123,"Discount":0.00,"Notes":"En anteckning","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Kajsa Anka","MaxPeople":0,"CalculatedBookingPrice":2.0,"TotalBookingValue":0.0,"PayMethodId":0},{"BookingId":60,"Name":"","BookingTypeId":0,"CustomerId":1,"Provisional":false,"NumberOfPeople":300,"Discount":0.00,"Notes":"","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Atlas Copco","MaxPeople":0,"CalculatedBookingPrice":23.0,"TotalBookingValue":0.0,"PayMethodId":0},{"BookingId":61,"Name":"","BookingTypeId":0,"CustomerId":3,"Provisional":false,"NumberOfPeople":20,"Discount":0.00,"Notes":"hej","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Fagersta kommun","MaxPeople":0,"CalculatedBookingPrice":98.0,"TotalBookingValue":0.0,"PayMethodId":0}];
-    var queryMoreForPeriodBookingsJSON = [{"StartTime":"2015-04-01T00:00:00","EndTime":"2015-04-01T00:00:00","Type":"location"}];
-    var queryLessForPeriodBookingsJSON = [{"StartTime":"2015-01-01T00:00:00","EndTime":"2015-01-01T23:00:00","Type":"resource"},{"StartTime":"2015-01-02T00:00:00","EndTime":"2015-01-02T23:00:00","Type":"resource"},{"StartTime":"2015-04-01T00:00:00","EndTime":"2015-04-01T00:00:00","Type":"location"},{"StartTime":"2015-10-01T00:00:00","EndTime":"2015-10-01T00:00:00","Type":"meal"}]
-    var queryDayBookingsJSON = [{"BookingId":7,"BookingName":"","CustomerId":1,"NumberOfPeople":10,"Provisional":false,"CustomerName":"Atlas Copco","TypeName":"Whiteboard","Type":"Resource","TypeId":3,"Count":5,"StartTime":"2015-01-01T00:00:00","EndTime":"2015-01-01T23:00:00"}]
     var calendarElement;
     var calendarController;
     var dayElement;
@@ -35,32 +30,37 @@ describe('directive: calendarDirective', function() {
 
     // Mock booking service module
     beforeEach(function () {
-        module({
-            Booking: {
-                get : jasmine.createSpy('get').andCallFake(function() {
-                    return getBookingsJSON
-                }),
-                query : jasmine.createSpy('query').andCallFake(function() {
-                    return queryBookingsJSON
-                }),
-                queryMoreForPeriod : jasmine.createSpy('queryMoreForPeriod').andCallFake(function() {
-                    return queryMoreForPeriodBookingsJSON
-                }),
-                queryLessForPeriod : jasmine.createSpy('queryLessForPeriod').andCallFake(function() {
-                    var deferred, returnValue;
-                    deferred = q.defer();
-                    deferred.resolve(queryLessForPeriodBookingsJSON);
+        module(function($provide) {
+            $provide.factory('Booking', function($q) {
+                return {
+                    get: jasmine.createSpy('get').andCallFake(function () {
 
-                    returnValue = queryLessForPeriodBookingsJSON;
-                    returnValue.$promise = deferred.promise;
+                        // Generate a promise object for mocked return data.
+                        return TestHelper.addPromiseToObject(TestHelper.JSON.getBookings, q);
+                    }),
+                    query: jasmine.createSpy('query').andCallFake(function () {
 
-                    return returnValue ;//queryLessForPeriodBookingsJSON
-                }),
-                queryDay : jasmine.createSpy('queryDay').andCallFake(function() {
-                    return queryDayBookingsJSON
-                })
+                        // Generate a promise object for mocked return data.
+                        return TestHelper.addPromiseToObject(TestHelper.JSON.queryBookings, q);
+                    }),
+                    queryMoreForPeriod: jasmine.createSpy('queryMoreForPeriod').andCallFake(function () {
 
-            }
+                        // Generate a promise object for mocked return data.
+                        return TestHelper.addPromiseToObject(TestHelper.JSON.queryMoreForPeriodBookings, q);
+                    }),
+                    queryLessForPeriod: jasmine.createSpy('queryLessForPeriod').andCallFake(function () {
+
+                        // Generate a promise object for mocked return data.
+                        return TestHelper.addPromiseToObject(TestHelper.JSON.queryLessForPeriodBookings, q);
+
+                    }),
+                    queryDay: jasmine.createSpy('queryDay').andCallFake(function () {
+
+                        // Generate a promise object for mocked return data.
+                        return TestHelper.addPromiseToObject(TestHelper.JSON.queryDayBookings, q);
+                    })
+                }
+            });
         });
     });
 
@@ -103,7 +103,6 @@ describe('directive: calendarDirective', function() {
     }));
 
 
-    // Shared testing function. avoid DRY
     var testDateVars = function() {
 
         expect(calendarController.currentYear).toEqual(testCurrentDateObj.getFullYear());
@@ -119,7 +118,6 @@ describe('directive: calendarDirective', function() {
 
         expect(calendarController.currentMonthEndWeekDay).toEqual(calendarController.currentMonthEndDateObj.getDay() === 0 ? 7 : calendarController.currentMonthEndDateObj.getDay());
         expect(calendarController.prevMonthNumberOfDays).toEqual(new Date(calendarController.currentYear, calendarController.currentMonth, 0).getDate());
-
     };
 
     // Tests START
@@ -156,7 +154,7 @@ describe('directive: calendarDirective', function() {
         calendarController.getBookingsForMonth(testCallBack);
 
         // Expect array to have correct values
-        expect(calendarController.bookingsForMonthArray).toEqual(queryLessForPeriodBookingsJSON);
+        expect(calendarController.bookingsForMonthArray).toEqual(TestHelper.JSON.queryLessForPeriodBookings);
 
         // Expect callback to have been called
         calendarController.bookingsForMonthArray.$promise.then(function(){
@@ -195,7 +193,7 @@ describe('directive: calendarDirective', function() {
         $scope.changeToDay(dayElement, {number: 10}, event);
 
         // Expect bookings to contain right data
-        expect($scope.datedata.bookings).toEqual(queryDayBookingsJSON);
+        expect($scope.datedata.bookings).toEqual(TestHelper.JSON.queryDayBookings);
 
         // Expect certain date variables to be right
         expect(calendarController.currentDateObj).toEqual(new Date(calendarController.currentYear, calendarController.currentMonth, 10));
