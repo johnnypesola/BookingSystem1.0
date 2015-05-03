@@ -1,0 +1,35 @@
+<section class="content-container" ng-controller="LocationCreateCtrl">
+    <h2>Skapa Plats / Lokal</h2>
+    <div class="page-header-icons-container">
+        <a class="map" href="#/platser/karta"></a>
+        <a class="list" href="#/platser/lista"></a>
+        <a class="add" href="#/platser/skapa"></a>
+    </div>
+
+    <form name="furnituringForm">
+        <label>Namn</label>
+        <input type="text" name="name" ng-model="location.Name" required>
+
+        <label>Max personer</label>
+        <input type="text" name="max-people" ng-model="location.MaxPeople" required>
+
+        <label>GPS Latitud</label>
+        <input type="text" name="gps-latitude" ng-model="location.GPSLatitude">
+
+        <label>GPS Longitud</label>
+        <input type="text" name="gps-longitude" ng-model="location.GPSLongitude">
+
+        <label>Sökväg till bild</label>
+        <input type="text" name="image-src" ng-model="location.ImageSrc">
+
+        <label>Bokningspris per timme</label>
+        <input type="text" name="booking-price-per-hour" ng-model="location.BookingPricePerHour" required>
+
+        <label>Marginal i minuter efter bokning</label>
+        <input type="text" name="minutes-margin-after-booking" ng-model="location.MinutesMarginAfterBooking">
+
+        <button ng-click="save()">Skapa</button>
+        <button ng-click="abort()">Avbryt</button>
+
+    </form>
+</section>

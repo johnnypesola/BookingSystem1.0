@@ -1,0 +1,41 @@
+<section class="content-container" ng-controller="LocationListCtrl">
+    <h2>
+        Lista över Lokaler/Platser
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <div class="page-header-icons-container">
+        <a class="map" href="#/platser/karta"></a>
+        <a class="list" href="#/platser/lista"></a>
+        <a class="add" href="#/platser/skapa"></a>
+    </div>
+
+    <section class="list-container">
+
+        <table class="list-table">
+            <tr>
+                <th>Namn</th>
+                <th>Max personer</th>
+                <th>Pris per timme</th>
+                <th>Antal bokningar</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="location in locations">
+                <td>
+                    {{location.Name}}
+                </td>
+                <td class="align-right">
+                    {{location.MaxPeople | count}}
+                </td>
+                <td class="align-right">
+                    {{location.BookingPricePerHour | kr}}
+                </td>
+                <td class="align-right">
+                    {{location.TotalBookings | count}}
+                </td>
+                <td>
+                    <div item-action-buttons="location.LocationId"></div>
+                </td>
+            </tr>
+        </table>
+    </section>
+</section>

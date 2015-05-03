@@ -1,0 +1,14 @@
+<section class="content-container" ng-controller="LocationDeleteCtrl">
+    <h2>Radera Lokal/Plats</h2>
+    <div class="page-header-icons-container">
+        <a class="map" href="#/platser/karta"></a>
+        <a class="list" href="#/platser/lista"></a>
+        <a class="add" href="#/platser/skapa"></a>
+    </div>
+
+    <div class="align-center">
+    <p>Vill du verkligen radera lokalen/platsen <strong class="text-dark-purple">{{location.Name}}</strong>?</p>
+        <button ng-click="confirm()">Ja</button>
+        <button ng-click="abort()">Nej</button>
+    </div>
+</section>

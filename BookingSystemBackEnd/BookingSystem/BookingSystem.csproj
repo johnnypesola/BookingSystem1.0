@@ -91,6 +91,7 @@
     <Compile Include="App_Extensions\ValidationExtensions.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\FurnituringController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -111,6 +112,7 @@
     <Compile Include="Models\DAL\LocationDAL.cs" />
     <Compile Include="Models\FurnituringService.cs" />
     <Compile Include="Models\LocationBookingService.cs" />
+    <Compile Include="Models\LocationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

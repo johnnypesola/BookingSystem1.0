@@ -59,29 +59,19 @@ namespace BookingSystem.Models
                         // Check if there is any return data to read
                         if (reader.Read())
                         {
-                            // Get column indexes from known column names. Does not matter if columns change order.
-                            int locationIdIndex = reader.GetOrdinal("LocationId");
-                            int NameIndex = reader.GetOrdinal("Name");
-                            int MaxPeopleIndex = reader.GetOrdinal("MaxPeople");
-                            int GPSLongitudeIndex = reader.GetOrdinal("GPSLongitude");
-                            int GPSLatitudeIndex = reader.GetOrdinal("GPSLatitude");
-                            int ImageSrcIndex = reader.GetOrdinal("ImageSrc");
-                            int BookingPricePerHourIndex = reader.GetOrdinal("BookingPricePerHour");
-                            int totalBookingsIndex = reader.GetOrdinal("TotalBookings");
-                            int totalBookingValueIndex = reader.GetOrdinal("TotalBookingValue");
-
                             // Create new Location object from database values and return a reference
                             return new Location
                             {
-                                LocationId = reader.GetSafeInt32(locationIdIndex),
-                                Name = reader.GetSafeString(NameIndex),
-                                MaxPeople = reader.GetSafeInt16(MaxPeopleIndex),
-                                GPSLongitude = reader.GetSafeDecimal(GPSLongitudeIndex),
-                                GPSLatitude = reader.GetSafeDecimal(GPSLatitudeIndex),
-                                ImageSrc= reader.GetSafeString(ImageSrcIndex),
-                                BookingPricePerHour = reader.GetSafeDecimal(BookingPricePerHourIndex),
-                                TotalBookings = reader.GetSafeInt32(totalBookingsIndex),
-                                TotalBookingValue = reader.GetSafeDecimal(totalBookingValueIndex)
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
+                                Name = reader.GetSafeString(reader.GetOrdinal("Name")),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal("MaxPeople")),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLongitude")),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLatitude")),
+                                ImageSrc= reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings")),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal("TotalBookingValue")),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking"))
                             };
                         }
                     }
@@ -120,29 +110,19 @@ namespace BookingSystem.Models
                         // Check if there is any return data to read
                         if (reader.Read())
                         {
-                            // Get column indexes from known column names. Does not matter if columns change order.
-                            int locationIdIndex = reader.GetOrdinal("LocationId");
-                            int NameIndex = reader.GetOrdinal("Name");
-                            int MaxPeopleIndex = reader.GetOrdinal("MaxPeople");
-                            int GPSLongitudeIndex = reader.GetOrdinal("GPSLongitude");
-                            int GPSLatitudeIndex = reader.GetOrdinal("GPSLatitude");
-                            int ImageSrcIndex = reader.GetOrdinal("ImageSrc");
-                            int BookingPricePerHourIndex = reader.GetOrdinal("BookingPricePerHour");
-                            int totalBookingsIndex = reader.GetOrdinal("TotalBookings");
-                            int totalBookingValueIndex = reader.GetOrdinal("TotalBookingValue");
-
                             // Create new Location object from database values and return a reference
                             return new Location
                             {
-                                LocationId = reader.GetSafeInt32(locationIdIndex),
-                                Name = reader.GetSafeString(NameIndex),
-                                MaxPeople = reader.GetSafeInt16(MaxPeopleIndex),
-                                GPSLongitude = reader.GetSafeDecimal(GPSLongitudeIndex),
-                                GPSLatitude = reader.GetSafeDecimal(GPSLatitudeIndex),
-                                ImageSrc = reader.GetSafeString(ImageSrcIndex),
-                                BookingPricePerHour = reader.GetSafeDecimal(BookingPricePerHourIndex),
-                                TotalBookings = reader.GetSafeInt32(totalBookingsIndex),
-                                TotalBookingValue = reader.GetSafeDecimal(totalBookingValueIndex)
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
+                                Name = reader.GetSafeString(reader.GetOrdinal("Name")),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal("MaxPeople")),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLongitude")),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLatitude")),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings")),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal("TotalBookingValue")),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking"))
                             };
                         }
                     }
@@ -176,28 +156,21 @@ namespace BookingSystem.Models
                     // Get all data from stored procedure
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        // Get column indexes from known column names. Does not matter if columns change order.
-                        int locationIdIndex = reader.GetOrdinal("LocationId");
-                        int NameIndex = reader.GetOrdinal("Name");
-                        int MaxPeopleIndex = reader.GetOrdinal("MaxPeople");
-                        int GPSLongitudeIndex = reader.GetOrdinal("GPSLongitude");
-                        int GPSLatitudeIndex = reader.GetOrdinal("GPSLatitude");
-                        int ImageSrcIndex = reader.GetOrdinal("ImageSrc");
-                        int BookingPricePerHourIndex = reader.GetOrdinal("BookingPricePerHour");
-
                         // Get all data rows
                         while (reader.Read())
                         {
                             // Create new Location object from database values and add to list
                             locationsReturnList.Add(new Location
                             {
-                                LocationId = reader.GetSafeInt32(locationIdIndex),
-                                Name = reader.GetSafeString(NameIndex),
-                                MaxPeople = reader.GetSafeInt16(MaxPeopleIndex),
-                                GPSLongitude = reader.GetSafeDecimal(GPSLongitudeIndex),
-                                GPSLatitude = reader.GetSafeDecimal(GPSLatitudeIndex),
-                                ImageSrc = reader.GetSafeString(ImageSrcIndex),
-                                BookingPricePerHour = reader.GetSafeDecimal(BookingPricePerHourIndex)
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
+                                Name = reader.GetSafeString(reader.GetOrdinal("Name")),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal("MaxPeople")),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLongitude")),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLatitude")),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings"))
+                                
                             });
                         }
                     }
@@ -243,32 +216,22 @@ namespace BookingSystem.Models
                     // Get all data from stored procedure
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        // Get column indexes from known column names. Does not matter if columns change order.
-                        int locationIdIndex = reader.GetOrdinal("LocationId");
-                        int NameIndex = reader.GetOrdinal("Name");
-                        int MaxPeopleIndex = reader.GetOrdinal("MaxPeople");
-                        int GPSLongitudeIndex = reader.GetOrdinal("GPSLongitude");
-                        int GPSLatitudeIndex = reader.GetOrdinal("GPSLatitude");
-                        int ImageSrcIndex = reader.GetOrdinal("ImageSrc");
-                        int BookingPricePerHourIndex = reader.GetOrdinal("BookingPricePerHour");
-                        int totalBookingsIndex = reader.GetOrdinal("TotalBookings");
-                        int totalBookingValueIndex = reader.GetOrdinal("TotalBookingValue");
-
                         // Get all data rows
                         while (reader.Read())
                         {
                             // Create new Location object from database values and add to list
                             locationsReturnList.Add(new Location
                             {
-                                LocationId = reader.GetSafeInt32(locationIdIndex),
-                                Name = reader.GetSafeString(NameIndex),
-                                MaxPeople = reader.GetSafeInt16(MaxPeopleIndex),
-                                GPSLongitude = reader.GetSafeDecimal(GPSLongitudeIndex),
-                                GPSLatitude = reader.GetSafeDecimal(GPSLatitudeIndex),
-                                ImageSrc = reader.GetSafeString(ImageSrcIndex),
-                                BookingPricePerHour = reader.GetSafeDecimal(BookingPricePerHourIndex),
-                                TotalBookings = reader.GetSafeInt32(totalBookingsIndex),
-                                TotalBookingValue = reader.GetSafeDecimal(totalBookingValueIndex)
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
+                                Name = reader.GetSafeString(reader.GetOrdinal("Name")),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal("MaxPeople")),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLongitude")),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLatitude")),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings")),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal("TotalBookingValue")),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking"))
                             });
                         }
                     }
@@ -308,6 +271,7 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add("@GPSLatitude", SqlDbType.Decimal).Value = location.GPSLatitude;
                     cmd.Parameters.Add("@ImageSrc", SqlDbType.VarChar, 30).Value = location.ImageSrc;
                     cmd.Parameters.Add("@BookingPricePerHour", SqlDbType.Decimal).Value = location.BookingPricePerHour;
+                    cmd.Parameters.Add("@MinutesMarginAfterBooking", SqlDbType.Decimal).Value = location.MinutesMarginAfterBooking;
 
                     // Add out parameter for Stored procedure
                     cmd.Parameters.Add("@InsertId", SqlDbType.Int).Direction = ParameterDirection.Output;
@@ -349,6 +313,7 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add("@GPSLatitude", SqlDbType.Decimal).Value = location.GPSLatitude;
                     cmd.Parameters.Add("@ImageSrc", SqlDbType.VarChar, 30).Value = location.ImageSrc;
                     cmd.Parameters.Add("@BookingPricePerHour", SqlDbType.Decimal).Value = location.BookingPricePerHour;
+                    cmd.Parameters.Add("@MinutesMarginAfterBooking", SqlDbType.Decimal).Value = location.MinutesMarginAfterBooking;
 
                     // Open DB connection
                     connection.Open();

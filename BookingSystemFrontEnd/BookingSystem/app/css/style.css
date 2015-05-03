@@ -783,90 +783,90 @@ section.content-container {
 /* Colors */
     /* Backgrounds */
     .bg-light-green {
-        background-color: #A0BC49;
+        background-color: #A0BC49 !important;
     }
 
     .bg-dark-green {
-        background-color: #5BA87A;
+        background-color: #5BA87A !important;
     }
 
     .bg-magenta {
-        background-color: #E04F94;
+        background-color: #E04F94 !important;
     }
 
     .bg-red {
-        background-color: #AD5163;
+        background-color: #AD5163 !important;
     }
 
     .bg-yellow {
-        background-color: #F7BC6D;
+        background-color: #F7BC6D !important;
     }
 
     .bg-beige {
-        background-color: #DDBC83;
+        background-color: #DDBC83 !important;
     }
 
     .bg-light-blue {
-        background-color: #95D2D7;
+        background-color: #95D2D7 !important;
     }
 
     .bg-dark-blue {
-        background-color: #4887B2;
+        background-color: #4887B2 !important;
     }
 
     .bg-dark-purple {
-        background-color: #A2559C;
+        background-color: #A2559C !important;
     }
 
     .bg-light-purple {
-        background-color: #BFABD2;
+        background-color: #BFABD2 !important;
     }
 
     .bg-orange {
-        background-color: #F08362;
+        background-color: #F08362 !important;
     }
 
     /* Text */
     .text-light-green {
-        color: #A0BC49;
+        color: #A0BC49 !important;
     }
 
     .text-dark-green {
-        color: #5BA87A;
+        color: #5BA87A !important;
     }
 
     .text-magenta {
-        color: #E04F94;
+        color: #E04F94 !important;
     }
 
     .text-red {
-        color: #AD5163;
+        color: #AD5163 !important;
     }
 
     .text-yellow {
-        color: #F7BC6D;
+        color: #F7BC6D !important;
     }
 
     .text-beige {
-        color: #DDBC83;
+        color: #DDBC83 !important;
     }
 
     .text-light-blue {
-        color: #95D2D7;
+        color: #95D2D7 !important;
     }
 
     .text-dark-blue {
-        color: #4887B2;
+        color: #4887B2 !important;
     }
 
     .text-dark-purple {
-        color: #A2559C;
+        color: #A2559C !important;
     }
 
     .text-light-purple {
-        color: #BFABD2;
+        color: #BFABD2 !important;
     }
 
     .text-orange {
-        color: #F08362;
+        color: #F08362 !important;
     }

@@ -13,17 +13,18 @@
         'bookingSystem.header',
         'bookingSystem.booking',
         'bookingSystem.furnituring',
+        'bookingSystem.location',
         'bookingSystem.loadingDirective'
     ]);
 
     // Define API url, used in services
     BookingSystem.constant('API_URL', 'http://localhost:6796/api/'); // 'http://192.168.1.4:8080/BookingSystem/api/');
 
-    // Declare basic routes
+
     BookingSystem.config(function($routeProvider) {
 
+        // Declare basic routes
         $routeProvider.
-
             // Startpage
             when('/', {
                 templateUrl: 'controllers/start/startCtrl.html'
@@ -49,17 +50,39 @@
             }).
             when('/mobleringar/skapa', {
                 templateUrl: 'controllers/furnituring/furnituringCreate.html'
-            });
-            /*.
+            }).
+
+            // Locations
+            when('/platser/lista', {
+                templateUrl: 'controllers/location/locationList.html'
+            }).
+            when('/platser/radera/:locationId', {
+                templateUrl: 'controllers/location/locationDelete.html'
+            }).
+            when('/platser/redigera/:locationId', {
+                templateUrl: 'controllers/location/locationEdit.html'
+            }).
+            when('/platser/skapa', {
+                templateUrl: 'controllers/location/locationCreate.html'
+            }).
+
+            // Page not found
             otherwise({
-                redirectTo: '/mobleringar/lista'
-            })*/
+                templateUrl: 'shared/views/notFound.html'
+            });
 
     });
 
 
+    BookingSystem.run(function($rootScope, $location) {
+
+        // Add $location to $rootScope, for access on all pages, even without controllers
+        $rootScope.appLocation = $location;
+    });
+
 
     // Automatically convert all $http ISO 6801 date strings to date objects from backend (affected: $http $provider).
+    // Does not work well with tests!
     /*
     BookingSystem.config(["$httpProvider", function ($httpProvider) {
         $httpProvider.defaults.transformResponse.push(function(responseData){

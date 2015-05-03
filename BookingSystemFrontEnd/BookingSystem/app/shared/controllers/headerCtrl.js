@@ -45,7 +45,7 @@
                 submenus: [
                     {
                         title: "Lokaler / Platser",
-                        location: "lokaler/lista"
+                        location: "platser/lista"
                     },
                     {
                         title: "Lokalmöbleringar",
