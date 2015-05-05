@@ -285,8 +285,12 @@ namespace BookingSystem.Models
                     // Place database insert id into location object.
                     location.LocationId = (int)cmd.Parameters["@InsertId"].Value;
                 }
-                catch
+                catch (Exception exception)
                 {
+                    if (exception.Message == "There is already a location with the given name.")
+                    {
+                        throw new DuplicateNameException(exception.Message);
+                    }
                     // Throw exception
                     throw new ApplicationException(DAL_ERROR_MSG);
                 }
@@ -321,8 +325,12 @@ namespace BookingSystem.Models
                     // Execute insert to database
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception exception)
                 {
+                    if (exception.Message == "There is already a location with the given name.")
+                    {
+                        throw new DuplicateNameException(exception.Message);
+                    }
                     // Throw exception
                     throw new ApplicationException(DAL_ERROR_MSG);
                 }

@@ -157,7 +157,7 @@ namespace BookingSystem.Models
                 {
                     if (exception.Message == "There is allready a furnituring with the given name.")
                     {
-                        throw new ApprovedException(exception.Message);
+                        throw new DuplicateNameException(exception.Message);
                     }
                     // Throw exception
                     throw new ApplicationException(DAL_ERROR_MSG);
@@ -191,7 +191,7 @@ namespace BookingSystem.Models
                 {
                     if (exception.Message == "There is allready a Furnituring with the given name.")
                     {
-                        throw new ApprovedException(exception.Message);
+                        throw new DuplicateNameException(exception.Message);
                     }
                     // Throw exception
                     throw new ApplicationException(DAL_ERROR_MSG);

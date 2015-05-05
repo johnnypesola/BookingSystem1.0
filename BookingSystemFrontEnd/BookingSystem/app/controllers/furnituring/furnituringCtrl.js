@@ -103,11 +103,7 @@
                 }).catch(function(response) {
 
                     // If there there was a foreign key reference
-                    if (
-                        response.status == 400 &&
-                        typeof response.data.Message !== 'undefined' &&
-                        response.data.Message === 'There is allready a Furnituring with the given name.'
-                    ){
+                    if (response.status == 409){
                         $rootScope.FlashMessage = {
                             type: 'error',
                             message: 'Det finns redan en möblering som heter "' + $scope.furnituring.Name +
@@ -183,11 +179,7 @@
                     }).catch(function(response) {
 
                         // If there there was a foreign key reference
-                        if (
-                            response.status == 400 &&
-                            response.data.Message !== 'undefined' &&
-                            response.data.Message === 'There is allready a Furnituring with the given name.'
-                        ){
+                        if (response.status == 409){
                             $rootScope.FlashMessage = {
                                 type: 'error',
                                 message:    'Det finns redan en möblering som heter "' + $scope.furnituring.Name +
@@ -266,7 +258,7 @@
                 // Delete furnituring
                 Furnituring.delete(
                     {
-                        FurnituringId: $routeParams.furnituringId
+                        furnituringId: $routeParams.furnituringId
                     }
                 ).$promise
 

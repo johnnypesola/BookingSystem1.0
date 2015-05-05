@@ -18,8 +18,12 @@
     ]);
 
     // Define API url, used in services
-    BookingSystem.constant('API_URL', 'http://localhost:6796/api/'); // 'http://192.168.1.4:8080/BookingSystem/api/');
+    BookingSystem.constant('API_URL', 'http://localhost:6796/api/');
+    /*
 
+    'http://localhost:6796/'
+    'http://192.168.1.4:8080/BookingSystem/api/');
+    */
 
     BookingSystem.config(function($routeProvider) {
 
@@ -76,8 +80,16 @@
 
     BookingSystem.run(function($rootScope, $location) {
 
-        // Add $location to $rootScope, for access on all pages, even without controllers
+        // Add values to $rootScope, for access on all pages, even without controllers
         $rootScope.appLocation = $location;
+
+        $rootScope.Int32MaxValue = 2147483647;
+        $rootScope.Int16MaxValue = 32767;
+        $rootScope.regExp = {
+            textField : new RegExp("^[0-9a-zA-ZåäöÅÄÖé\\-_&\.,@()/%\\s\!]*$"),
+            postNumber : new RegExp("^[0-9]{3}\s[0-9]{2}$"),
+            phoneNumber : new RegExp("^[0-9\-\s]*$")
+        };
     });
 
 

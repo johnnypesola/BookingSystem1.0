@@ -6,10 +6,13 @@
     </div>
 
     <form name="furnituringForm">
-        <label>Namn</label>
-        <input type="text" name="name" ng-model="furnituring.Name" required>
+        <label>Namn
+            <span ng-show="furnituringForm.name.$error.required">Var god ange</span>
+            <span ng-show="furnituringForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,@()/%!</span>
+        </label>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="furnituring.Name" required>
 
-        <button ng-click="save()">Skapa</button>
+        <button ng-click="save()" ng-disabled="!furnituringForm.$valid">Skapa</button>
         <button ng-click="abort()">Avbryt</button>
 
     </form>

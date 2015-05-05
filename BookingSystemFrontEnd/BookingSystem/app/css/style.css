@@ -19,7 +19,7 @@ input[type=checkbox] {
     top: 3px;
 }
 
-input[type=text], input[type=date] {
+input[type=text], input[type=date], input[type=number] {
     height: 30px;
     width: 200px;
     padding: 0 5px;
@@ -64,6 +64,12 @@ button:hover {
 */
     border: 1px solid #AAAAAA;
 }
+
+    button[disabled] {
+        background: #FFFFFF;
+        color: #999999;
+        cursor: not-allowed;
+    }
 
 header {
     background: #777777;
@@ -394,7 +400,35 @@ section.content-container {
             font-weight: normal;
             line-height: 30px;
             font-size: 16px;
+            display: block;
         }
+
+            section.content-container form label span {
+                line-height: 17px;
+                padding: 0 2px;
+                display: block;
+                float: right;
+                font-size: 12px;
+                background: #F08362;
+                margin: 4px 2px 7px 2px;
+                position: relative;
+                border-radius: 2px;
+                color: #FFFFFF;
+                /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);*/
+            }
+
+            section.content-container form label span:after {
+                content: '';
+                position: absolute;
+                top: 100%;
+                right: 45%;
+                width: 0;
+                height: 0;
+                border-right: solid 5px transparent;
+                border-top: solid 5px #F08362;
+                border-left: solid 5px transparent;
+                border-bottom: solid 5px transparent;
+            }
 
         section.content-container form input {
             background: #FFFFFF;
@@ -408,7 +442,7 @@ section.content-container {
             -moz-box-shadow:    inset 1px 1px 1px rgba(0,0,0,.075);
             box-shadow:         inset 1px 1px 1px rgba(0,0,0,.075);
 
-
+            margin: 0 0 8px 0;
 
             color: #777777;
 

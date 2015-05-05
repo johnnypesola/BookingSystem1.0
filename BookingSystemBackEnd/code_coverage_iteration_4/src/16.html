@@ -69,29 +69,19 @@ namespace BookingSystem.Models
                         // Check if there is any return data to read
                         if (reader.Read())
                         {
-                            // Get column indexes from known column names. Does not matter if columns change order.
-                            int locationIdIndex = reader.GetOrdinal(&quot;LocationId&quot;);
-                            int NameIndex = reader.GetOrdinal(&quot;Name&quot;);
-                            int MaxPeopleIndex = reader.GetOrdinal(&quot;MaxPeople&quot;);
-                            int GPSLongitudeIndex = reader.GetOrdinal(&quot;GPSLongitude&quot;);
-                            int GPSLatitudeIndex = reader.GetOrdinal(&quot;GPSLatitude&quot;);
-                            int ImageSrcIndex = reader.GetOrdinal(&quot;ImageSrc&quot;);
-                            int BookingPricePerHourIndex = reader.GetOrdinal(&quot;BookingPricePerHour&quot;);
-                            int totalBookingsIndex = reader.GetOrdinal(&quot;TotalBookings&quot;);
-                            int totalBookingValueIndex = reader.GetOrdinal(&quot;TotalBookingValue&quot;);
-
                             // Create new Location object from database values and return a reference
                             return new Location
                             {
-                                LocationId = reader.GetSafeInt32(locationIdIndex),
-                                Name = reader.GetSafeString(NameIndex),
-                                MaxPeople = reader.GetSafeInt16(MaxPeopleIndex),
-                                GPSLongitude = reader.GetSafeDecimal(GPSLongitudeIndex),
-                                GPSLatitude = reader.GetSafeDecimal(GPSLatitudeIndex),
-                                ImageSrc= reader.GetSafeString(ImageSrcIndex),
-                                BookingPricePerHour = reader.GetSafeDecimal(BookingPricePerHourIndex),
-                                TotalBookings = reader.GetSafeInt32(totalBookingsIndex),
-                                TotalBookingValue = reader.GetSafeDecimal(totalBookingValueIndex)
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal(&quot;LocationId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal(&quot;MaxPeople&quot;)),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLongitude&quot;)),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLatitude&quot;)),
+                                ImageSrc= reader.GetSafeString(reader.GetOrdinal(&quot;ImageSrc&quot;)),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal(&quot;BookingPricePerHour&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;))
                             };
                         }
                     }
@@ -130,29 +120,19 @@ namespace BookingSystem.Models
                         // Check if there is any return data to read
                         if (reader.Read())
                         {
-                            // Get column indexes from known column names. Does not matter if columns change order.
-                            int locationIdIndex = reader.GetOrdinal(&quot;LocationId&quot;);
-                            int NameIndex = reader.GetOrdinal(&quot;Name&quot;);
-                            int MaxPeopleIndex = reader.GetOrdinal(&quot;MaxPeople&quot;);
-                            int GPSLongitudeIndex = reader.GetOrdinal(&quot;GPSLongitude&quot;);
-                            int GPSLatitudeIndex = reader.GetOrdinal(&quot;GPSLatitude&quot;);
-                            int ImageSrcIndex = reader.GetOrdinal(&quot;ImageSrc&quot;);
-                            int BookingPricePerHourIndex = reader.GetOrdinal(&quot;BookingPricePerHour&quot;);
-                            int totalBookingsIndex = reader.GetOrdinal(&quot;TotalBookings&quot;);
-                            int totalBookingValueIndex = reader.GetOrdinal(&quot;TotalBookingValue&quot;);
-
                             // Create new Location object from database values and return a reference
                             return new Location
                             {
-                                LocationId = reader.GetSafeInt32(locationIdIndex),
-                                Name = reader.GetSafeString(NameIndex),
-                                MaxPeople = reader.GetSafeInt16(MaxPeopleIndex),
-                                GPSLongitude = reader.GetSafeDecimal(GPSLongitudeIndex),
-                                GPSLatitude = reader.GetSafeDecimal(GPSLatitudeIndex),
-                                ImageSrc = reader.GetSafeString(ImageSrcIndex),
-                                BookingPricePerHour = reader.GetSafeDecimal(BookingPricePerHourIndex),
-                                TotalBookings = reader.GetSafeInt32(totalBookingsIndex),
-                                TotalBookingValue = reader.GetSafeDecimal(totalBookingValueIndex)
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal(&quot;LocationId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal(&quot;MaxPeople&quot;)),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLongitude&quot;)),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLatitude&quot;)),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal(&quot;ImageSrc&quot;)),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal(&quot;BookingPricePerHour&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;))
                             };
                         }
                     }
@@ -186,28 +166,21 @@ namespace BookingSystem.Models
                     // Get all data from stored procedure
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        // Get column indexes from known column names. Does not matter if columns change order.
-                        int locationIdIndex = reader.GetOrdinal(&quot;LocationId&quot;);
-                        int NameIndex = reader.GetOrdinal(&quot;Name&quot;);
-                        int MaxPeopleIndex = reader.GetOrdinal(&quot;MaxPeople&quot;);
-                        int GPSLongitudeIndex = reader.GetOrdinal(&quot;GPSLongitude&quot;);
-                        int GPSLatitudeIndex = reader.GetOrdinal(&quot;GPSLatitude&quot;);
-                        int ImageSrcIndex = reader.GetOrdinal(&quot;ImageSrc&quot;);
-                        int BookingPricePerHourIndex = reader.GetOrdinal(&quot;BookingPricePerHour&quot;);
-
                         // Get all data rows
                         while (reader.Read())
                         {
                             // Create new Location object from database values and add to list
                             locationsReturnList.Add(new Location
                             {
-                                LocationId = reader.GetSafeInt32(locationIdIndex),
-                                Name = reader.GetSafeString(NameIndex),
-                                MaxPeople = reader.GetSafeInt16(MaxPeopleIndex),
-                                GPSLongitude = reader.GetSafeDecimal(GPSLongitudeIndex),
-                                GPSLatitude = reader.GetSafeDecimal(GPSLatitudeIndex),
-                                ImageSrc = reader.GetSafeString(ImageSrcIndex),
-                                BookingPricePerHour = reader.GetSafeDecimal(BookingPricePerHourIndex)
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal(&quot;LocationId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal(&quot;MaxPeople&quot;)),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLongitude&quot;)),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLatitude&quot;)),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal(&quot;ImageSrc&quot;)),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal(&quot;BookingPricePerHour&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;))
+                                
                             });
                         }
                     }
@@ -253,32 +226,22 @@ namespace BookingSystem.Models
                     // Get all data from stored procedure
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
-                        // Get column indexes from known column names. Does not matter if columns change order.
-                        int locationIdIndex = reader.GetOrdinal(&quot;LocationId&quot;);
-                        int NameIndex = reader.GetOrdinal(&quot;Name&quot;);
-                        int MaxPeopleIndex = reader.GetOrdinal(&quot;MaxPeople&quot;);
-                        int GPSLongitudeIndex = reader.GetOrdinal(&quot;GPSLongitude&quot;);
-                        int GPSLatitudeIndex = reader.GetOrdinal(&quot;GPSLatitude&quot;);
-                        int ImageSrcIndex = reader.GetOrdinal(&quot;ImageSrc&quot;);
-                        int BookingPricePerHourIndex = reader.GetOrdinal(&quot;BookingPricePerHour&quot;);
-                        int totalBookingsIndex = reader.GetOrdinal(&quot;TotalBookings&quot;);
-                        int totalBookingValueIndex = reader.GetOrdinal(&quot;TotalBookingValue&quot;);
-
                         // Get all data rows
                         while (reader.Read())
                         {
                             // Create new Location object from database values and add to list
                             locationsReturnList.Add(new Location
                             {
-                                LocationId = reader.GetSafeInt32(locationIdIndex),
-                                Name = reader.GetSafeString(NameIndex),
-                                MaxPeople = reader.GetSafeInt16(MaxPeopleIndex),
-                                GPSLongitude = reader.GetSafeDecimal(GPSLongitudeIndex),
-                                GPSLatitude = reader.GetSafeDecimal(GPSLatitudeIndex),
-                                ImageSrc = reader.GetSafeString(ImageSrcIndex),
-                                BookingPricePerHour = reader.GetSafeDecimal(BookingPricePerHourIndex),
-                                TotalBookings = reader.GetSafeInt32(totalBookingsIndex),
-                                TotalBookingValue = reader.GetSafeDecimal(totalBookingValueIndex)
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal(&quot;LocationId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal(&quot;MaxPeople&quot;)),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLongitude&quot;)),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLatitude&quot;)),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal(&quot;ImageSrc&quot;)),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal(&quot;BookingPricePerHour&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;))
                             });
                         }
                     }
@@ -318,6 +281,7 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add(&quot;@GPSLatitude&quot;, SqlDbType.Decimal).Value = location.GPSLatitude;
                     cmd.Parameters.Add(&quot;@ImageSrc&quot;, SqlDbType.VarChar, 30).Value = location.ImageSrc;
                     cmd.Parameters.Add(&quot;@BookingPricePerHour&quot;, SqlDbType.Decimal).Value = location.BookingPricePerHour;
+                    cmd.Parameters.Add(&quot;@MinutesMarginAfterBooking&quot;, SqlDbType.Decimal).Value = location.MinutesMarginAfterBooking;
 
                     // Add out parameter for Stored procedure
                     cmd.Parameters.Add(&quot;@InsertId&quot;, SqlDbType.Int).Direction = ParameterDirection.Output;
@@ -359,6 +323,7 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add(&quot;@GPSLatitude&quot;, SqlDbType.Decimal).Value = location.GPSLatitude;
                     cmd.Parameters.Add(&quot;@ImageSrc&quot;, SqlDbType.VarChar, 30).Value = location.ImageSrc;
                     cmd.Parameters.Add(&quot;@BookingPricePerHour&quot;, SqlDbType.Decimal).Value = location.BookingPricePerHour;
+                    cmd.Parameters.Add(&quot;@MinutesMarginAfterBooking&quot;, SqlDbType.Decimal).Value = location.MinutesMarginAfterBooking;
 
                     // Open DB connection
                     connection.Open();
@@ -377,7 +342,7 @@ namespace BookingSystem.Models
 }
     </pre>
     <script type="text/javascript">
-      highlightRanges([[13,9,13,10,0],[15,13,15,18,0],[16,13,16,14,0],[18,17,18,18,0],[22,21,22,70,0],[25,21,25,89,0],[28,21,28,43,0],[29,17,29,18,0],[30,17,30,22,0],[31,17,31,18,0],[33,21,33,67,0],[35,13,35,14,0],[36,9,36,10,0],[39,9,39,10,0],[41,13,41,18,0],[42,13,42,14,0],[44,17,44,18,0],[48,21,48,97,0],[51,21,51,89,0],[54,21,54,39,0],[57,28,57,70,0],[58,21,58,22,0],[60,25,60,43,0],[61,25,61,26,0],[63,29,63,83,0],[64,29,64,71,0],[65,29,65,81,0],[66,29,66,87,0],[67,29,67,85,0],[68,29,68,79,0],[69,29,69,101,0],[70,29,70,89,0],[71,29,71,97,0],[74,29,85,31,0],[87,21,87,22,0],[89,21,89,33,0],[91,17,91,22,0],[92,17,92,18,0],[94,21,94,67,0],[97,9,97,10,0],[100,9,100,10,0],[102,13,102,18,0],[103,13,103,14,0],[105,17,105,18,0],[109,21,109,97,0],[112,21,112,93,0],[115,21,115,39,0],[118,28,118,70,0],[119,21,119,22,0],[121,25,121,43,0],[122,25,122,26,0],[124,29,124,83,0],[125,29,125,71,0],[126,29,126,81,0],[127,29,127,87,0],[128,29,128,85,0],[129,29,129,79,0],[130,29,130,101,0],[131,29,131,89,0],[132,29,132,97,0],[135,29,146,31,0],[148,21,148,22,0],[150,21,150,33,0],[152,17,152,22,0],[153,17,153,18,0],[155,21,155,67,0],[158,9,158,10,0],[161,9,161,10,0],[163,13,163,18,0],[164,13,164,14,0],[166,17,166,18,0],[171,21,171,66,0],[174,21,174,74,0],[177,28,177,70,0],[178,21,178,22,0],[180,25,180,79,0],[181,25,181,67,0],[182,25,182,77,0],[183,25,183,83,0],[184,25,184,81,0],[185,25,185,75,0],[186,25,186,97,0],[190,25,190,26,0],[192,29,201,32,0],[202,25,202,26,0],[189,25,189,46,0],[203,21,203,22,0],[206,21,206,54,0],[209,21,209,48,0],[211,17,211,22,0],[212,17,212,18,0],[213,21,213,67,0],[216,9,216,10,0],[219,9,219,10,0],[221,13,221,18,0],[222,13,222,14,0],[224,17,224,18,0],[229,21,229,72,0],[232,21,232,97,0],[235,21,235,96,0],[236,21,236,87,0],[237,21,237,85,0],[238,21,238,111,0],[241,21,241,39,0],[244,28,244,70,0],[245,21,245,22,0],[247,25,247,79,0],[248,25,248,67,0],[249,25,249,77,0],[250,25,250,83,0],[251,25,251,81,0],[252,25,252,75,0],[253,25,253,97,0],[254,25,254,85,0],[255,25,255,93,0],[259,25,259,26,0],[261,29,272,32,0],[273,25,273,26,0],[258,25,258,46,0],[274,21,274,22,0],[277,21,277,93,0],[280,21,280,54,0],[283,21,283,48,0],[285,17,285,22,0],[286,17,286,18,0],[287,21,287,67,0],[290,9,290,10,0],[293,9,293,10,0],[295,13,295,18,0],[296,13,296,14,0],[298,17,298,18,0],[302,21,302,99,0],[305,21,305,94,0],[306,21,306,101,0],[307,21,307,106,0],[308,21,308,104,0],[309,21,309,102,0],[310,21,310,120,0],[313,21,313,106,0],[316,21,316,39,0],[319,21,319,43,0],[322,21,322,82,0],[323,17,323,18,0],[324,17,324,22,0],[325,17,325,18,0],[327,21,327,67,0],[329,13,329,14,0],[330,9,330,10,0],[333,9,333,10,0],[335,13,335,18,0],[336,13,336,14,0],[338,17,338,18,0],[342,21,342,99,0],[345,21,345,98,0],[346,21,346,94,0],[347,21,347,101,0],[348,21,348,106,0],[349,21,349,104,0],[350,21,350,102,0],[351,21,351,120,0],[354,21,354,39,0],[357,21,357,43,0],[358,17,358,18,0],[359,17,359,22,0],[360,17,360,18,0],[362,21,362,67,0],[364,13,364,14,0],[365,9,365,10,0]]);
+      highlightRanges([[77,21,77,22,0],[79,21,79,33,0],[81,17,81,22,0],[82,17,82,18,0],[84,21,84,67,0],[90,9,90,10,0],[92,13,92,18,0],[93,13,93,14,0],[95,17,95,18,0],[99,21,99,97,0],[102,21,102,93,0],[105,21,105,39,0],[108,28,108,70,0],[109,21,109,22,0],[111,25,111,43,0],[112,25,112,26,0],[114,29,126,31,0],[128,21,128,22,0],[130,21,130,33,0],[132,17,132,22,0],[133,17,133,18,0],[135,21,135,67,0],[138,9,138,10,0],[184,17,184,22,0],[185,17,185,18,0],[186,21,186,67,0],[192,9,192,10,0],[194,13,194,18,0],[195,13,195,14,0],[197,17,197,18,0],[202,21,202,72,0],[205,21,205,97,0],[208,21,208,96,0],[209,21,209,87,0],[210,21,210,85,0],[211,21,211,111,0],[214,21,214,39,0],[217,28,217,70,0],[218,21,218,22,0],[221,25,221,26,0],[223,29,235,32,0],[236,25,236,26,0],[220,25,220,46,0],[237,21,237,22,0],[240,21,240,93,0],[243,21,243,54,0],[246,21,246,48,0],[248,17,248,22,0],[249,17,249,18,0],[250,21,250,67,0],[253,9,253,10,0],[324,17,324,22,0],[325,17,325,18,0],[327,21,327,67,0],[13,9,13,10,1],[15,13,15,18,1],[16,13,16,14,1],[18,17,18,18,1],[22,21,22,70,1],[25,21,25,89,1],[28,21,28,43,1],[29,17,29,18,1],[30,17,30,22,1],[31,17,31,18,1],[33,21,33,67,1],[35,13,35,14,1],[36,9,36,10,1],[39,9,39,10,1],[41,13,41,18,1],[42,13,42,14,1],[44,17,44,18,1],[48,21,48,97,1],[51,21,51,89,1],[54,21,54,39,1],[57,28,57,70,1],[58,21,58,22,1],[60,25,60,43,1],[61,25,61,26,1],[63,29,75,31,1],[87,9,87,10,1],[141,9,141,10,1],[143,13,143,18,1],[144,13,144,14,1],[146,17,146,18,1],[151,21,151,66,1],[154,21,154,74,1],[157,28,157,70,1],[158,21,158,22,1],[161,25,161,26,1],[163,29,174,32,1],[175,25,175,26,1],[160,25,160,46,1],[176,21,176,22,1],[179,21,179,54,1],[182,21,182,48,1],[189,9,189,10,1],[256,9,256,10,1],[258,13,258,18,1],[259,13,259,14,1],[261,17,261,18,1],[265,21,265,99,1],[268,21,268,94,1],[269,21,269,101,1],[270,21,270,106,1],[271,21,271,104,1],[272,21,272,102,1],[273,21,273,120,1],[274,21,274,132,1],[277,21,277,106,1],[280,21,280,39,1],[283,21,283,43,1],[286,21,286,82,1],[287,17,287,18,1],[288,17,288,22,1],[289,17,289,18,1],[291,21,291,67,1],[293,13,293,14,1],[294,9,294,10,1],[297,9,297,10,1],[299,13,299,18,1],[300,13,300,14,1],[302,17,302,18,1],[306,21,306,99,1],[309,21,309,98,1],[310,21,310,94,1],[311,21,311,101,1],[312,21,312,106,1],[313,21,313,104,1],[314,21,314,102,1],[315,21,315,120,1],[316,21,316,132,1],[319,21,319,39,1],[322,21,322,43,1],[323,17,323,18,1],[329,13,329,14,1],[330,9,330,10,1]]);
     </script>
   </body>
 </html>

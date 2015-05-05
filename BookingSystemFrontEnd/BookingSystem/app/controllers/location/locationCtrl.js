@@ -24,7 +24,6 @@
 
         /* Private methods START */
 
-
         /* Private methods END */
 
 
@@ -59,14 +58,18 @@
 
         /* Private methods START */
 
-        that.redirectToListPage = function(){
-            var objectType;
+            that.initVariables = function(){
 
-            objectType = $location.path().split('/')[1];
+            };
 
-            // Go back to location list
-            $location.path(objectType + "/lista");
-        };
+            that.redirectToListPage = function(){
+                var objectType;
+
+                objectType = $location.path().split('/')[1];
+
+                // Go back to location list
+                $location.path(objectType + "/lista");
+            };
 
         /* Private methods END */
 
@@ -109,14 +112,10 @@
                 }).catch(function(response) {
 
                     // If there there was a foreign key reference
-                    if (
-                        response.status == 400 &&
-                        typeof response.data.Message !== 'undefined' &&
-                        response.data.Message === 'There is allready a Location with the given name.'
-                    ){
+                    if (response.status == 409){
                         $rootScope.FlashMessage = {
                             type: 'error',
-                            message: 'Det finns redan en möblering som heter "' + $scope.location.Name +
+                            message: 'Det finns redan en plats som heter "' + $scope.location.Name +
                             '". Två platser kan inte heta lika.'
                         };
                     }
@@ -125,7 +124,7 @@
                     else {
                         $rootScope.FlashMessage = {
                             type: 'error',
-                            message: 'Ett oväntat fel uppstod när möbleringen skulle sparas'
+                            message: 'Ett oväntat fel uppstod när platsen skulle sparas'
                         };
                     }
                 });
@@ -135,6 +134,8 @@
 
 
         /* Initialization START */
+
+            that.initVariables();
 
         /* Initialization END */
     })
@@ -186,7 +187,7 @@
 
                         $rootScope.FlashMessage = {
                             type: 'success',
-                            message: 'Möbleringen "' + $scope.location.Name + '" sparades med ett lyckat resultat'
+                            message: 'Platsen "' + $scope.location.Name + '" sparades med ett lyckat resultat'
                         };
 
                         that.redirectToListPage();
@@ -195,14 +196,10 @@
                     }).catch(function(response) {
 
                         // If there there was a foreign key reference
-                        if (
-                            response.status == 400 &&
-                            response.data.Message !== 'undefined' &&
-                            response.data.Message === 'There is allready a Location with the given name.'
-                        ){
+                        if (response.status == 409){
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message:    'Det finns redan en möblering som heter "' + $scope.location.Name +
+                                message:    'Det finns redan en plats som heter "' + $scope.location.Name +
                                 '". Två platser kan inte heta lika.'
                             };
                         }

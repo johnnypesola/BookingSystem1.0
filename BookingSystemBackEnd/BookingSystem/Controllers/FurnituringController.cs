@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using BookingSystem.Models;
 using System.Web.Http.Cors;
+using System.Data;
 
 namespace BookingSystem.Controllers
 {
@@ -57,6 +58,10 @@ namespace BookingSystem.Controllers
             catch (DataBaseEntryNotFoundException)
             {
                 return NotFound();
+            }
+            catch (DuplicateNameException)
+            {
+                return Conflict();
             }
             catch (ApprovedException exception)
             {
