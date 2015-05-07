@@ -959,3 +959,6 @@ section.content-container {
     .text-orange {
         color: #F08362 !important;
     }
+
+
+    .angular-google-map-container { height: 400px; }

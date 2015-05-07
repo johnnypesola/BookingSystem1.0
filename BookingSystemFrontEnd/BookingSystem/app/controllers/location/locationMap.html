@@ -1,0 +1,21 @@
+<section class="content-container" ng-controller="LocationMapCtrl">
+    <h2>
+        Visa Lokaler/Platser på karta
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-map="true"
+            show-search="true"
+            ></page-header-buttons>
+
+    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" bounds="map.bounds">
+        <ui-gmap-markers models="markers" coords="'self'" icon="'icon'">
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
+
+    <button ng-click="back()">Tillbaka</button>
+
+</section>
+

@@ -14,7 +14,8 @@
         'bookingSystem.booking',
         'bookingSystem.furnituring',
         'bookingSystem.location',
-        'bookingSystem.loadingDirective'
+        'bookingSystem.loadingDirective',
+        'uiGmapgoogle-maps' // Google maps API
     ]);
 
     // Define API url, used in services
@@ -25,7 +26,7 @@
     'http://192.168.1.4:8080/BookingSystem/api/');
     */
 
-    BookingSystem.config(function($routeProvider) {
+    BookingSystem.config(function($routeProvider, uiGmapGoogleMapApiProvider) {
 
         // Declare basic routes
         $routeProvider.
@@ -72,12 +73,22 @@
             when('/platser/skapa', {
                 templateUrl: 'controllers/location/locationCreate.html'
             }).
+            when('/platser/karta', {
+                templateUrl: 'controllers/location/locationMap.html'
+            }).
 
             // Page not found
             otherwise({
                 templateUrl: 'shared/views/notFound.html'
             });
 
+
+        // Google maps API
+        uiGmapGoogleMapApiProvider.configure({
+            //    key: 'your api key',
+            v: '3.17',
+            libraries: 'weather,geometry,visualization'
+        });
     });
 
 

@@ -403,6 +403,97 @@
             $scope.location = location;
 
         /* Initialization END */
+    })
+
+    // Map Controller
+    .controller('LocationMapCtrl', function($scope, Location, $rootScope, uiGmapGoogleMapApi){
+
+            var that = this;
+                $scope.markers = [];
+                that.locations = [];
+
+        /* Private methods START */
+
+            // Convert markers from data fetched from backend to match google maps format.
+            that.convertMarkers = function() {
+                that.locations.forEach(function(element){
+                    $scope.markers.push(
+                        {
+                            id : element.LocationId,
+                            latitude : element.GPSLatitude,
+                            longitude : element.GPSLongitude
+                        }
+                    );
+                });
+
+                console.log($scope.markers);
+            };
+
+
+            // Add default map variables to scope
+            that.initMapVariables = function() {
+                $scope.map = {
+                    center: {
+                        latitude: 59.9,
+                        longitude: 15.8
+                    },
+                    zoom: 5,
+                    bounds: {},
+                    options: {}
+                };
+            };
+
+
+
+        /* Private methods END */
+
+
+        /* Public methods START */
+
+        /* Public methods END */
+
+        /* Initialization START */
+
+            var locations = Location.query();
+
+            // In case location cannot be fetched, display an error to user.
+            locations.$promise.catch(function(){
+
+                $rootScope.FlashMessage = {
+                    type: 'error',
+                    message: 'Platser kunde inte hämtas, var god försök igen.'
+                };
+            })
+
+            // When locations have been fetched
+            .then(function(){
+
+                    // Init map variables
+                    that.initMapVariables();
+
+                    // Add locations to private scope
+                    that.locations = locations;
+
+                    // Add watch to check if return boundary data is received from google maps
+                    $scope.$watch(function() {
+                        return $scope.map.bounds;
+                    }, function(nv, ov) {
+
+                        // Only need to regenerate once
+                        if (!ov.southwest && nv.southwest) {
+
+                            that.convertMarkers();
+                        }
+                    }, true);
+
+
+                    //////////////////////////////////
+
+
+
+            });
+
+        /* Initialization END */
     });
 
 })();
