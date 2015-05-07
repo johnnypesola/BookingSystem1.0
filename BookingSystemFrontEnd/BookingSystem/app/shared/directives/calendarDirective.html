@@ -33,6 +33,7 @@
             <th>Antal</th>
             <th>Starttid</th>
             <th>Sluttid</th>
+            <th></th>
 
         </tr>
         <tr ng-repeat="booking in datedata.bookings">
@@ -45,6 +46,9 @@
             <td>{{booking.Count | count}}</td>
             <td class="date">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
             <td class="date">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+            <td class="align-right">
+                <div item-action-buttons="booking.BookingId"></div>
+            </td>
             <!--<td class="align-right">{{booking.CalculatedBookingPrice | kr }}</td>
             <td class="align-right">{{booking.Discount | percentage }}</td>-->
         </tr>

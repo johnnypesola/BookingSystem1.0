@@ -1,5 +1,8 @@
 <section class="content-container" ng-controller="LocationEditCtrl">
-    <h2>Redigera Lokal/Plats</h2>
+    <h2>
+        Redigera Lokal/Plats
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
     <div class="page-header-icons-container">
         <a class="map" href="#/platser/karta"></a>
         <a class="list" href="#/platser/lista"></a>
@@ -52,9 +55,3 @@
     </form>
 </section>
 
-<!--
-[Required(ErrorMessage = "LokalId måste anges.")]
-[Range(0, int.MaxValue, ErrorMessage = "LokalId befinner sig utanför gränsvärdena.")]
-public int LocationId { get; set; }
-
--->

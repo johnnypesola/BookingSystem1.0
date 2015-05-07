@@ -12,7 +12,7 @@
     })
 
     // Header Controller
-    .controller('HeaderCtrl', function($scope){
+    .controller('HeaderCtrl', function($scope, $rootScope){
 
         // Init values
         $scope.selectedSubMenu = 0;
@@ -62,9 +62,9 @@
                     }
                 ]
             },
-            {
+/*            {
                 title: "Användare"
-            },
+            },*/
             {
                 title: "Resurser"
             },
@@ -96,6 +96,15 @@
             $scope.selectedSubMenu = index;
         };
 
+        $scope.displayAddForm = function(value) {
+            $rootScope.addFormIsVisible = value;
+            $rootScope.searchFormIsVisible = false;
+        };
+
+        $scope.displaySearchForm = function(value) {
+            $rootScope.searchFormIsVisible = value;
+            $rootScope.addFormIsVisible = false;
+        };
 
 
         // Watch changes on selectedMainMenu variable

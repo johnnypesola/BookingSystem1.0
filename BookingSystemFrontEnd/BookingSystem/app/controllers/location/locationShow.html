@@ -1,0 +1,51 @@
+<section class="content-container" ng-controller="LocationShowCtrl">
+    <h2>
+        Visa Lokal/Plats
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <div class="page-header-icons-container">
+        <a class="map" href="#/platser/karta"></a>
+        <a class="list" href="#/platser/lista"></a>
+        <a class="add" href="#/platser/skapa"></a>
+    </div>
+
+    <table class="show-table">
+        <tr>
+            <th>Namn</th>
+            <td>{{location.Name}}</td>
+        </tr>
+        <tr>
+            <th>Max personer (st)</th>
+            <td>{{location.MaxPeople | count}}</td>
+        </tr>
+        <tr>
+            <th>GPS Latitud</th>
+            <td>{{location.GPSLatitude}}</td>
+        </tr>
+        <tr>
+            <th>GPS Longitud</th>
+            <td>{{location.GPSLongitude}}</td>
+        </tr>
+        <tr>
+            <th>Bokningspris per timme (kr)</th>
+            <td>{{location.BookingPricePerHour | kr}}</td>
+        </tr>
+        <tr>
+            <th>Marginal efter bokning (minuter)</th>
+            <td>{{location.MinutesMarginAfterBooking | minutes}}</td>
+        </tr>
+        <tr>
+            <th>Totalt antal bokningar</th>
+            <td>{{location.TotalBookings | count}}</td>
+        </tr>
+        <tr>
+            <th>Totalt bokningsvärde</th>
+            <td>{{location.TotalBookingValue | kr}}</td>
+        </tr>
+
+    </table>
+
+    <button ng-click="back()">Tillbaka</button>
+
+</section>
+

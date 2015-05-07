@@ -3,6 +3,7 @@ html {
 }
 
 body {
+    text-align: center;
     background: #F2F1EF;
     /*font-family: 'Open Sans', sans-serif;*/
     font-family: 'Oxygen', sans-serif;
@@ -91,8 +92,8 @@ header {
 }
 
     header h1 {
-        float: left;
-        margin: 0;
+        display: inline-block;
+        margin: 0 10px 0 0;
         font-size: 26px;
         line-height: 60px;
         background: url('../img/icons/logo.svg') left no-repeat;
@@ -106,34 +107,37 @@ header {
     header .header-button-add {
         display: block;
         position: absolute;
-        top: 5px;
-        right: 120px;
+        top: 8px;
+        right: 128px;
         background: url('../img/icons/add.svg') no-repeat;
         width: 50px;
         height: 50px;
+        border-radius: 3px;
     }
 
     header .header-button-search {
         display: block;
         position: absolute;
-        top: 5px;
-        right: 60px;
+        top: 8px;
+        right: 68px;
         background: url('../img/icons/search.svg') no-repeat;
         width: 50px;
         height: 50px;
+        border-radius: 3px;
     }
 
-    header .header-button-logout {
+    header .header-button-user {
         display: block;
         position: absolute;
-        top: 5px;
-        right: 0;
-        background: url('../img/icons/logout.svg') no-repeat;
+        top: 8px;
+        right: 8px;
+        background: url('../img/icons/user.svg') no-repeat;
         width: 50px;
         height: 50px;
+        border-radius: 3px;
     }
 
-    header .header-button-add:hover, header .header-button-logout:hover, header .header-button-search:hover {
+    header .header-button-add:hover, header .header-button-user:hover, header .header-button-search:hover {
         cursor: pointer;
         background-color: #AAAAAA;
     }
@@ -141,7 +145,7 @@ header {
     header nav.main-menu {
         display: inline-block;
         color: #FFFFFF;
-        margin: 0 0 0 10px;
+        margin: 0;
     }
 
         header nav.main-menu ul {
@@ -149,10 +153,11 @@ header {
             padding: 0;
             display: block;
             /*border-left: 1px solid #263145;*/
-
+            border-right: 1px solid #666666;
         }
             header nav.main-menu ul li {
                 display: inline-block;
+                border-left: 1px solid #666666;
             }
 
             header nav.main-menu ul li a {
@@ -199,17 +204,25 @@ header {
         -webkit-box-shadow: 0px 0px 4px 0px rgba(50, 50, 50, 0.5);
         -moz-box-shadow:    0px 0px 4px 0px rgba(50, 50, 50, 0.5);
         box-shadow:         0px 0px 4px 0px rgba(50, 50, 50, 0.5);
+
+        text-align: left;
     }
 
         header nav.sub-menu ul {
+            width: 840px;
             display: block;
-            margin: 0;
+            margin: 0 auto;
             padding: 0;
         }
 
             header nav.sub-menu ul li {
                 display: inline-block;
             }
+
+                header nav.sub-menu ul li:first-child {
+                    border-left: 1px solid #EEEEEE;
+                    /*margin: 0 0 0 242px;*/
+                }
 
                 header nav.sub-menu ul li a {
                     display: inline-block;
@@ -235,6 +248,7 @@ header {
                     }
 
 section.search-form-container, section.add-form-container {
+    z-index: 5;
     text-align: center;
     min-height: 300px;
     top: 60px;
@@ -347,11 +361,11 @@ section.flash-message-container {
     }
 
 section.content-container {
+    text-align: left;
     position: relative;
-    float: left;
-    width: 600px;
+    width: 840px; /* 600 */
     line-height: 25px;
-    margin: 20px;
+    margin: 20px auto;
     padding: 15px;
     background: #FFFFFF;
 
@@ -373,7 +387,10 @@ section.content-container {
     section.content-container form {
         font-size: 14px;
         background: #FFFFFF;
-        padding: 25px 15px;
+        padding: 25px;
+        width: 630px;
+
+        margin: 0 auto 25px auto;
 
         border-radius: 2px;
 
@@ -433,7 +450,7 @@ section.content-container {
         section.content-container form input {
             background: #FFFFFF;
             display: block;
-            width: 535px;
+            width: 600px;
             padding: 3px 12px;
 
             border: 1px solid #CCCCCC;
@@ -458,12 +475,37 @@ section.content-container {
             box-shadow:         0 0 10px rgba(0, 0, 255, 0.2);
         }
 
+    section.content-container .show-table {
+        font-size: 14px;
+    }
+
+        section.content-container .show-table th {
+            padding: 0 10px 0 5px;
+            font-weight: normal;
+            color: #888888;
+            font-size: 12px;
+        }
+
+        section.content-container .show-table td {
+            font-size: 13px;
+        }
+
+        section.content-container .show-table th, section.content-container .show-table td {
+            text-align: left;
+            border-bottom: 1px solid #EEEEEE;
+            line-height: 32px;
+        }
+
     section.content-container .list-table {
         width: 100%;
         font-size: 13px;
         border: 1px solid #E0E0E0;
         border-right: none;
         border-collapse: collapse;
+    }
+
+    section.content-container .list-table div {
+        width: auto !important;
     }
 
     section.content-container .list-table tr:nth-child(odd) td {
@@ -520,7 +562,7 @@ section.content-container {
 
     section.content-container .list-table td.date {
         font-size: 10px;
-        width: 50px;
+        width: 55px;
     }
 
     section.content-container .calendar-container,
@@ -742,7 +784,7 @@ section.content-container {
                 right: 70%;
                 top: -10px;
 
-                width: 138px;
+                width: 138px !important;
                 height: 45px;
 
                 -webkit-box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.2);
@@ -767,6 +809,7 @@ section.content-container {
                     border-bottom: solid 6px transparent;
                 }
 
+                /*
             section.content-container .action-buttons-container .actions:before {
                 content: '';
                 position: absolute;
@@ -779,7 +822,7 @@ section.content-container {
                 border-left: solid 6px transparent;
                 border-bottom: solid 6px transparent;
             }
-
+            */
                 section.content-container .action-buttons-container .actions a {
                     margin: 0;
                     border-right: 1px solid #636E7A;

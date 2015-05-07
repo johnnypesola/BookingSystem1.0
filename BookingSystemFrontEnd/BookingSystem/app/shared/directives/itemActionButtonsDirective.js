@@ -62,6 +62,16 @@
                         $location.path( objectType + "/redigera/" + $scope.id );
                     };
 
+                    $scope.redirectToShowPage = function(){
+
+                        var objectType;
+
+                        // Get type of object to redirect to
+                        objectType = $location.path().split('/')[1];
+
+                        $location.path( objectType + "/visa/" + $scope.id );
+                    };
+
         /* Public methods END */
 
         /* Initialization START */

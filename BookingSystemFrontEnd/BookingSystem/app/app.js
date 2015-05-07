@@ -57,6 +57,9 @@
             }).
 
             // Locations
+            when('/platser/visa/:locationId', {
+                templateUrl: 'controllers/location/locationShow.html'
+            }).
             when('/platser/lista', {
                 templateUrl: 'controllers/location/locationList.html'
             }).
@@ -90,6 +93,9 @@
             postNumber : new RegExp("^[0-9]{3}\s[0-9]{2}$"),
             phoneNumber : new RegExp("^[0-9\-\s]*$")
         };
+
+        $rootScope.searchFormIsVisible = false;
+        $rootScope.addFormIsVisible = false;
     });
 
 

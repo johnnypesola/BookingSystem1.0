@@ -19,6 +19,55 @@
 
     })
 
+    // Show Controller
+    .controller('LocationShowCtrl', function($scope, Location, $routeParams, $location, $rootScope){
+
+            var that = this;
+
+        /* Private methods START */
+
+            /* Private methods START */
+
+            that.redirectToListPage = function(){
+                var objectType;
+
+                objectType = $location.path().split('/')[1];
+
+                // Go back to location list
+                $location.path(objectType + "/lista");
+            };
+
+            /* Private methods END */
+
+            /* Public methods START */
+
+            // Abort editing
+            $scope.back = function(){
+                that.redirectToListPage();
+            };
+
+        /* Initialization START */
+
+            var location = Location.get(
+                {
+                    locationId: $routeParams.locationId
+                }
+            );
+
+            // In case locations cannot be fetched, display an error to user.
+            location.$promise.catch(function(){
+
+                $rootScope.FlashMessage = {
+                    type: 'error',
+                    message: 'Platsen kunde inte hämtas, var god försök igen.'
+                };
+            });
+
+            $scope.location = location;
+
+        /* Initialization END */
+    })
+
     // List Controller
     .controller('LocationListCtrl', function($scope, Location, $rootScope){
 

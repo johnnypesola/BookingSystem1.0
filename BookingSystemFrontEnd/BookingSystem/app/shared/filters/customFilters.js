@@ -8,8 +8,12 @@
         // Custom filters
         .filter('kr', function() {
             return function (text) {
-                text = text.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");
-                var t = text + ' kr';
+                // Only filter when defined
+                if(typeof text !== 'undefined'){
+                    text = text.toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1 ");
+                    var t = text + ' kr';
+                }
+
                 return t;
             };
         })
@@ -29,6 +33,12 @@
         .filter('count', function() {
             return function(text) {
                 return text + ' st';
+            }
+        })
+
+        .filter('minutes', function() {
+            return function(text) {
+                return text + ' min';
             }
         })
 
