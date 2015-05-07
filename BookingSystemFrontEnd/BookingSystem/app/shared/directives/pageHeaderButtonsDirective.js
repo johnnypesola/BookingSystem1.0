@@ -28,6 +28,8 @@
                         // Get type of object to redirect to
                         $scope.objectType = $location.path().split('/')[1];
 
+                        $scope.activePage = $location.path().split('/')[2];
+
                     /* Initialization END */
 
                 }

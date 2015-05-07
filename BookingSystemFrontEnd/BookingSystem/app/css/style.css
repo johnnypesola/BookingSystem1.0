@@ -480,7 +480,7 @@ section.content-container {
     }
 
         section.content-container .show-table th {
-            padding: 0 10px 0 5px;
+            padding: 0 20px 0 5px;
             font-weight: normal;
             color: #888888;
             font-size: 12px;
@@ -745,9 +745,16 @@ section.content-container {
                 background-position: -121px 7px;
             }
 
-
             section.content-container .page-header-icons-container a:hover {
                 background-color: #FFD77F;
+            }
+
+            section.content-container .page-header-icons-container a.active {
+                background-color: #E0E0E0;
+
+                -webkit-box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+                -moz-box-shadow:    inset 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
+                box-shadow:         inset 0px 0px 5px 0px rgba(0, 0, 0, 0.1);
             }
 
         section.content-container img.data-pre-loader {
