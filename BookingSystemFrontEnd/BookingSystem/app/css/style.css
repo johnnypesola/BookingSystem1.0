@@ -741,6 +741,11 @@ section.content-container {
                 background-position: -92px 7px;
             }
 
+            section.content-container .page-header-icons-container a.search {
+                background-position: -121px 7px;
+            }
+
+
             section.content-container .page-header-icons-container a:hover {
                 background-color: #FFD77F;
             }

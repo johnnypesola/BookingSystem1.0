@@ -4,14 +4,13 @@
         Lista över Bokningstillfällen
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
-    <div class="page-header-icons-container">
-        <a class="calendar" href="#/bokningstillfallen/kalender"></a>
-        <a class="list" href="#/bokningstillfallen/lista"></a>
-        <!--
-        <a class="map" href="#/bokningstillfallen/lista"></a>
-        <a class="add" href="#/bokningstillfallen/lista"></a>
-        -->
-    </div>
+
+    <page-header-buttons
+        show-calendar="true"
+        show-list="true"
+        show-add="true"
+        show-search="true"
+        ></page-header-buttons>
 
     <section class="list-container">
 

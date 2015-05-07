@@ -10,7 +10,9 @@
         [
             'bookingSystem.locationServices',
             'bookingSystem.customFilters',
-            'bookingSystem.itemActionButtonsDirective'
+            'bookingSystem.itemActionButtonsDirective',
+            'bookingSystem.pageHeaderButtonsDirective'
+
         ]
     )
 

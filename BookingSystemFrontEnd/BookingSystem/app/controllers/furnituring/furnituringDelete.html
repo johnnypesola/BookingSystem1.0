@@ -3,10 +3,11 @@
         Radera möblering
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
-    <div class="page-header-icons-container">
-        <a class="list" href="#/mobleringar/lista"></a>
-        <a class="add" href="#/mobleringar/skapa"></a>
-    </div>
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
 
     <div class="align-center">
     <p>Vill du verkligen radera möbleringen <strong class="text-dark-purple">{{furnituring.Name}}</strong>?</p>
