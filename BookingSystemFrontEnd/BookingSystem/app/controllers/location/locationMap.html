@@ -8,14 +8,65 @@
             show-add="true"
             show-map="true"
             show-search="true"
-            ></page-header-buttons>
+            >
+    </page-header-buttons>
 
     <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" bounds="map.bounds">
-        <ui-gmap-markers models="markers" coords="'self'" icon="'icon'">
+        <ui-gmap-markers
+                models="markers"
+                coords="'coords'"
+                icon="'icon'"
+                title="'title'"
+                click="showLocation"
+                fit="true"
+                show="false"
+                >
+
+            <ui-gmap-windows closeClick="'hideLocation'">
+                <div ng-non-bindable>{{title}}</div>
+            </ui-gmap-windows>
+
         </ui-gmap-markers>
     </ui-gmap-google-map>
 
-    <button ng-click="back()">Tillbaka</button>
+    <div class="map-location-info-container" ng-show="visibleLocation">
+        <h3>{{visibleLocation.Name}}</h3>
+        <table class="show-table">
+            <tr>
+                <th>Max personer (st)</th>
+                <td>{{visibleLocation.MaxPeople | count}}</td>
+            </tr>
+            <tr>
+                <th>GPS Latitud</th>
+                <td>{{visibleLocation.GPSLatitude}}</td>
+            </tr>
+            <tr>
+                <th>GPS Longitud</th>
+                <td>{{visibleLocation.GPSLongitude}}</td>
+            </tr>
+            <tr>
+                <th>Bokningspris per timme (kr)</th>
+                <td>{{visibleLocation.BookingPricePerHour | kr}}</td>
+            </tr>
+            <tr>
+                <th>Marginal efter bokning (minuter)</th>
+                <td>{{visibleLocation.MinutesMarginAfterBooking | minutes}}</td>
+            </tr>
+            <tr>
+                <th>Totalt antal bokningar</th>
+                <td>{{visibleLocation.TotalBookings | count}}</td>
+            </tr>
+            <tr>
+                <th>Totalt bokningsvärde</th>
+                <td>{{visibleLocation.TotalBookingValue | kr}}</td>
+            </tr>
+        </table>
+
+        <img src="img/icons/photo_missing.svg">
+    </div>
+
+    <button ng-click="back()">Tillbaka</button> <button ng-click="edit()" ng-show="visibleLocation">Redigera</button>
+
 
 </section>
 

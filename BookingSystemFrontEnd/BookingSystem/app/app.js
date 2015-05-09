@@ -14,8 +14,7 @@
         'bookingSystem.booking',
         'bookingSystem.furnituring',
         'bookingSystem.location',
-        'bookingSystem.loadingDirective',
-        'uiGmapgoogle-maps' // Google maps API
+        'bookingSystem.loadingDirective'
     ]);
 
     // Define API url, used in services
@@ -26,7 +25,7 @@
     'http://192.168.1.4:8080/BookingSystem/api/');
     */
 
-    BookingSystem.config(function($routeProvider, uiGmapGoogleMapApiProvider) {
+    BookingSystem.config(function($routeProvider) {
 
         // Declare basic routes
         $routeProvider.
@@ -81,14 +80,6 @@
             otherwise({
                 templateUrl: 'shared/views/notFound.html'
             });
-
-
-        // Google maps API
-        uiGmapGoogleMapApiProvider.configure({
-            //    key: 'your api key',
-            v: '3.17',
-            libraries: 'weather,geometry,visualization'
-        });
     });
 
 
@@ -105,8 +96,18 @@
             phoneNumber : new RegExp("^[0-9\-\s]*$")
         };
 
+        // Form visibility
         $rootScope.searchFormIsVisible = false;
         $rootScope.addFormIsVisible = false;
+
+        // Google maps defaults
+        $rootScope.googleMapsDefaults = {
+            center: {
+                latitude: 59.9,
+                longitude: 15.8
+            },
+            zoom: 1
+        }
     });
 
 

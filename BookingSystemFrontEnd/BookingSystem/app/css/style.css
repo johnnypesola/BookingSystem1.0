@@ -761,6 +761,23 @@ section.content-container {
 
         }
 
+        section.content-container .map-location-info-container {
+            position: relative;
+            text-align: center;
+        }
+
+            section.content-container .map-location-info-container table {
+                margin: 0 0 0 50px;
+            }
+
+            section.content-container .map-location-info-container img {
+                width: 300px;
+                height: 300px;
+                position: absolute;
+                top: 50px;
+                right: 50px;
+            }
+
         section.content-container .action-buttons-container {
             position: relative;
             width: 25px;
@@ -866,7 +883,11 @@ section.content-container {
 }
 
 .align-center {
-    text-align: center;
+    text-align: center !important;
+}
+
+.place-in-center {
+    margin: 0 auto;
 }
 
 /* Colors */

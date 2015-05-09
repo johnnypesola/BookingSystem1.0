@@ -1,0 +1,65 @@
+<section class="content-container" ng-controller="LocationMapCtrl">
+    <h2>
+        Visa Lokaler/Platser på karta
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-map="true"
+            show-search="true"
+            >
+    </page-header-buttons>
+
+    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" bounds="map.bounds">
+        <ui-gmap-markers
+                models="markers"
+                coords="'coords'"
+                icon="'icon'"
+                title="'title'"
+                click="showLocation"
+                fit="true"
+                >
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
+
+    <table class="show-table place-in-center" ng-show="visibleLocation" >
+        <tr>
+            <th>Namn</th>
+            <td>{{visibleLocation.Name}}</td>
+        </tr>
+        <tr>
+            <th>Max personer (st)</th>
+            <td>{{visibleLocation.MaxPeople | count}}</td>
+        </tr>
+        <tr>
+            <th>GPS Latitud</th>
+            <td>{{visibleLocation.GPSLatitude}}</td>
+        </tr>
+        <tr>
+            <th>GPS Longitud</th>
+            <td>{{visibleLocation.GPSLongitude}}</td>
+        </tr>
+        <tr>
+            <th>Bokningspris per timme (kr)</th>
+            <td>{{visibleLocation.BookingPricePerHour | kr}}</td>
+        </tr>
+        <tr>
+            <th>Marginal efter bokning (minuter)</th>
+            <td>{{visibleLocation.MinutesMarginAfterBooking | minutes}}</td>
+        </tr>
+        <tr>
+            <th>Totalt antal bokningar</th>
+            <td>{{visibleLocation.TotalBookings | count}}</td>
+        </tr>
+        <tr>
+            <th>Totalt bokningsvärde</th>
+            <td>{{visibleLocation.TotalBookingValue | kr}}</td>
+        </tr>
+
+    </table>
+
+    <button ng-click="back()">Tillbaka</button>
+
+</section>
+

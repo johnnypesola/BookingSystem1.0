@@ -10,6 +10,17 @@
             show-search="true"
     ></page-header-buttons>
 
+    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" bounds="map.bounds" events="map.events">
+        <ui-gmap-markers
+                models="markers"
+                coords="'coords'"
+                options="options"
+                events="events"
+                fit="true"
+                >
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
+
     <form name="locationForm">
         <label>Namn
             <span ng-show="locationForm.name.$error.required">Var god ange</span>
@@ -50,7 +61,7 @@
         </label>
         <input type="number" min="0" max="{{Int16MaxValue}}" name="minutesMarginAfterBooking" ng-model="location.MinutesMarginAfterBooking">
 
-        <button ng-click="save()" ng-disabled="!locationForm.$valid">Skapa</button>
+        <button ng-click="save()" ng-disabled="!locationForm.$valid">Spara</button>
         <button ng-click="abort()">Avbryt</button>
 
     </form>

@@ -204,7 +204,7 @@
     .controller('LocationEditCtrl', function($scope, $routeParams, $location, $rootScope, $timeout, Location){
 
             var that = this;
-                $scope.markers = [];
+                $scope.markers = {};
                 $scope.coordsUpdates = 0;
 
         /* Private methods START */
@@ -224,54 +224,42 @@
                 $scope.map = {
                     center: $rootScope.googleMapsDefaults.center,
                     zoom: $rootScope.googleMapsDefaults.zoom,
-                    bounds: {},
-                    options: { mapTypeId: google.maps.MapTypeId.SATELLITE }, // Make satellite view default
-                    events: {
-                        click: function (map, eventName, args) {
-                            that.addClickCordsToObjects(map, eventName, args);
-                        }
-                    }
+                    bounds: {}
                 };
-            };
-
-            that.addClickCordsToObjects = function(map, eventName, args) {
-
-                // Refresh location variables
-                $scope.location.GPSLatitude = args[0].latLng.lat();
-                $scope.location.GPSLongitude = args[0].latLng.lng();
-
-                // Refresh map marker variables
-                $scope.markers[0].coords = {
-                    latitude : args[0].latLng.lat(),
-                    longitude : args[0].latLng.lng()
-                };
-
-                $scope.$apply();
             };
 
             // Convert markers from data fetched from backend to match google maps format.
             that.convertMarkers = function() {
 
-                $scope.markers.push(
-                    {
-                        id: that.location.LocationId,
-                        coords: {
-                            latitude: that.location.GPSLatitude,
-                            longitude: that.location.GPSLongitude
+                $scope.marker = {
+                    id : that.location.LocationId,
+                    coords: { latitude : that.location.GPSLatitude, longitude : that.location.GPSLongitude },
+                    options : { draggable: true },
+                    events: {
+                        dragend: function (marker, eventName, args) {
+                            /*
+                            $scope.location.GPSLatitude = marker.getPosition().lat();
+                            $scope.location.GPSLongitude = marker.getPosition().lng();
+                            */
+                            /*
+                            $scope.marker.options = {
+                                draggable: true,
+                                labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+                                labelAnchor: "100 0",
+                                labelClass: "marker-labels"
+                            };
+                            */
                         }
                     }
-                );
+                }
+
             };
+
+
 
         /* Private methods END */
 
         /* Public methods START */
-
-            // On marker drag end
-            $scope.onMarkerDragEnd = function($event) {
-                $scope.location.GPSLatitude = $event.position.lat();
-                $scope.location.GPSLongitude = $event.position.lng();
-            };
 
             // Abort editing
             $scope.abort = function(){
@@ -336,7 +324,6 @@
                         }
                     });
             };
-
 
         /* Public methods END */
 
@@ -508,36 +495,20 @@
                 $location.path(objectType + "/lista");
             };
 
-            that.redirectToEditPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/redigera/" + $scope.visibleLocation.LocationId);
-            };
-
             // Convert markers from data fetched from backend to match google maps format.
             that.convertMarkers = function() {
-                that.locations.forEach(function(location, index, array){
+                that.locations.forEach(function(location){
                     $scope.markers.push(
                         {
                             id : location.LocationId,
-                            coords : { latitude : location.GPSLatitude, longitude : location.GPSLongitude },
-                            title : location.Name
+                            coords: { latitude : location.GPSLatitude, longitude : location.GPSLongitude },
+
+                            // Define OnClick function, show more info about the location to the user.
+                            showLocation : function(){
+                                $scope.visibleLocation = location;
+                            }
                         }
                     );
-                    // Define OnClick function, show more info about the location to the user.
-                    $scope.markers[index].showLocation = function() {
-
-                        $scope.markers[index].show = true;
-                        $scope.visibleLocation = location;
-                    };
-                    $scope.markers[index].hideLocation = function() {
-
-                        $scope.visibleLocation = null;
-                    }
-
                 });
             };
 
@@ -557,14 +528,9 @@
 
         /* Public methods START */
 
-            // Back
+            // Abort editing
             $scope.back = function(){
                 that.redirectToListPage();
-            };
-
-            // Back
-            $scope.edit = function(){
-                that.redirectToEditPage();
             };
 
         /* Public methods END */
