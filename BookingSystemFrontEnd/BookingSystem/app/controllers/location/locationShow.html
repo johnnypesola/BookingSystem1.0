@@ -10,6 +10,17 @@
             show-search="true"
     ></page-header-buttons>
 
+    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" bounds="map.bounds" events="map.events">
+        <ui-gmap-markers
+                models="markers"
+                coords="'coords'"
+                options="options"
+                events="events"
+                fit="true"
+                >
+        </ui-gmap-markers>
+    </ui-gmap-google-map>
+
     <table class="show-table">
         <tr>
             <th>Namn</th>

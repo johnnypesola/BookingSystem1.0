@@ -60,12 +60,16 @@
                 <th>Totalt bokningsvärde</th>
                 <td>{{visibleLocation.TotalBookingValue | kr}}</td>
             </tr>
+            <tr>
+                <th>Alternativ</th>
+                <td><div class="place-left" item-action-buttons="visibleLocation.LocationId"></div></td>
+            </tr>
         </table>
 
         <img src="img/icons/photo_missing.svg">
     </div>
 
-    <button ng-click="back()">Tillbaka</button> <button ng-click="edit()" ng-show="visibleLocation">Redigera</button>
+    <button ng-click="back()">Tillbaka</button>
 
 
 </section>

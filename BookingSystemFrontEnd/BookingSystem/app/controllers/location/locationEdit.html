@@ -21,6 +21,8 @@
         </ui-gmap-markers>
     </ui-gmap-google-map>
 
+    <image-uploader></image-uploader>
+
     <form name="locationForm">
         <label>Namn
             <span ng-show="locationForm.name.$error.required">Var god ange</span>
@@ -36,12 +38,6 @@
             <span ng-show="locationForm.maxPeople.$error.min">Får vara minst 0</span>
         </label>
         <input type="number" min="0" max="{{Int16MaxValue}}" name="maxPeople" ng-model="location.MaxPeople" required >
-
-        <label>GPS Latitud</label>
-        <input type="text" name="gps-latitude" ng-model="location.GPSLatitude">
-
-        <label>GPS Longitud</label>
-        <input type="text" name="gps-longitude" ng-model="location.GPSLongitude">
 
         <label>Sökväg till bild</label>
         <input type="text" name="image-src" ng-model="location.ImageSrc">

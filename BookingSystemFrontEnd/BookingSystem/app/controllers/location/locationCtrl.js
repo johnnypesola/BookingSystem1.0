@@ -12,6 +12,7 @@
             'bookingSystem.customFilters',
             'bookingSystem.itemActionButtonsDirective',
             'bookingSystem.pageHeaderButtonsDirective',
+            'bookingSystem.imageUploaderDirective',
             'uiGmapgoogle-maps' // Google maps API
         ]
     )
@@ -32,10 +33,9 @@
     .controller('LocationShowCtrl', function($scope, Location, $routeParams, $location, $rootScope){
 
             var that = this;
+            $scope.markers = [];
 
         /* Private methods START */
-
-            /* Private methods START */
 
             that.redirectToListPage = function(){
                 var objectType;
@@ -46,35 +46,86 @@
                 $location.path(objectType + "/lista");
             };
 
-            /* Private methods END */
+            // Add default map variables to scope
+            that.initMapVariables = function() {
 
-            /* Public methods START */
-
-                // Abort editing
-                $scope.back = function(){
-                    that.redirectToListPage();
+                $scope.map = {
+                    center: $rootScope.googleMapsDefaults.center,
+                    zoom: $rootScope.googleMapsDefaults.zoom,
+                    bounds: {},
+                    options: { mapTypeId: google.maps.MapTypeId.SATELLITE } // Make satellite view default
                 };
+            };
 
-            /* Public methods END */
+            // Convert markers from data fetched from backend to match google maps format.
+            that.convertMarkers = function() {
+
+                $scope.markers.push(
+                    {
+                        id: that.location.LocationId,
+                        coords: {
+                            latitude: that.location.GPSLatitude,
+                            longitude: that.location.GPSLongitude
+                        }
+                    }
+                );
+            };
+
+        /* Private methods END */
+
+        /* Public methods START */
+
+            // Abort editing
+            $scope.back = function(){
+                that.redirectToListPage();
+            };
+
+        /* Public methods END */
 
         /* Initialization START */
 
-            var location = Location.get(
+            that.location = Location.get(
                 {
                     locationId: $routeParams.locationId
                 }
             );
 
             // In case locations cannot be fetched, display an error to user.
-            location.$promise.catch(function(){
+            that.location.$promise.catch(function(){
 
                 $rootScope.FlashMessage = {
                     type: 'error',
                     message: 'Platsen kunde inte hämtas, var god försök igen.'
                 };
+            })
+
+            // When location has been fetched
+            .then(function(){
+
+                // Add locations to public scope
+                $scope.location = that.location;
+
+                // Init map variables
+                that.initMapVariables();
+
+                // Add watch on $scope.map.bounds to check (every time it changes) if return boundary data is received from google maps
+                $scope.$watch(
+                    // Get $scope.map.bounds on change
+                    function() {return $scope.map.bounds;},
+
+                    // Do the following on change
+                    function(nv, ov) {
+
+                        // Only need to regenerate once
+                        if (!ov.southwest && nv.southwest) {
+
+                            that.convertMarkers();
+                        }
+                    },
+                    true
+                );
             });
 
-            $scope.location = location;
 
         /* Initialization END */
     })
@@ -205,7 +256,6 @@
 
             var that = this;
                 $scope.markers = [];
-                $scope.coordsUpdates = 0;
 
         /* Private methods START */
 
@@ -228,13 +278,14 @@
                     options: { mapTypeId: google.maps.MapTypeId.SATELLITE }, // Make satellite view default
                     events: {
                         click: function (map, eventName, args) {
-                            that.addClickCordsToObjects(map, eventName, args);
+                            that.moveMarkerOnClick(map, eventName, args);
                         }
                     }
                 };
             };
 
-            that.addClickCordsToObjects = function(map, eventName, args) {
+
+            that.moveMarkerOnClick = function(map, eventName, args) {
 
                 // Refresh location variables
                 $scope.location.GPSLatitude = args[0].latLng.lat();
@@ -369,18 +420,23 @@
                 that.initMapVariables();
 
 
-                    // Add watch to check if return boundary data is received from google maps
-                    $scope.$watch(function() {
-                        return $scope.map.bounds;
-                    }, function(nv, ov) {
+                // Add watch on $scope.map.bounds to check (every time it changes) if return boundary data is received from google maps
+                $scope.$watch(
+                    // Get $scope.map.bounds on change
+                    function() {return $scope.map.bounds;},
+
+                    // Do the following on change
+                    function(nv, ov) {
 
                         // Only need to regenerate once
                         if (!ov.southwest && nv.southwest) {
 
                             that.convertMarkers();
                         }
-                    }, true);
-                });
+                    },
+                    true
+                );
+            });
 
         /* Initialization END */
     })
@@ -591,17 +647,22 @@
                 // Init map variables
                 that.initMapVariables();
 
-                // Add watch to check if return boundary data is received from google maps
-                $scope.$watch(function() {
-                    return $scope.map.bounds;
-                }, function(nv, ov) {
+                // Add watch on $scope.map.bounds to check (every time it changes) if return boundary data is received from google maps
+                $scope.$watch(
+                    // Get $scope.map.bounds on change
+                    function() {return $scope.map.bounds;},
 
-                    // Only need to regenerate once
-                    if (!ov.southwest && nv.southwest) {
+                    // Do the following on change
+                    function(nv, ov) {
 
-                        that.convertMarkers();
-                    }
-                }, true);
+                        // Only need to regenerate once
+                        if (!ov.southwest && nv.southwest) {
+
+                            that.convertMarkers();
+                        }
+                    },
+                    true
+                );
             });
 
         /* Initialization END */

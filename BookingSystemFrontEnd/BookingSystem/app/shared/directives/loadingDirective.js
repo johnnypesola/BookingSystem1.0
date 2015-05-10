@@ -2,7 +2,6 @@
  * Created by jopes on 2015-05-01.
  */
 
-
 (function(){
     // Declare module
     angular.module('bookingSystem.loadingDirective',

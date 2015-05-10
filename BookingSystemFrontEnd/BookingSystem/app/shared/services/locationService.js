@@ -35,6 +35,22 @@
              }).success(callback);
              }
              */
-        });
+        })
 
+        .factory('LocationImage', function($resource, API_URL){
+
+            return $resource(
+                API_URL + 'Location/images/:locationId',
+                {locationId: '@locationId'},
+                {
+                    save: {
+                        method: 'POST',
+                        transformRequest: formDataObject,
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }
+                }
+            );
+        });
 })();
