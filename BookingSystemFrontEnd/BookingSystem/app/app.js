@@ -19,6 +19,9 @@
 
     // Define API url, used in services
     BookingSystem.constant('API_URL', 'http://localhost:6796/api/');
+    BookingSystem.constant('UPLOAD_IMG_MAX_WIDTH', '400');
+    BookingSystem.constant('UPLOAD_IMG_MAX_HEIGHT', '400');
+
     /*
 
     'http://localhost:6796/'

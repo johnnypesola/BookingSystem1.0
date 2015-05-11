@@ -37,6 +37,31 @@
              */
         })
 
+        .factory('LocationImage', function($http, API_URL) {
+
+
+            return {
+                upload : function(imageData, locationId) {
+
+                    return $http(
+                        {
+                            method: 'POST',
+                            url: API_URL + 'Location/image/' + locationId,
+                            data: imageData,
+                            headers: {'Content-Type': undefined}
+                        }
+                    );
+                    /*
+                     .success(function(data, status, headers, config) {
+
+                     });
+                     */
+                }
+            }
+
+        });
+
+        /*
         .factory('LocationImage', function($resource, API_URL){
 
             return $resource(
@@ -53,4 +78,5 @@
                 }
             );
         });
+        */
 })();

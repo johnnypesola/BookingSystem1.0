@@ -2,8 +2,5 @@
     <div>
         <input image-uploader-file="" type="file"  id="image-uploader" name="file" ng-model="selectedFile" ng-change="fileSelected()"/>
     </div>
-
-    <progress ng-show="isProgressVisible" value="{{progress}}"></progress>
-    <p>{{data}}</p>
     <img ng-show="imageSrc" ng-src="{{imageSrc}}">
 </div>

@@ -13,6 +13,7 @@
             'bookingSystem.itemActionButtonsDirective',
             'bookingSystem.pageHeaderButtonsDirective',
             'bookingSystem.imageUploaderDirective',
+            'bookingSystem.imageResizeServices',
             'uiGmapgoogle-maps' // Google maps API
         ]
     )

@@ -7,10 +7,12 @@
     angular.module('bookingSystem.imageUploaderDirective',
 
         // Dependencies
-        [])
+        [
+            'bookingSystem.imageResizeServices'
+        ])
 
         // Directive specific controllers START
-        .controller('imageUploaderCtrl', function($scope, $q, $element, $attrs, Booking, $rootScope) {
+        .controller('imageUploaderCtrl', function($scope, $q, $element, $attrs, $rootScope, LocationImage, ImageResize) {
 
             /* Declare variables START */
             var that = this,
@@ -29,7 +31,38 @@
                     return function () {
                         $scope.$apply(function () {
                             // Success
-                            deferred.resolve(reader.result);
+
+                            var imgData = ImageResize.scaleImage(reader.result);
+                            var UploadObj;
+                            var UploadString;
+
+                            if($attrs.type === "Location"){
+
+                                UploadString = imgData.replace(/^data:image\/jpeg;base64,/, "");
+
+                                UploadObj = LocationImage.upload(UploadString, $attrs.id);
+                            }
+
+                            UploadObj
+                            .success(function(){
+
+                                $rootScope.FlashMessage = {
+                                    type: 'success',
+                                    message: 'Bilden laddades upp och sparades.'
+                                };
+
+                                deferred.resolve(imgData)
+
+
+                            })
+                            .error(function(){
+
+                                $rootScope.FlashMessage = {
+                                    type: 'error',
+                                    message: 'Det gick inte att ladda upp och spara den önskade bilden.'
+                                };
+                            })
+
                         });
                     };
                 };
@@ -45,15 +78,7 @@
 
                 that.onProgress = function(reader) {
                     return function (event) {
-                         var progress;
-                        // Calculate progress
-                        progress = event.loaded / event.total;
 
-                        // Show progressbar if it hasn't finished.
-                        $scope.isProgressVisible = (progress !== 0 && progress !== 1);
-
-                        // Add progress to scope.
-                        $scope.progress = progress
                     };
                 };
 
@@ -110,11 +135,7 @@
             /* Initialization START */
 
                 // Update progressbar on upload file progress
-            /*
-                $scope.$on("fileProgress", function(e, progress) {
-                    $scope.progress = progress.loaded / progress.total;
-                });
-            */
+
             /* Initialization END */
 
         })
@@ -148,7 +169,9 @@
                         file = (event.srcElement || event.target).files[0];
 
                         $scope.readUploadedFile(file).then(function(result) {
+
                             $scope.imageSrc = result;
+
                         });
                     });
                 }

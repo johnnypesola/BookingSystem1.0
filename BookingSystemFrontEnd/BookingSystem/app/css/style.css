@@ -801,6 +801,7 @@ section.content-container {
             width: 400px;
             height: 400px;
             /*border: 3px dashed #EEEEEE;*/
+            background: #EEEEEE;
         }
 
             section.content-container .image-uploader-container input[type=file] {
@@ -828,9 +829,11 @@ section.content-container {
             }
 
             section.content-container .image-uploader-container img {
+
                 position: absolute;
-                top: 0;
-                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+
                 z-index: 0;
                 max-height: 400px;
                 max-width: 400px;
@@ -843,7 +846,7 @@ section.content-container {
                 left: 0;
                 height: 40px;
                 z-index: 1;
-                background: rgba(255, 255, 255, 0.5);
+                background: rgba(230, 230, 230, 0.5);
                 text-align: center;
             }
 
@@ -1060,8 +1063,8 @@ section.content-container {
     }
 
     .angular-google-map {
-        width: 435px;
-        display: inline-block;
+        /*width: 435px;
+        display: inline-block;*/
     }
 
     .angular-google-map .angular-google-map-container {

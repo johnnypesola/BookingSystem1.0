@@ -7,6 +7,9 @@ using System.Web.Http;
 using BookingSystem.Models;
 using System.Web.Http.Cors;
 using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Web;
 
 namespace BookingSystem.Controllers
 {
@@ -112,6 +115,52 @@ namespace BookingSystem.Controllers
             }
 
             return Ok();
+        }
+
+        // POST a picture for a location
+        [Route("api/Location/image/{id:int}")]
+        [AcceptVerbs("POST")]
+        [HttpPost]
+        public IHttpActionResult Post(int id)
+        {
+            MemoryStream ms;
+            string base64string;
+            byte[] bytes;
+            Image image;
+            const string IMAGE_PATH = "Content/upload/img/location";
+            string UploadImagePath;
+
+            base64string = Request.Content.ReadAsStringAsync().Result;
+
+            try
+            {
+                bytes = Convert.FromBase64String(base64string);
+
+                using (ms = new MemoryStream(bytes))
+                {
+                    image = Image.FromStream(ms);
+
+                    if (
+                        image.Width > 400 ||
+                        image.Height > 400 ||
+                        image.Width < 10 ||
+                        image.Height < 10
+                       )
+                    {
+                        throw new BadImageFormatException();
+                    }
+
+                    UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@"~/{0}", IMAGE_PATH));
+
+                    image.Save(String.Format("{0}/{1}.jpg", UploadImagePath, id), System.Drawing.Imaging.ImageFormat.Jpeg);
+                }
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            return Ok(String.Format("{0}.jpg", id));
         }
     }
 }
