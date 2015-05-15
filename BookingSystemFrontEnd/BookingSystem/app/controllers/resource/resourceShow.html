@@ -1,0 +1,51 @@
+<section class="content-container" ng-controller="FurnituringShowCtrl">
+    <h2>
+        Visa Lokal/Plats
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
+
+    <table class="show-table">
+        <tr>
+            <th>Namn</th>
+            <td>{{furnituring.Name}}</td>
+        </tr>
+        <tr>
+            <th>Max personer (st)</th>
+            <td>{{furnituring.MaxPeople | count}}</td>
+        </tr>
+        <tr>
+            <th>GPS Latitud</th>
+            <td>{{furnituring.GPSLatitude}}</td>
+        </tr>
+        <tr>
+            <th>GPS Longitud</th>
+            <td>{{furnituring.GPSLongitude}}</td>
+        </tr>
+        <tr>
+            <th>Bokningspris per timme (kr)</th>
+            <td>{{furnituring.BookingPricePerHour | kr}}</td>
+        </tr>
+        <tr>
+            <th>Marginal efter bokning (minuter)</th>
+            <td>{{furnituring.MinutesMarginAfterBooking | minutes}}</td>
+        </tr>
+        <tr>
+            <th>Totalt antal bokningar</th>
+            <td>{{furnituring.TotalBookings | count}}</td>
+        </tr>
+        <tr>
+            <th>Totalt bokningsvärde</th>
+            <td>{{furnituring.TotalBookingValue | kr}}</td>
+        </tr>
+
+    </table>
+
+    <button ng-click="back()">Tillbaka</button>
+
+</section>
+

@@ -86,6 +86,7 @@ namespace BookingSystem.Models
             } // Connection is closed here
         }
 
+        /*
         public Location GetLocationByName(string locationName)
         {
             // Create connection object
@@ -136,6 +137,8 @@ namespace BookingSystem.Models
                 }
             } // Connection is closed here
         }
+        */
+
 
         public IEnumerable<Location> GetLocations()
         {
@@ -271,7 +274,7 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add("@GPSLatitude", SqlDbType.Decimal).Value = location.GPSLatitude;
                     cmd.Parameters.Add("@ImageSrc", SqlDbType.VarChar, 50).Value = location.ImageSrc;
                     cmd.Parameters.Add("@BookingPricePerHour", SqlDbType.Decimal).Value = location.BookingPricePerHour;
-                    cmd.Parameters.Add("@MinutesMarginAfterBooking", SqlDbType.Decimal).Value = location.MinutesMarginAfterBooking;
+                    cmd.Parameters.Add("@MinutesMarginAfterBooking", SqlDbType.SmallInt).Value = location.MinutesMarginAfterBooking;
 
                     // Add out parameter for Stored procedure
                     cmd.Parameters.Add("@InsertId", SqlDbType.Int).Direction = ParameterDirection.Output;

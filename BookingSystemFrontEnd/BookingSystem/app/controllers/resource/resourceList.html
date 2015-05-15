@@ -1,0 +1,30 @@
+<section class="content-container" ng-controller="FurnituringListCtrl">
+    <h2>
+        Lista över Möbleringar
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
+
+    <section class="list-container">
+
+        <table class="list-table">
+            <tr>
+                <th>Möbleringsnamn</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="furnituring in furniturings">
+                <td>
+                    {{furnituring.Name}}
+                </td>
+                <td class="align-right">
+                    <div item-action-buttons="furnituring.FurnituringId"></div>
+                </td>
+            </tr>
+        </table>
+    </section>
+</section>

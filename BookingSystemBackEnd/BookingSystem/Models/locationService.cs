@@ -30,7 +30,7 @@ namespace BookingSystem.Models
         {
             if (LocationId < 0)
             {
-                throw new FormatException("Invalid FunituringId");
+                throw new FormatException("Invalid LocationId");
             }
 
             // Check that the Location exists before deletion

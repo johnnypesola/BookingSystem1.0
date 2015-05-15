@@ -1,0 +1,20 @@
+<section class="content-container" ng-controller="FurnituringEditCtrl">
+    <h2>
+        Redigera möblering
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
+
+    <form name="furnituringForm">
+        <label>Namn</label>
+        <input type="text" name="name" ng-model="furnituring.Name" required>
+
+        <button ng-click="save()">Spara</button>
+        <button ng-click="abort()">Avbryt</button>
+
+    </form>
+</section>
