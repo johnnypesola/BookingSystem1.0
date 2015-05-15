@@ -12,7 +12,7 @@
         ])
 
         // Directive specific controllers START
-        .controller('imageUploaderCtrl', function($scope, $q, $element, $attrs, $rootScope, LocationImage, ImageResize) {
+        .controller('imageUploaderCtrl', function($scope, $q, $element, $attrs, $rootScope, LocationImage, ImageResize, API_IMG_PATH_URL) {
 
             /* Declare variables START */
             var that = this,
@@ -20,8 +20,6 @@
                 $scope.file = "";
                 $scope.progress = 0;
                 $scope.isProgressVisible = false;
-                $scope.imageSrc = 'img/icons/photo_missing.svg';
-
 
             /* Declare variables END */
 
@@ -30,27 +28,32 @@
                 that.onLoad = function(reader, deferred) {
                     return function () {
                         $scope.$apply(function () {
-                            // Success
 
+                            // Success
                             var imgData = ImageResize.scaleImage(reader.result);
                             var UploadObj;
                             var UploadString;
 
                             if($attrs.type === "Location"){
 
+                                // Remove invalid string
                                 UploadString = imgData.replace(/^data:image\/jpeg;base64,/, "");
 
                                 UploadObj = LocationImage.upload(UploadString, $attrs.id);
                             }
 
                             UploadObj
-                            .success(function(){
+                            .success(function(data){
 
                                 $rootScope.FlashMessage = {
                                     type: 'success',
                                     message: 'Bilden laddades upp och sparades.'
                                 };
 
+                                // Use the returned imgpath value from post request in parent scope image source
+                                $scope.imageSrc = data.imgpath;
+
+                                // Resolve promise
                                 deferred.resolve(imgData)
 
 
@@ -61,6 +64,8 @@
                                     type: 'error',
                                     message: 'Det gick inte att ladda upp och spara den önskade bilden.'
                                 };
+
+                                deferred.reject();
                             })
 
                         });
@@ -100,6 +105,18 @@
 
             /* Scope methods START */
 
+                // Add a watch on imageSrc, Controls what image should be displayed to user.
+                $scope.$watch('imageSrc', function(newValue, oldValue) {
+
+                    if(typeof newValue !== 'undefined' && newValue !== ""){
+                        $scope.displayImageSrc = API_IMG_PATH_URL + newValue;
+                    }
+                    else {
+                        $scope.displayImageSrc = "img/icons/photo_missing.svg";
+                    }
+                });
+
+                // When a file is uploaded, this method is called to process the file
                 $scope.readUploadedFile = function (file) {
 
                     var deferred = $q.defer();
@@ -148,11 +165,12 @@
                 {
 
                 },
+                scope: {
+                    imageSrc: '=imageSrc'
+                },
                 replace: true,
                 templateUrl: 'shared/directives/imageUploaderDirective.html',
-                scope: true,
                 controller: 'imageUploaderCtrl'
-
             }
         })
 
@@ -166,12 +184,14 @@
                     $element.bind("change", function(event){
                         var file;
 
+                        // Get file from file input
                         file = (event.srcElement || event.target).files[0];
 
+                        // Prcess file.
                         $scope.readUploadedFile(file).then(function(result) {
 
-                            $scope.imageSrc = result;
-
+                            // When image has been uploaded. Display new image to user
+                            $scope.displayImageSrc = result;
                         });
                     });
                 }

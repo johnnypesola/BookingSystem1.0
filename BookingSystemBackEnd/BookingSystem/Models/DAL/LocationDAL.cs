@@ -67,7 +67,7 @@ namespace BookingSystem.Models
                                 MaxPeople = reader.GetSafeInt16(reader.GetOrdinal("MaxPeople")),
                                 GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLongitude")),
                                 GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLatitude")),
-                                ImageSrc= reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
                                 BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
                                 TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings")),
                                 TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal("TotalBookingValue")),
@@ -269,7 +269,7 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add("@MaxPeople", SqlDbType.SmallInt).Value = location.MaxPeople;
                     cmd.Parameters.Add("@GPSLongitude", SqlDbType.Decimal).Value = location.GPSLongitude;
                     cmd.Parameters.Add("@GPSLatitude", SqlDbType.Decimal).Value = location.GPSLatitude;
-                    cmd.Parameters.Add("@ImageSrc", SqlDbType.VarChar, 30).Value = location.ImageSrc;
+                    cmd.Parameters.Add("@ImageSrc", SqlDbType.VarChar, 50).Value = location.ImageSrc;
                     cmd.Parameters.Add("@BookingPricePerHour", SqlDbType.Decimal).Value = location.BookingPricePerHour;
                     cmd.Parameters.Add("@MinutesMarginAfterBooking", SqlDbType.Decimal).Value = location.MinutesMarginAfterBooking;
 
@@ -315,7 +315,7 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add("@MaxPeople", SqlDbType.SmallInt).Value = location.MaxPeople;
                     cmd.Parameters.Add("@GPSLongitude", SqlDbType.Decimal).Value = location.GPSLongitude;
                     cmd.Parameters.Add("@GPSLatitude", SqlDbType.Decimal).Value = location.GPSLatitude;
-                    cmd.Parameters.Add("@ImageSrc", SqlDbType.VarChar, 30).Value = location.ImageSrc;
+                    cmd.Parameters.Add("@ImageSrc", SqlDbType.VarChar, 50).Value = location.ImageSrc;
                     cmd.Parameters.Add("@BookingPricePerHour", SqlDbType.Decimal).Value = location.BookingPricePerHour;
                     cmd.Parameters.Add("@MinutesMarginAfterBooking", SqlDbType.Decimal).Value = location.MinutesMarginAfterBooking;
 

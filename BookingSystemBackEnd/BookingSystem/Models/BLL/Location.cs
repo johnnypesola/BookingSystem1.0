@@ -30,7 +30,7 @@ namespace BookingSystem.Models
         [Range(-180, 180, ErrorMessage = "GPSLongitude is out of range.")]
         public decimal GPSLongitude { get; set; }
 
-        [StringLength(30, ErrorMessage = "ImageSrc must not exceed 30 chars.")]
+        [StringLength(50, ErrorMessage = "ImageSrc must not exceed 50 chars.")]
         [RegularExpression(ValidationExtensions.IMG_PATH_REGEXP, ErrorMessage = "ImageSrc is invalid")]
         public string ImageSrc { get; set; }
 

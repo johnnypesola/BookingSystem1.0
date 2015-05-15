@@ -167,11 +167,33 @@
     .controller('LocationCreateCtrl', function($scope, $routeParams, $location, $rootScope, Location){
 
             var that = this;
+            $scope.markers = [{ // Init marker on map
+                id: 0,
+                coords: {
+                    latitude: $rootScope.googleMapsDefaults.center.latitude,
+                    longitude: $rootScope.googleMapsDefaults.center.longitude
+                }
+            }];
+            $scope.location = {};
+            $scope.location.GPSLatitude = "";
+            $scope.location.GPSLongitude = "";
 
         /* Private methods START */
 
-            that.initVariables = function(){
+            // Add default map variables to scope
+            that.initMapVariables = function() {
 
+                $scope.map = {
+                    center: $rootScope.googleMapsDefaults.center,
+                    zoom: $rootScope.googleMapsDefaults.zoom,
+                    bounds: {},
+                    options: { mapTypeId: google.maps.MapTypeId.SATELLITE }, // Make satellite view default
+                    events: {
+                        click: function (map, eventName, args) {
+                            that.moveMarkerOnClick(map, eventName, args);
+                        }
+                    }
+                };
             };
 
             that.redirectToListPage = function(){
@@ -183,71 +205,86 @@
                 $location.path(objectType + "/lista");
             };
 
+            that.moveMarkerOnClick = function(map, eventName, args) {
+
+                // Refresh location variables
+                $scope.location.GPSLatitude = args[0].latLng.lat();
+                $scope.location.GPSLongitude = args[0].latLng.lng();
+
+                // Refresh map marker variables
+                $scope.markers[0].coords = {
+                    latitude : args[0].latLng.lat(),
+                    longitude : args[0].latLng.lng()
+                };
+
+
+                $scope.$apply();
+            };
+
         /* Private methods END */
 
         /* Public methods START */
 
-        // Abort creating
-        $scope.abort = function(){
-            that.redirectToListPage();
-        };
-
-        // Save location
-        $scope.save = function(){
+            // Abort creating
+            $scope.abort = function(){
+                that.redirectToListPage();
+            };
 
             // Save location
-            Location.save(
-                {
-                    LocationId: 0,
-                    Name: $scope.location.Name,
-                    MaxPeople: $scope.location.MaxPeople,
-                    GPSLatitude: $scope.location.GPSLatitude,
-                    GPSLongitude: $scope.location.GPSLongitude,
-                    ImageSrc: $scope.location.ImageSrc,
-                    BookingPricePerHour: $scope.location.BookingPricePerHour,
-                    MinutesMarginAfterBooking: $scope.location.MinutesMarginAfterBooking
-                }
-            ).$promise
+            $scope.save = function(){
 
-                // If everything went ok
-                .then(function(response){
-
-
-                    $rootScope.FlashMessage = {
-                        type: 'success',
-                        message: 'Möbleringen "' + $scope.location.Name + '" skapades med ett lyckat resultat'
-                    };
-
-                    that.redirectToListPage();
-
-                // Something went wrong
-                }).catch(function(response) {
-
-                    // If there there was a foreign key reference
-                    if (response.status == 409){
-                        $rootScope.FlashMessage = {
-                            type: 'error',
-                            message: 'Det finns redan en plats som heter "' + $scope.location.Name +
-                            '". Två platser kan inte heta lika.'
-                        };
+                // Save location
+                Location.save(
+                    {
+                        LocationId: 0,
+                        Name: $scope.location.Name,
+                        MaxPeople: $scope.location.MaxPeople,
+                        GPSLatitude: $scope.location.GPSLatitude,
+                        GPSLongitude: $scope.location.GPSLongitude,
+                        ImageSrc: $scope.location.ImageSrc,
+                        BookingPricePerHour: $scope.location.BookingPricePerHour,
+                        MinutesMarginAfterBooking: $scope.location.MinutesMarginAfterBooking
                     }
+                ).$promise
 
-                    // If there was a problem with the in-data
-                    else {
+                    // If everything went ok
+                    .then(function(response){
+
                         $rootScope.FlashMessage = {
-                            type: 'error',
-                            message: 'Ett oväntat fel uppstod när platsen skulle sparas'
+                            type: 'success',
+                            message: 'Möbleringen "' + $scope.location.Name + '" skapades med ett lyckat resultat'
                         };
-                    }
-                });
-        };
+
+                        that.redirectToListPage();
+
+                    // Something went wrong
+                    }).catch(function(response) {
+
+                        // If there there was a foreign key reference
+                        if (response.status == 409){
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Det finns redan en plats som heter "' + $scope.location.Name +
+                                '". Två platser kan inte heta lika.'
+                            };
+                        }
+
+                        // If there was a problem with the in-data
+                        else {
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Ett oväntat fel uppstod när platsen skulle sparas'
+                            };
+                        }
+                    });
+            };
 
         /* Public methods END */
 
 
         /* Initialization START */
 
-            that.initVariables();
+            that.initMapVariables();
 
         /* Initialization END */
     })
@@ -285,7 +322,6 @@
                 };
             };
 
-
             that.moveMarkerOnClick = function(map, eventName, args) {
 
                 // Refresh location variables
@@ -304,15 +340,13 @@
             // Convert markers from data fetched from backend to match google maps format.
             that.convertMarkers = function() {
 
-                $scope.markers.push(
-                    {
+                $scope.markers[0] = {
                         id: that.location.LocationId,
                         coords: {
                             latitude: that.location.GPSLatitude,
                             longitude: that.location.GPSLongitude
                         }
-                    }
-                );
+                };
             };
 
         /* Private methods END */

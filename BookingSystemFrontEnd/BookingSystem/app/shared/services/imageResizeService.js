@@ -95,8 +95,9 @@
 
                 scaleImage: function (imgData, completionCallback) {
 
-                    var img = document.createElement('img');
-                    var canvas = document.createElement('canvas');
+                    var img = document.createElement('img'),
+                        canvas = document.createElement('canvas'),
+                        returnImageData;
 
                     img.src = imgData;
 
@@ -112,30 +113,10 @@
                         canvas = scaleCanvasWithAlgorithm(canvas);
                     }
 
-                    var imageData = canvas.toDataURL('image/jpeg', 1.0);
-                    //this.performUpload(imageData, completionCallback);
+                    returnImageData = canvas.toDataURL('image/jpeg', 1.0);
 
-                    return imageData;
+                    return returnImageData;
                 }
             }
         });
-
-    /*
-     .factory('LocationImage', function($resource, API_URL){
-
-     return $resource(
-     API_URL + 'Location/images/:locationId',
-     {locationId: '@locationId'},
-     {
-     save: {
-     method: 'POST',
-     transformRequest: formDataObject,
-     headers: {
-     'Content-Type': 'multipart/form-data'
-     }
-     }
-     }
-     );
-     });
-     */
 })();

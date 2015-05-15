@@ -795,7 +795,7 @@ section.content-container {
         }
 
         section.content-container .image-uploader-container {
-            display: inline-block;
+            display: block;
             margin: 0 auto;
             position: relative;
             width: 400px;
@@ -809,6 +809,10 @@ section.content-container {
                 position: relative;
                 z-index: 1;
                 margin: 8px 0 0 0;
+                background: none;
+                border: none;
+                text-align: center;
+                box-shadow: none;
             }
 
             section.content-container .image-uploader-container button {
@@ -846,8 +850,8 @@ section.content-container {
                 left: 0;
                 height: 40px;
                 z-index: 1;
-                background: rgba(230, 230, 230, 0.5);
-                text-align: center;
+                background: rgba(230, 230, 230, 0.5) !important;
+                text-align: center !important;
             }
 
         section.content-container .map-location-info-container {

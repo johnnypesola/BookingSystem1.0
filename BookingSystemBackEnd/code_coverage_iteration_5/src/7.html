@@ -1,4 +1,14 @@
-﻿using System;
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Controllers\LocationController.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -10,23 +20,19 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Web;
-using Newtonsoft.Json.Linq;
 
 namespace BookingSystem.Controllers
 {
-    [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [EnableCors(origins: &quot;*&quot;, headers: &quot;*&quot;, methods: &quot;*&quot;)]
     public class LocationController : ApiController
     {
-        // Shared variables
-        const string IMAGE_PATH = "Content/upload/img/location";
-
         // Set up Service.
         LocationService locationService = new LocationService();
 
         // GET: api/Location
         public IHttpActionResult Get()
         {
-            IEnumerable<Location> locations = locationService.GetLocations();
+            IEnumerable&lt;Location&gt; locations = locationService.GetLocations();
 
             if (locations == null)
             {
@@ -79,7 +85,7 @@ namespace BookingSystem.Controllers
             }
 
             // Respond that the booking was created and redirect
-            return Ok(location); //CreatedAtRoute("DefaultApi", new { id = location.LocationId }, location);
+            return Ok(location); //CreatedAtRoute(&quot;DefaultApi&quot;, new { id = location.LocationId }, location);
         }
 
         // PUT: api/Location/5
@@ -97,24 +103,9 @@ namespace BookingSystem.Controllers
         // DELETE: api/Location/5
         public IHttpActionResult Delete(int id)
         {
-            string UploadImagePath, imageLocation;
-
             try
             {
-                // Delete info from database
                 locationService.LocationDelete(id);
-                
-                // Get uploadpath
-                UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@"~/{0}", IMAGE_PATH));
-
-                // Build full image path
-                imageLocation = String.Format("{0}/{1}.jpg", UploadImagePath, id);
-
-                // Remove uploaded file if it exists
-                if(File.Exists(@imageLocation))
-                {
-                    File.Delete(@imageLocation);
-                }
             }
             catch (FormatException)
             {
@@ -131,14 +122,14 @@ namespace BookingSystem.Controllers
             catch
             {
                 return InternalServerError();
-            }            
+            }
 
             return Ok();
         }
 
         // POST a picture for a location
-        [Route("api/Location/image/{id:int}")]
-        [AcceptVerbs("POST")]
+        [Route(&quot;api/Location/image/{id:int}&quot;)]
+        [AcceptVerbs(&quot;POST&quot;)]
         [HttpPost]
         public IHttpActionResult Post(int id)
         {
@@ -146,8 +137,8 @@ namespace BookingSystem.Controllers
             string base64string;
             byte[] bytes;
             Image image;
+            const string IMAGE_PATH = &quot;Content/upload/img/location&quot;;
             string UploadImagePath;
-            JObject returnData;
 
             base64string = Request.Content.ReadAsStringAsync().Result;
 
@@ -160,30 +151,33 @@ namespace BookingSystem.Controllers
                     image = Image.FromStream(ms);
 
                     if (
-                        image.Width > 400 ||
-                        image.Height > 400 ||
-                        image.Width < 10 ||
-                        image.Height < 10
+                        image.Width &gt; 400 ||
+                        image.Height &gt; 400 ||
+                        image.Width &lt; 10 ||
+                        image.Height &lt; 10
                        )
                     {
                         throw new BadImageFormatException();
                     }
 
-                    UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@"~/{0}", IMAGE_PATH));
+                    UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@&quot;~/{0}&quot;, IMAGE_PATH));
 
-                    image.Save(String.Format("{0}/{1}.jpg", UploadImagePath, id), System.Drawing.Imaging.ImageFormat.Jpeg);
+                    image.Save(String.Format(&quot;{0}/{1}.jpg&quot;, UploadImagePath, id), System.Drawing.Imaging.ImageFormat.Jpeg);
                 }
             }
-            catch (Exception e)
+            catch
             {
-                return BadRequest(e.Message);
+                return BadRequest();
             }
 
-            // Build return JSON object
-            returnData = JObject.Parse(String.Format("{{ 'imgpath' : '{0}/{1}.jpg'}}", IMAGE_PATH, id));
-
-            // Return path to uploaded image
-            return Ok(returnData);
+            return Ok(String.Format(&quot;{0}.jpg&quot;, id));
         }
     }
 }
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[29,17,29,35,0],[41,17,41,35,0],[52,17,52,47,0],[60,13,60,51,0],[62,17,62,35,0],[68,13,68,48,0],[70,17,70,54,0],[72,13,72,18,0],[74,17,74,46,0],[85,13,85,37,0],[87,17,87,47,0],[90,13,90,42,0],[100,13,100,36,0],[102,17,102,37,0],[104,13,104,51,0],[106,17,106,35,0],[108,13,108,48,0],[110,17,110,54,0],[112,13,112,18,0],[114,17,114,46,0],[118,9,118,10,0],[150,25,150,61,0],[158,13,158,18,0],[160,17,160,37,0],[164,9,164,10,0],[25,13,25,78,1],[27,13,27,35,1],[32,13,32,34,1],[38,13,38,65,1],[39,13,39,34,1],[43,13,43,33,1],[50,13,50,37,1],[58,17,58,56,1],[64,13,64,43,1],[66,17,66,35,1],[78,13,78,33,1],[79,9,79,10,1],[98,17,98,52,1],[117,13,117,25,1],[133,13,133,71,1],[137,17,137,64,1],[139,17,139,22,1],[141,21,141,50,1],[143,21,148,25,1],[153,21,153,111,1],[155,21,155,124,1],[163,13,163,53,1],[20,9,20,65,1]]);
+    </script>
+  </body>
+</html>

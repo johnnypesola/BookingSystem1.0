@@ -1,0 +1,27 @@
+### Manuella tester gjorda i Angular gränssnittet
+
+# Bokningar
+Går att visa Bokningskalenders månader med händelser | JA
+Går att visa Bokningskalenders dagar med händelser | JA
+Går att visa Bokningslista händelser | JA
+
+# Lokaler
+Går att visa lista över lokaler | JA
+Går att redigera lokal | JA
+Går att lägga till lokal | JA 
+Går att radera lokal | JA
+Får rätt felmeddelande när man försöker spara lokal med lika namn som en annan | JA
+Får rätt felmeddelande när man försöker skapa lokal med lika namn som en annan | JA
+
+Går att spara plats för lokal | DELVIS
+Går att visa lokaler på karta och klicka på dem för att få mera information | JA
+Går att ladda upp bild på lokal | JA
+
+# Möbleringar
+Går att visa lista över möbleringar | JA
+Går att radera möblering | NEJ
+Går att lägga till möblering | JA
+Går att Döpa om möblering | JA
+Får rätt felmeddelande när man försöker spara möblering med lika namn som en annan | NEJ
+Får rätt felmeddelande när man försöker skapa möblering med lika namn som en annan | NEJ
+

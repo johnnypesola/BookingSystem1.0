@@ -11,7 +11,7 @@ namespace BookingSystem
         // Regexp for recurring validation purposes
         public const string TEXT_FIELD_REGEXP = @"^[0-9a-zA-ZåäöÅÄÖé\-_&\.,@()/%\s\!]*$";
 
-        public const string IMG_PATH_REGEXP = @"^([a-z_\-\s0-9\.]+)+\.(gif|png|jpg)$";
+        public const string IMG_PATH_REGEXP = @"^Content/upload/img/([a-z_\-\s0-9\.]+)+\/([a-z_\-\s0-9\.]+)+\.(gif|png|jpg)$";
 
         public const string POST_NUMBER_REGEXP = @"^[0-9]{3}\s[0-9]{2}$";
 

@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\DAL\LocationDAL.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class LocationDAL : DALBase
+    {
+        public void DeleteLocation(int locationId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_LocationDelete&quot;);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@LocationId&quot;, SqlDbType.Int).Value = locationId;
+
+                    // Try to delete location from database.
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public Location GetLocationById(int locationId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_LocationList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@LocationId&quot;, SqlDbType.Int).Value = locationId;
+
+                    // Open connection to database
+                    connection.Open();
+
+                    // Try to read response from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if there is any return data to read
+                        if (reader.Read())
+                        {
+                            // Create new Location object from database values and return a reference
+                            return new Location
+                            {
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal(&quot;LocationId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal(&quot;MaxPeople&quot;)),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLongitude&quot;)),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLatitude&quot;)),
+                                ImageSrc= reader.GetSafeString(reader.GetOrdinal(&quot;ImageSrc&quot;)),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal(&quot;BookingPricePerHour&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;))
+                            };
+                        }
+                    }
+
+                    return null;
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            } // Connection is closed here
+        }
+
+        public Location GetLocationByName(string locationName)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_LocationList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = locationName;
+
+                    // Open connection to database
+                    connection.Open();
+
+                    // Try to read response from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if there is any return data to read
+                        if (reader.Read())
+                        {
+                            // Create new Location object from database values and return a reference
+                            return new Location
+                            {
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal(&quot;LocationId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal(&quot;MaxPeople&quot;)),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLongitude&quot;)),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLatitude&quot;)),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal(&quot;ImageSrc&quot;)),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal(&quot;BookingPricePerHour&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;))
+                            };
+                        }
+                    }
+
+                    return null;
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            } // Connection is closed here
+        }
+
+        public IEnumerable&lt;Location&gt; GetLocations()
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;Location&gt; locationsReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    locationsReturnList = new List&lt;Location&gt;(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_LocationListSimple&quot;);
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Location object from database values and add to list
+                            locationsReturnList.Add(new Location
+                            {
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal(&quot;LocationId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal(&quot;MaxPeople&quot;)),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLongitude&quot;)),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLatitude&quot;)),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal(&quot;ImageSrc&quot;)),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal(&quot;BookingPricePerHour&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;))
+                                
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    locationsReturnList.TrimExcess();
+
+                    // Return list
+                    return locationsReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public IEnumerable&lt;Location&gt; GetLocationsPageWise(string sortColumn, int pageSize, int pageIndex, out int totalRowCount)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;Location&gt; locationsReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    locationsReturnList = new List&lt;Location&gt;(pageSize);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_LocationList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@SortOrder&quot;, SqlDbType.VarChar, 25).Value = sortColumn;
+                    cmd.Parameters.Add(&quot;@PageIndex&quot;, SqlDbType.Int).Value = pageIndex;
+                    cmd.Parameters.Add(&quot;@PageSize&quot;, SqlDbType.Int).Value = pageSize;
+                    cmd.Parameters.Add(&quot;@TotalRowCount&quot;, SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Location object from database values and add to list
+                            locationsReturnList.Add(new Location
+                            {
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal(&quot;LocationId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal(&quot;MaxPeople&quot;)),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLongitude&quot;)),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal(&quot;GPSLatitude&quot;)),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal(&quot;ImageSrc&quot;)),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal(&quot;BookingPricePerHour&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;))
+                            });
+                        }
+                    }
+
+                    // Get total row count
+                    totalRowCount = Convert.ToInt32(cmd.Parameters[&quot;@TotalRowCount&quot;].Value);
+
+                    // Remove unused list rows, free memory.
+                    locationsReturnList.TrimExcess();
+
+                    // Return list
+                    return locationsReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void InsertLocation(Location location)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_LocationCreate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = location.Name;
+                    cmd.Parameters.Add(&quot;@MaxPeople&quot;, SqlDbType.SmallInt).Value = location.MaxPeople;
+                    cmd.Parameters.Add(&quot;@GPSLongitude&quot;, SqlDbType.Decimal).Value = location.GPSLongitude;
+                    cmd.Parameters.Add(&quot;@GPSLatitude&quot;, SqlDbType.Decimal).Value = location.GPSLatitude;
+                    cmd.Parameters.Add(&quot;@ImageSrc&quot;, SqlDbType.VarChar, 30).Value = location.ImageSrc;
+                    cmd.Parameters.Add(&quot;@BookingPricePerHour&quot;, SqlDbType.Decimal).Value = location.BookingPricePerHour;
+                    cmd.Parameters.Add(&quot;@MinutesMarginAfterBooking&quot;, SqlDbType.Decimal).Value = location.MinutesMarginAfterBooking;
+
+                    // Add out parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@InsertId&quot;, SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+
+                    // Place database insert id into location object.
+                    location.LocationId = (int)cmd.Parameters[&quot;@InsertId&quot;].Value;
+                }
+                catch (Exception exception)
+                {
+                    if (exception.Message == &quot;There is already a location with the given name.&quot;)
+                    {
+                        throw new DuplicateNameException(exception.Message);
+                    }
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void UpdateLocation(Location location)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_LocationUpdate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@LocationId&quot;, SqlDbType.Int).Value = location.LocationId;
+                    cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = location.Name;
+                    cmd.Parameters.Add(&quot;@MaxPeople&quot;, SqlDbType.SmallInt).Value = location.MaxPeople;
+                    cmd.Parameters.Add(&quot;@GPSLongitude&quot;, SqlDbType.Decimal).Value = location.GPSLongitude;
+                    cmd.Parameters.Add(&quot;@GPSLatitude&quot;, SqlDbType.Decimal).Value = location.GPSLatitude;
+                    cmd.Parameters.Add(&quot;@ImageSrc&quot;, SqlDbType.VarChar, 30).Value = location.ImageSrc;
+                    cmd.Parameters.Add(&quot;@BookingPricePerHour&quot;, SqlDbType.Decimal).Value = location.BookingPricePerHour;
+                    cmd.Parameters.Add(&quot;@MinutesMarginAfterBooking&quot;, SqlDbType.Decimal).Value = location.MinutesMarginAfterBooking;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    if (exception.Message == &quot;There is already a location with the given name.&quot;)
+                    {
+                        throw new DuplicateNameException(exception.Message);
+                    }
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[30,17,30,22,0],[33,21,33,67,0],[79,21,79,33,0],[81,17,81,22,0],[84,21,84,67,0],[92,13,92,18,0],[99,21,99,97,0],[102,21,102,93,0],[105,21,105,39,0],[108,28,108,70,0],[111,25,111,43,0],[114,29,126,31,0],[130,21,130,33,0],[132,17,132,22,0],[135,21,135,67,0],[138,9,138,10,0],[184,17,184,22,0],[186,21,186,67,0],[194,13,194,18,0],[202,21,202,72,0],[205,21,205,97,0],[208,21,208,96,0],[209,21,209,87,0],[210,21,210,85,0],[211,21,211,111,0],[214,21,214,39,0],[217,28,217,70,0],[223,29,235,32,0],[220,25,220,46,0],[240,21,240,93,0],[243,21,243,54,0],[246,21,246,48,0],[248,17,248,22,0],[250,21,250,67,0],[253,9,253,10,0],[295,21,295,67,0],[335,21,335,67,0],[15,13,15,18,1],[22,21,22,70,1],[25,21,25,89,1],[28,21,28,43,1],[36,9,36,10,1],[41,13,41,18,1],[48,21,48,97,1],[51,21,51,89,1],[54,21,54,39,1],[57,28,57,70,1],[60,25,60,43,1],[63,29,75,31,1],[87,9,87,10,1],[143,13,143,18,1],[151,21,151,66,1],[154,21,154,74,1],[157,28,157,70,1],[163,29,174,32,1],[160,25,160,46,1],[179,21,179,54,1],[182,21,182,48,1],[189,9,189,10,1],[258,13,258,18,1],[265,21,265,99,1],[268,21,268,94,1],[269,21,269,101,1],[270,21,270,106,1],[271,21,271,104,1],[272,21,272,102,1],[273,21,273,120,1],[274,21,274,132,1],[277,21,277,106,1],[280,21,280,39,1],[283,21,283,43,1],[286,21,286,82,1],[288,17,288,44,1],[290,21,290,97,1],[292,25,292,77,1],[298,9,298,10,1],[303,13,303,18,1],[310,21,310,99,1],[313,21,313,98,1],[314,21,314,94,1],[315,21,315,101,1],[316,21,316,106,1],[317,21,317,104,1],[318,21,318,102,1],[319,21,319,120,1],[320,21,320,132,1],[323,21,323,39,1],[326,21,326,43,1],[328,17,328,44,1],[330,21,330,97,1],[332,25,332,77,1],[338,9,338,10,1]]);
+    </script>
+  </body>
+</html>

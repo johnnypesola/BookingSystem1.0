@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Controllers\FurnituringController.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using BookingSystem.Models;
+using System.Web.Http.Cors;
+using System.Data;
+
+namespace BookingSystem.Controllers
+{
+    [EnableCors(origins: &quot;*&quot;, headers: &quot;*&quot;, methods: &quot;*&quot;)]
+    public class FurnituringController : ApiController
+    {
+
+        // Set up Service.
+        FurnituringService furnituringService = new FurnituringService();  
+
+        // GET: api/Furnituring
+        public IHttpActionResult Get()
+        {
+            IEnumerable&lt;Furnituring&gt; furniturings = furnituringService.GetFurniturings();
+
+            if (furniturings == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(furniturings);
+        }
+
+        // GET: api/Furnituring/5
+        public IHttpActionResult Get(int id)
+        {
+            Furnituring furnituring = furnituringService.GetFurnituring(id);
+            if (furnituring == null)
+            {
+                return NotFound();
+            }
+            return Ok(furnituring);
+        }
+
+        // POST: api/Furnituring
+        public IHttpActionResult Post(Furnituring furnituring)
+        {
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Try to save furnituring
+            try
+            {
+                furnituringService.SaveFurnituring(furnituring);
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DuplicateNameException)
+            {
+                return Conflict();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            // Respond that the booking was created and redirect
+            return Ok(furnituring); //CreatedAtRoute(&quot;DefaultApi&quot;, new { id = furnituring.FurnituringId }, furnituring);
+        }
+
+        // PUT: api/Furnituring/5
+        public IHttpActionResult Put(Furnituring furnituring)
+        {
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return InternalServerError();
+        }
+
+        // DELETE: api/Furnituring/5
+        public IHttpActionResult Delete(int id)
+        {
+            try
+            {
+                furnituringService.FurnituringDelete(id);
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[27,17,27,35,0],[39,17,39,35,0],[50,17,50,47,0],[58,13,58,51,0],[60,17,60,35,0],[62,13,62,43,0],[64,17,64,35,0],[66,13,66,48,0],[68,17,68,54,0],[83,13,83,37,0],[85,17,85,47,0],[88,13,88,42,0],[98,13,98,36,0],[100,17,100,37,0],[102,13,102,51,0],[104,17,104,35,0],[106,13,106,48,0],[108,17,108,54,0],[110,13,110,18,0],[112,17,112,46,0],[116,9,116,10,0],[23,13,23,90,1],[25,13,25,38,1],[30,13,30,37,1],[36,13,36,77,1],[37,13,37,37,1],[41,13,41,36,1],[48,13,48,37,1],[56,17,56,65,1],[70,13,70,18,1],[72,17,72,46,1],[76,13,76,36,1],[77,9,77,10,1],[96,17,96,58,1],[115,13,115,25,1],[18,9,18,74,1]]);
+    </script>
+  </body>
+</html>

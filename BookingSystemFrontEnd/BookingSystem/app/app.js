@@ -18,7 +18,8 @@
     ]);
 
     // Define API url, used in services
-    BookingSystem.constant('API_URL', 'http://localhost:6796/api/');
+    BookingSystem.constant('API_URL', 'http://192.168.1.4:8080/BookingSystem/api/');
+    BookingSystem.constant('API_IMG_PATH_URL', 'http://192.168.1.4:8080/BookingSystem/');
     BookingSystem.constant('UPLOAD_IMG_MAX_WIDTH', '400');
     BookingSystem.constant('UPLOAD_IMG_MAX_HEIGHT', '400');
 
@@ -86,7 +87,7 @@
     });
 
 
-    BookingSystem.run(function($rootScope, $location) {
+    BookingSystem.run(function($rootScope, $location, API_IMG_PATH_URL) {
 
         // Add values to $rootScope, for access on all pages, even without controllers
         $rootScope.appLocation = $location;
@@ -99,6 +100,9 @@
             phoneNumber : new RegExp("^[0-9\-\s]*$")
         };
 
+        // Image path
+        $rootScope.imagePath = API_IMG_PATH_URL;
+
         // Form visibility
         $rootScope.searchFormIsVisible = false;
         $rootScope.addFormIsVisible = false;
@@ -106,8 +110,8 @@
         // Google maps defaults
         $rootScope.googleMapsDefaults = {
             center: {
-                latitude: 59.9,
-                longitude: 15.8
+                latitude: 59.990229963467435,
+                longitude: 15.806483030319214
             },
             zoom: 1
         }

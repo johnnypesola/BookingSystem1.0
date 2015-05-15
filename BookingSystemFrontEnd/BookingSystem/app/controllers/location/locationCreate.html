@@ -11,6 +11,7 @@
     ></page-header-buttons>
 
     <form name="locationForm">
+
         <label>Namn
             <span ng-show="locationForm.name.$error.required">Var god ange</span>
             <span ng-show="locationForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,@()/%!</span>
@@ -24,13 +25,7 @@
             <span ng-show="locationForm.maxPeople.$error.max">Får vara max {{Int16MaxValue}}</span>
             <span ng-show="locationForm.maxPeople.$error.min">Får vara minst 0</span>
         </label>
-        <input type="number" min="0" max="{{Int16MaxValue}}" name="maxPeople" ng-model="location.MaxPeople" required >
-
-        <label>GPS Latitud</label>
-        <input type="text" name="gps-latitude" ng-model="location.GPSLatitude">
-
-        <label>GPS Longitud</label>
-        <input type="text" name="gps-longitude" ng-model="location.GPSLongitude">
+        <input type="number" min="0" max="{{Int16MaxValue}}" name="maxPeople" ng-model="location.MaxPeople" required>
 
         <label>Sökväg till bild</label>
         <input type="text" name="image-src" ng-model="location.ImageSrc">
@@ -49,6 +44,24 @@
             <span ng-show="locationForm.minutesMarginAfterBooking.$error.min">Får vara minst 0</span>
         </label>
         <input type="number" min="0" max="{{Int16MaxValue}}" name="minutesMarginAfterBooking" ng-model="location.MinutesMarginAfterBooking">
+
+        <label>GPS kartmarkering
+            <span ng-show="locationForm.GPSLongitude.$error.required">Var god klicka på kartan för att markera lokalens position</span>
+        </label>
+
+        <input type="hidden" name="GPSLongitude" value="0" ng-model="location.GPSLongitude" required>
+        <input type="hidden" name="GPSLatitude" value="0" ng-model="location.GPSLatitude" required>
+
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" bounds="map.bounds" events="map.events">
+            <ui-gmap-markers
+                    models="markers"
+                    coords="'coords'"
+                    options="options"
+                    events="events"
+                    fit="true"
+                    >
+            </ui-gmap-markers>
+        </ui-gmap-google-map>
 
         <button ng-click="save()" ng-disabled="!locationForm.$valid">Skapa</button>
         <button ng-click="abort()">Avbryt</button>
