@@ -35,6 +35,15 @@
              }).success(callback);
              }
              */
+        })
+
+        .factory('LocationFurnituring', function($resource, API_URL){
+
+            return $resource(
+                API_URL + 'LocationFurnituring/:furnituringId',
+                {furnituringId: '@furnituringId'}
+            );
+
         });
 
 })();
