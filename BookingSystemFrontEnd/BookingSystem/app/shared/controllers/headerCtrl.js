@@ -12,99 +12,168 @@
     })
 
     // Header Controller
-    .controller('HeaderCtrl', function($scope, $rootScope){
+    .controller('HeaderCtrl', function($scope, $rootScope, $location){
 
-        // Init values
-        $scope.selectedSubMenu = 0;
+            // Declare variables
+            var that = this;
+            var selectedMenus;
+            var selectedMainMenu;
+            var selectedSubMenu;
 
-        // Declare Menu
-        $scope.menus = [
-            {
-                title: "Bokningar",
-                submenus: [
-                    {
-                        title: "Bokningstillfällen",
-                        location: "bokningstillfallen/lista"
-                    },
-                    {
-                        title: "Lokalbokningar",
-                        location: "lokalbokningar/lista"
-                    },
-                    {
-                        title: "Matbokningar",
-                        location: "matbokningar/lista"
-                    },
-                    {
-                        title: "Resursbokningar",
-                        location: "resursbokningar/lista"
-                    }
-                ]
-            },
-            {
-                title: "Lokaler / Platser",
-                submenus: [
-                    {
-                        title: "Lokaler / Platser",
-                        location: "platser/lista"
-                    },
-                    {
-                        title: "Lokalmöbleringar",
-                        location: "lokalmobleringar/lista"
-                    }
-                ]
-            },
-            {
-                title: "Möbleringar",
-                submenus: [
-                    {
-                        title: "Möbleringar",
-                        location: "mobleringar/lista"
-                    }
-                ]
-            },
-/*            {
-                title: "Användare"
-            },*/
-            {
-                title: "Resurser"
-            },
-            {
-                title: "Mat",
-                submenus: [
-                    {
-                        title: "Måltider"
-                    },
-                    {
-                        title: "Måltidsegenskaper"
-                    }
-                ]
-            },
-            {
-                title: "Kunder"
-            }
-        ];
+            // Declare Menu
+            $scope.menus = [
+                {
+                    title: "Bokningar",
+                    submenus: [
+                        {
+                            title: "Bokningstillfällen",
+                            location: "bokningstillfallen/lista"
+                        },
+                        {
+                            title: "Lokalbokningar",
+                            location: "lokalbokningar/lista"
+                        },
+                        {
+                            title: "Matbokningar",
+                            location: "matbokningar/lista"
+                        },
+                        {
+                            title: "Resursbokningar",
+                            location: "resursbokningar/lista"
+                        }
+                    ]
+                },
+                {
+                    title: "Lokaler / Platser",
+                    submenus: [
+                        {
+                            title: "Lokaler / Platser",
+                            location: "platser/lista"
+                        },
+                        {
+                            title: "Lokalmöbleringar",
+                            location: "lokalmobleringar/lista"
+                        }
+                    ]
+                },
+                {
+                    title: "Möbleringar",
+                    submenus: [
+                        {
+                            title: "Möbleringar",
+                            location: "mobleringar/lista"
+                        }
+                    ]
+                },
+    /*            {
+                    title: "Användare"
+                },*/
+                {
+                    title: "Resurser",
+                    submenus: [
+                        {
+                            title: "Resurser",
+                            location: "resurser/lista"
+                        }
+                    ]
+                },
+                {
+                    title: "Mat",
+                    submenus: [
+                        {
+                            title: "Måltider",
+                            location: "maltider/lista"
+                        },
+                        {
+                            title: "Måltidsegenskaper",
+                            location: "maltidsegenskaper/lista"
+                        }
+                    ]
+                },
+                {
+                    title: "Kunder",
+                    submenus: []
+                }
+            ];
 
-        // Method for when a main menu is selected
-        $scope.selectMainMenu = function(index) {
-            $scope.selectedMainMenu = index;
+        /* Object methods START */
 
-            $scope.activeSubMenus = $scope.menus[index].submenus;
-        };
+            // Find out selected main menu and sub menu and select them
+            that.selectCurrentLocationMenus = function(){
 
-        // Method for when a sub menu is selected
-        $scope.selectSubMenu = function(index) {
-            $scope.selectedSubMenu = index;
-        };
+                // Check that we aren't on he index page.
+                if($location.path().length > 2){
 
-        $scope.displayAddForm = function(value) {
-            $rootScope.addFormIsVisible = value;
-            $rootScope.searchFormIsVisible = false;
-        };
+                    var iteratedMainMenu;
 
-        $scope.displaySearchForm = function(value) {
-            $rootScope.searchFormIsVisible = value;
-            $rootScope.addFormIsVisible = false;
-        };
+                    selectedMenus = $location.path().split('/');
+                    selectedMainMenu = selectedMenus[1];
+                    selectedSubMenu = selectedMenus[2];
+
+                    $scope.menus.forEach(function(mainmenu, mindex, array){
+
+                        mainmenu.submenus.forEach(function(submenu, sindex, array){
+                            if(typeof submenu.location !== 'undefined'){
+
+                                iteratedMainMenu = submenu.location.split('/')[0];
+
+                                if(iteratedMainMenu === selectedMainMenu){
+                                    $scope.selectedMainMenu = mindex;
+
+                                    $scope.activeSubMenus = $scope.menus[mindex].submenus;
+
+                                    $scope.selectedSubMenu = sindex;
+
+                                    // Avoid unnecessary iterations
+                                    return;
+                                }
+                            }
+                        });
+
+                        // Avoid unnecessary iterations
+                        if($scope.selectedSubMenu) {
+                            return;
+                        }
+                    });
+
+                }
+                // No menu is selected, set index to 0.
+                else {
+                    $scope.selectedSubMenu = 0;
+                }
+            };
+
+        /* Object methods END */
+
+        /* Public methods START */
+
+            // Method for when a main menu is selected
+            $scope.selectMainMenu = function(index) {
+                $scope.selectedMainMenu = index;
+
+                $scope.activeSubMenus = $scope.menus[index].submenus;
+            };
+
+            // Method for when a sub menu is selected
+            $scope.selectSubMenu = function(index) {
+                $scope.selectedSubMenu = index;
+            };
+
+            $scope.displayAddForm = function(value) {
+                $rootScope.addFormIsVisible = value;
+                $rootScope.searchFormIsVisible = false;
+            };
+
+            $scope.displaySearchForm = function(value) {
+                $rootScope.searchFormIsVisible = value;
+                $rootScope.addFormIsVisible = false;
+            };
+
+        /* Public methods END */
+
+        /* Initialization START */
+
+            that.selectCurrentLocationMenus();
 
 
         // Watch changes on selectedMainMenu variable
@@ -116,6 +185,8 @@
 
         });
         */
+
+        /* Initialization END */
     })
 
 

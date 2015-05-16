@@ -1,6 +1,6 @@
-<section class="content-container" ng-controller="FurnituringShowCtrl">
+<section class="content-container" ng-controller="ResourceShowCtrl">
     <h2>
-        Visa Lokal/Plats
+        Visa Resurs
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
     <page-header-buttons
@@ -12,35 +12,31 @@
     <table class="show-table">
         <tr>
             <th>Namn</th>
-            <td>{{furnituring.Name}}</td>
+            <td>{{resource.Name}}</td>
         </tr>
         <tr>
-            <th>Max personer (st)</th>
-            <td>{{furnituring.MaxPeople | count}}</td>
+            <th>Antal</th>
+            <td>{{resource.Count | count}}</td>
         </tr>
         <tr>
-            <th>GPS Latitud</th>
-            <td>{{furnituring.GPSLatitude}}</td>
-        </tr>
-        <tr>
-            <th>GPS Longitud</th>
-            <td>{{furnituring.GPSLongitude}}</td>
+            <th>Antal under helgdagar</th>
+            <td>{{resource.WeekEndCount | count}}</td>
         </tr>
         <tr>
             <th>Bokningspris per timme (kr)</th>
-            <td>{{furnituring.BookingPricePerHour | kr}}</td>
+            <td>{{resource.BookingPricePerHour | kr}}</td>
         </tr>
         <tr>
             <th>Marginal efter bokning (minuter)</th>
-            <td>{{furnituring.MinutesMarginAfterBooking | minutes}}</td>
+            <td>{{resource.MinutesMarginAfterBooking | minutes}}</td>
         </tr>
         <tr>
             <th>Totalt antal bokningar</th>
-            <td>{{furnituring.TotalBookings | count}}</td>
+            <td>{{resource.TotalBookings | count}}</td>
         </tr>
         <tr>
             <th>Totalt bokningsvärde</th>
-            <td>{{furnituring.TotalBookingValue | kr}}</td>
+            <td>{{resource.TotalBookingValue | kr}}</td>
         </tr>
 
     </table>

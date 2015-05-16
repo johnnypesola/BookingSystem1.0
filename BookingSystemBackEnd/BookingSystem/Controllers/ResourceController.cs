@@ -14,6 +14,7 @@ using Newtonsoft.Json.Linq;
 
 namespace BookingSystem.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class ResourceController : ApiController
     {
         // Shared variables
@@ -25,25 +26,39 @@ namespace BookingSystem.Controllers
         // GET: api/Resource
         public IHttpActionResult Get()
         {
-            IEnumerable<Resource> resources = resourceService.GetResources();
-
-            if (resources == null)
+            try
             {
-                return NotFound();
-            }
+                IEnumerable<Resource> resources = resourceService.GetResources();
 
-            return Ok(resources);
+                if (resources == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(resources);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
         }
 
         // GET: api/Resource/5
         public IHttpActionResult Get(int id)
         {
-            Resource resource = resourceService.GetResource(id);
-            if (resource == null)
+            try
             {
-                return NotFound();
+                Resource resource = resourceService.GetResource(id);
+                if (resource == null)
+                {
+                    return NotFound();
+                }
+                return Ok(resource);
             }
-            return Ok(resource);
+            catch
+            {
+                return InternalServerError();
+            }
         }
 
         // POST: api/Resource

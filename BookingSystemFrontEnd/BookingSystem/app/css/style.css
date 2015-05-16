@@ -231,6 +231,7 @@ header {
             }
 
     header nav.sub-menu {
+        min-height: 42px;
         background: #FFFFFF;
         color: #000000;
 
@@ -281,6 +282,8 @@ header {
                     }
 
 section.search-form-container, section.add-form-container {
+
+    visibility: hidden;
     z-index: 5;
     text-align: center;
     min-height: 300px;

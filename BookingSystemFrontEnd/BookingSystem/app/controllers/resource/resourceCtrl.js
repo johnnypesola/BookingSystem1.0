@@ -19,6 +19,56 @@
 
     })
 
+    // Show Controller
+    .controller('ResourceShowCtrl', function($scope, $routeParams, $location, $rootScope, Resource){
+
+        var that = this;
+
+        /* Private methods START */
+
+        that.redirectToListPage = function(){
+            var objectType;
+
+            objectType = $location.path().split('/')[1];
+
+            // Go back to location list
+            $location.path(objectType + "/lista");
+        };
+
+        /* Private methods END */
+
+        /* Public methods START */
+
+        // Abort editing
+        $scope.back = function(){
+            that.redirectToListPage();
+        };
+
+        /* Public methods END */
+
+
+        /* Initialization START */
+
+        var resource = Resource.get(
+            {
+                resourceId: $routeParams.resourceId
+            }
+        );
+
+        // In case resources cannot be fetched, display an error to user.
+        resource.$promise.catch(function(){
+
+            $rootScope.FlashMessage = {
+                type: 'error',
+                message: 'Resursen kunde inte hämtas, var god försök igen.'
+            };
+        });
+
+        $scope.resource = resource;
+
+        /* Initialization END */
+    })
+
     // List Controller
     .controller('ResourceListCtrl', function($scope, Resource, $rootScope){
 
@@ -43,7 +93,7 @@
 
                 $rootScope.FlashMessage = {
                     type: 'error',
-                    message: 'Möbleringar kunde inte hämtas, var god försök igen.'
+                    message: 'Resurser kunde inte hämtas, var god försök igen.'
                 };
             });
 
@@ -84,7 +134,11 @@
             Resource.save(
                 {
                     ResourceId: 0,
-                    Name: $scope.resource.Name
+                    Name: $scope.resource.Name,
+                    Count: $scope.resource.Count,
+                    BookingPricePerHour: $scope.resource.BookingPricePerHour,
+                    MinutesMarginAfterBooking: $scope.resource.MinutesMarginAfterBooking,
+                    WeekEndCount: $scope.resource.WeekEndCount
                 }
             ).$promise
 
@@ -94,7 +148,7 @@
 
                     $rootScope.FlashMessage = {
                         type: 'success',
-                        message: 'Möbleringen "' + $scope.resource.Name + '" skapades med ett lyckat resultat'
+                        message: 'Resursen "' + $scope.resource.Name + '" skapades med ett lyckat resultat'
                     };
 
                     that.redirectToListPage();
@@ -106,8 +160,8 @@
                     if (response.status == 409){
                         $rootScope.FlashMessage = {
                             type: 'error',
-                            message: 'Det finns redan en möblering som heter "' + $scope.resource.Name +
-                            '". Två möbleringar kan inte heta lika.'
+                            message: 'Det finns redan en resurs som heter "' + $scope.resource.Name +
+                            '". Två resurser kan inte heta lika.'
                         };
                     }
 
@@ -115,7 +169,7 @@
                     else {
                         $rootScope.FlashMessage = {
                             type: 'error',
-                            message: 'Ett oväntat fel uppstod när möbleringen skulle sparas'
+                            message: 'Ett oväntat fel uppstod när resursen skulle sparas'
                         };
                     }
                 });
@@ -161,7 +215,11 @@
                 Resource.save(
                     {
                         ResourceId: $routeParams.resourceId,
-                        Name: $scope.resource.Name
+                        Name: $scope.resource.Name,
+                        Count: $scope.resource.Count,
+                        BookingPricePerHour: $scope.resource.BookingPricePerHour,
+                        MinutesMarginAfterBooking: $scope.resource.MinutesMarginAfterBooking,
+                        WeekEndCount: $scope.resource.WeekEndCount
                     }
                 ).$promise
 
@@ -170,7 +228,7 @@
 
                         $rootScope.FlashMessage = {
                             type: 'success',
-                            message: 'Möbleringen "' + $scope.resource.Name + '" sparades med ett lyckat resultat'
+                            message: 'Resursen "' + $scope.resource.Name + '" sparades med ett lyckat resultat'
                         };
 
                         that.redirectToListPage();
@@ -182,8 +240,8 @@
                         if (response.status == 409){
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message:    'Det finns redan en möblering som heter "' + $scope.resource.Name +
-                                '". Två möbleringar kan inte heta lika.'
+                                message:    'Det finns redan en resurs som heter "' + $scope.resource.Name +
+                                '". Två resurser kan inte heta lika.'
                             };
                         }
 
@@ -191,7 +249,7 @@
                         else if (response.status == 400 || response.status == 500){
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message: 'Ett oväntat fel uppstod när möbleringen skulle sparas'
+                                message: 'Ett oväntat fel uppstod när resursen skulle sparas'
                             };
                         }
 
@@ -199,7 +257,7 @@
                         if (response.status == 404) {
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message: 'Möbleringen "' + $scope.resource.Name + '" existerar inte längre. Hann kanske någon radera den?'
+                                message: 'Resursen "' + $scope.resource.Name + '" existerar inte längre. Hann kanske någon radera den?'
                             };
 
                             that.redirectToListPage();
@@ -223,7 +281,7 @@
 
                 $rootScope.FlashMessage = {
                     type: 'error',
-                    message: 'Möbleringen kunde inte hämtas, var god försök igen.'
+                    message: 'Resursen kunde inte hämtas, var god försök igen.'
                 };
             });
 
@@ -267,7 +325,7 @@
 
                         $rootScope.FlashMessage = {
                             type: 'success',
-                            message: 'Möbleringen "' + $scope.resource.Name + '" raderades med ett lyckat resultat'
+                            message: 'Resursen "' + $scope.resource.Name + '" raderades med ett lyckat resultat'
                         };
 
                         that.redirectToListPage();
@@ -283,8 +341,8 @@
                         ){
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message:    'Möbleringen kan inte raderas eftersom det finns' +
-                                            ' en lokalbokning eller en lokalmöblering som refererar till möbleringen'
+                                message:    'Resursen kan inte raderas eftersom det finns' +
+                                            ' en resursbokning som refererar till resursen'
                             };
                         }
 
@@ -292,7 +350,7 @@
                         else if (response.status == 400 || response.status == 500){
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message: 'Ett oväntat fel uppstod när möbleringen skulle tas bort'
+                                message: 'Ett oväntat fel uppstod när resursen skulle tas bort'
                             };
                         }
 
@@ -300,7 +358,7 @@
                         if (response.status == 404) {
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message: 'Möbleringen "' + $scope.resource.Name + '" existerar inte längre. Hann kanske någon radera den?'
+                                message: 'Resursen "' + $scope.resource.Name + '" existerar inte längre. Hann kanske någon radera den?'
                             };
                         }
 
@@ -328,7 +386,7 @@
 
                 $rootScope.FlashMessage = {
                     type: 'error',
-                    message: 'Möbleringen kunde inte hämtas, var god försök igen.'
+                    message: 'Resursen kunde inte hämtas, var god försök igen.'
                 };
             });
 

@@ -19,6 +19,56 @@
 
     })
 
+    // Show Controller
+    .controller('FurnituringShowCtrl', function($scope, $routeParams, $location, $rootScope, Furnituring){
+
+        var that = this;
+
+        /* Private methods START */
+
+        that.redirectToListPage = function(){
+            var objectType;
+
+            objectType = $location.path().split('/')[1];
+
+            // Go back to location list
+            $location.path(objectType + "/lista");
+        };
+
+        /* Private methods END */
+
+        /* Public methods START */
+
+            // Back button
+            $scope.back = function(){
+                that.redirectToListPage();
+            };
+
+        /* Public methods END */
+
+
+        /* Initialization START */
+
+        var furnituring = Furnituring.get(
+            {
+                furnituringId: $routeParams.furnituringId
+            }
+        );
+
+        // In case furniturings cannot be fetched, display an error to user.
+        furnituring.$promise.catch(function(){
+
+            $rootScope.FlashMessage = {
+                type: 'error',
+                message: 'Möbleringen kunde inte hämtas, var god försök igen.'
+            };
+        });
+
+        $scope.furnituring = furnituring;
+
+        /* Initialization END */
+    })
+
     // List Controller
     .controller('FurnituringListCtrl', function($scope, Furnituring, $rootScope){
 

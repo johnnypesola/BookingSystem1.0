@@ -66,12 +66,14 @@ namespace BookingSystem.Models
                             // Create new Resource object from database values and return a reference
                             return new Resource
                             {
-                                ResourceId = reader.GetSafeInt16(reader.GetOrdinal("ResourceId")),
+                                ResourceId = reader.GetSafeInt32(reader.GetOrdinal("ResourceId")),
                                 Name = reader.GetSafeString(reader.GetOrdinal("Name")),
                                 Count = reader.GetSafeInt16(reader.GetOrdinal("Count")),
                                 BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
                                 MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking")),
-                                WeekEndCount = reader.GetSafeInt16(reader.GetOrdinal("WeekEndCount"))
+                                WeekEndCount = reader.GetSafeInt16(reader.GetOrdinal("WeekEndCount")),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings")),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal("TotalBookingValue"))
                             };
                         }
                     }
@@ -111,12 +113,13 @@ namespace BookingSystem.Models
                             // Create new Resource object from database values and add to list
                             ResourcesReturnList.Add(new Resource
                             {
-                                ResourceId = reader.GetSafeInt16(reader.GetOrdinal("ResourceId")),
+                                ResourceId = reader.GetSafeInt32(reader.GetOrdinal("ResourceId")),
                                 Name = reader.GetSafeString(reader.GetOrdinal("Name")),
                                 Count = reader.GetSafeInt16(reader.GetOrdinal("Count")),
                                 BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
                                 MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking")),
-                                WeekEndCount = reader.GetSafeInt16(reader.GetOrdinal("WeekEndCount"))
+                                WeekEndCount = reader.GetSafeInt16(reader.GetOrdinal("WeekEndCount")),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings"))
                             });
                         }
                     }
@@ -168,7 +171,7 @@ namespace BookingSystem.Models
                             // Create new Resource object from database values and add to list
                             resourcesReturnList.Add(new Resource
                             {
-                                ResourceId = reader.GetSafeInt16(reader.GetOrdinal("ResourceId")),
+                                ResourceId = reader.GetSafeInt32(reader.GetOrdinal("ResourceId")),
                                 Name = reader.GetSafeString(reader.GetOrdinal("Name")),
                                 Count = reader.GetSafeInt16(reader.GetOrdinal("Count")),
                                 BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
@@ -214,7 +217,7 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add("@WeekEndCount", SqlDbType.SmallInt).Value = Resource.WeekEndCount;
 
                     // Add out parameter for Stored procedure
-                    cmd.Parameters.Add("@InsertId", SqlDbType.SmallInt).Direction = ParameterDirection.Output;
+                    cmd.Parameters.Add("@InsertId", SqlDbType.Int).Direction = ParameterDirection.Output;
 
                     // Open DB connection
                     connection.Open();
@@ -227,7 +230,7 @@ namespace BookingSystem.Models
                 }
                 catch (Exception exception)
                 {
-                    if (exception.Message == "There is allready a resource with the given name.")
+                    if (exception.Message == "There is already a resource with the given name.")
                     {
                         throw new DuplicateNameException(exception.Message);
                     }
@@ -265,7 +268,7 @@ namespace BookingSystem.Models
                 }
                 catch (Exception exception)
                 {
-                    if (exception.Message == "There is allready a resource with the given name.")
+                    if (exception.Message == "There is already a resource with the given name.")
                     {
                         throw new DuplicateNameException(exception.Message);
                     }

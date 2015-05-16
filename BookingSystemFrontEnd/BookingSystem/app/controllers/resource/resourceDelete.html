@@ -1,6 +1,6 @@
-<section class="content-container" ng-controller="FurnituringDeleteCtrl">
+<section class="content-container" ng-controller="ResourceDeleteCtrl">
     <h2>
-        Radera möblering
+        Radera resurs
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
     <page-header-buttons
@@ -10,7 +10,7 @@
     ></page-header-buttons>
 
     <div class="align-center">
-    <p>Vill du verkligen radera möbleringen <strong class="text-dark-purple">{{furnituring.Name}}</strong>?</p>
+    <p>Vill du verkligen radera resursen <strong class="text-dark-purple">{{resource.Name}}</strong>?</p>
         <button ng-click="confirm()">Ja</button>
         <button ng-click="abort()">Nej</button>
     </div>

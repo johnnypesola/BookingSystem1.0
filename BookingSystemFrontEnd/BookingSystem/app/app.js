@@ -14,20 +14,22 @@
         'bookingSystem.booking',
         'bookingSystem.furnituring',
         'bookingSystem.location',
+        'bookingSystem.resource',
         'bookingSystem.loadingDirective'
     ]);
 
+    /*
+     'http://localhost:6796/api/'
+     'http://192.168.1.4:8080/BookingSystem/api/');
+     */
+
     // Define API url, used in services
-    BookingSystem.constant('API_URL', 'http://192.168.1.4:8080/BookingSystem/api/');
-    BookingSystem.constant('API_IMG_PATH_URL', 'http://192.168.1.4:8080/BookingSystem/');
+    BookingSystem.constant('API_URL', 'http://localhost:6796/api/');
+    BookingSystem.constant('API_IMG_PATH_URL', 'http://localhost:6796/');
     BookingSystem.constant('UPLOAD_IMG_MAX_WIDTH', '400');
     BookingSystem.constant('UPLOAD_IMG_MAX_HEIGHT', '400');
 
-    /*
 
-    'http://localhost:6796/'
-    'http://192.168.1.4:8080/BookingSystem/api/');
-    */
 
     BookingSystem.config(function($routeProvider) {
 
@@ -47,6 +49,9 @@
             }).
 
             // Furniturings
+            when('/mobleringar/visa/:furnituringId', {
+                templateUrl: 'controllers/furnituring/furnituringShow.html'
+            }).
             when('/mobleringar/lista', {
                 templateUrl: 'controllers/furnituring/furnituringList.html'
             }).
@@ -78,6 +83,23 @@
             }).
             when('/platser/karta', {
                 templateUrl: 'controllers/location/locationMap.html'
+            }).
+
+            // Resources
+            when('/resurser/visa/:resourceId', {
+                templateUrl: 'controllers/resource/resourceShow.html'
+            }).
+            when('/resurser/lista', {
+                templateUrl: 'controllers/resource/resourceList.html'
+            }).
+            when('/resurser/radera/:resourceId', {
+                templateUrl: 'controllers/resource/resourceDelete.html'
+            }).
+            when('/resurser/redigera/:resourceId', {
+                templateUrl: 'controllers/resource/resourceEdit.html'
+            }).
+            when('/resurser/skapa', {
+                templateUrl: 'controllers/resource/resourceCreate.html'
             }).
 
             // Page not found

@@ -31,5 +31,11 @@ namespace BookingSystem.Models
         [Required(ErrorMessage = "WeekEndCount is required.")]
         [Range(0, Int16.MaxValue, ErrorMessage = "WeekEndCount is out of range.")]
         public int WeekEndCount { get; set; }
+
+        // Extra datafields retrieved from database/stored procedure
+        public int TotalBookings { get; set; }
+
+        [DataType(DataType.Currency)]
+        public decimal TotalBookingValue { get; set; }
     }
 }

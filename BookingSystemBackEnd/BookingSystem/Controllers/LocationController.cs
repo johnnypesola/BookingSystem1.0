@@ -26,14 +26,21 @@ namespace BookingSystem.Controllers
         // GET: api/Location
         public IHttpActionResult Get()
         {
-            IEnumerable<Location> locations = locationService.GetLocations();
-
-            if (locations == null)
+            try
             {
-                return NotFound();
-            }
+                IEnumerable<Location> locations = locationService.GetLocations();
 
-            return Ok(locations);
+                if (locations == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(locations);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
         }
 
         // GET: api/Location/5
@@ -83,6 +90,7 @@ namespace BookingSystem.Controllers
         }
 
         // PUT: api/Location/5
+        /*
         public IHttpActionResult Put(Location location)
         {
             // Check for bad values, done by the data annotations in the model class.
@@ -93,6 +101,7 @@ namespace BookingSystem.Controllers
 
             return InternalServerError();
         }
+         */
 
         // DELETE: api/Location/5
         public IHttpActionResult Delete(int id)

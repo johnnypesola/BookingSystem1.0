@@ -36,25 +36,41 @@ namespace BookingSystem.Controllers
         // GET: api/Booking
         public IHttpActionResult Get()
         {
-            IEnumerable<Booking> bookings = bookingService.Get();
-
-            if(bookings == null)
+            try
             {
-                return NotFound();
-            }
+                IEnumerable<Booking> bookings = bookingService.Get();
 
-            return Ok(bookings);
+                if (bookings == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(bookings);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+            
         }
 
         // GET: api/Booking/5
         public IHttpActionResult Get(int id)
         {
-            Booking booking = bookingService.Get(id);
-            if (booking == null)
+            try
             {
-                return NotFound();
+                Booking booking = bookingService.Get(id);
+                if (booking == null)
+                {
+                    return NotFound();
+                }
+                return Ok(booking);
             }
-            return Ok(booking);
+            catch
+            {
+                return InternalServerError();
+            }
+            
         }
 
         // Get detailed bookings for day
@@ -64,16 +80,24 @@ namespace BookingSystem.Controllers
         {
             DateTime startTime, endTime;
 
-            startTime = Convert.ToDateTime(date).StartOfDay();
-            endTime = Convert.ToDateTime(date).EndOfDay();
-
-            IEnumerable<BookingContainer> bookings = bookingService.GetForPeriod(startTime, endTime);
-
-            if (bookings == null)
+            try
             {
-                return NotFound();
+                startTime = Convert.ToDateTime(date).StartOfDay();
+                endTime = Convert.ToDateTime(date).EndOfDay();
+
+                IEnumerable<BookingContainer> bookings = bookingService.GetForPeriod(startTime, endTime);
+
+                if (bookings == null)
+                {
+                    return NotFound();
+                }
+                return Ok(bookings);
             }
-            return Ok(bookings);
+            catch
+            {
+                return InternalServerError();
+            }
+            
         }
 
         // Get info if there are any bookings for a period
@@ -84,44 +108,51 @@ namespace BookingSystem.Controllers
             DateTime startTime, endTime;
             Regex typeRegex;
 
-            startTime = Convert.ToDateTime(fromDate);
-            endTime = Convert.ToDateTime(toDate);
-
-            // Try to validate type
-            typeRegex = new Regex(ValidationExtensions.BOOKING_TYPE_REGEXP);
-            if(!typeRegex.IsMatch(type))
+            try
             {
-                return NotFound();
-            }
+                startTime = Convert.ToDateTime(fromDate);
+                endTime = Convert.ToDateTime(toDate);
 
-            // Check how much data is requested
-            if(moreOrLess == "more")
-            {
-                // Get bookings
-                IEnumerable<BookingContainer> bookings = bookingService.GetForPeriod(startTime, endTime);
-
-                if (bookings == null)
+                // Try to validate type
+                typeRegex = new Regex(ValidationExtensions.BOOKING_TYPE_REGEXP);
+                if (!typeRegex.IsMatch(type))
                 {
                     return NotFound();
                 }
 
-                return Ok(bookings);
-            }
-            else if(moreOrLess == "less")
-            {
-                // Get bookings
-                IEnumerable<CalendarBookingDay> bookings = bookingService.CheckDaysForPeriod(startTime, endTime, type);
+                // Check how much data is requested
+                if (moreOrLess == "more")
+                {
+                    // Get bookings
+                    IEnumerable<BookingContainer> bookings = bookingService.GetForPeriod(startTime, endTime);
 
-                if (bookings == null)
+                    if (bookings == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(bookings);
+                }
+                else if (moreOrLess == "less")
+                {
+                    // Get bookings
+                    IEnumerable<CalendarBookingDay> bookings = bookingService.CheckDaysForPeriod(startTime, endTime, type);
+
+                    if (bookings == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(bookings);
+                }
+                else
                 {
                     return NotFound();
                 }
-
-                return Ok(bookings);
             }
-            else
+            catch
             {
-                return NotFound();
+                return InternalServerError();
             }
         }
 

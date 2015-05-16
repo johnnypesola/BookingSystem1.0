@@ -1,6 +1,6 @@
-<section class="content-container" ng-controller="FurnituringListCtrl">
+<section class="content-container" ng-controller="ResourceListCtrl">
     <h2>
-        Lista över Möbleringar
+        Lista över Resurser
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
 
@@ -14,15 +14,27 @@
 
         <table class="list-table">
             <tr>
-                <th>Möbleringsnamn</th>
+                <th>Resursnamn</th>
+                <th>Antal</th>
+                <th>Pris per timme</th>
+                <th>Antal bokningar</th>
                 <th></th>
             </tr>
-            <tr ng-repeat="furnituring in furniturings">
+            <tr ng-repeat="resource in resources">
                 <td>
-                    {{furnituring.Name}}
+                    {{resource.Name}}
                 </td>
                 <td class="align-right">
-                    <div item-action-buttons="furnituring.FurnituringId"></div>
+                    {{resource.Count | count}}
+                </td>
+                <td class="align-right">
+                    {{resource.BookingPricePerHour | kr}}
+                </td>
+                <td class="align-right">
+                    {{resource.TotalBookings | count}}
+                </td>
+                <td class="align-right">
+                    <div item-action-buttons="resource.ResourceId"></div>
                 </td>
             </tr>
         </table>
