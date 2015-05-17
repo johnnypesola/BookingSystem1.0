@@ -17,6 +17,8 @@ namespace BookingSystem.Controllers
         LocationFurnituringService locationFurnituringService = new LocationFurnituringService();
 
         // GET: api/LocationFurnituring
+        [Route("api/LocationFurnituring")]
+        [AcceptVerbs("GET")]
         public IHttpActionResult Get()
         {
             try
@@ -37,11 +39,13 @@ namespace BookingSystem.Controllers
         }
 
         // GET: api/LocationFurnituring/5
-        public IHttpActionResult Get(int id)
+        [Route("api/LocationFurnituring/{LocationId:int}")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult Get(int LocationId)
         {
             try
             {
-                LocationFurnituring locationFurnituring = locationFurnituringService.GetLocationFurnituring(id);
+                LocationFurnituring locationFurnituring = locationFurnituringService.GetLocationFurnituring(LocationId);
                 if (locationFurnituring == null)
                 {
                     return NotFound();
@@ -55,6 +59,8 @@ namespace BookingSystem.Controllers
         }
 
         // POST: api/LocationFurnituring
+        [Route("api/LocationFurnituring")]
+        [AcceptVerbs("POST")]
         public IHttpActionResult Post(LocationFurnituring locationFurnituring)
         {
             // Check for bad values, done by the data annotations in the model class.
@@ -124,18 +130,6 @@ namespace BookingSystem.Controllers
 
             // Respond that the booking was created and redirect
             return Ok(locationFurniturings); //CreatedAtRoute("DefaultApi", new { id = locationFurnituring.LocationFurnituringId }, locationFurnituring);
-        }
-
-        // PUT: api/LocationFurnituring/5
-        public IHttpActionResult Put(LocationFurnituring locationFurnituring)
-        {
-            // Check for bad values, done by the data annotations in the model class.
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return InternalServerError();
         }
 
         // DELETE: api/LocationFurnituring/5/5
@@ -219,34 +213,5 @@ namespace BookingSystem.Controllers
             }
 
         }
-
-        /*
-        // GET: api/LocationFurnituring
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/LocationFurnituring/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/LocationFurnituring
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/LocationFurnituring/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/LocationFurnituring/5
-        public void Delete(int id)
-        {
-        }
-         */
     }
 }

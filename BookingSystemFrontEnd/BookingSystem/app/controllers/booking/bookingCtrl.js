@@ -20,7 +20,7 @@
     })
 
     // Controller
-    .controller('BookingCtrl', function($scope, Booking, $rootScope){
+    .controller('BookingListCtrl', function($scope, Booking, $rootScope){
             var that = this;
             var currentDateObj;
 
@@ -39,7 +39,7 @@
             // Get bookings
             that.getBookings = function(){
 
-                // Store bookigns in private variable
+                // Store bookings in private variable
                 that.bookings = Booking.queryMoreForPeriod(
                     {
                         fromDate: that.currentMonthStartDateObj.BookingSystemGetYearsMonthsDays(),
@@ -97,5 +97,12 @@
             that.addVarsToScope();
 
             /* Initialization END */
+    })
+
+    .controller('BookingCreateCtrl', function($scope, Booking, $rootScope){
+        var that = this;
+        var currentDateObj;
+
+
     });
 })();

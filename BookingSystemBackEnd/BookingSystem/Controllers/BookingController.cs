@@ -34,6 +34,8 @@ namespace BookingSystem.Controllers
         }
 
         // GET: api/Booking
+        [Route("api/Booking")]
+        [AcceptVerbs("GET")]
         public IHttpActionResult Get()
         {
             try
@@ -55,11 +57,13 @@ namespace BookingSystem.Controllers
         }
 
         // GET: api/Booking/5
-        public IHttpActionResult Get(int id)
+        [Route("api/Booking/{BookingId:int}")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult Get(int BookingId)
         {
             try
             {
-                Booking booking = bookingService.Get(id);
+                Booking booking = bookingService.Get(BookingId);
                 if (booking == null)
                 {
                     return NotFound();
@@ -75,7 +79,7 @@ namespace BookingSystem.Controllers
 
         // Get detailed bookings for day
         [Route("api/Booking/day/{date:datetime?}")]
-        [AcceptVerbs("GET", "POST")]
+        [AcceptVerbs("GET")]
         public IHttpActionResult Get(string date)
         {
             DateTime startTime, endTime;
@@ -102,7 +106,7 @@ namespace BookingSystem.Controllers
 
         // Get info if there are any bookings for a period
         [Route("api/Booking/period/{fromDate:datetime}/{toDate:datetime}/{type}/{moreOrLess}")]
-        [AcceptVerbs("GET", "POST")]
+        [AcceptVerbs("GET")]
         public IHttpActionResult Get(string fromDate, string toDate, string type, String moreOrLess)
         {
             DateTime startTime, endTime;
@@ -157,6 +161,8 @@ namespace BookingSystem.Controllers
         }
 
         // POST api/Booking
+        [Route("api/Booking")]
+        [AcceptVerbs("POST")]
         public IHttpActionResult Post(Booking booking)
         {
             // Check for bad values, done by the data annotations in the model class.
@@ -180,17 +186,14 @@ namespace BookingSystem.Controllers
 
         }
 
-        // PUT: api/Booking/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
         // DELETE: api/Booking/5
-        public IHttpActionResult Delete(int id)
+        [Route("api/Booking/{BookingId:int}")]
+        [AcceptVerbs("DELETE")]
+        public IHttpActionResult Delete(int BookingId)
         {
             try
             {
-                bookingService.Delete(id);
+                bookingService.Delete(BookingId);
             }
             catch (FormatException)
             {

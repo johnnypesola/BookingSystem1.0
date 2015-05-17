@@ -11,27 +11,26 @@ using System.Data;
 namespace BookingSystem.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
-    public class FurnituringController : ApiController
+    public class CustomerController : ApiController
     {
-
         // Set up Service.
-        FurnituringService furnituringService = new FurnituringService();  
+        CustomerService customerService = new CustomerService();
 
-        // GET: api/Furnituring
-        [Route("api/Furnituring")]
+        // GET: api/Customer
+        [Route("api/Customer")]
         [AcceptVerbs("GET")]
         public IHttpActionResult Get()
         {
             try
             {
-                IEnumerable<Furnituring> furniturings = furnituringService.GetFurniturings();
+                IEnumerable<Customer> customers = customerService.GetCustomers();
 
-                if (furniturings == null)
+                if (customers == null)
                 {
                     return NotFound();
                 }
 
-                return Ok(furniturings);
+                return Ok(customers);
             }
             catch
             {
@@ -39,31 +38,30 @@ namespace BookingSystem.Controllers
             }
         }
 
-        // GET: api/Furnituring/5
-        [Route("api/Furnituring/{FurnituringId:int}")]
+        // GET: api/Customer/5
+        [Route("api/Customer/{CustomerId:int}")]
         [AcceptVerbs("GET")]
-        public IHttpActionResult Get(int FurnituringId)
+        public IHttpActionResult Get(int CustomerId)
         {
             try
             {
-                Furnituring furnituring = furnituringService.GetFurnituring(FurnituringId);
-                if (furnituring == null)
+                Customer customer = customerService.GetCustomer(CustomerId);
+                if (customer == null)
                 {
                     return NotFound();
                 }
-                return Ok(furnituring);
+                return Ok(customer);
             }
             catch
             {
                 return InternalServerError();
             }
-            
         }
 
-        // POST: api/Furnituring
-        [Route("api/Furnituring")]
+        // POST: api/Customer
+        [Route("api/Customer")]
         [AcceptVerbs("POST")]
-        public IHttpActionResult Post(Furnituring furnituring)
+        public IHttpActionResult Post(Customer customer)
         {
             // Check for bad values, done by the data annotations in the model class.
             if (!ModelState.IsValid)
@@ -71,10 +69,10 @@ namespace BookingSystem.Controllers
                 return BadRequest(ModelState);
             }
 
-            // Try to save furnituring
+            // Try to save customer
             try
             {
-                furnituringService.SaveFurnituring(furnituring);
+                customerService.SaveCustomer(customer);
             }
             catch (DataBaseEntryNotFoundException)
             {
@@ -94,17 +92,17 @@ namespace BookingSystem.Controllers
             }
 
             // Respond that the booking was created and redirect
-            return Ok(furnituring); //CreatedAtRoute("DefaultApi", new { id = furnituring.FurnituringId }, furnituring);
+            return Ok(customer); //CreatedAtRoute("DefaultApi", new { id = customer.CustomerId }, customer);
         }
 
-        // DELETE: api/Furnituring/5
-        [Route("api/Furnituring/{FurnituringId:int}")]
+        // DELETE: api/Customer/5
+        [Route("api/Customer/{CustomerId:int}")]
         [AcceptVerbs("DELETE")]
-        public IHttpActionResult Delete(int FurnituringId)
+        public IHttpActionResult Delete(int CustomerId)
         {
             try
             {
-                furnituringService.FurnituringDelete(FurnituringId);
+                customerService.DeleteCustomer(CustomerId);
             }
             catch (FormatException)
             {

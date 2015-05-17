@@ -1,0 +1,42 @@
+<section class="content-container" ng-controller="CustomerListCtrl">
+    <h2>
+        Lista över Kunder
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
+
+    <section class="list-container">
+
+        <table class="list-table">
+            <tr>
+                <th>Kundnr.</th>
+                <th>Kundnamn</th>
+                <th>Ort</th>
+                <th>Överordnad kund</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="customer in customers">
+                <td class="align-right">
+                    {{customer.CustomerId}}
+                </td>
+                <td>
+                    {{customer.Name}}
+                </td>
+                <td>
+                    {{customer.City}}
+                </td>
+                <td>
+                    {{customer.ParentCustomerName}}
+                </td>
+                <td class="align-right">
+                    <div item-action-buttons="customer.CustomerId"></div>
+                </td>
+            </tr>
+        </table>
+    </section>
+</section>

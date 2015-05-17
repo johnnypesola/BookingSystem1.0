@@ -1,0 +1,68 @@
+<section class="content-container" ng-controller="BookingCreateCtrl">
+    <h2>
+        Skapa Bokningstillfälle
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+        show-calendar="true"
+        show-list="true"
+        show-add="true"
+        show-search="true"
+    ></page-header-buttons>
+
+    <form name="bookingForm">
+        <label>Namn
+            <span ng-show="bookingForm.name.$error.required">Var god ange</span>
+            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name" required>
+
+        <label>Bokningstyp
+            <span ng-show="bookingForm.name.$error.required">Var god ange</span>
+            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name" required>
+
+        <label>Kund
+            <span ng-show="bookingForm.name.$error.required">Var god ange</span>
+            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name" required>
+
+        <label>Preliminär
+            <span ng-show="bookingForm.name.$error.required">Var god ange</span>
+            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name" required>
+
+        <label>Antal personer
+            <span ng-show="bookingForm.name.$error.required">Var god ange</span>
+            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name" required>
+
+        <label>Rabatt
+            <span ng-show="bookingForm.name.$error.required">Var god ange</span>
+            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name" required>
+
+        <label>Betalningsform
+            <span ng-show="bookingForm.name.$error.required">Var god ange</span>
+            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name" required>
+
+        <label>Anteckningar
+            <span ng-show="bookingForm.name.$error.required">Var god ange</span>
+            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name" required>
+
+
+
+        <button ng-click="save()" ng-disabled="!bookingForm.$valid">Skapa</button>
+        <button ng-click="abort()">Avbryt</button>
+
+    </form>
+</section>

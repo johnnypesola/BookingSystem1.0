@@ -96,18 +96,6 @@ namespace BookingSystem.Controllers
             return Ok(resource); //CreatedAtRoute("DefaultApi", new { id = resource.ResourceId }, resource);
         }
 
-        // PUT: api/Resource/5
-        public IHttpActionResult Put(Resource resource)
-        {
-            // Check for bad values, done by the data annotations in the model class.
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return InternalServerError();
-        }
-
         // DELETE: api/Resource/5
         public IHttpActionResult Delete(int id)
         {
@@ -163,10 +151,10 @@ namespace BookingSystem.Controllers
             string UploadImagePath;
             JObject returnData;
 
-            base64string = Request.Content.ReadAsStringAsync().Result;
-
             try
             {
+                base64string = Request.Content.ReadAsStringAsync().Result;
+
                 bytes = Convert.FromBase64String(base64string);
 
                 using (ms = new MemoryStream(bytes))

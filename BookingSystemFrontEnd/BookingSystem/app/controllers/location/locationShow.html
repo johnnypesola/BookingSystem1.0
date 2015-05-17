@@ -10,55 +10,71 @@
             show-search="true"
     ></page-header-buttons>
 
-    <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" bounds="map.bounds" events="map.events">
-        <ui-gmap-markers
-                models="markers"
-                coords="'coords'"
-                options="options"
-                events="events"
-                fit="true"
-                >
-        </ui-gmap-markers>
-    </ui-gmap-google-map>
+    <div class="show-container">
 
-    <img class="float-right" ng-src="{{imagePath + location.ImageSrc}}" ng-show="location.ImageSrc">
+        <h3>{{location.Name}}</h3>
 
-    <table class="show-table">
-        <tr>
-            <th>Namn</th>
-            <td>{{location.Name}}</td>
-        </tr>
-        <tr>
-            <th>Max personer (st)</th>
-            <td>{{location.MaxPeople | count}}</td>
-        </tr>
-        <tr>
-            <th>GPS Latitud</th>
-            <td>{{location.GPSLatitude}}</td>
-        </tr>
-        <tr>
-            <th>GPS Longitud</th>
-            <td>{{location.GPSLongitude}}</td>
-        </tr>
-        <tr>
-            <th>Bokningspris per timme (kr)</th>
-            <td>{{location.BookingPricePerHour | kr}}</td>
-        </tr>
-        <tr>
-            <th>Marginal efter bokning (minuter)</th>
-            <td>{{location.MinutesMarginAfterBooking | minutes}}</td>
-        </tr>
-        <tr>
-            <th>Totalt antal bokningar</th>
-            <td>{{location.TotalBookings | count}}</td>
-        </tr>
-        <tr>
-            <th>Totalt bokningsvärde</th>
-            <td>{{location.TotalBookingValue | kr}}</td>
-        </tr>
-    </table>
+        <img class="show-image" ng-src="{{location.ImageSrc}}" ng-show="location.ImageSrc">
 
-    <button ng-click="back()">Tillbaka</button>
+        <table class="show-table">
+            <tr>
+                <th>Namn</th>
+                <td>{{location.Name}}</td>
+            </tr>
+            <tr>
+                <th>Max personer (st)</th>
+                <td>{{location.MaxPeople | count}}</td>
+            </tr>
+            <tr>
+                <th>GPS Latitud</th>
+                <td>{{location.GPSLatitude}}</td>
+            </tr>
+            <tr>
+                <th>GPS Longitud</th>
+                <td>{{location.GPSLongitude}}</td>
+            </tr>
+            <tr>
+                <th>Bokningspris per timme (kr)</th>
+                <td>{{location.BookingPricePerHour | kr}}</td>
+            </tr>
+            <tr>
+                <th>Marginal efter bokning (minuter)</th>
+                <td>{{location.MinutesMarginAfterBooking | minutes}}</td>
+            </tr>
+            <tr>
+                <th>Totalt antal bokningar</th>
+                <td>{{location.TotalBookings | count}}</td>
+            </tr>
+            <tr>
+                <th>Totalt bokningsvärde</th>
+                <td>{{location.TotalBookingValue | kr}}</td>
+            </tr>
+            <tr>
+                <th>Valbara möbleringar</th>
+                <td>
+                    <div ng-repeat="furnituring in location.furniturings">{{furnituring.FurnituringName}} (Max {{furnituring.MaxPeople}} pers.)</div>
+                </td>
+            </tr>
+            <tr>
+                <th>Alternativ</th>
+                <td><div class="place-left" item-action-buttons="location.LocationId"></div></td>
+            </tr>
+        </table>
+
+        <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" bounds="map.bounds" events="map.events">
+            <ui-gmap-markers
+                    models="markers"
+                    coords="'coords'"
+                    options="options"
+                    events="events"
+                    fit="true"
+                    >
+            </ui-gmap-markers>
+        </ui-gmap-google-map>
+
+        <button ng-click="back()">Tillbaka</button>
+    </div>
+
 
 </section>
 

@@ -9,37 +9,46 @@
             show-search="true"
     ></page-header-buttons>
 
-    <table class="show-table">
-        <tr>
-            <th>Namn</th>
-            <td>{{resource.Name}}</td>
-        </tr>
-        <tr>
-            <th>Antal</th>
-            <td>{{resource.Count | count}}</td>
-        </tr>
-        <tr>
-            <th>Antal under helgdagar</th>
-            <td>{{resource.WeekEndCount | count}}</td>
-        </tr>
-        <tr>
-            <th>Bokningspris per timme (kr)</th>
-            <td>{{resource.BookingPricePerHour | kr}}</td>
-        </tr>
-        <tr>
-            <th>Marginal efter bokning (minuter)</th>
-            <td>{{resource.MinutesMarginAfterBooking | minutes}}</td>
-        </tr>
-        <tr>
-            <th>Totalt antal bokningar</th>
-            <td>{{resource.TotalBookings | count}}</td>
-        </tr>
-        <tr>
-            <th>Totalt bokningsvärde</th>
-            <td>{{resource.TotalBookingValue | kr}}</td>
-        </tr>
+    <div class="show-container">
 
-    </table>
+        <h3>{{resource.Name}}</h3>
+
+        <table class="show-table">
+            <tr>
+                <th>Namn</th>
+                <td>{{resource.Name}}</td>
+            </tr>
+            <tr>
+                <th>Antal</th>
+                <td>{{resource.Count | count}}</td>
+            </tr>
+            <tr>
+                <th>Antal under helgdagar</th>
+                <td>{{resource.WeekEndCount | count}}</td>
+            </tr>
+            <tr>
+                <th>Bokningspris per timme (kr)</th>
+                <td>{{resource.BookingPricePerHour | kr}}</td>
+            </tr>
+            <tr>
+                <th>Marginal efter bokning (minuter)</th>
+                <td>{{resource.MinutesMarginAfterBooking | minutes}}</td>
+            </tr>
+            <tr>
+                <th>Totalt antal bokningar</th>
+                <td>{{resource.TotalBookings | count}}</td>
+            </tr>
+            <tr>
+                <th>Totalt bokningsvärde</th>
+                <td>{{resource.TotalBookingValue | kr}}</td>
+            </tr>
+            <tr>
+                <th>Alternativ</th>
+                <td><div class="place-left" item-action-buttons="resource.ResourceId"></div></td>
+            </tr>
+        </table>
+
+    </div>
 
     <button ng-click="back()">Tillbaka</button>
 

@@ -1,0 +1,79 @@
+<section class="content-container" ng-controller="CustomerShowCtrl">
+    <h2>
+        Visa Kund
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
+
+    <div class="show-container">
+
+        <h3>{{customer.Name}}</h3>
+
+        <table class="show-table">
+            <tr>
+                <th>Kundnummer</th>
+                <td>{{customer.CustomerId}}</td>
+            </tr>
+            <tr>
+                <th>Namn</th>
+                <td>{{customer.Name}}</td>
+            </tr>
+            <tr>
+                <th>Adress</th>
+                <td>{{customer.Address}}</td>
+            </tr>
+            <tr>
+                <th>Postnummer</th>
+                <td>{{customer.PostNumber}}</td>
+            </tr>
+            <tr>
+                <th>Ort</th>
+                <td>{{customer.City}}</td>
+            </tr>
+            <tr>
+                <th>E-postadress</th>
+                <td>{{customer.EmailAddress}}</td>
+            </tr>
+            <tr>
+                <th>Telefonnummer</th>
+                <td>{{customer.PhoneNumber}}</td>
+            </tr>
+            <tr>
+                <th>Mobiltelefonnummer</th>
+                <td>{{customer.CellPhoneNumber}}</td>
+            </tr>
+            <tr>
+                <th>Överordnad kund</th>
+                <td>{{customer.ParentCustomerName}}</td>
+            </tr>
+            <tr>
+                <th>Antal underordnade kunder</th>
+                <td>{{customer.ChildCustomers | count}}</td>
+            </tr>
+            <tr>
+                <th>Totalt antal bokningar</th>
+                <td>{{customer.TotalBookings | count}}</td>
+            </tr>
+            <tr>
+                <th>Total bokningsvärde</th>
+                <td>{{customer.TotalBookingValue | kr}}</td>
+            </tr>
+            <tr>
+                <th>Anteckningar</th>
+                <td>{{customer.Notes}}</td>
+            </tr>
+            <tr>
+                <th>Alternativ</th>
+                <td><div class="place-left" item-action-buttons="customer.CustomerId"></div></td>
+            </tr>
+        </table>
+    </div>
+
+    <button ng-click="back()">Tillbaka</button>
+
+</section>
+

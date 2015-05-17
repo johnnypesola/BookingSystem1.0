@@ -24,6 +24,8 @@ namespace BookingSystem.Controllers
         LocationService locationService = new LocationService();
 
         // GET: api/Location
+        [Route("api/Location")]
+        [AcceptVerbs("GET")]
         public IHttpActionResult Get()
         {
             try
@@ -44,17 +46,28 @@ namespace BookingSystem.Controllers
         }
 
         // GET: api/Location/5
-        public IHttpActionResult Get(int id)
+        [Route("api/Location/{LocationId:int}")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult Get(int LocationId)
         {
-            Location location = locationService.GetLocation(id);
-            if (location == null)
+            try
             {
-                return NotFound();
+                Location location = locationService.GetLocation(LocationId);
+                if (location == null)
+                {
+                    return NotFound();
+                }
+                return Ok(location);
             }
-            return Ok(location);
+            catch
+            {
+                return InternalServerError();
+            }
         }
 
         // POST: api/Location
+        [Route("api/Location")]
+        [AcceptVerbs("POST")]
         public IHttpActionResult Post(Location location)
         {
             // Check for bad values, done by the data annotations in the model class.
@@ -89,35 +102,23 @@ namespace BookingSystem.Controllers
             return Ok(location); //CreatedAtRoute("DefaultApi", new { id = location.LocationId }, location);
         }
 
-        // PUT: api/Location/5
-        /*
-        public IHttpActionResult Put(Location location)
-        {
-            // Check for bad values, done by the data annotations in the model class.
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return InternalServerError();
-        }
-         */
-
         // DELETE: api/Location/5
-        public IHttpActionResult Delete(int id)
+        [Route("api/Location/{LocationId:int}")]
+        [AcceptVerbs("DELETE")]
+        public IHttpActionResult Delete(int LocationId)
         {
             string UploadImagePath, imageLocation;
 
             try
             {
                 // Delete info from database
-                locationService.LocationDelete(id);
+                locationService.LocationDelete(LocationId);
                 
                 // Get uploadpath
                 UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@"~/{0}", IMAGE_PATH));
 
                 // Build full image path
-                imageLocation = String.Format("{0}/{1}.jpg", UploadImagePath, id);
+                imageLocation = String.Format("{0}/{1}.jpg", UploadImagePath, LocationId);
 
                 // Remove uploaded file if it exists
                 if(File.Exists(@imageLocation))
@@ -146,10 +147,10 @@ namespace BookingSystem.Controllers
         }
 
         // POST a picture for a location
-        [Route("api/Location/image/{id:int}")]
+        [Route("api/Location/image/{LocationId:int}")]
         [AcceptVerbs("POST")]
         [HttpPost]
-        public IHttpActionResult Post(int id)
+        public IHttpActionResult Post(int LocationId)
         {
             MemoryStream ms;
             string base64string;
@@ -158,10 +159,10 @@ namespace BookingSystem.Controllers
             string UploadImagePath;
             JObject returnData;
 
-            base64string = Request.Content.ReadAsStringAsync().Result;
-
             try
             {
+                base64string = Request.Content.ReadAsStringAsync().Result;
+
                 bytes = Convert.FromBase64String(base64string);
 
                 using (ms = new MemoryStream(bytes))
@@ -180,7 +181,7 @@ namespace BookingSystem.Controllers
 
                     UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@"~/{0}", IMAGE_PATH));
 
-                    image.Save(String.Format("{0}/{1}.jpg", UploadImagePath, id), System.Drawing.Imaging.ImageFormat.Jpeg);
+                    image.Save(String.Format("{0}/{1}.jpg", UploadImagePath, LocationId), System.Drawing.Imaging.ImageFormat.Jpeg);
                 }
             }
             catch (Exception e)
@@ -189,7 +190,7 @@ namespace BookingSystem.Controllers
             }
 
             // Build return JSON object
-            returnData = JObject.Parse(String.Format("{{ 'imgpath' : '{0}/{1}.jpg'}}", IMAGE_PATH, id));
+            returnData = JObject.Parse(String.Format("{{ 'imgpath' : '{0}/{1}.jpg'}}", IMAGE_PATH, LocationId));
 
             // Return path to uploaded image
             return Ok(returnData);

@@ -87,7 +87,12 @@
                 },
                 {
                     title: "Kunder",
-                    submenus: []
+                    submenus: [
+                        {
+                            title: "Kunder",
+                            location: "kunder/lista"
+                        }
+                    ]
                 }
             ];
 

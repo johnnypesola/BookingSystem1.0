@@ -20,7 +20,7 @@ input[type=checkbox] {
     top: 3px;
 }
 
-input[type=text], input[type=date], input[type=number] {
+input[type=text], input[type=date], input[type=number], input[type=email], select, textarea {
     height: 30px;
     width: 200px;
     padding: 0 5px;
@@ -31,6 +31,26 @@ input[type=text], input[type=date], input[type=number] {
     -webkit-box-shadow: inset 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
     -moz-box-shadow:    inset 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
     box-shadow:         inset 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
+}
+
+input:disabled {
+    background: #FFFFFF !important;
+    border: 1px solid #EEEEEE !important;
+
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow:    none !important;
+    box-shadow:         none !important;
+}
+
+select {
+    display: inline-block !important;
+    width: auto !important;
+}
+
+textarea {
+    height: 100px !important;
+    line-height: 22px !important;
+    padding: 2px !important;
 }
 
 button {
@@ -419,7 +439,7 @@ section.content-container {
         /*border-bottom: 1px solid #EEEEEE;*/
     }
 
-    section.content-container form {
+    section.content-container form, section.content-container .show-container {
         font-size: 14px;
         background: #FFFFFF;
         padding: 25px;
@@ -447,6 +467,11 @@ section.content-container {
 
 */
     }
+
+        section.content-container form h3, section.content-container .show-container h3 {
+            font-size: 26px;
+            color: #AAAAAA;
+        }
 
         section.content-container form label {
             font-weight: normal;
@@ -485,8 +510,8 @@ section.content-container {
                 border-bottom: solid 5px transparent;
             }
 
-        section.content-container form input {
-            background: #FFFFFF;
+        section.content-container form input, section.content-container form select, section.content-container form textarea {
+            background: #FBFBFB;
             display: block;
             width: 600px;
             padding: 3px 12px;
@@ -500,7 +525,6 @@ section.content-container {
             margin: 0 0 8px 0;
 
             color: #777777;
-
         }
 
         section.content-container form div.checkbox-container {
@@ -520,6 +544,9 @@ section.content-container {
 
                 section.content-container form div.checkbox-container label select {
                     border-radius: 3px;
+                    width: inherit;
+                    display: inline-block;
+                    padding: 0;
                 }
 
         section.content-container form input[type=checkbox] {
@@ -531,7 +558,11 @@ section.content-container {
             height: 20px;
         }
 
-        section.content-container form input[type=text]:focus, section.content-container form input[type=number]:focus, section.content-container form input[type=date]:focus{
+        section.content-container form input[type=text]:focus,
+        section.content-container form input[type=number]:focus,
+        section.content-container form input[type=date]:focus,
+        section.content-container form select:focus,
+        section.content-container form textarea:focus {
             color: #555555;
 
             border-color: #FFFFFF;
@@ -541,9 +572,21 @@ section.content-container {
             box-shadow:         0 0 10px rgba(0, 0, 255, 0.2);
         }
 
+    section.content-container .show-image {
+        margin: 20px auto;
+        display: block;
+    }
+
     section.content-container .show-table {
         font-size: 14px;
+        margin: 0 0 20px 0;
+        width: 100%;
+
+        border-top: 1px solid #EEEEEE;
     }
+        section.content-container .show-table tr:nth-child(odd) {
+            background: #FAFAFA;
+        }
 
         section.content-container .show-table th {
             padding: 0 20px 0 5px;
@@ -893,7 +936,8 @@ section.content-container {
         }
 
             section.content-container .map-location-info-container table {
-                margin: 0 0 0 50px;
+                margin: 0 0 0 50px !important;
+                width: inherit !important;
             }
 
             section.content-container .map-location-info-container img {
@@ -1010,6 +1054,14 @@ section.content-container {
 
 .float-right {
     float: right;
+}
+
+.float-left {
+    float: left;
+}
+
+.uppercase {
+    text-transform: uppercase;
 }
 
 /* Colors */

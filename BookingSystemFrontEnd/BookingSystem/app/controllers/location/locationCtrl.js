@@ -32,7 +32,7 @@
     })
 
     // Show Controller
-    .controller('LocationShowCtrl', function($scope, Location, $routeParams, $location, $rootScope){
+    .controller('LocationShowCtrl', function($scope, Location, $routeParams, $location, $rootScope, LocationFurnituring, API_IMG_PATH_URL, PHOTO_MISSING_SRC){
 
             var that = this;
             $scope.markers = [];
@@ -92,6 +92,7 @@
                 }
             );
 
+
             // In case locations cannot be fetched, display an error to user.
             that.location.$promise.catch(function(){
 
@@ -106,6 +107,16 @@
 
                 // Add locations to public scope
                 $scope.location = that.location;
+
+                // Add path to imageSrc
+                $scope.location.ImageSrc = (that.location.ImageSrc === "" ? PHOTO_MISSING_SRC : API_IMG_PATH_URL + that.location.ImageSrc);
+
+                // Get location furniturings
+                $scope.location.furniturings = LocationFurnituring.queryForLocation(
+                    {
+                        locationId: $routeParams.locationId
+                    }
+                );
 
                 // Init map variables
                 that.initMapVariables();
@@ -652,7 +663,7 @@
     })
 
     // Map Controller
-    .controller('LocationMapCtrl', function($scope, Location, $rootScope, $location, uiGmapGoogleMapApi){
+    .controller('LocationMapCtrl', function($scope, Location, $rootScope, $location, uiGmapGoogleMapApi, API_IMG_PATH_URL, PHOTO_MISSING_SRC){
 
             var that = this;
                 $scope.markers = [];
@@ -693,6 +704,9 @@
 
                         $scope.markers[index].show = true;
                         $scope.visibleLocation = location;
+
+                        // Add path to imageSrc
+                        $scope.ImageSrc = (location.ImageSrc === "" ? PHOTO_MISSING_SRC : API_IMG_PATH_URL + location.ImageSrc);
                     };
                     $scope.markers[index].hideLocation = function() {
 

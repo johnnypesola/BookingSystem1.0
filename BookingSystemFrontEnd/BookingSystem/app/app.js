@@ -15,6 +15,7 @@
         'bookingSystem.furnituring',
         'bookingSystem.location',
         'bookingSystem.resource',
+        'bookingSystem.customer',
         'bookingSystem.loadingDirective'
     ]);
 
@@ -28,6 +29,7 @@
     BookingSystem.constant('API_IMG_PATH_URL', 'http://localhost:6796/');
     BookingSystem.constant('UPLOAD_IMG_MAX_WIDTH', '400');
     BookingSystem.constant('UPLOAD_IMG_MAX_HEIGHT', '400');
+    BookingSystem.constant('PHOTO_MISSING_SRC', 'img/icons/photo_missing.svg');
 
 
 
@@ -46,6 +48,9 @@
             }).
             when('/bokningstillfallen/kalender', {
                 templateUrl: 'controllers/booking/bookingCalendar.html'
+            }).
+            when('/bokningstillfallen/skapa', {
+                templateUrl: 'controllers/booking/bookingCreate.html'
             }).
 
             // Furniturings
@@ -102,6 +107,23 @@
                 templateUrl: 'controllers/resource/resourceCreate.html'
             }).
 
+            // Customer
+            when('/kunder/visa/:customerId', {
+                templateUrl: 'controllers/customer/customerShow.html'
+            }).
+            when('/kunder/lista', {
+                templateUrl: 'controllers/customer/customerList.html'
+            }).
+            when('/kunder/radera/:customerId', {
+                templateUrl: 'controllers/customer/customerDelete.html'
+            }).
+            when('/kunder/redigera/:customerId', {
+                templateUrl: 'controllers/customer/customerEdit.html'
+            }).
+            when('/kunder/skapa', {
+                templateUrl: 'controllers/customer/customerCreate.html'
+            }).
+
             // Page not found
             otherwise({
                 templateUrl: 'shared/views/notFound.html'
@@ -117,9 +139,10 @@
         $rootScope.Int32MaxValue = 2147483647;
         $rootScope.Int16MaxValue = 32767;
         $rootScope.regExp = {
-            textField : new RegExp("^[0-9a-zA-ZåäöÅÄÖé\\-_&\.,@()/%\\s\!]*$"),
-            postNumber : new RegExp("^[0-9]{3}\s[0-9]{2}$"),
-            phoneNumber : new RegExp("^[0-9\-\s]*$")
+            textField : new RegExp("^[0-9a-zA-ZåäöÅÄÖé\\-_&\.,~\\^@()/%\\s\!]*$"),
+            postNumber : new RegExp("^[0-9]{3}\\s[0-9]{2}$"),
+            phoneNumber : new RegExp("^[0-9\\-\\s]*$"),
+
         };
 
         // Image path

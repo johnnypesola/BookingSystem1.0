@@ -12,7 +12,7 @@
         ])
 
         // Directive specific controllers START
-        .controller('imageUploaderCtrl', function($scope, $q, $element, $attrs, $rootScope, LocationImage, ImageResize, API_IMG_PATH_URL) {
+        .controller('imageUploaderCtrl', function($scope, $q, $element, $attrs, $rootScope, LocationImage, ImageResize, API_IMG_PATH_URL, PHOTO_MISSING_SRC) {
 
             /* Declare variables START */
             var that = this,
@@ -112,7 +112,7 @@
                         $scope.displayImageSrc = API_IMG_PATH_URL + newValue;
                     }
                     else {
-                        $scope.displayImageSrc = "img/icons/photo_missing.svg";
+                        $scope.displayImageSrc = PHOTO_MISSING_SRC;
                     }
                 });
 

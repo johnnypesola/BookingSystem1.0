@@ -12,9 +12,9 @@
     <form name="resourceForm">
         <label>Namn
             <span ng-show="resourceForm.name.$error.required">Var god ange</span>
-            <span ng-show="resourceForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,@()/%!</span>
+            <span ng-show="resourceForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
-        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="resource.Name" required>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="resource.Name" maxlength="50" required>
 
         <label>Antal
             <span ng-show="resourceForm.count.$error.required">Var god ange</span>

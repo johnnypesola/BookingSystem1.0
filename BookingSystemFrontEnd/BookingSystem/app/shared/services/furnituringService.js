@@ -23,7 +23,7 @@
 
             return $resource(
                 API_URL + 'LocationFurnituring/:locationId',
-                {}, //furnituringId: '@furnituringId'
+                {locationId: '@locationId'}, //furnituringId: '@furnituringId'
                 {
                     // Override delete, needs 2 id:s. Backend is a relational database table.
                     remove: {

@@ -17,9 +17,9 @@
 
         <label>Namn
             <span ng-show="locationForm.name.$error.required">Var god ange</span>
-            <span ng-show="locationForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,@()/%!</span>
+            <span ng-show="locationForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
-        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="location.Name" required>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="location.Name" maxlength="50" required>
 
         <label>Max personer (st)
             <span ng-show="locationForm.maxPeople.$error.required">Var god ange</span>
@@ -52,7 +52,6 @@
                 <div ng-show="furnituring.Selected">
                     Max
                     <select ng-model="furnituring.MaxPeople" ng-options="maxPeople for maxPeople in maxPeopleRange">
-                        <option selected="selected">Antal personer</option>
                     </select>
                     pers.
                 </div>

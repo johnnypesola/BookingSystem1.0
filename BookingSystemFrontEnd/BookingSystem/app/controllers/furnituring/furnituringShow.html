@@ -9,13 +9,22 @@
             show-search="true"
     ></page-header-buttons>
 
-    <table class="show-table">
-        <tr>
-            <th>Namn</th>
-            <td>{{furnituring.Name}}</td>
-        </tr>
+    <div class="show-container">
 
-    </table>
+        <h3>{{furnituring.Name}}</h3>
+
+        <table class="show-table">
+            <tr>
+                <th>Namn</th>
+                <td>{{furnituring.Name}}</td>
+            </tr>
+            <tr>
+                <th>Alternativ</th>
+                <td><div class="place-left" item-action-buttons="furnituring.FurnituringId"></div></td>
+            </tr>
+        </table>
+
+    </div>
 
     <button ng-click="back()">Tillbaka</button>
 
