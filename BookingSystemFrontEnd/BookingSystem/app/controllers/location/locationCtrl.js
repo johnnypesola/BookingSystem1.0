@@ -9,6 +9,7 @@
         // Load Dependencies
         [
             'bookingSystem.locationServices',
+            'bookingSystem.furnituringServices',
             'bookingSystem.customFilters',
             'bookingSystem.itemActionButtonsDirective',
             'bookingSystem.pageHeaderButtonsDirective',
@@ -290,10 +291,17 @@
     })
 
     // Edit Controller
-    .controller('LocationEditCtrl', function($scope, $routeParams, $location, $rootScope, $timeout, Location){
+    .controller('LocationEditCtrl', function($scope, $routeParams, $location, $rootScope, $timeout, Location, LocationFurnituring, Furnituring, LocationFurnituringHelper){
 
-            var that = this;
+            var that = this,
+                i;
                 $scope.markers = [];
+                $scope.maxPeopleRange = [];
+
+            // Init max people range
+            for(i = 0; i <= 2000; i++){
+                $scope.maxPeopleRange.push(i);
+            }
 
         /* Private methods START */
 
@@ -349,6 +357,58 @@
                 };
             };
 
+            that.saveLocationFurnituring = function(){
+                var furnituringsToSave,
+                    locationFurnituringResource,
+                    postDataArray = [];
+
+                // Delete previous location furniturings
+                locationFurnituringResource = LocationFurnituring.removeForLocation(
+                    {
+                        locationId: $routeParams.locationId
+                    }
+                );
+
+                // Save new furniturings for location
+                locationFurnituringResource.$promise.finally(function() {
+
+                    // Filter out furniturings to save
+                    furnituringsToSave = $scope.furniturings.filter(function(furnituring){
+                        return furnituring.Selected;
+                    });
+
+                    // Process each and one of the furniturings
+                    furnituringsToSave.forEach(function(furnituring){
+
+                        postDataArray.push({
+                            LocationId: $routeParams.locationId,
+                            FurnituringId: furnituring.FurnituringId,
+                            MaxPeople: furnituring.MaxPeople
+                        })
+                    });
+
+                    // Save
+                    LocationFurnituring.saveForLocation(postDataArray);
+                });
+
+                // Return promise
+                return locationFurnituringResource.$promise;
+
+            };
+
+            that.getLocationFurnituring = function(){
+                var locationFurniturings;
+
+                // Use Helper service to get all furnituring with existing locations furnituring selected.
+                locationFurniturings = LocationFurnituringHelper.getCombined($routeParams.locationId);
+
+                // When data is loaded. Add to scope.
+                locationFurniturings.$promise.finally(function(){
+
+                    $scope.furniturings = locationFurniturings;
+                });
+            };
+
         /* Private methods END */
 
         /* Public methods START */
@@ -366,6 +426,7 @@
 
             // Save location
             $scope.save = function(){
+                var locationFurnituringSavePromise;
 
                 // Save location
                 Location.save(
@@ -384,12 +445,18 @@
                     // If everything went ok
                     .then(function(response){
 
-                        $rootScope.FlashMessage = {
-                            type: 'success',
-                            message: 'Platsen "' + $scope.location.Name + '" sparades med ett lyckat resultat'
-                        };
+                        // Save location furnituring
+                        that.saveLocationFurnituring().finally(function(){
 
-                        that.redirectToListPage();
+                            // Display success message
+                            $rootScope.FlashMessage = {
+                                type: 'success',
+                                message: 'Platsen "' + $scope.location.Name + '" sparades med ett lyckat resultat'
+                            };
+
+                            // Redirect
+                            that.redirectToListPage();
+                        });
 
                     // Something went wrong
                     }).catch(function(response) {
@@ -429,6 +496,7 @@
 
         /* Initialization START */
 
+            // Get location data
             that.location = Location.get(
                 {
                     locationId: $routeParams.locationId
@@ -454,6 +522,8 @@
                 // Init map variables
                 that.initMapVariables();
 
+                // Get location furnituring data
+                that.getLocationFurnituring();
 
                 // Add watch on $scope.map.bounds to check (every time it changes) if return boundary data is received from google maps
                 $scope.$watch(

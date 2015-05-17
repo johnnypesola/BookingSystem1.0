@@ -186,11 +186,10 @@ header {
             padding: 0;
             display: block;
             /*border-left: 1px solid #263145;*/
-            border-right: 1px solid #666666;
+            /*border-left: 1px solid #666666;*/
         }
             header nav.main-menu ul li {
                 display: inline-block;
-                border-left: 1px solid #666666;
             }
 
             header nav.main-menu ul li a {
@@ -220,10 +219,10 @@ header {
                 text-shadow: none;
             }
 
-            header nav.main-menu ul li a:hover {
+            header nav.main-menu ul li a:hover  {
                 cursor: pointer;
                 background-color: #FFFFFF;
-                color: #F08362;
+                color: #F08362 !important;
             }
 
             header nav.main-menu ul li.active a {
@@ -454,7 +453,10 @@ section.content-container {
             line-height: 30px;
             font-size: 16px;
             display: block;
+            margin: 0 0 2px 0;
         }
+
+
 
             section.content-container form label span {
                 line-height: 17px;
@@ -501,7 +503,35 @@ section.content-container {
 
         }
 
-        section.content-container form input[type=text]:focus{
+        section.content-container form div.checkbox-container {
+            margin: 0 0 10px 0;
+        }
+
+            section.content-container form div.checkbox-container label {
+                display: inline-block;
+                font-size: 14px;
+                color: #444444;
+                background: #F0F0F0;
+                border-radius: 4px;
+                margin: 3px;
+                padding: 0 5px 0 5px;
+                border: 1px solid #DDDDDD;
+            }
+
+                section.content-container form div.checkbox-container label select {
+                    border-radius: 3px;
+                }
+
+        section.content-container form input[type=checkbox] {
+            position: relative;
+            top: 5px;
+            display: inline-block;
+            margin: 0 3px 0 0;
+            width: 20px;
+            height: 20px;
+        }
+
+        section.content-container form input[type=text]:focus, section.content-container form input[type=number]:focus, section.content-container form input[type=date]:focus{
             color: #555555;
 
             border-color: #FFFFFF;
@@ -978,6 +1008,10 @@ section.content-container {
     margin: 0 !important;
 }
 
+.float-right {
+    float: right;
+}
+
 /* Colors */
     /* Backgrounds */
     .bg-light-green {
@@ -1072,6 +1106,7 @@ section.content-container {
     .angular-google-map {
         /*width: 435px;
         display: inline-block;*/
+        margin: 0 0 10px 0;
     }
 
     .angular-google-map .angular-google-map-container {

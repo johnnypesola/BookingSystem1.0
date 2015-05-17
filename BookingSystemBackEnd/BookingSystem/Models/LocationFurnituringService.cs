@@ -26,9 +26,9 @@ namespace BookingSystem.Models
             LocationFurnituringDelete(LocationFurnituring.LocationId, LocationFurnituring.FurnituringId);
         }
 
-        public void LocationFurnituringDelete(int LocationId, int FurnituringId)
+        public void LocationFurnituringDelete(int LocationId, int? FurnituringId = null)
         {
-            if (LocationId < 0 && FurnituringId < 0)
+            if (LocationId < 0 || FurnituringId != null && FurnituringId < 0)
             {
                 throw new FormatException("Invalid LocationId or FurnituringId");
             }
@@ -57,9 +57,9 @@ namespace BookingSystem.Models
             return LocationFurnituringDAL.GetLocationFurnituringById(LocationId);
         }
 
-        public IEnumerable<LocationFurnituring> GetLocationFurniturings()
+        public IEnumerable<LocationFurnituring> GetLocationFurniturings(int? LocationId = null)
         {
-            return LocationFurnituringDAL.GetLocationFurniturings();
+            return LocationFurnituringDAL.GetLocationFurniturings(LocationId);
         }
 
         public void SaveLocationFurnituring(LocationFurnituring LocationFurnituring)
@@ -95,6 +95,14 @@ namespace BookingSystem.Models
                 exception.Data.Add("ValidationResults", validationResults);
 
                 throw exception;
+            }
+        }
+
+        public void SaveLocationFurniturings(LocationFurnituring[] LocationFurniturings)
+        {
+            foreach (LocationFurnituring LocationFurnituring in LocationFurniturings)
+            {
+                this.SaveLocationFurnituring(LocationFurnituring);
             }
         }
     }

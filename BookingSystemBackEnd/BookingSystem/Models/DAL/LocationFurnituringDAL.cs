@@ -9,7 +9,7 @@ namespace BookingSystem.Models
 {
     public class LocationFurnituringDAL : DALBase
     {
-        public void DeleteLocationFurnituring(int LocationId, int FurnituringId)
+        public void DeleteLocationFurnituring(int LocationId, int? FurnituringId = null)
         {
             // Create connection object
             using (this.CreateConnection())
@@ -23,7 +23,10 @@ namespace BookingSystem.Models
 
                     // Add parameter for Stored procedure
                     cmd.Parameters.Add("@LocationId", SqlDbType.Int).Value = LocationId;
-                    cmd.Parameters.Add("@FurnituringId", SqlDbType.SmallInt).Value = FurnituringId;
+                    if (FurnituringId != null)
+                    {
+                        cmd.Parameters.Add("@FurnituringId", SqlDbType.SmallInt).Value = FurnituringId;
+                    }
 
                     // Try to delete LocationFurnituring from database.
                     cmd.ExecuteNonQuery();
@@ -68,7 +71,7 @@ namespace BookingSystem.Models
                             return new LocationFurnituring
                             {
                                 LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
-                                FurnituringId = reader.GetSafeInt32(reader.GetOrdinal("FurnituringId")),
+                                FurnituringId = reader.GetSafeInt16(reader.GetOrdinal("FurnituringId")),
                                 MaxPeople = reader.GetSafeInt32(reader.GetOrdinal("MaxPeople")),
                                 FurnituringName = reader.GetSafeString(reader.GetOrdinal("FurnituringName")),
                                 LocationName = reader.GetSafeString(reader.GetOrdinal("LocationName"))
@@ -86,7 +89,7 @@ namespace BookingSystem.Models
             } // Connection is closed here
         }
 
-        public IEnumerable<LocationFurnituring> GetLocationFurniturings()
+        public IEnumerable<LocationFurnituring> GetLocationFurniturings(int? LocationId = null)
         {
             // Create connection object
             using (this.CreateConnection())
@@ -102,6 +105,12 @@ namespace BookingSystem.Models
                     // Connect to database and execute given stored procedure
                     cmd = this.Setup("appSchema.usp_LocationFurnituringList");
 
+                    // Add parameter for Stored procedure
+                    if (LocationId != null)
+                    {
+                        cmd.Parameters.Add("@LocationId", SqlDbType.Int).Value = LocationId;
+                    }
+
                     // Get all data from stored procedure
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
@@ -112,7 +121,7 @@ namespace BookingSystem.Models
                             LocationFurnituringsReturnList.Add(new LocationFurnituring
                             {
                                 LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
-                                FurnituringId = reader.GetSafeInt32(reader.GetOrdinal("FurnituringId")),
+                                FurnituringId = reader.GetSafeInt16(reader.GetOrdinal("FurnituringId")),
                                 MaxPeople = reader.GetSafeInt32(reader.GetOrdinal("MaxPeople")),
                                 FurnituringName = reader.GetSafeString(reader.GetOrdinal("FurnituringName")),
                                 LocationName = reader.GetSafeString(reader.GetOrdinal("LocationName"))

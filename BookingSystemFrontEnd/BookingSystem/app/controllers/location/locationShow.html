@@ -21,6 +21,8 @@
         </ui-gmap-markers>
     </ui-gmap-google-map>
 
+    <img class="float-right" ng-src="{{imagePath + location.ImageSrc}}" ng-show="location.ImageSrc">
+
     <table class="show-table">
         <tr>
             <th>Namn</th>
@@ -54,7 +56,6 @@
             <th>Totalt bokningsvärde</th>
             <td>{{location.TotalBookingValue | kr}}</td>
         </tr>
-
     </table>
 
     <button ng-click="back()">Tillbaka</button>

@@ -44,6 +44,20 @@
         </label>
         <input type="number" min="0" max="{{Int16MaxValue}}" name="minutesMarginAfterBooking" ng-model="location.MinutesMarginAfterBooking">
 
+        <label>Möbleringar som ska vara tillgängliga för lokalen/platsen</label>
+        <div class="checkbox-container" >
+            <label ng-repeat="furnituring in furniturings">
+                <input type="checkbox" name="selectedFurniturings" value="{{furnituring.Name}}" ng-model="furnituring.Selected">{{furnituring.Name}}
+
+                <div ng-show="furnituring.Selected">
+                    Max
+                    <select ng-model="furnituring.MaxPeople" ng-options="maxPeople for maxPeople in maxPeopleRange">
+                        <option selected="selected">Antal personer</option>
+                    </select>
+                    pers.
+                </div>
+            </label>
+        </div>
         <label>GPS kartmarkering</label>
         <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="map.options" bounds="map.bounds" events="map.events">
             <ui-gmap-markers
@@ -55,6 +69,7 @@
                     >
             </ui-gmap-markers>
         </ui-gmap-google-map>
+
 
         <button ng-click="save()" ng-disabled="!locationForm.$valid">Spara</button>
         <button ng-click="abort()">Avbryt</button>

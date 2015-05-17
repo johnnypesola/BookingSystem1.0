@@ -21,7 +21,8 @@
                 });
             };
 
-            return $resource(API_URL + 'Booking',
+            return $resource(
+                API_URL + 'Booking',
                 {},
                 {
                     // Get bookings for specified day

@@ -53,12 +53,7 @@
                         {
                             title: "Lokalmöbleringar",
                             location: "lokalmobleringar/lista"
-                        }
-                    ]
-                },
-                {
-                    title: "Möbleringar",
-                    submenus: [
+                        },
                         {
                             title: "Möbleringar",
                             location: "mobleringar/lista"
@@ -151,7 +146,11 @@
             $scope.selectMainMenu = function(index) {
                 $scope.selectedMainMenu = index;
 
+                // Display active sub menus for clicked main menu
                 $scope.activeSubMenus = $scope.menus[index].submenus;
+
+                // Deselect sub menu when main menu is clicked
+                $scope.selectedSubMenu = -1;
             };
 
             // Method for when a sub menu is selected

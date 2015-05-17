@@ -89,6 +89,43 @@ namespace BookingSystem.Controllers
             return Ok(locationFurnituring); //CreatedAtRoute("DefaultApi", new { id = locationFurnituring.LocationFurnituringId }, locationFurnituring);
         }
 
+        // POST: api/LocationFurnituring/location
+        [Route("api/LocationFurnituring/location")]
+        [AcceptVerbs("POST")]
+        public IHttpActionResult Post(LocationFurnituring[] locationFurniturings)
+        {
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Try to save locationFurnituring
+            try
+            {
+                locationFurnituringService.SaveLocationFurniturings(locationFurniturings);
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DuplicateNameException)
+            {
+                return Conflict();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            // Respond that the booking was created and redirect
+            return Ok(locationFurniturings); //CreatedAtRoute("DefaultApi", new { id = locationFurnituring.LocationFurnituringId }, locationFurnituring);
+        }
+
         // PUT: api/LocationFurnituring/5
         public IHttpActionResult Put(LocationFurnituring locationFurnituring)
         {
@@ -101,7 +138,7 @@ namespace BookingSystem.Controllers
             return InternalServerError();
         }
 
-        // DELETE: api/LocationFurnituring/5
+        // DELETE: api/LocationFurnituring/5/5
         [Route("api/LocationFurnituring/{LocationId:int}/{FurnituringId:int}")]
         [AcceptVerbs("DELETE")]
         public IHttpActionResult Delete(int LocationId, int FurnituringId)
@@ -129,6 +166,58 @@ namespace BookingSystem.Controllers
             }
 
             return Ok();
+        }
+
+        // DELETE: api/LocationFurnituring/5/5
+        [Route("api/LocationFurnituring/{LocationId:int}")]
+        [AcceptVerbs("DELETE")]
+        public IHttpActionResult Delete(int LocationId)
+        {
+            try
+            {
+                // Delete info from database
+                locationFurnituringService.LocationFurnituringDelete(LocationId);
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
+
+        // GET: all location furniturings for specific location
+        [Route("api/LocationFurnituring/location/{LocationId:int}")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult GetForLocation(int LocationId)
+        {
+            try
+            {
+                IEnumerable<LocationFurnituring> locationFurniturings = locationFurnituringService.GetLocationFurniturings(LocationId);
+
+                if (locationFurniturings == null)
+                {
+                    return NotFound();
+                }
+                return Ok(locationFurniturings);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
         }
 
         /*
