@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\ResourceService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class ResourceService
+    {
+        // Fields
+        private ResourceDAL _resourceDAL;
+
+        // Properties
+        private ResourceDAL ResourceDAL
+        {
+            get
+            {
+                return _resourceDAL ?? (_resourceDAL = new ResourceDAL());
+            }
+        }
+
+        // Methods
+        public void ResourceDelete(Resource Resource)
+        {
+            ResourceDelete(Resource.ResourceId);
+        }
+
+        public void ResourceDelete(int ResourceId)
+        {
+            if (ResourceId &lt; 0)
+            {
+                throw new FormatException(&quot;Invalid ResourceId&quot;);
+            }
+
+            // Check that the Resource exists before deletion
+            Resource Resource = ResourceDAL.GetResourceById(ResourceId);
+
+            // If there is no Resource
+            if (Resource == null)
+            {
+                throw new DataBaseEntryNotFoundException(&quot;Resource does not exist&quot;);
+            }
+
+            // Delete Resource
+            ResourceDAL.DeleteResource(ResourceId);
+
+        }
+
+        public Resource GetResource(int ResourceId)
+        {
+            if (ResourceId &lt; 0)
+            {
+                throw new ApplicationException(&quot;Invalid ResourceId&quot;);
+            }
+
+            return ResourceDAL.GetResourceById(ResourceId);
+        }
+
+        public IEnumerable&lt;Resource&gt; GetResources()
+        {
+            return ResourceDAL.GetResources();
+        }
+
+        public IEnumerable&lt;Resource&gt; GetPageWise(string sortColumn, int pageSize, int pageIndex, out int totalRowCount)
+        {
+            return ResourceDAL.GetResourcesPageWise(sortColumn, pageSize, pageIndex, out totalRowCount);
+        }
+
+        public void SaveResource(Resource Resource)
+        {
+            // Preparare validation return data
+            ICollection&lt;ValidationResult&gt; validationResults;
+
+            // Try to validate given data
+            if (Resource.Validate(out validationResults))
+            {
+                // If a new Resource should be created
+                if (Resource.ResourceId == 0)
+                {
+                    ResourceDAL.InsertResource(Resource);
+                }
+                // Existing Resource should be updated
+                else
+                {
+                    // Check that the Resource exists before update
+                    if (ResourceDAL.GetResourceById(Resource.ResourceId) == null)
+                    {
+                        throw new DataBaseEntryNotFoundException();
+                    }
+
+                    // Update Resource
+                    ResourceDAL.UpdateResource(Resource);
+                }
+            }
+            // Validation failed
+            else
+            {
+                // Create exception
+                ApplicationException exception = new ApplicationException(&quot;Resource object contained invalid values.&quot;);
+
+                // Add validation data to exception.
+                exception.Data.Add(&quot;ValidationResults&quot;, validationResults);
+
+                throw exception;
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[26,13,26,49,0],[27,9,27,10,0],[33,17,33,65,0],[42,17,42,85,0],[54,17,54,70,0],[67,13,67,105,0],[89,25,89,68,0],[100,17,100,120,0],[103,17,103,76,0],[105,17,105,33,0],[19,17,19,75,1],[31,13,31,32,1],[37,13,37,73,1],[40,13,40,34,1],[46,13,46,52,1],[48,9,48,10,1],[52,13,52,32,1],[57,13,57,60,1],[62,13,62,47,1],[76,13,76,58,1],[79,17,79,46,1],[81,21,81,58,1],[87,21,87,82,1],[93,21,93,58,1]]);
+    </script>
+  </body>
+</html>

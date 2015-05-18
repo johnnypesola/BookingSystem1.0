@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\DAL\ResourceDAL.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class ResourceDAL : DALBase
+    {
+        public void DeleteResource(int ResourceId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_ResourceDelete&quot;);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@ResourceId&quot;, SqlDbType.Int).Value = ResourceId;
+
+                    // Try to delete Resource from database.
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    if (exception.Message == &quot;Foreign key references exists&quot;)
+                    {
+                        throw new ApprovedException(exception.Message);
+                    }
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public Resource GetResourceById(int ResourceId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_ResourceList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@ResourceId&quot;, SqlDbType.Int).Value = ResourceId;
+
+                    // Open connection to database
+                    connection.Open();
+
+                    // Try to read response from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if there is any return data to read
+                        if (reader.Read())
+                        {
+                            // Create new Resource object from database values and return a reference
+                            return new Resource
+                            {
+                                ResourceId = reader.GetSafeInt32(reader.GetOrdinal(&quot;ResourceId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                Count = reader.GetSafeInt16(reader.GetOrdinal(&quot;Count&quot;)),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal(&quot;BookingPricePerHour&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;)),
+                                WeekEndCount = reader.GetSafeInt16(reader.GetOrdinal(&quot;WeekEndCount&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;))
+                            };
+                        }
+                    }
+
+                    return null;
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            } // Connection is closed here
+        }
+
+        public IEnumerable&lt;Resource&gt; GetResources()
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;Resource&gt; ResourcesReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    ResourcesReturnList = new List&lt;Resource&gt;(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_ResourceListSimple&quot;);
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Resource object from database values and add to list
+                            ResourcesReturnList.Add(new Resource
+                            {
+                                ResourceId = reader.GetSafeInt32(reader.GetOrdinal(&quot;ResourceId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                Count = reader.GetSafeInt16(reader.GetOrdinal(&quot;Count&quot;)),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal(&quot;BookingPricePerHour&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;)),
+                                WeekEndCount = reader.GetSafeInt16(reader.GetOrdinal(&quot;WeekEndCount&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;))
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    ResourcesReturnList.TrimExcess();
+
+                    // Return list
+                    return ResourcesReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public IEnumerable&lt;Resource&gt; GetResourcesPageWise(string sortColumn, int pageSize, int pageIndex, out int totalRowCount)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;Resource&gt; resourcesReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    resourcesReturnList = new List&lt;Resource&gt;(pageSize);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_ResourceList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@SortOrder&quot;, SqlDbType.VarChar, 25).Value = sortColumn;
+                    cmd.Parameters.Add(&quot;@PageIndex&quot;, SqlDbType.Int).Value = pageIndex;
+                    cmd.Parameters.Add(&quot;@PageSize&quot;, SqlDbType.Int).Value = pageSize;
+                    cmd.Parameters.Add(&quot;@TotalRowCount&quot;, SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Resource object from database values and add to list
+                            resourcesReturnList.Add(new Resource
+                            {
+                                ResourceId = reader.GetSafeInt32(reader.GetOrdinal(&quot;ResourceId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                Count = reader.GetSafeInt16(reader.GetOrdinal(&quot;Count&quot;)),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal(&quot;BookingPricePerHour&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;)),
+                                WeekEndCount = reader.GetSafeInt16(reader.GetOrdinal(&quot;WeekEndCount&quot;))
+                            });
+                        }
+                    }
+
+                    // Get total row count
+                    totalRowCount = Convert.ToInt32(cmd.Parameters[&quot;@TotalRowCount&quot;].Value);
+
+                    // Remove unused list rows, free memory.
+                    resourcesReturnList.TrimExcess();
+
+                    // Return list
+                    return resourcesReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void InsertResource(Resource Resource)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_ResourceCreate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = Resource.Name;
+                    cmd.Parameters.Add(&quot;@Count&quot;, SqlDbType.SmallInt).Value = Resource.Count;
+                    cmd.Parameters.Add(&quot;@BookingPricePerHour&quot;, SqlDbType.Decimal).Value = Resource.BookingPricePerHour;
+                    cmd.Parameters.Add(&quot;@MinutesMarginAfterBooking&quot;, SqlDbType.SmallInt).Value = Resource.MinutesMarginAfterBooking;
+                    cmd.Parameters.Add(&quot;@WeekEndCount&quot;, SqlDbType.SmallInt).Value = Resource.WeekEndCount;
+
+                    // Add out parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@InsertId&quot;, SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+
+                    // Place database insert id into Resource object.
+                    Resource.ResourceId = (int)cmd.Parameters[&quot;@InsertId&quot;].Value;
+                }
+                catch (Exception exception)
+                {
+                    if (exception.Message == &quot;There is already a resource with the given name.&quot;)
+                    {
+                        throw new DuplicateNameException(exception.Message);
+                    }
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void UpdateResource(Resource Resource)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_ResourceUpdate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@ResourceId&quot;, SqlDbType.SmallInt).Value = Resource.ResourceId;
+                    cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = Resource.Name;
+                    cmd.Parameters.Add(&quot;@Count&quot;, SqlDbType.SmallInt).Value = Resource.Count;
+                    cmd.Parameters.Add(&quot;@BookingPricePerHour&quot;, SqlDbType.Decimal).Value = Resource.BookingPricePerHour;
+                    cmd.Parameters.Add(&quot;@MinutesMarginAfterBooking&quot;, SqlDbType.SmallInt).Value = Resource.MinutesMarginAfterBooking;
+                    cmd.Parameters.Add(&quot;@WeekEndCount&quot;, SqlDbType.SmallInt).Value = Resource.WeekEndCount;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    if (exception.Message == &quot;There is already a resource with the given name.&quot;)
+                    {
+                        throw new DuplicateNameException(exception.Message);
+                    }
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[30,17,30,44,0],[32,21,32,78,0],[34,25,34,72,0],[37,21,37,67,0],[81,21,81,33,0],[83,17,83,22,0],[86,21,86,67,0],[133,17,133,22,0],[135,21,135,67,0],[143,13,143,18,0],[151,21,151,72,0],[154,21,154,97,0],[157,21,157,96,0],[158,21,158,87,0],[159,21,159,85,0],[160,21,160,111,0],[163,21,163,39,0],[166,28,166,70,0],[172,29,180,32,0],[169,25,169,46,0],[185,21,185,93,0],[188,21,188,54,0],[191,21,191,48,0],[193,17,193,22,0],[195,21,195,67,0],[198,9,198,10,0],[238,21,238,67,0],[276,21,276,67,0],[15,13,15,18,1],[22,21,22,70,1],[25,21,25,89,1],[28,21,28,43,1],[40,9,40,10,1],[45,13,45,18,1],[52,21,52,97,1],[55,21,55,89,1],[58,21,58,39,1],[61,28,61,70,1],[64,25,64,43,1],[67,29,77,31,1],[89,9,89,10,1],[94,13,94,18,1],[102,21,102,66,1],[105,21,105,74,1],[108,28,108,70,1],[114,29,123,32,1],[111,25,111,46,1],[128,21,128,54,1],[131,21,131,48,1],[138,9,138,10,1],[203,13,203,18,1],[210,21,210,99,1],[213,21,213,94,1],[214,21,214,93,1],[215,21,215,120,1],[216,21,216,133,1],[217,21,217,107,1],[220,21,220,106,1],[223,21,223,39,1],[226,21,226,43,1],[229,21,229,82,1],[231,17,231,44,1],[233,21,233,97,1],[235,25,235,77,1],[241,9,241,10,1],[246,13,246,18,1],[253,21,253,99,1],[256,21,256,103,1],[257,21,257,94,1],[258,21,258,93,1],[259,21,259,120,1],[260,21,260,133,1],[261,21,261,107,1],[264,21,264,39,1],[267,21,267,43,1],[269,17,269,44,1],[271,21,271,97,1],[273,25,273,77,1],[279,9,279,10,1]]);
+    </script>
+  </body>
+</html>

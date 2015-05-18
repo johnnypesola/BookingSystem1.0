@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\DAL\LocationFurnituringDAL.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class LocationFurnituringDAL : DALBase
+    {
+        public void DeleteLocationFurnituring(int LocationId, int? FurnituringId = null)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_LocationFurnituringDelete&quot;);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@LocationId&quot;, SqlDbType.Int).Value = LocationId;
+                    if (FurnituringId != null)
+                    {
+                        cmd.Parameters.Add(&quot;@FurnituringId&quot;, SqlDbType.SmallInt).Value = FurnituringId;
+                    }
+
+                    // Try to delete LocationFurnituring from database.
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public LocationFurnituring GetLocationFurnituringById(int LocationId, int? FurnituringId = null)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_LocationFurnituringList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@LocationId&quot;, SqlDbType.Int).Value = LocationId;
+                    if(FurnituringId != null)
+                    {
+                        cmd.Parameters.Add(&quot;@FurnituringId&quot;, SqlDbType.SmallInt).Value = FurnituringId;
+                    }
+
+                    // Open connection to database
+                    connection.Open();
+
+                    // Try to read response from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if there is any return data to read
+                        if (reader.Read())
+                        {
+                            // Create new LocationFurnituring object from database values and return a reference
+                            return new LocationFurnituring
+                            {
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal(&quot;LocationId&quot;)),
+                                FurnituringId = reader.GetSafeInt16(reader.GetOrdinal(&quot;FurnituringId&quot;)),
+                                MaxPeople = reader.GetSafeInt32(reader.GetOrdinal(&quot;MaxPeople&quot;)),
+                                FurnituringName = reader.GetSafeString(reader.GetOrdinal(&quot;FurnituringName&quot;)),
+                                LocationName = reader.GetSafeString(reader.GetOrdinal(&quot;LocationName&quot;))
+                            };
+                        }
+                    }
+
+                    return null;
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            } // Connection is closed here
+        }
+
+        public IEnumerable&lt;LocationFurnituring&gt; GetLocationFurniturings(int? LocationId = null)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;LocationFurnituring&gt; LocationFurnituringsReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    LocationFurnituringsReturnList = new List&lt;LocationFurnituring&gt;(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_LocationFurnituringList&quot;);
+
+                    // Add parameter for Stored procedure
+                    if (LocationId != null)
+                    {
+                        cmd.Parameters.Add(&quot;@LocationId&quot;, SqlDbType.Int).Value = LocationId;
+                    }
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new LocationFurnituring object from database values and add to list
+                            LocationFurnituringsReturnList.Add(new LocationFurnituring
+                            {
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal(&quot;LocationId&quot;)),
+                                FurnituringId = reader.GetSafeInt16(reader.GetOrdinal(&quot;FurnituringId&quot;)),
+                                MaxPeople = reader.GetSafeInt32(reader.GetOrdinal(&quot;MaxPeople&quot;)),
+                                FurnituringName = reader.GetSafeString(reader.GetOrdinal(&quot;FurnituringName&quot;)),
+                                LocationName = reader.GetSafeString(reader.GetOrdinal(&quot;LocationName&quot;))
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    LocationFurnituringsReturnList.TrimExcess();
+
+                    // Return list
+                    return LocationFurnituringsReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void InsertLocationFurnituring(LocationFurnituring LocationFurnituring)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_LocationFurnituringCreate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@LocationId&quot;, SqlDbType.Int).Value = LocationFurnituring.LocationId;
+                    cmd.Parameters.Add(&quot;@FurnituringId&quot;, SqlDbType.SmallInt).Value = LocationFurnituring.FurnituringId;
+                    cmd.Parameters.Add(&quot;@MaxPeople&quot;, SqlDbType.Int).Value = LocationFurnituring.MaxPeople;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    if (exception.Message == &quot;There is already a location furnituring with the given data.&quot;)
+                    {
+                        throw new DuplicateNameException(exception.Message);
+                    }
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void UpdateLocationFurnituring(LocationFurnituring LocationFurnituring)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_LocationFurnituringUpdate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@LocationId&quot;, SqlDbType.Int).Value = LocationFurnituring.LocationId;
+                    cmd.Parameters.Add(&quot;@FurnituringId&quot;, SqlDbType.SmallInt).Value = LocationFurnituring.FurnituringId;
+                    cmd.Parameters.Add(&quot;@MaxPeople&quot;, SqlDbType.Int).Value = LocationFurnituring.MaxPeople;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception)
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[28,25,28,104,0],[34,17,34,34,0],[37,21,37,67,0],[84,17,84,22,0],[87,21,87,67,0],[138,17,138,22,0],[140,21,140,67,0],[168,17,168,44,0],[170,21,170,109,0],[172,25,172,77,0],[175,21,175,67,0],[183,13,183,18,0],[190,21,190,110,0],[193,21,193,109,0],[194,21,194,120,0],[195,21,195,107,0],[198,21,198,39,0],[201,21,201,43,0],[203,17,203,34,0],[206,21,206,67,0],[209,9,209,10,0],[15,13,15,18,1],[22,21,22,81,1],[25,21,25,89,1],[26,21,26,47,1],[32,21,32,43,1],[40,9,40,10,1],[45,13,45,18,1],[52,21,52,108,1],[55,21,55,89,1],[56,21,56,46,1],[58,25,58,104,1],[62,21,62,39,1],[65,28,65,70,1],[68,25,68,43,1],[71,29,78,31,1],[82,21,82,33,1],[90,9,90,10,1],[95,13,95,18,1],[103,21,103,88,1],[106,21,106,79,1],[109,21,109,44,1],[111,25,111,93,1],[115,28,115,70,1],[121,29,128,32,1],[118,25,118,46,1],[133,21,133,65,1],[136,21,136,59,1],[143,9,143,10,1],[148,13,148,18,1],[155,21,155,110,1],[158,21,158,109,1],[159,21,159,120,1],[160,21,160,107,1],[163,21,163,39,1],[166,21,166,43,1],[178,9,178,10,1]]);
+    </script>
+  </body>
+</html>

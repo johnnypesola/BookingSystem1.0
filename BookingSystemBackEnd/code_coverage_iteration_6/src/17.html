@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\DAL\CustomerDAL.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class CustomerDAL : DALBase
+    {
+        public void DeleteCustomer(int customerId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerDelete&quot;);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@CustomerId&quot;, SqlDbType.Int).Value = customerId;
+
+                    // Try to delete customer from database.
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public Customer GetCustomerById(int customerId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@CustomerId&quot;, SqlDbType.Int).Value = customerId;
+
+                    // Open connection to database
+                    connection.Open();
+
+                    // Try to read response from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if there is any return data to read
+                        if (reader.Read())
+                        {
+                            // Create new Customer object from database values and return a reference
+                            return new Customer
+                            {
+                                CustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;CustomerId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                Address = reader.GetSafeString(reader.GetOrdinal(&quot;Address&quot;)),
+                                PostNumber = reader.GetSafeString(reader.GetOrdinal(&quot;PostNumber&quot;)),
+                                City = reader.GetSafeString(reader.GetOrdinal(&quot;City&quot;)),
+                                EmailAddress = reader.GetSafeString(reader.GetOrdinal(&quot;EmailAddress&quot;)),
+                                PhoneNumber = reader.GetSafeString(reader.GetOrdinal(&quot;PhoneNumber&quot;)),
+                                CellPhoneNumber = reader.GetSafeString(reader.GetOrdinal(&quot;CellPhoneNumber&quot;)),
+                                ParentCustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;ParentCustomerId&quot;)),
+                                ParentCustomerName = reader.GetSafeString(reader.GetOrdinal(&quot;ParentCustomerName&quot;)),
+                                Notes = reader.GetSafeString(reader.GetOrdinal(&quot;Notes&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;)),
+                                ChildCustomers = reader.GetSafeInt32(reader.GetOrdinal(&quot;ChildCustomers&quot;))
+                            };
+                        }
+                    }
+
+                    return null;
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            } // Connection is closed here
+        }
+
+        public IEnumerable&lt;Customer&gt; GetCustomers()
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;Customer&gt; customersReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    customersReturnList = new List&lt;Customer&gt;(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerListSimple&quot;);
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Customer object from database values and add to list
+                            customersReturnList.Add(new Customer
+                            {
+                                CustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;CustomerId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                City = reader.GetSafeString(reader.GetOrdinal(&quot;City&quot;)),
+                                ParentCustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;ParentCustomerId&quot;)),
+                                ParentCustomerName = reader.GetSafeString(reader.GetOrdinal(&quot;ParentCustomerName&quot;))
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    customersReturnList.TrimExcess();
+
+                    // Return list
+                    return customersReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public IEnumerable&lt;Customer&gt; GetCustomersPageWise(string sortColumn, int pageSize, int pageIndex, out int totalRowCount)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;Customer&gt; customersReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    customersReturnList = new List&lt;Customer&gt;(pageSize);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@SortOrder&quot;, SqlDbType.VarChar, 25).Value = sortColumn; 
+                    cmd.Parameters.Add(&quot;@PageIndex&quot;, SqlDbType.Int).Value = pageIndex;
+                    cmd.Parameters.Add(&quot;@PageSize&quot;, SqlDbType.Int).Value = pageSize;
+                    cmd.Parameters.Add(&quot;@TotalRowCount&quot;, SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                         // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Customer object from database values and add to list
+                            customersReturnList.Add(new Customer
+                            {
+                                CustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;CustomerId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                Address = reader.GetSafeString(reader.GetOrdinal(&quot;Address&quot;)),
+                                PostNumber = reader.GetSafeString(reader.GetOrdinal(&quot;PostNumber&quot;)),
+                                City = reader.GetSafeString(reader.GetOrdinal(&quot;City&quot;)),
+                                EmailAddress = reader.GetSafeString(reader.GetOrdinal(&quot;EmailAddress&quot;)),
+                                PhoneNumber = reader.GetSafeString(reader.GetOrdinal(&quot;PhoneNumber&quot;)),
+                                CellPhoneNumber = reader.GetSafeString(reader.GetOrdinal(&quot;CellPhoneNumber&quot;)),
+                                ParentCustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;ParentCustomerId&quot;)),
+                                ParentCustomerName = reader.GetSafeString(reader.GetOrdinal(&quot;ParentCustomerName&quot;)),
+                                Notes = reader.GetSafeString(reader.GetOrdinal(&quot;Notes&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;))
+                            });
+                        }
+                    }
+
+                    // Get total row count
+                    totalRowCount = Convert.ToInt32(cmd.Parameters[&quot;@TotalRowCount&quot;].Value);
+
+                    // Remove unused list rows, free memory.
+                    customersReturnList.TrimExcess();
+
+                    // Return list
+                    return customersReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void InsertCustomer(Customer customer)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerCreate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = customer.Name;
+                    cmd.Parameters.Add(&quot;@Address&quot;, SqlDbType.VarChar, 40).Value = customer.Address;
+                    cmd.Parameters.Add(&quot;@PostNumber&quot;, SqlDbType.VarChar, 6).Value = customer.PostNumber;
+                    cmd.Parameters.Add(&quot;@City&quot;, SqlDbType.VarChar, 30).Value = customer.City;
+                    cmd.Parameters.Add(&quot;@EmailAddress&quot;, SqlDbType.VarChar, 50).Value = customer.EmailAddress;
+                    cmd.Parameters.Add(&quot;@PhoneNumber&quot;, SqlDbType.VarChar, 20).Value = customer.PhoneNumber;
+                    cmd.Parameters.Add(&quot;@CellPhoneNumber&quot;, SqlDbType.VarChar, 20).Value = customer.CellPhoneNumber;
+                    cmd.Parameters.Add(&quot;@ParentCustomerId&quot;, SqlDbType.Int).Value = customer.ParentCustomerId;
+                    cmd.Parameters.Add(&quot;@Notes&quot;, SqlDbType.VarChar, 200).Value = customer.Notes;
+
+                    // Add out parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@InsertId&quot;, SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+
+                    // Place database insert id into customer object.
+                    customer.CustomerId = (int)cmd.Parameters[&quot;@InsertId&quot;].Value;
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void UpdateCustomer(Customer customer)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerUpdate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@CustomerId&quot;, SqlDbType.Int).Value = customer.CustomerId;
+                    cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = customer.Name;
+                    cmd.Parameters.Add(&quot;@Address&quot;, SqlDbType.VarChar, 40).Value = customer.Address;
+                    cmd.Parameters.Add(&quot;@PostNumber&quot;, SqlDbType.VarChar, 6).Value = customer.PostNumber;
+                    cmd.Parameters.Add(&quot;@City&quot;, SqlDbType.VarChar, 30).Value = customer.City;
+                    cmd.Parameters.Add(&quot;@EmailAddress&quot;, SqlDbType.VarChar, 50).Value = customer.EmailAddress;
+                    cmd.Parameters.Add(&quot;@PhoneNumber&quot;, SqlDbType.VarChar, 20).Value = customer.PhoneNumber;
+                    cmd.Parameters.Add(&quot;@CellPhoneNumber&quot;, SqlDbType.VarChar, 20).Value = customer.CellPhoneNumber;
+                    cmd.Parameters.Add(&quot;@ParentCustomerId&quot;, SqlDbType.Int).Value = customer.ParentCustomerId;
+                    cmd.Parameters.Add(&quot;@Notes&quot;, SqlDbType.VarChar, 200).Value = customer.Notes;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[15,13,15,18,0],[22,21,22,70,0],[25,21,25,89,0],[28,21,28,43,0],[30,17,30,22,0],[33,21,33,67,0],[36,9,36,10,0],[83,21,83,33,0],[85,17,85,22,0],[88,21,88,67,0],[133,17,133,22,0],[135,21,135,67,0],[143,13,143,18,0],[151,21,151,72,0],[154,21,154,97,0],[157,21,157,96,0],[158,21,158,87,0],[159,21,159,85,0],[160,21,160,111,0],[163,21,163,39,0],[166,28,166,70,0],[172,29,187,32,0],[169,25,169,46,0],[192,21,192,93,0],[195,21,195,54,0],[198,21,198,48,0],[200,17,200,22,0],[202,21,202,67,0],[205,9,205,10,0],[242,17,242,22,0],[245,21,245,67,0],[280,17,280,22,0],[283,21,283,67,0],[41,13,41,18,1],[48,21,48,97,1],[51,21,51,89,1],[54,21,54,39,1],[57,28,57,70,1],[60,25,60,43,1],[63,29,79,31,1],[91,9,91,10,1],[96,13,96,18,1],[104,21,104,66,1],[107,21,107,74,1],[110,28,110,70,1],[116,29,123,32,1],[113,25,113,46,1],[128,21,128,54,1],[131,21,131,48,1],[138,9,138,10,1],[210,13,210,18,1],[217,21,217,99,1],[220,21,220,94,1],[221,21,221,100,1],[222,21,222,105,1],[223,21,223,94,1],[224,21,224,110,1],[225,21,225,108,1],[226,21,226,116,1],[227,21,227,110,1],[228,21,228,97,1],[231,21,231,106,1],[234,21,234,39,1],[237,21,237,43,1],[240,21,240,82,1],[248,9,248,10,1],[253,13,253,18,1],[260,21,260,99,1],[263,21,263,98,1],[264,21,264,94,1],[265,21,265,100,1],[266,21,266,105,1],[267,21,267,94,1],[268,21,268,110,1],[269,21,269,108,1],[270,21,270,116,1],[271,21,271,110,1],[272,21,272,97,1],[275,21,275,39,1],[278,21,278,43,1],[286,9,286,10,1]]);
+    </script>
+  </body>
+</html>
