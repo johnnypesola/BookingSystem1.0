@@ -357,7 +357,7 @@
                             $rootScope.FlashMessage = {
                                 type: 'error',
                                 message:    'Kunden kan inte raderas eftersom det finns' +
-                                            ' ett en annan kund eller ett bokningstillfälle som refererar till kunden'
+                                            ' en annan kund eller ett bokningstillfälle som refererar till kunden'
                             };
                         }
 

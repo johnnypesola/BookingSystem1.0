@@ -112,7 +112,7 @@ describe('module: bookingSystem.furnituring', function() {
             _Furnituring_.save = jasmine.createSpy('save').andCallFake(function() {
 
                 // Generate a promise object for mocked return data.
-                return TestHelper.addPromiseToObject({}, $q, '400', 'There is allready a Furnituring with the given name.');
+                return TestHelper.addPromiseToObject({}, $q, '409', 'There is already a Furnituring with the given name.');
             });
 
             // Spy on existing controller method

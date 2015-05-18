@@ -71,7 +71,7 @@
                             location: "resurser/lista"
                         }
                     ]
-                },
+                },/*
                 {
                     title: "Mat",
                     submenus: [
@@ -85,6 +85,7 @@
                         }
                     ]
                 },
+                */
                 {
                     title: "Kunder",
                     submenus: [

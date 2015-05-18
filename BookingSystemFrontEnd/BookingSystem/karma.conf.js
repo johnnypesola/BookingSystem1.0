@@ -16,6 +16,9 @@ module.exports = function(config){
         'app/shared/directives/**/*.js',
         'app/*.js',
         'app/lib/extensions.js',
+        'app/lib/angular-google-maps.min.js',
+        'app/lib/lodash.min.js',
+        'app/lib/google-maps-api.js',
         'app/shared/**/*.html'
     ],
 

@@ -474,6 +474,7 @@
 
                         // If there there was a foreign key reference
                         if (response.status == 409){
+
                             $rootScope.FlashMessage = {
                                 type: 'error',
                                 message:    'Det finns redan en plats som heter "' + $scope.location.Name +
@@ -508,6 +509,7 @@
         /* Initialization START */
 
             // Get location data
+
             that.location = Location.get(
                 {
                     locationId: $routeParams.locationId

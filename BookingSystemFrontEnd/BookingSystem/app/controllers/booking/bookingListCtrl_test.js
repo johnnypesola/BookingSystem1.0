@@ -52,7 +52,7 @@ describe('module: bookingSystem.booking', function() {
         $scope = $rootScope;
         testCurrentDateObj = new Date();
 
-        BookingCtrl = $controller('BookingCtrl', {
+        BookingCtrl = $controller('BookingListCtrl', {
             $scope: $scope,
             Booking: _Booking_,
             $rootScope: $rootScope
@@ -60,7 +60,7 @@ describe('module: bookingSystem.booking', function() {
     }));
 
     // Actual tests
-    describe('BookingCtrl controller', function(){
+    describe('BookingListCtrl controller', function(){
 
         // Shared testing function. avoid DRY
         var testDateVars = function() {

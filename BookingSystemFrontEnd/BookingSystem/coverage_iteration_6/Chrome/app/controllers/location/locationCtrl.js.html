@@ -1,0 +1,2418 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./app/controllers/location/locationCtrl.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">./app/controllers/location/locationCtrl.js</span></h1>
+    <h2>
+        Statements: <span class="metric">37.5% <small>(66 / 176)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">29.73% <small>(11 / 37)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">29.23% <small>(19 / 65)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">37.5% <small>(66 / 176)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/controllers/location/</a> &#187; locationCtrl.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421
+422
+423
+424
+425
+426
+427
+428
+429
+430
+431
+432
+433
+434
+435
+436
+437
+438
+439
+440
+441
+442
+443
+444
+445
+446
+447
+448
+449
+450
+451
+452
+453
+454
+455
+456
+457
+458
+459
+460
+461
+462
+463
+464
+465
+466
+467
+468
+469
+470
+471
+472
+473
+474
+475
+476
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489
+490
+491
+492
+493
+494
+495
+496
+497
+498
+499
+500
+501
+502
+503
+504
+505
+506
+507
+508
+509
+510
+511
+512
+513
+514
+515
+516
+517
+518
+519
+520
+521
+522
+523
+524
+525
+526
+527
+528
+529
+530
+531
+532
+533
+534
+535
+536
+537
+538
+539
+540
+541
+542
+543
+544
+545
+546
+547
+548
+549
+550
+551
+552
+553
+554
+555
+556
+557
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602
+603
+604
+605
+606
+607
+608
+609
+610
+611
+612
+613
+614
+615
+616
+617
+618
+619
+620
+621
+622
+623
+624
+625
+626
+627
+628
+629
+630
+631
+632
+633
+634
+635
+636
+637
+638
+639
+640
+641
+642
+643
+644
+645
+646
+647
+648
+649
+650
+651
+652
+653
+654
+655
+656
+657
+658
+659
+660
+661
+662
+663
+664
+665
+666
+667
+668
+669
+670
+671
+672
+673
+674
+675
+676
+677
+678
+679
+680
+681
+682
+683
+684
+685
+686
+687
+688
+689
+690
+691
+692
+693
+694
+695
+696
+697
+698
+699
+700
+701
+702
+703
+704
+705
+706
+707
+708
+709
+710
+711
+712
+713
+714
+715
+716
+717
+718
+719
+720
+721
+722
+723
+724
+725
+726
+727
+728
+729
+730
+731
+732
+733
+734
+735
+736
+737
+738
+739
+740
+741
+742
+743
+744
+745
+746
+747
+748
+749
+750
+751
+752
+753
+754
+755
+756
+757
+758
+759
+760
+761
+762
+763
+764
+765
+766
+767
+768
+769
+770
+771
+772
+773
+774
+775
+776
+777
+778
+779
+780
+781
+782
+783
+784
+785
+786
+787
+788
+789
+790
+791
+792</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">81</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">10005</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * Created by jopes on 2015-04-15.
+ */
+&nbsp;
+(function(){
+    // Declare module
+    angular.module('bookingSystem.location',
+&nbsp;
+        // Load Dependencies
+        [
+            'bookingSystem.locationServices',
+            'bookingSystem.furnituringServices',
+            'bookingSystem.customFilters',
+            'bookingSystem.itemActionButtonsDirective',
+            'bookingSystem.pageHeaderButtonsDirective',
+            'bookingSystem.imageUploaderDirective',
+            'bookingSystem.imageResizeServices',
+            'uiGmapgoogle-maps' // Google maps API
+        ]
+    )
+&nbsp;
+    // Config for module
+    .config(function($routeProvider, uiGmapGoogleMapApiProvider) {
+&nbsp;
+        // Google maps API
+        uiGmapGoogleMapApiProvider.configure({
+            //    key: 'your api key',
+            v: '3.17',
+            libraries: 'weather,geometry,visualization',
+            language: 'sv'
+        });
+    })
+&nbsp;
+    // Show Controller
+    .controller('LocationShowCtrl', <span class="fstat-no" title="function not covered" >function($scope, Location, $routeParams, $location, $rootScope, LocationFurnituring, API_IMG_PATH_URL, PHOTO_MISSING_SRC){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var that = this;</span>
+<span class="cstat-no" title="statement not covered" >            $scope.markers = [];</span>
+&nbsp;
+        /* Private methods START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            that.redirectToListPage = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >                var objectType;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                objectType = $location.path().split('/')[1];</span>
+&nbsp;
+                // Go back to location list
+<span class="cstat-no" title="statement not covered" >                $location.path(objectType + "/lista");</span>
+            };
+&nbsp;
+            // Add default map variables to scope
+<span class="cstat-no" title="statement not covered" >            that.initMapVariables = <span class="fstat-no" title="function not covered" >function() {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $scope.map = {</span>
+                    center: $rootScope.googleMapsDefaults.center,
+                    zoom: $rootScope.googleMapsDefaults.zoom,
+                    bounds: {},
+                    options: { mapTypeId: google.maps.MapTypeId.SATELLITE } // Make satellite view default
+                };
+            };
+&nbsp;
+            // Convert markers from data fetched from backend to match google maps format.
+<span class="cstat-no" title="statement not covered" >            that.convertMarkers = <span class="fstat-no" title="function not covered" >function() {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $scope.markers.push(</span>
+                    {
+                        id: that.location.LocationId,
+                        coords: {
+                            latitude: that.location.GPSLatitude,
+                            longitude: that.location.GPSLongitude
+                        }
+                    }
+                );
+            };
+&nbsp;
+        /* Private methods END */
+&nbsp;
+        /* Public methods START */
+&nbsp;
+            // Abort editing
+<span class="cstat-no" title="statement not covered" >            $scope.back = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >                that.redirectToListPage();</span>
+            };
+&nbsp;
+        /* Public methods END */
+&nbsp;
+        /* Initialization START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            that.location = Location.get(</span>
+                {
+                    locationId: $routeParams.locationId
+                }
+            );
+&nbsp;
+&nbsp;
+            // In case locations cannot be fetched, display an error to user.
+<span class="cstat-no" title="statement not covered" >            that.location.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $rootScope.FlashMessage = {</span>
+                    type: 'error',
+                    message: 'Platsen kunde inte hämtas, var god försök igen.'
+                };
+            })
+&nbsp;
+            // When location has been fetched
+            .then(<span class="fstat-no" title="function not covered" >function(){</span>
+&nbsp;
+                // Add locations to public scope
+<span class="cstat-no" title="statement not covered" >                $scope.location = that.location;</span>
+&nbsp;
+                // Add path to imageSrc
+<span class="cstat-no" title="statement not covered" >                $scope.location.ImageSrc = (that.location.ImageSrc === "" ? PHOTO_MISSING_SRC : API_IMG_PATH_URL + that.location.ImageSrc);</span>
+&nbsp;
+                // Get location furniturings
+<span class="cstat-no" title="statement not covered" >                $scope.location.furniturings = LocationFurnituring.queryForLocation(</span>
+                    {
+                        locationId: $routeParams.locationId
+                    }
+                );
+&nbsp;
+                // Init map variables
+<span class="cstat-no" title="statement not covered" >                that.initMapVariables();</span>
+&nbsp;
+                // Add watch on $scope.map.bounds to check (every time it changes) if return boundary data is received from google maps
+<span class="cstat-no" title="statement not covered" >                $scope.$watch(</span>
+                    // Get $scope.map.bounds on change
+<span class="fstat-no" title="function not covered" >                    function() {<span class="cstat-no" title="statement not covered" ></span>return $scope.map.bounds;}</span>,
+&nbsp;
+                    // Do the following on change
+<span class="fstat-no" title="function not covered" >                    function(nv, ov) {</span>
+&nbsp;
+                        // Only need to regenerate once
+<span class="cstat-no" title="statement not covered" >                        if (!ov.southwest &amp;&amp; nv.southwest) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            that.convertMarkers();</span>
+                        }
+                    },
+                    true
+                );
+            });
+&nbsp;
+&nbsp;
+        /* Initialization END */
+    })
+&nbsp;
+    // List Controller
+    .controller('LocationListCtrl', function($scope, Location, $rootScope){
+&nbsp;
+        /* Private methods START */
+&nbsp;
+        /* Private methods END */
+&nbsp;
+&nbsp;
+&nbsp;
+            /* Public methods START */
+&nbsp;
+&nbsp;
+            /* Public methods END */
+&nbsp;
+            /* Initialization START */
+&nbsp;
+            var locations = Location.query();
+&nbsp;
+            // In case location cannot be fetched, display an error to user.
+            locations.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $rootScope.FlashMessage = {</span>
+                    type: 'error',
+                    message: 'Platser kunde inte hämtas, var god försök igen.'
+                };
+            });
+&nbsp;
+            $scope.locations = locations;
+&nbsp;
+            /* Initialization END */
+    })
+&nbsp;
+    // Create Controller
+    .controller('LocationCreateCtrl', function($scope, $routeParams, $location, $rootScope, Location){
+&nbsp;
+            var that = this;
+            $scope.markers = [{ // Init marker on map
+                id: 0,
+                coords: {
+                    latitude: $rootScope.googleMapsDefaults.center.latitude,
+                    longitude: $rootScope.googleMapsDefaults.center.longitude
+                }
+            }];
+            $scope.location = {};
+            $scope.location.GPSLatitude = "";
+            $scope.location.GPSLongitude = "";
+&nbsp;
+        /* Private methods START */
+&nbsp;
+            // Add default map variables to scope
+            that.initMapVariables = function() {
+&nbsp;
+                $scope.map = {
+                    center: $rootScope.googleMapsDefaults.center,
+                    zoom: $rootScope.googleMapsDefaults.zoom,
+                    bounds: {},
+                    options: { mapTypeId: google.maps.MapTypeId.SATELLITE }, // Make satellite view default
+                    events: {
+                        click: <span class="fstat-no" title="function not covered" >function (map, eventName, args) {</span>
+<span class="cstat-no" title="statement not covered" >                            that.moveMarkerOnClick(map, eventName, args);</span>
+                        }
+                    }
+                };
+            };
+&nbsp;
+            that.redirectToListPage = <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >                var objectType;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                objectType = $location.path().split('/')[1];</span>
+&nbsp;
+                // Go back to location list
+<span class="cstat-no" title="statement not covered" >                $location.path(objectType + "/lista");</span>
+            };
+&nbsp;
+            that.moveMarkerOnClick = <span class="fstat-no" title="function not covered" >function(map, eventName, args) {</span>
+&nbsp;
+                // Refresh location variables
+<span class="cstat-no" title="statement not covered" >                $scope.location.GPSLatitude = args[0].latLng.lat();</span>
+<span class="cstat-no" title="statement not covered" >                $scope.location.GPSLongitude = args[0].latLng.lng();</span>
+&nbsp;
+                // Refresh map marker variables
+<span class="cstat-no" title="statement not covered" >                $scope.markers[0].coords = {</span>
+                    latitude : args[0].latLng.lat(),
+                    longitude : args[0].latLng.lng()
+                };
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $scope.$apply();</span>
+            };
+&nbsp;
+        /* Private methods END */
+&nbsp;
+        /* Public methods START */
+&nbsp;
+            // Abort creating
+            $scope.abort = <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >                that.redirectToListPage();</span>
+            };
+&nbsp;
+            // Save location
+            $scope.save = <span class="fstat-no" title="function not covered" >function(){</span>
+&nbsp;
+                // Save location
+<span class="cstat-no" title="statement not covered" >                Location.save(</span>
+                    {
+                        LocationId: 0,
+                        Name: $scope.location.Name,
+                        MaxPeople: $scope.location.MaxPeople,
+                        GPSLatitude: $scope.location.GPSLatitude,
+                        GPSLongitude: $scope.location.GPSLongitude,
+                        ImageSrc: $scope.location.ImageSrc,
+                        BookingPricePerHour: $scope.location.BookingPricePerHour,
+                        MinutesMarginAfterBooking: $scope.location.MinutesMarginAfterBooking
+                    }
+                ).$promise
+&nbsp;
+                    // If everything went ok
+                    .then(<span class="fstat-no" title="function not covered" >function(response){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        $rootScope.FlashMessage = {</span>
+                            type: 'success',
+                            message: 'Möbleringen "' + $scope.location.Name + '" skapades med ett lyckat resultat'
+                        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        that.redirectToListPage();</span>
+&nbsp;
+                    // Something went wrong
+                    }).catch(<span class="fstat-no" title="function not covered" >function(response) {</span>
+&nbsp;
+                        // If there there was a foreign key reference
+<span class="cstat-no" title="statement not covered" >                        if (response.status == 409){</span>
+<span class="cstat-no" title="statement not covered" >                            $rootScope.FlashMessage = {</span>
+                                type: 'error',
+                                message: 'Det finns redan en plats som heter "' + $scope.location.Name +
+                                '". Två platser kan inte heta lika.'
+                            };
+                        }
+&nbsp;
+                        // If there was a problem with the in-data
+                        else {
+<span class="cstat-no" title="statement not covered" >                            $rootScope.FlashMessage = {</span>
+                                type: 'error',
+                                message: 'Ett oväntat fel uppstod när platsen skulle sparas'
+                            };
+                        }
+                    });
+            };
+&nbsp;
+        /* Public methods END */
+&nbsp;
+&nbsp;
+        /* Initialization START */
+&nbsp;
+            that.initMapVariables();
+&nbsp;
+        /* Initialization END */
+    })
+&nbsp;
+    // Edit Controller
+    .controller('LocationEditCtrl', function($scope, $routeParams, $location, $rootScope, $timeout, Location, LocationFurnituring, Furnituring, LocationFurnituringHelper){
+&nbsp;
+            var that = this,
+                i;
+                $scope.markers = [];
+                $scope.maxPeopleRange = [];
+&nbsp;
+            // Init max people range
+            for(i = 0; i &lt;= 2000; i++){
+                $scope.maxPeopleRange.push(i);
+            }
+&nbsp;
+        /* Private methods START */
+&nbsp;
+            that.redirectToListPage = <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >                var objectType;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                objectType = $location.path().split('/')[1];</span>
+&nbsp;
+                // Go back to location list
+<span class="cstat-no" title="statement not covered" >                $location.path(objectType + "/lista");</span>
+            };
+&nbsp;
+            // Add default map variables to scope
+            that.initMapVariables = function() {
+&nbsp;
+                $scope.map = {
+                    center: $rootScope.googleMapsDefaults.center,
+                    zoom: $rootScope.googleMapsDefaults.zoom,
+                    bounds: {},
+                    options: { mapTypeId: google.maps.MapTypeId.SATELLITE }, // Make satellite view default
+                    events: {
+                        click: <span class="fstat-no" title="function not covered" >function (map, eventName, args) {</span>
+<span class="cstat-no" title="statement not covered" >                            that.moveMarkerOnClick(map, eventName, args);</span>
+                        }
+                    }
+                };
+            };
+&nbsp;
+            that.moveMarkerOnClick = <span class="fstat-no" title="function not covered" >function(map, eventName, args) {</span>
+&nbsp;
+                // Refresh location variables
+<span class="cstat-no" title="statement not covered" >                $scope.location.GPSLatitude = args[0].latLng.lat();</span>
+<span class="cstat-no" title="statement not covered" >                $scope.location.GPSLongitude = args[0].latLng.lng();</span>
+&nbsp;
+                // Refresh map marker variables
+<span class="cstat-no" title="statement not covered" >                $scope.markers[0].coords = {</span>
+                    latitude : args[0].latLng.lat(),
+                    longitude : args[0].latLng.lng()
+                };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $scope.$apply();</span>
+            };
+&nbsp;
+            // Convert markers from data fetched from backend to match google maps format.
+            that.convertMarkers = <span class="fstat-no" title="function not covered" >function() {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $scope.markers[0] = {</span>
+                        id: that.location.LocationId,
+                        coords: {
+                            latitude: that.location.GPSLatitude,
+                            longitude: that.location.GPSLongitude
+                        }
+                };
+            };
+&nbsp;
+            that.saveLocationFurnituring = function(){
+                var furnituringsToSave,
+                    locationFurnituringResource,
+                    postDataArray = [];
+&nbsp;
+                // Delete previous location furniturings
+                locationFurnituringResource = LocationFurnituring.removeForLocation(
+                    {
+                        locationId: $routeParams.locationId
+                    }
+                );
+&nbsp;
+                // Save new furniturings for location
+                locationFurnituringResource.$promise.finally(function() {
+&nbsp;
+                    // Filter out furniturings to save
+                    furnituringsToSave = $scope.furniturings.filter(<span class="fstat-no" title="function not covered" >function(furnituring){</span>
+<span class="cstat-no" title="statement not covered" >                        return furnituring.Selected;</span>
+                    });
+&nbsp;
+                    // Process each and one of the furniturings
+<span class="cstat-no" title="statement not covered" >                    furnituringsToSave.forEach(<span class="fstat-no" title="function not covered" >function(furnituring){</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        postDataArray.push({</span>
+                            LocationId: $routeParams.locationId,
+                            FurnituringId: furnituring.FurnituringId,
+                            MaxPeople: furnituring.MaxPeople
+                        })
+                    });
+&nbsp;
+                    // Save
+<span class="cstat-no" title="statement not covered" >                    LocationFurnituring.saveForLocation(postDataArray);</span>
+                });
+&nbsp;
+                // Return promise
+                return locationFurnituringResource.$promise;
+&nbsp;
+            };
+&nbsp;
+            that.getLocationFurnituring = <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >                var locationFurniturings;</span>
+&nbsp;
+                // Use Helper service to get all furnituring with existing locations furnituring selected.
+<span class="cstat-no" title="statement not covered" >                locationFurniturings = LocationFurnituringHelper.getCombined($routeParams.locationId);</span>
+&nbsp;
+                // When data is loaded. Add to scope.
+<span class="cstat-no" title="statement not covered" >                locationFurniturings.$promise.finally(<span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    $scope.furniturings = locationFurniturings;</span>
+                });
+            };
+&nbsp;
+        /* Private methods END */
+&nbsp;
+        /* Public methods START */
+&nbsp;
+            // On marker drag end
+            $scope.onMarkerDragEnd = <span class="fstat-no" title="function not covered" >function($event) {</span>
+<span class="cstat-no" title="statement not covered" >                $scope.location.GPSLatitude = $event.position.lat();</span>
+<span class="cstat-no" title="statement not covered" >                $scope.location.GPSLongitude = $event.position.lng();</span>
+            };
+&nbsp;
+            // Abort editing
+            $scope.abort = function(){
+                that.redirectToListPage();
+            };
+&nbsp;
+            // Save location
+            $scope.save = function(){
+                var locationFurnituringSavePromise;
+&nbsp;
+                // Save location
+                Location.save(
+                    {
+                        LocationId: $routeParams.locationId,
+                        Name: $scope.location.Name,
+                        MaxPeople: $scope.location.MaxPeople,
+                        GPSLatitude: $scope.location.GPSLatitude,
+                        GPSLongitude: $scope.location.GPSLongitude,
+                        ImageSrc: $scope.location.ImageSrc,
+                        BookingPricePerHour: $scope.location.BookingPricePerHour,
+                        MinutesMarginAfterBooking: $scope.location.MinutesMarginAfterBooking
+                    }
+                ).$promise
+&nbsp;
+                    // If everything went ok
+                    .then(function(response){
+&nbsp;
+                        // Save location furnituring
+                        that.saveLocationFurnituring().finally(function(){
+&nbsp;
+                            // Display success message
+                            $rootScope.FlashMessage = {
+                                type: 'success',
+                                message: 'Platsen "' + $scope.location.Name + '" sparades med ett lyckat resultat'
+                            };
+&nbsp;
+                            // Redirect
+                            that.redirectToListPage();
+                        });
+&nbsp;
+                    // Something went wrong
+                    }).catch(<span class="fstat-no" title="function not covered" >function(response) {</span>
+&nbsp;
+                        // If there there was a foreign key reference
+<span class="cstat-no" title="statement not covered" >                        if (response.status == 409){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            $rootScope.FlashMessage = {</span>
+                                type: 'error',
+                                message:    'Det finns redan en plats som heter "' + $scope.location.Name +
+                                '". Två platser kan inte heta lika.'
+                            };
+                        }
+&nbsp;
+                        // If there was a problem with the in-data
+                        else <span class="cstat-no" title="statement not covered" >if (response.status == 400 || response.status == 500){</span>
+<span class="cstat-no" title="statement not covered" >                            $rootScope.FlashMessage = {</span>
+                                type: 'error',
+                                message: 'Ett oväntat fel uppstod när platsen skulle sparas'
+                            };
+                        }
+&nbsp;
+                        // If the entry was not found
+<span class="cstat-no" title="statement not covered" >                        if (response.status == 404) {</span>
+<span class="cstat-no" title="statement not covered" >                            $rootScope.FlashMessage = {</span>
+                                type: 'error',
+                                message: 'Platsen "' + $scope.location.Name + '" existerar inte längre. Hann kanske någon radera den?'
+                            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            that.redirectToListPage();</span>
+                        }
+                    });
+            };
+&nbsp;
+&nbsp;
+        /* Public methods END */
+&nbsp;
+&nbsp;
+        /* Initialization START */
+&nbsp;
+            // Get location data
+&nbsp;
+            that.location = Location.get(
+                {
+                    locationId: $routeParams.locationId
+                }
+            );
+&nbsp;
+            // In case locations cannot be fetched, display an error to user.
+            that.location.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $rootScope.FlashMessage = {</span>
+                    type: 'error',
+                    message: 'Platsen kunde inte hämtas, var god försök igen.'
+                };
+            })
+&nbsp;
+&nbsp;
+            // When location has been fetched
+            .then(function(){
+&nbsp;
+                // Add locations to public scope
+                    $scope.location = that.location;
+&nbsp;
+                // Init map variables
+                that.initMapVariables();
+&nbsp;
+                // Get location furnituring data
+<span class="cstat-no" title="statement not covered" >                that.getLocationFurnituring();</span>
+&nbsp;
+                // Add watch on $scope.map.bounds to check (every time it changes) if return boundary data is received from google maps
+<span class="cstat-no" title="statement not covered" >                $scope.$watch(</span>
+                    // Get $scope.map.bounds on change
+<span class="fstat-no" title="function not covered" >                    function() {<span class="cstat-no" title="statement not covered" ></span>return $scope.map.bounds;}</span>,
+&nbsp;
+                    // Do the following on change
+<span class="fstat-no" title="function not covered" >                    function(nv, ov) {</span>
+&nbsp;
+                        // Only need to regenerate once
+<span class="cstat-no" title="statement not covered" >                        if (!ov.southwest &amp;&amp; nv.southwest) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            that.convertMarkers();</span>
+                        }
+                    },
+                    true
+                );
+            });
+&nbsp;
+        /* Initialization END */
+    })
+&nbsp;
+    // Delete Controller
+    .controller('LocationDeleteCtrl', function($scope, $routeParams, Location, $location, $rootScope){
+&nbsp;
+            var that = this;
+&nbsp;
+        /* Private methods START */
+&nbsp;
+            that.redirectToListPage = <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >                var objectType;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                objectType = $location.path().split('/')[1];</span>
+&nbsp;
+                // Go back to location list
+<span class="cstat-no" title="statement not covered" >                $location.path(objectType + "/lista");</span>
+            };
+&nbsp;
+        /* Private methods END */
+&nbsp;
+        /* Public methods START */
+&nbsp;
+            // Confirm deletion
+            $scope.confirm = function(){
+&nbsp;
+                // Delete location
+                Location.delete(
+                    {
+                        locationId: $routeParams.locationId
+                    }
+                ).$promise
+&nbsp;
+                    // If everything went ok
+                    .then(function(response) {
+&nbsp;
+                        $rootScope.FlashMessage = {
+                            type: 'success',
+                            message: 'Platsen "' + $scope.location.Name + '" raderades med ett lyckat resultat'
+                        };
+&nbsp;
+                        that.redirectToListPage();
+                    })
+                    // Something went wrong
+                    .catch(function(response) {
+&nbsp;
+                        // If there there was a foreign key reference
+                        if (
+                            response.status == 400 &amp;&amp;
+                            response.data.Message !== 'undefined' &amp;&amp;
+                            response.data.Message === 'Foreign key references exists'
+                        ){
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message:    'Platsen kan inte raderas eftersom det finns' +
+                                            ' en lokalbokning eller en lokalplats som refererar till platsen'
+                            };
+                        }
+&nbsp;
+                        // If there was a problem with the in-data
+                        else if (response.status == 400 || response.status == 500){
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Ett oväntat fel uppstod när platsen skulle tas bort'
+                            };
+                        }
+&nbsp;
+                        // If the entry was not found
+                        if (response.status == 404) {
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Platsen "' + $scope.location.Name + '" existerar inte längre. Hann kanske någon radera den?'
+                            };
+                        }
+&nbsp;
+                    that.redirectToListPage();
+                });
+            };
+&nbsp;
+            // Abort deletion
+            $scope.abort = function(){
+                that.redirectToListPage();
+            };
+&nbsp;
+        /* Public methods END */
+&nbsp;
+        /* Initialization START */
+&nbsp;
+            var location = Location.get(
+                {
+                    locationId: $routeParams.locationId
+                }
+            );
+&nbsp;
+            // In case locations cannot be fetched, display an error to user.
+            location.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $rootScope.FlashMessage = {</span>
+                    type: 'error',
+                    message: 'Platsen kunde inte hämtas, var god försök igen.'
+                };
+            });
+&nbsp;
+            $scope.location = location;
+&nbsp;
+        /* Initialization END */
+    })
+&nbsp;
+    // Map Controller
+    .controller('LocationMapCtrl', <span class="fstat-no" title="function not covered" >function($scope, Location, $rootScope, $location, uiGmapGoogleMapApi, API_IMG_PATH_URL, PHOTO_MISSING_SRC){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var that = this;</span>
+<span class="cstat-no" title="statement not covered" >                $scope.markers = [];</span>
+<span class="cstat-no" title="statement not covered" >                that.locations = [];</span>
+&nbsp;
+        /* Private methods START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            that.redirectToListPage = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >                var objectType;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                objectType = $location.path().split('/')[1];</span>
+&nbsp;
+                // Go back to location list
+<span class="cstat-no" title="statement not covered" >                $location.path(objectType + "/lista");</span>
+            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            that.redirectToEditPage = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >                var objectType;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                objectType = $location.path().split('/')[1];</span>
+&nbsp;
+                // Go back to location list
+<span class="cstat-no" title="statement not covered" >                $location.path(objectType + "/redigera/" + $scope.visibleLocation.LocationId);</span>
+            };
+&nbsp;
+            // Convert markers from data fetched from backend to match google maps format.
+<span class="cstat-no" title="statement not covered" >            that.convertMarkers = <span class="fstat-no" title="function not covered" >function() {</span></span>
+<span class="cstat-no" title="statement not covered" >                that.locations.forEach(<span class="fstat-no" title="function not covered" >function(location, index, array){</span></span>
+<span class="cstat-no" title="statement not covered" >                    $scope.markers.push(</span>
+                        {
+                            id : location.LocationId,
+                            coords : { latitude : location.GPSLatitude, longitude : location.GPSLongitude },
+                            title : location.Name
+                        }
+                    );
+                    // Define OnClick function, show more info about the location to the user.
+<span class="cstat-no" title="statement not covered" >                    $scope.markers[index].showLocation = <span class="fstat-no" title="function not covered" >function() {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        $scope.markers[index].show = true;</span>
+<span class="cstat-no" title="statement not covered" >                        $scope.visibleLocation = location;</span>
+&nbsp;
+                        // Add path to imageSrc
+<span class="cstat-no" title="statement not covered" >                        $scope.ImageSrc = (location.ImageSrc === "" ? PHOTO_MISSING_SRC : API_IMG_PATH_URL + location.ImageSrc);</span>
+                    };
+<span class="cstat-no" title="statement not covered" >                    $scope.markers[index].hideLocation = <span class="fstat-no" title="function not covered" >function() {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        $scope.visibleLocation = null;</span>
+                    }
+&nbsp;
+                });
+            };
+&nbsp;
+            // Add default map variables to scope
+<span class="cstat-no" title="statement not covered" >            that.initMapVariables = <span class="fstat-no" title="function not covered" >function() {</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $scope.map = {</span>
+                    center: $rootScope.googleMapsDefaults.center,
+                    zoom: $rootScope.googleMapsDefaults.zoom,
+                    bounds: {}
+                };
+            };
+&nbsp;
+&nbsp;
+        /* Private methods END */
+&nbsp;
+&nbsp;
+        /* Public methods START */
+&nbsp;
+            // Back
+<span class="cstat-no" title="statement not covered" >            $scope.back = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >                that.redirectToListPage();</span>
+            };
+&nbsp;
+            // Back
+<span class="cstat-no" title="statement not covered" >            $scope.edit = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >                that.redirectToEditPage();</span>
+            };
+&nbsp;
+        /* Public methods END */
+&nbsp;
+        /* Initialization START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var locations = Location.query();</span>
+&nbsp;
+            // In case location cannot be fetched, display an error to user.
+<span class="cstat-no" title="statement not covered" >            locations.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $rootScope.FlashMessage = {</span>
+                    type: 'error',
+                    message: 'Platser kunde inte hämtas, var god försök igen.'
+                };
+            })
+&nbsp;
+            // When locations have been fetched
+            .then(<span class="fstat-no" title="function not covered" >function(){</span>
+&nbsp;
+                // Add locations to private scope
+<span class="cstat-no" title="statement not covered" >                that.locations = locations;</span>
+&nbsp;
+                // Init map variables
+<span class="cstat-no" title="statement not covered" >                that.initMapVariables();</span>
+&nbsp;
+                // Add watch on $scope.map.bounds to check (every time it changes) if return boundary data is received from google maps
+<span class="cstat-no" title="statement not covered" >                $scope.$watch(</span>
+                    // Get $scope.map.bounds on change
+<span class="fstat-no" title="function not covered" >                    function() {<span class="cstat-no" title="statement not covered" ></span>return $scope.map.bounds;}</span>,
+&nbsp;
+                    // Do the following on change
+<span class="fstat-no" title="function not covered" >                    function(nv, ov) {</span>
+&nbsp;
+                        // Only need to regenerate once
+<span class="cstat-no" title="statement not covered" >                        if (!ov.southwest &amp;&amp; nv.southwest) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            that.convertMarkers();</span>
+                        }
+                    },
+                    true
+                );
+            });
+&nbsp;
+        /* Initialization END */
+    });
+&nbsp;
+})();</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon May 18 2015 02:30:17 GMT+0200 (Västeuropa, sommartid)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

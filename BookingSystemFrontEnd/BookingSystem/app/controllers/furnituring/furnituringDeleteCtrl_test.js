@@ -96,7 +96,7 @@ describe('module: bookingSystem.furnituring', function() {
 
             // Check that furnituring was saved
             expect(_Furnituring_.delete).toHaveBeenCalledWith({
-                FurnituringId: 4
+                furnituringId: 4
             });
 
             $scope.$digest();

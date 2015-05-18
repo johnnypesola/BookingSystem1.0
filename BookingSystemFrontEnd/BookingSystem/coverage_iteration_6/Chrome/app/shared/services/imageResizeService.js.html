@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./app/shared/services/imageResizeService.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">./app/shared/services/imageResizeService.js</span></h1>
+    <h2>
+        Statements: <span class="metric">4.76% <small>(3 / 63)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">14.29% <small>(1 / 7)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">4.76% <small>(3 / 63)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/shared/services/</a> &#187; imageResizeService.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * Created by jopes on 2015-05-10.
+ */
+&nbsp;
+(function(){
+    // Declare module
+    angular.module('bookingSystem.imageResizeServices',
+&nbsp;
+        // Dependencies
+        [
+&nbsp;
+        ])
+&nbsp;
+        .factory('ImageResize', <span class="fstat-no" title="function not covered" >function(UPLOAD_IMG_MAX_WIDTH, UPLOAD_IMG_MAX_HEIGHT) {</span>
+&nbsp;
+            /* Private functions START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                var scaleCanvasWithAlgorithm = <span class="fstat-no" title="function not covered" >function(canvas) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    var scaledCanvas = document.createElement('canvas');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    var scale = UPLOAD_IMG_MAX_WIDTH / canvas.width;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    scaledCanvas.width = canvas.width * scale;</span>
+<span class="cstat-no" title="statement not covered" >                    scaledCanvas.height = canvas.height * scale;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    var srcImgData = canvas.getContext('2d').getImageData(0, 0, canvas.width, canvas.height);</span>
+<span class="cstat-no" title="statement not covered" >                    var destImgData = scaledCanvas.getContext('2d').createImageData(scaledCanvas.width, scaledCanvas.height);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    applyBilinearInterpolation(srcImgData, destImgData, scale);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    scaledCanvas.getContext('2d').putImageData(destImgData, 0, 0);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    return scaledCanvas;</span>
+                };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                var getHalfScaleCanvas = <span class="fstat-no" title="function not covered" >function(canvas) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    var halfCanvas = document.createElement('canvas');</span>
+<span class="cstat-no" title="statement not covered" >                    halfCanvas.width = canvas.width / 2;</span>
+<span class="cstat-no" title="statement not covered" >                    halfCanvas.height = canvas.height / 2;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    halfCanvas.getContext('2d').drawImage(canvas, 0, 0, halfCanvas.width, halfCanvas.height);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    return halfCanvas;</span>
+                };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                var applyBilinearInterpolation = <span class="fstat-no" title="function not covered" >function(srcCanvasData, destCanvasData, scale) {</span></span>
+<span class="fstat-no" title="function not covered" >                    function inner(f00, f10, f01, f11, x, y) {</span>
+<span class="cstat-no" title="statement not covered" >                        var un_x = 1.0 - x;</span>
+<span class="cstat-no" title="statement not covered" >                        var un_y = 1.0 - y;</span>
+<span class="cstat-no" title="statement not covered" >                        return (f00 * un_x * un_y + f10 * x * un_y + f01 * un_x * y + f11 * x * y);</span>
+                    }
+<span class="cstat-no" title="statement not covered" >                    var i, j;</span>
+<span class="cstat-no" title="statement not covered" >                    var iyv, iy0, iy1, ixv, ix0, ix1;</span>
+<span class="cstat-no" title="statement not covered" >                    var idxD, idxS00, idxS10, idxS01, idxS11;</span>
+<span class="cstat-no" title="statement not covered" >                    var dx, dy;</span>
+<span class="cstat-no" title="statement not covered" >                    var r, g, b, a;</span>
+<span class="cstat-no" title="statement not covered" >                    for (i = 0; i &lt; destCanvasData.height; ++i) {</span>
+<span class="cstat-no" title="statement not covered" >                        iyv = i / scale;</span>
+<span class="cstat-no" title="statement not covered" >                        iy0 = Math.floor(iyv);</span>
+                        // Math.ceil can go over bounds
+<span class="cstat-no" title="statement not covered" >                        iy1 = (Math.ceil(iyv) &gt; (srcCanvasData.height - 1) ? (srcCanvasData.height - 1) : Math.ceil(iyv));</span>
+<span class="cstat-no" title="statement not covered" >                        for (j = 0; j &lt; destCanvasData.width; ++j) {</span>
+<span class="cstat-no" title="statement not covered" >                            ixv = j / scale;</span>
+<span class="cstat-no" title="statement not covered" >                            ix0 = Math.floor(ixv);</span>
+                            // Math.ceil can go over bounds
+<span class="cstat-no" title="statement not covered" >                            ix1 = (Math.ceil(ixv) &gt; (srcCanvasData.width - 1) ? (srcCanvasData.width - 1) : Math.ceil(ixv));</span>
+<span class="cstat-no" title="statement not covered" >                            idxD = (j + destCanvasData.width * i) * 4;</span>
+                            // matrix to vector indices
+<span class="cstat-no" title="statement not covered" >                            idxS00 = (ix0 + srcCanvasData.width * iy0) * 4;</span>
+<span class="cstat-no" title="statement not covered" >                            idxS10 = (ix1 + srcCanvasData.width * iy0) * 4;</span>
+<span class="cstat-no" title="statement not covered" >                            idxS01 = (ix0 + srcCanvasData.width * iy1) * 4;</span>
+<span class="cstat-no" title="statement not covered" >                            idxS11 = (ix1 + srcCanvasData.width * iy1) * 4;</span>
+                            // overall coordinates to unit square
+<span class="cstat-no" title="statement not covered" >                            dx = ixv - ix0;</span>
+<span class="cstat-no" title="statement not covered" >                            dy = iyv - iy0;</span>
+                            // I let the r, g, b, a on purpose for debugging
+<span class="cstat-no" title="statement not covered" >                            r = inner(srcCanvasData.data[idxS00], srcCanvasData.data[idxS10], srcCanvasData.data[idxS01], srcCanvasData.data[idxS11], dx, dy);</span>
+<span class="cstat-no" title="statement not covered" >                            destCanvasData.data[idxD] = r;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            g = inner(srcCanvasData.data[idxS00 + 1], srcCanvasData.data[idxS10 + 1], srcCanvasData.data[idxS01 + 1], srcCanvasData.data[idxS11 + 1], dx, dy);</span>
+<span class="cstat-no" title="statement not covered" >                            destCanvasData.data[idxD + 1] = g;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            b = inner(srcCanvasData.data[idxS00 + 2], srcCanvasData.data[idxS10 + 2], srcCanvasData.data[idxS01 + 2], srcCanvasData.data[idxS11 + 2], dx, dy);</span>
+<span class="cstat-no" title="statement not covered" >                            destCanvasData.data[idxD + 2] = b;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            a = inner(srcCanvasData.data[idxS00 + 3], srcCanvasData.data[idxS10 + 3], srcCanvasData.data[idxS01 + 3], srcCanvasData.data[idxS11 + 3], dx, dy);</span>
+<span class="cstat-no" title="statement not covered" >                            destCanvasData.data[idxD + 3] = a;</span>
+                        }
+                    }
+                };
+&nbsp;
+            /* Private functions END */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return {</span>
+&nbsp;
+                scaleImage: <span class="fstat-no" title="function not covered" >function (imgData, completionCallback) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    var img = document.createElement('img'),</span>
+                        canvas = document.createElement('canvas'),
+                        returnImageData;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    img.src = imgData;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    canvas.width = img.width;</span>
+<span class="cstat-no" title="statement not covered" >                    canvas.height = img.height;</span>
+<span class="cstat-no" title="statement not covered" >                    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    while (canvas.width &gt;= (2 * UPLOAD_IMG_MAX_WIDTH)) {</span>
+<span class="cstat-no" title="statement not covered" >                        canvas = getHalfScaleCanvas(canvas);</span>
+                    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    if (canvas.width &gt; UPLOAD_IMG_MAX_WIDTH) {</span>
+<span class="cstat-no" title="statement not covered" >                        canvas = scaleCanvasWithAlgorithm(canvas);</span>
+                    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    returnImageData = canvas.toDataURL('image/jpeg', 1.0);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    return returnImageData;</span>
+                }
+            }
+        });
+})();
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon May 18 2015 02:30:17 GMT+0200 (Västeuropa, sommartid)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
