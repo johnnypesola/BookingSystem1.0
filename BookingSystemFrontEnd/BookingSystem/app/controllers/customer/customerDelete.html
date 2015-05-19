@@ -1,0 +1,17 @@
+<section class="content-container" ng-controller="CustomerDeleteCtrl">
+    <h2>
+        Radera Kund
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
+
+    <div class="align-center">
+    <p>Vill du verkligen radera kunden <strong class="text-dark-purple">{{customer.Name}}</strong>?</p>
+        <button ng-click="confirm()">Ja</button>
+        <button ng-click="abort()">Nej</button>
+    </div>
+</section>

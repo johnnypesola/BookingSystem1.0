@@ -45,7 +45,7 @@
         <input type="number" min="0" max="{{Int16MaxValue}}" name="minutesMarginAfterBooking" ng-model="location.MinutesMarginAfterBooking">
 
         <label>Möbleringar som ska vara tillgängliga för lokalen/platsen</label>
-        <div class="checkbox-container" >
+        <div class="checkbox-radio-container" >
             <label ng-repeat="furnituring in furniturings">
                 <input type="checkbox" name="selectedFurniturings" value="{{furnituring.Name}}" ng-model="furnituring.Selected">{{furnituring.Name}}
 

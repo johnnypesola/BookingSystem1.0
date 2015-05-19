@@ -527,11 +527,21 @@ section.content-container {
             color: #777777;
         }
 
-        section.content-container form div.checkbox-container {
-            margin: 0 0 10px 0;
+        section.content-container form input[type=radio] {
+            width: 17px;
+            height: 17px;
+
+            -webkit-box-shadow: none;
+            -moz-box-shadow:    none;
+            box-shadow:         none;
+            display: inline-block;
         }
 
-            section.content-container form div.checkbox-container label {
+        section.content-container form div.radio-container {
+
+        }
+
+            section.content-container form div.radio-container label {
                 display: inline-block;
                 font-size: 14px;
                 color: #444444;
@@ -542,11 +552,31 @@ section.content-container {
                 border: 1px solid #DDDDDD;
             }
 
-                section.content-container form div.checkbox-container label select {
+        section.content-container form div.checkbox-radio-container {
+            margin: 0 0 10px 0;
+        }
+
+            section.content-container form div.checkbox-radio-container label {
+                display: inline-block;
+                font-size: 14px;
+                color: #444444;
+                background: #F0F0F0;
+                border-radius: 4px;
+                margin: 3px;
+                padding: 0 5px 0 5px;
+                border: 1px solid #DDDDDD;
+            }
+
+                section.content-container form div.checkbox-radio-container label select {
                     border-radius: 3px;
                     width: inherit;
                     display: inline-block;
                     padding: 0;
+                }
+
+                section.content-container form div.checkbox-radio-container label input[type=radio] {
+                    position: relative;
+                    top: 4px;
                 }
 
         section.content-container form input[type=checkbox] {

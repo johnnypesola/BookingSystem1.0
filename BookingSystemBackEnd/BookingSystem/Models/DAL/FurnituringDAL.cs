@@ -155,7 +155,7 @@ namespace BookingSystem.Models
                 }
                 catch (Exception exception)
                 {
-                    if (exception.Message == "There is allready a furnituring with the given name.")
+                    if (exception.Message == "There is already a furnituring with the given name.")
                     {
                         throw new DuplicateNameException(exception.Message);
                     }
@@ -189,7 +189,7 @@ namespace BookingSystem.Models
                 }
                 catch (Exception exception)
                 {
-                    if (exception.Message == "There is allready a Furnituring with the given name.")
+                    if (exception.Message == "There is already a furnituring with the given name.")
                     {
                         throw new DuplicateNameException(exception.Message);
                     }

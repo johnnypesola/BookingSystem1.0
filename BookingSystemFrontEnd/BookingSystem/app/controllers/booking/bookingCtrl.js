@@ -10,7 +10,8 @@
         [
             'bookingSystem.bookingServices',
             'bookingSystem.customFilters',
-            'bookingSystem.calendarDirective'
+            'bookingSystem.calendarDirective',
+            'bookingSystem.customerServices'
         ]
     )
 
@@ -99,9 +100,50 @@
             /* Initialization END */
     })
 
-    .controller('BookingCreateCtrl', function($scope, Booking, $rootScope){
+    .controller('BookingCreateCtrl', function($scope, Booking, $rootScope, Customer){
         var that = this;
         var currentDateObj;
+            $scope.discountRange = [];
+
+            // Init discount range
+            for(i = 0; i <= 100; i++){
+                $scope.discountRange.push(i);
+            }
+        /* Private methods START */
+
+            that.initDateVariables = function () {
+                that.currentYear = currentDateObj.getFullYear();
+                that.currentMonth = currentDateObj.getMonth();
+                that.currentMonthName = currentDateObj.monthNamesArray[that.currentMonth];
+                that.currentMonthNumberOfDays = new Date(that.currentYear, that.currentMonth + 1, 0).getDate();
+
+                that.currentMonthStartDateObj = new Date(that.currentYear, that.currentMonth, 1);
+                that.currentMonthEndDateObj = new Date(that.currentYear, that.currentMonth, that.currentMonthNumberOfDays);
+            };
+
+        /* Private methods END */
+
+        /* Public methods START */
+
+        /* Initialization START */
+
+            // Get customers
+            $scope.customers = Customer.query();
+
+            // In case locations furniturings cannot be fetched, display an error to user.
+            $scope.customers.$promise.catch(function(){
+                $rootScope.FlashMessage = {
+                    type: 'error',
+                    message: 'Kunder kunde inte hämtas.'
+                };
+            });
+
+            // Init date to now
+            currentDateObj = new Date();
+
+            that.initDateVariables();
+
+        /* Initialization END */
 
 
     });

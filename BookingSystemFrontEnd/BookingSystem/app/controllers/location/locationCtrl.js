@@ -64,10 +64,10 @@
 
                 $scope.markers.push(
                     {
-                        id: that.location.LocationId,
+                        id: $scope.location.LocationId,
                         coords: {
-                            latitude: that.location.GPSLatitude,
-                            longitude: that.location.GPSLongitude
+                            latitude: $scope.location.GPSLatitude,
+                            longitude: $scope.location.GPSLongitude
                         }
                     }
                 );
@@ -86,15 +86,15 @@
 
         /* Initialization START */
 
-            that.location = Location.get(
+            // Get location to public scope
+            $scope.location = Location.get(
                 {
                     locationId: $routeParams.locationId
                 }
             );
 
-
             // In case locations cannot be fetched, display an error to user.
-            that.location.$promise.catch(function(){
+            $scope.location.$promise.catch(function(){
 
                 $rootScope.FlashMessage = {
                     type: 'error',
@@ -105,11 +105,8 @@
             // When location has been fetched
             .then(function(){
 
-                // Add locations to public scope
-                $scope.location = that.location;
-
                 // Add path to imageSrc
-                $scope.location.ImageSrc = (that.location.ImageSrc === "" ? PHOTO_MISSING_SRC : API_IMG_PATH_URL + that.location.ImageSrc);
+                $scope.location.ImageSrc = ($scope.location.ImageSrc === "" ? PHOTO_MISSING_SRC : API_IMG_PATH_URL + $scope.location.ImageSrc);
 
                 // Get location furniturings
                 $scope.location.furniturings = LocationFurnituring.queryForLocation(
@@ -118,11 +115,20 @@
                     }
                 );
 
+                // In case locations furniturings cannot be fetched, display an error to user.
+                $scope.location.furniturings.$promise.catch(function(){
+                    $rootScope.FlashMessage = {
+                        type: 'error',
+                        message: 'Möbleringar för platsen kunde inte hämtas.'
+                    };
+                });
+
                 // Init map variables
                 that.initMapVariables();
 
                 // Add watch on $scope.map.bounds to check (every time it changes) if return boundary data is received from google maps
                 $scope.$watch(
+
                     // Get $scope.map.bounds on change
                     function() {return $scope.map.bounds;},
 
