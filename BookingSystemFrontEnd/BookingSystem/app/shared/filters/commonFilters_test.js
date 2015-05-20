@@ -2,7 +2,7 @@
  * Created by jopes on 2015-04-28.
  */
 
-describe('filter: customFilters', function () {
+describe('filter: commonFilters', function () {
 
     var $filter;
 
@@ -10,7 +10,7 @@ describe('filter: customFilters', function () {
     beforeEach(module('bookingSystem'));
 
     // Load modules
-    beforeEach(module('bookingSystem.customFilters'));
+    beforeEach(module('bookingSystem.commonFilters'));
 
     beforeEach(function () {
         inject(function (_$filter_) {

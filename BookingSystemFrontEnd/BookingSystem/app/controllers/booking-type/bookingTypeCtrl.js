@@ -4,11 +4,11 @@
 
 (function(){
     // Declare module
-    angular.module('bookingSystem.furnituring',
+    angular.module('bookingSystem.bookingType',
 
         // Load Dependencies
         [
-            'bookingSystem.furnituringServices',
+            'bookingSystem.bookingTypeServices',
             'bookingSystem.commonFilters',
             'bookingSystem.commonDirectives'
         ]
@@ -20,7 +20,7 @@
     })
 
     // Show Controller
-    .controller('FurnituringShowCtrl', function($scope, $routeParams, $location, $rootScope, Furnituring){
+    .controller('BookingTypeShowCtrl', function($scope, $routeParams, $location, $rootScope, BookingType){
 
         var that = this;
 
@@ -49,28 +49,28 @@
 
         /* Initialization START */
 
-        var furnituring = Furnituring.get(
+        var bookingType = BookingType.get(
             {
-                furnituringId: $routeParams.furnituringId
+                bookingTypeId: $routeParams.bookingTypeId
             }
         );
 
-        // In case furniturings cannot be fetched, display an error to user.
-        furnituring.$promise.catch(function(){
+        // In case bookingTypes cannot be fetched, display an error to user.
+        bookingType.$promise.catch(function(){
 
             $rootScope.FlashMessage = {
                 type: 'error',
-                message: 'Möbleringen kunde inte hämtas, var god försök igen.'
+                message: 'Bokningstypen kunde inte hämtas, var god försök igen.'
             };
         });
 
-        $scope.furnituring = furnituring;
+        $scope.bookingType = bookingType;
 
         /* Initialization END */
     })
 
     // List Controller
-    .controller('FurnituringListCtrl', function($scope, Furnituring, $rootScope){
+    .controller('BookingTypeListCtrl', function($scope, BookingType, $rootScope){
 
         /* Private methods START */
 
@@ -86,24 +86,24 @@
 
             /* Initialization START */
 
-            var furniturings = Furnituring.query();
+            var bookingTypes = BookingType.query();
 
-            // In case furnituring cannot be fetched, display an error to user.
-            furniturings.$promise.catch(function(){
+            // In case bookingType cannot be fetched, display an error to user.
+            bookingTypes.$promise.catch(function(){
 
                 $rootScope.FlashMessage = {
                     type: 'error',
-                    message: 'Möbleringar kunde inte hämtas, var god försök igen.'
+                    message: 'Bokningstyper kunde inte hämtas, var god försök igen.'
                 };
             });
 
-            $scope.furniturings = furniturings;
+            $scope.bookingTypes = bookingTypes;
 
             /* Initialization END */
     })
 
     // Create Controller
-    .controller('FurnituringCreateCtrl', function($scope, $routeParams, $location, $rootScope, Furnituring){
+    .controller('BookingTypeCreateCtrl', function($scope, $routeParams, $location, $rootScope, BookingType){
 
             var that = this;
 
@@ -127,14 +127,14 @@
             that.redirectToListPage();
         };
 
-        // Save furnituring
+        // Save bookingType
         $scope.save = function(){
 
-            // Save furnituring
-            Furnituring.save(
+            // Save bookingType
+            BookingType.save(
                 {
-                    FurnituringId: 0,
-                    Name: $scope.furnituring.Name
+                    BookingTypeId: 0,
+                    Name: $scope.bookingType.Name
                 }
             ).$promise
 
@@ -144,7 +144,7 @@
 
                     $rootScope.FlashMessage = {
                         type: 'success',
-                        message: 'Möbleringen "' + $scope.furnituring.Name + '" skapades med ett lyckat resultat'
+                        message: 'Bokningstypen "' + $scope.bookingType.Name + '" skapades med ett lyckat resultat'
                     };
 
                     that.redirectToListPage();
@@ -156,8 +156,8 @@
                     if (response.status == 409){
                         $rootScope.FlashMessage = {
                             type: 'error',
-                            message: 'Det finns redan en möblering som heter "' + $scope.furnituring.Name +
-                            '". Två möbleringar kan inte heta lika.'
+                            message: 'Det finns redan en bokningstyp som heter "' + $scope.bookingType.Name +
+                            '". Två bokningstyper kan inte heta lika.'
                         };
                     }
 
@@ -165,7 +165,7 @@
                     else {
                         $rootScope.FlashMessage = {
                             type: 'error',
-                            message: 'Ett oväntat fel uppstod när möbleringen skulle sparas'
+                            message: 'Ett oväntat fel uppstod när bokningstypen skulle sparas'
                         };
                     }
                 });
@@ -180,7 +180,7 @@
     })
 
     // Edit Controller
-    .controller('FurnituringEditCtrl', function($scope, $routeParams, $location, $rootScope, Furnituring){
+    .controller('BookingTypeEditCtrl', function($scope, $routeParams, $location, $rootScope, BookingType){
 
             var that = this;
 
@@ -204,14 +204,14 @@
                 that.redirectToListPage();
             };
 
-            // Save furnituring
+            // Save bookingType
             $scope.save = function(){
 
-                // Save furnituring
-                Furnituring.save(
+                // Save bookingType
+                BookingType.save(
                     {
-                        FurnituringId: $routeParams.furnituringId,
-                        Name: $scope.furnituring.Name
+                        BookingTypeId: $routeParams.bookingTypeId,
+                        Name: $scope.bookingType.Name
                     }
                 ).$promise
 
@@ -220,7 +220,7 @@
 
                         $rootScope.FlashMessage = {
                             type: 'success',
-                            message: 'Möbleringen "' + $scope.furnituring.Name + '" sparades med ett lyckat resultat'
+                            message: 'Bokningstypen "' + $scope.bookingType.Name + '" sparades med ett lyckat resultat'
                         };
 
                         that.redirectToListPage();
@@ -232,8 +232,8 @@
                         if (response.status == 409){
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message:    'Det finns redan en möblering som heter "' + $scope.furnituring.Name +
-                                '". Två möbleringar kan inte heta lika.'
+                                message:    'Det finns redan en bokningstyp som heter "' + $scope.bookingType.Name +
+                                '". Två bokningstyper kan inte heta lika.'
                             };
                         }
 
@@ -241,7 +241,7 @@
                         else if (response.status == 400 || response.status == 500){
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message: 'Ett oväntat fel uppstod när möbleringen skulle sparas'
+                                message: 'Ett oväntat fel uppstod när bokningstypen skulle sparas'
                             };
                         }
 
@@ -249,7 +249,7 @@
                         if (response.status == 404) {
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message: 'Möbleringen "' + $scope.furnituring.Name + '" existerar inte längre. Hann kanske någon radera den?'
+                                message: 'Bokningstypen "' + $scope.bookingType.Name + '" existerar inte längre. Hann kanske någon radera den?'
                             };
 
                             that.redirectToListPage();
@@ -262,28 +262,28 @@
 
         /* Initialization START */
 
-            var furnituring = Furnituring.get(
+            var bookingType = BookingType.get(
                 {
-                    furnituringId: $routeParams.furnituringId
+                    bookingTypeId: $routeParams.bookingTypeId
                 }
             );
 
-            // In case furniturings cannot be fetched, display an error to user.
-            furnituring.$promise.catch(function(){
+            // In case bookingTypes cannot be fetched, display an error to user.
+            bookingType.$promise.catch(function(){
 
                 $rootScope.FlashMessage = {
                     type: 'error',
-                    message: 'Möbleringen kunde inte hämtas, var god försök igen.'
+                    message: 'Bokningstypen kunde inte hämtas, var god försök igen.'
                 };
             });
 
-            $scope.furnituring = furnituring;
+            $scope.bookingType = bookingType;
 
         /* Initialization END */
     })
 
     // Delete Controller
-    .controller('FurnituringDeleteCtrl', function($scope, $routeParams, Furnituring, $location, $rootScope){
+    .controller('BookingTypeDeleteCtrl', function($scope, $routeParams, BookingType, $location, $rootScope){
 
             var that = this;
 
@@ -305,10 +305,10 @@
             // Confirm deletion
             $scope.confirm = function(){
 
-                // Delete furnituring
-                Furnituring.delete(
+                // Delete bookingType
+                BookingType.delete(
                     {
-                        furnituringId: $routeParams.furnituringId
+                        bookingTypeId: $routeParams.bookingTypeId
                     }
                 ).$promise
 
@@ -317,7 +317,7 @@
 
                         $rootScope.FlashMessage = {
                             type: 'success',
-                            message: 'Möbleringen "' + $scope.furnituring.Name + '" raderades med ett lyckat resultat'
+                            message: 'Bokningstypen "' + $scope.bookingType.Name + '" raderades med ett lyckat resultat'
                         };
 
                         that.redirectToListPage();
@@ -333,8 +333,8 @@
                         ){
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message:    'Möbleringen kan inte raderas eftersom det finns' +
-                                            ' en lokalbokning eller en lokalmöblering som refererar till möbleringen'
+                                message:    'Bokningstypen kan inte raderas eftersom det finns' +
+                                            ' en bokning eller en resurs som refererar till bokningstypen'
                             };
                         }
 
@@ -342,7 +342,7 @@
                         else if (response.status == 400 || response.status == 500){
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message: 'Ett oväntat fel uppstod när möbleringen skulle tas bort'
+                                message: 'Ett oväntat fel uppstod när bokningstypen skulle tas bort'
                             };
                         }
 
@@ -350,7 +350,7 @@
                         if (response.status == 404) {
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message: 'Möbleringen "' + $scope.furnituring.Name + '" existerar inte längre. Hann kanske någon radera den?'
+                                message: 'Bokningstypen "' + $scope.bookingType.Name + '" existerar inte längre. Hann kanske någon radera den?'
                             };
                         }
 
@@ -367,22 +367,22 @@
 
         /* Initialization START */
 
-            var furnituring = Furnituring.get(
+            var bookingType = BookingType.get(
                 {
-                    furnituringId: $routeParams.furnituringId
+                    bookingTypeId: $routeParams.bookingTypeId
                 }
             );
 
-            // In case furniturings cannot be fetched, display an error to user.
-            furnituring.$promise.catch(function(){
+            // In case bookingTypes cannot be fetched, display an error to user.
+            bookingType.$promise.catch(function(){
 
                 $rootScope.FlashMessage = {
                     type: 'error',
-                    message: 'Möbleringen kunde inte hämtas, var god försök igen.'
+                    message: 'Bokningstypen kunde inte hämtas, var god försök igen.'
                 };
             });
 
-            $scope.furnituring = furnituring;
+            $scope.bookingType = bookingType;
 
         /* Initialization END */
     });

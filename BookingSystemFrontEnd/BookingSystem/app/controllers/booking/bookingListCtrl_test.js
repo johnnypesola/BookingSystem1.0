@@ -10,7 +10,7 @@ describe('module: bookingSystem.booking', function() {
 
     // Load modules
     beforeEach(module('bookingSystem.booking'));
-    beforeEach(module('bookingSystem.customFilters'));
+    beforeEach(module('bookingSystem.commonFilters'));
     beforeEach(module('bookingSystem.calendarDirective'));
 
     // Root variables

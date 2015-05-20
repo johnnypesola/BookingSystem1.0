@@ -10,7 +10,7 @@ describe('module: bookingSystem.header HeaderCtrl', function() {
 
     // Load modules
     beforeEach(module('bookingSystem.header'));
-    beforeEach(module('bookingSystem.customFilters'));
+    beforeEach(module('bookingSystem.commonFilters'));
 
     // Root variables
     var HeaderCtrl;
@@ -75,7 +75,7 @@ describe('module: bookingSystem.header FlashMessageCtrl', function() {
 
     // Load modules
     beforeEach(module('bookingSystem.header'));
-    beforeEach(module('bookingSystem.customFilters'));
+    beforeEach(module('bookingSystem.commonFilters'));
 
     // Root variables
     var FlashMessageCtrl;

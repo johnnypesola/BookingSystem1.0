@@ -9,7 +9,7 @@ describe('module: bookingSystem.location', function() {
 
     // Load modules
     beforeEach(module('bookingSystem.location'));
-    beforeEach(module('bookingSystem.customFilters'));
+    beforeEach(module('bookingSystem.commonFilters'));
 
     // Root variables
     var LocationListCtrl, LocationCreateCtrl, LocationEditCtrl;

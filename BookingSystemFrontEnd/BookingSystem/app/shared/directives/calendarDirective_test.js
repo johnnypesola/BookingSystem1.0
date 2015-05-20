@@ -8,7 +8,7 @@ describe('directive: calendarDirective', function() {
     //beforeEach(module('bookingSystem'));
 
     // Load modules
-    beforeEach(module('bookingSystem.customFilters'));
+    beforeEach(module('bookingSystem.commonFilters'));
     beforeEach(module('bookingSystem.calendarDirective'));
 
     // Load template

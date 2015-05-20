@@ -9,7 +9,7 @@ describe('module: bookingSystem.customer', function() {
 
     // Load modules
     beforeEach(module('bookingSystem.customer'));
-    beforeEach(module('bookingSystem.customFilters'));
+    beforeEach(module('bookingSystem.commonFilters'));
 
     // Root variables
     var CustomerListCtrl, CustomerCreateCtrl, CustomerEditCtrl;

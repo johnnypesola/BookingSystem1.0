@@ -9,7 +9,7 @@ describe('module: bookingSystem.furnituring', function() {
 
     // Load modules
     beforeEach(module('bookingSystem.furnituring'));
-    beforeEach(module('bookingSystem.customFilters'));
+    beforeEach(module('bookingSystem.commonFilters'));
 
     // Root variables
     var FurnituringListCtrl, FurnituringCreateCtrl, FurnituringEditCtrl;

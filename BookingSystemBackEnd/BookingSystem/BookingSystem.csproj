@@ -91,6 +91,7 @@
     <Compile Include="App_Extensions\ValidationExtensions.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BookingController.cs" />
+    <Compile Include="Controllers\BookingTypeController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\FurnituringController.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Interfaces\IBookingService.cs" />
     <Compile Include="Models\BLL\Booking.cs" />
     <Compile Include="Models\BLL\BookingContainer.cs" />
+    <Compile Include="Models\BLL\BookingType.cs" />
     <Compile Include="Models\BLL\CalendarBookingDay.cs" />
     <Compile Include="Models\BLL\Customer.cs" />
     <Compile Include="Models\BLL\LocationFurnituring.cs" />
@@ -109,8 +111,10 @@
     <Compile Include="Models\BLL\Furnituring.cs" />
     <Compile Include="Models\BLL\Location.cs" />
     <Compile Include="Models\BookingService.cs" />
+    <Compile Include="Models\BookingTypeService.cs" />
     <Compile Include="Models\CustomerService.cs" />
     <Compile Include="Models\DAL\BookingDAL.cs" />
+    <Compile Include="Models\DAL\BookingTypeDAL.cs" />
     <Compile Include="Models\DAL\CustomerDAL.cs" />
     <Compile Include="Models\DAL\DALBase.cs" />
     <Compile Include="Models\DAL\FurnituringDAL.cs" />

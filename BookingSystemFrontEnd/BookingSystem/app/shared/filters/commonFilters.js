@@ -3,7 +3,7 @@
  */
 
 (function() {
-    angular.module('bookingSystem.customFilters', [])
+    angular.module('bookingSystem.commonFilters', [])
 
         // Custom filters
         .filter('kr', function() {

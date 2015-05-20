@@ -10,7 +10,7 @@
         // Dependencies
         [
             'bookingSystem.bookingServices',
-            'bookingSystem.customFilters'
+            'bookingSystem.commonFilters'
         ]
     )
 

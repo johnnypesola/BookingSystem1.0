@@ -9,7 +9,7 @@ describe('module: bookingSystem.resource', function() {
 
     // Load modules
     beforeEach(module('bookingSystem.resource'));
-    beforeEach(module('bookingSystem.customFilters'));
+    beforeEach(module('bookingSystem.commonFilters'));
 
     // Root variables
     var ResourceDeleteCtrl;

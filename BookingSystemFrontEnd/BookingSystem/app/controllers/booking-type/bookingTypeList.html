@@ -1,0 +1,30 @@
+<section class="content-container" ng-controller="BookingTypeListCtrl">
+    <h2>
+        Lista över Bokningstyper
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
+
+    <section class="list-container">
+
+        <table class="list-table">
+            <tr>
+                <th>Bokningstypsnamn</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="bookingType in bookingTypes">
+                <td>
+                    {{bookingType.Name}}
+                </td>
+                <td class="align-right">
+                    <div item-action-buttons="bookingType.BookingTypeId"></div>
+                </td>
+            </tr>
+        </table>
+    </section>
+</section>

@@ -9,8 +9,8 @@
         // Load Dependencies
         [
             'bookingSystem.customerServices',
-            'bookingSystem.customFilters',
-            'bookingSystem.itemActionButtonsDirective'
+            'bookingSystem.commonFilters',
+            'bookingSystem.commonDirectives'
         ]
     )
 
