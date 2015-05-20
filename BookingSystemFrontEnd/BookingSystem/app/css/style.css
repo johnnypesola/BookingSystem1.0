@@ -499,7 +499,6 @@ section.content-container {
                 position: relative;
                 border-radius: 2px;
                 color: #FFFFFF;
-                /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);*/
             }
 
             section.content-container form label span:after {
@@ -514,6 +513,14 @@ section.content-container {
                 border-left: solid 5px transparent;
                 border-bottom: solid 5px transparent;
             }
+
+                section.content-container form label span.green {
+                    background: #5BA87A;
+                }
+
+                section.content-container form label span.green:after {
+                    border-top: solid 5px #5BA87A;
+                }
 
         section.content-container form input, section.content-container form select, section.content-container form textarea {
             background: #FBFBFB;
@@ -562,6 +569,7 @@ section.content-container {
         }
 
             section.content-container form div.checkbox-radio-container label {
+                position: relative;
                 display: inline-block;
                 font-size: 14px;
                 color: #444444;
@@ -583,6 +591,15 @@ section.content-container {
                     position: relative;
                     top: 4px;
                 }
+
+                section.content-container form div.checkbox-radio-container label div div {
+                    display: inline-block;
+                }
+
+                    section.content-container form div.checkbox-radio-container label div div span {
+                        position: absolute;
+                        top: 6px;
+                    }
 
         section.content-container form input[type=checkbox] {
             position: relative;

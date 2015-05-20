@@ -161,6 +161,14 @@ namespace BookingSystem.Controllers
 
             try
             {
+                // Check that location with specific Id exists
+                Location location = locationService.GetLocation(LocationId);
+                if (location == null)
+                {
+                    return NotFound();
+                }
+
+                // Process image data
                 base64string = Request.Content.ReadAsStringAsync().Result;
 
                 bytes = Convert.FromBase64String(base64string);
@@ -169,6 +177,7 @@ namespace BookingSystem.Controllers
                 {
                     image = Image.FromStream(ms);
 
+                    // Check image dimensions
                     if (
                         image.Width > 400 ||
                         image.Height > 400 ||
@@ -179,10 +188,17 @@ namespace BookingSystem.Controllers
                         throw new Exception("Maximum image dimensions are: Width: 400px and Height: 400px. Minimum image dimensions are: Width: 10px and Height 10px.");
                     }
 
+                    // Build uploadpath
                     UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@"~/{0}", IMAGE_PATH));
 
+                    // Save image
                     image.Save(String.Format("{0}/{1}.jpg", UploadImagePath, LocationId), System.Drawing.Imaging.ImageFormat.Jpeg);
                 }
+
+                // Update location with image path.
+                location.ImageSrc = String.Format("{0}/{1}.jpg", IMAGE_PATH, LocationId);
+
+                locationService.SaveLocation(location);
             }
             catch (Exception e)
             {

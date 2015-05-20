@@ -69,23 +69,75 @@
             return {
                 restrict: 'E',
                 replace: true,
-                template: '<select ng-model="model" ng-options="maxPeople for maxPeople in maxPeopleRange"></select>',
+                template: '<div><span ng-show="isErrorVisible">Max {{maxPeopleOptions}}</span><select ng-model="model" ng-options="maxPeople for maxPeople in maxPeopleRange"></select></div>',
                 scope: {
-                    model: '=useModel'
+                    model: '=useModel',
+                    maxPeopleOptions: '=maxPeopleOptions'
                 },
                 controller: function($scope, $element, $attrs) {
-                    var i;
-                    $scope.maxPeopleRange = [];
+                    var i,
+                        that = this;
+
+                    $scope.isErrorVisible = false;
+
+                    that.generateOptions = function(){
+
+                        $scope.maxPeopleRange = [];
+
+                        for(i = 0; i <= OPTIONS_MAX_PEOPLE; i++){
+                            $scope.maxPeopleRange.push(i);
+                        }
+                    };
 
                 /* Initialization START */
 
                     $scope.model = $scope.model || 0;
 
-                    for(i = 0; i <= OPTIONS_MAX_PEOPLE; i++){
-                        $scope.maxPeopleRange.push(i)
-                    }
+                    $scope.$watch('maxPeopleOptions', function(){
+                        $scope.isErrorVisible = $scope.model > $scope.maxPeopleOptions;
+
+                        //that.generateOptions();
+                    });
+
+                    $scope.$watch('model', function(){
+                        $scope.isErrorVisible = $scope.model > $scope.maxPeopleOptions;
+                    });
+
+                    that.generateOptions();
 
                 /* Initialization END */
+                }
+            };
+        })
+
+        .directive('inputMaxPeople', function() {
+            return {
+                restrict: 'E',
+                replace: true,
+                template: '<div><input type="number" ng-model="model" min="0" max="{{maxPeople}}">{{maxPeople}}</div>',
+                scope: {
+                    model: '=useModel',
+                    maxPeople: '=maxPeople'
+                },
+                controller: function($scope, $element, $attrs) {
+                    var i, that = this;
+
+                    /* Initialization START */
+
+                    $scope.model = $scope.model || 0;
+
+                    if($scope.model > $scope.maxPeople){
+                        $scope.model = 0;
+                    }
+
+                    $scope.$watch('maxPeople', function(){
+
+                        if($scope.model > $scope.maxPeople){
+                            $scope.model = 0;
+                        }
+                    });
+
+                    /* Initialization END */
                 }
             };
         })
@@ -183,6 +235,18 @@
 
                     /* Initialization END */
 
+                }
+            };
+        })
+
+        .directive('stopParentEvent', function () {
+            return {
+                restrict: 'A',
+                link: function (scope, element, attr) {
+                    element.bind(attr.stopParentEvent, function (e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    });
                 }
             };
         });

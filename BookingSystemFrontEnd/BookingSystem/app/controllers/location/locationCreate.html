@@ -12,30 +12,30 @@
 
     <form name="locationForm">
 
+        <label>Bild på lokal/plats</label>
+        <image-uploader type="Location" id="{{location.LocationId}}" image-src="location.ImageSrc" base64-encoded-image="location.ImageForUpload"></image-uploader>
+
         <label>Namn
-            <span ng-show="locationForm.name.$error.required">Var god ange</span>
+            <span ng-show="locationForm.name.$error.required" class="green">Var god ange</span>
             <span ng-show="locationForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
         <input type="text" name="name" ng-pattern="regExp.textField" ng-model="location.Name" maxlength="50" required>
 
         <label>Max personer (st)
-            <span ng-show="locationForm.maxPeople.$error.required">Var god ange</span>
+            <span ng-show="locationForm.maxPeople.$error.required" class="green">Var god ange</span>
             <span ng-show="locationForm.maxPeople.$error.number">Inget giltigt antal</span>
             <span ng-show="locationForm.maxPeople.$error.max">Får vara max {{Int16MaxValue}}</span>
             <span ng-show="locationForm.maxPeople.$error.min">Får vara minst 0</span>
         </label>
         <input type="number" min="0" max="{{Int16MaxValue}}" name="maxPeople" ng-model="location.MaxPeople" required>
 
-        <label>Sökväg till bild</label>
-        <input type="text" name="image-src" ng-model="location.ImageSrc">
-
         <label>Bokningspris per timme (kr)
-            <span ng-show="locationForm.bookingPricePerHour.$error.required">Var god ange</span>
+            <span ng-show="locationForm.bookingPricePerHour.$error.required" class="green">Var god ange</span>
             <span ng-show="locationForm.bookingPricePerHour.$error.number">Inget giltigt värde</span>
             <span ng-show="locationForm.bookingPricePerHour.$error.max">Får vara max {{Int32MaxValue}}</span>
             <span ng-show="locationForm.bookingPricePerHour.$error.min">Får vara minst 0</span>
         </label>
-        <input type="number" min="0" max="{{Int32MaxValue}}" name="bookingPricePerHour" ng-model="location.BookingPricePerHour" required>
+        <input type="number" min="0" max="{{Int32MaxValue}}" name="bookingPricePerHour" ng-model="location.BookingPricePerHour" step="0.01" required>
 
         <label>Marginal efter bokning (minuter)
             <span ng-show="locationForm.minutesMarginAfterBooking.$error.number">Inget giltigt antal</span>
@@ -44,8 +44,21 @@
         </label>
         <input type="number" min="0" max="{{Int16MaxValue}}" name="minutesMarginAfterBooking" ng-model="location.MinutesMarginAfterBooking">
 
+        <label>Möbleringar som ska vara tillgängliga för lokalen/platsen</label>
+        <div class="checkbox-radio-container" >
+            <label ng-repeat="furnituring in furniturings">
+                <input type="checkbox" name="selectedFurniturings" value="{{furnituring.Name}}" ng-model="furnituring.Selected">{{furnituring.Name}}
+
+                <div ng-show="furnituring.Selected" stop-event="click">
+                    Max
+                    <select-max-people max-people-options="location.MaxPeople" use-model="furnituring.MaxPeople"></select-max-people>
+                    pers.
+                </div>
+            </label>
+        </div>
+
         <label>GPS kartmarkering
-            <span ng-show="locationForm.GPSLongitude.$error.required">Var god klicka på kartan för att markera lokalens position</span>
+            <span ng-show="locationForm.GPSLongitude.$error.required" class="green">Var god klicka på kartan för att markera lokalens position</span>
         </label>
 
         <input type="hidden" name="GPSLongitude" value="0" ng-model="location.GPSLongitude" required>

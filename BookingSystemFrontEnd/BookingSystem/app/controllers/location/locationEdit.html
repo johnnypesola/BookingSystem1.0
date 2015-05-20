@@ -13,7 +13,7 @@
     <form name="locationForm">
 
         <label>Bild på lokal/plats</label>
-        <image-uploader type="Location" id="{{location.LocationId}}" image-src="location.ImageSrc"></image-uploader>
+        <image-uploader type="Location" id="{{location.LocationId}}" image-src="location.ImageSrc" base64-encoded-image="location.ImageForUpload"></image-uploader>
 
         <label>Namn
             <span ng-show="locationForm.name.$error.required">Var god ange</span>
@@ -27,7 +27,7 @@
             <span ng-show="locationForm.maxPeople.$error.max">Får vara max {{Int16MaxValue}}</span>
             <span ng-show="locationForm.maxPeople.$error.min">Får vara minst 0</span>
         </label>
-        <input type="number" min="0" max="{{Int16MaxValue}}" name="maxPeople" ng-model="location.MaxPeople" required >
+        <input type="number" min="0" max="{{Int16MaxValue}}" name="maxPeople" ng-model="location.MaxPeople" required>
 
         <label>Bokningspris per timme (kr)
             <span ng-show="locationForm.bookingPricePerHour.$error.required">Var god ange</span>
@@ -35,7 +35,7 @@
             <span ng-show="locationForm.bookingPricePerHour.$error.max">Får vara max {{Int32MaxValue}}</span>
             <span ng-show="locationForm.bookingPricePerHour.$error.min">Får vara minst 0</span>
         </label>
-        <input type="number" min="0" max="{{Int32MaxValue}}" name="bookingPricePerHour" ng-model="location.BookingPricePerHour" required>
+        <input type="number" min="0" max="{{Int32MaxValue}}" name="bookingPricePerHour" ng-model="location.BookingPricePerHour" step="0.01" required>
 
         <label>Marginal efter bokning (minuter)
             <span ng-show="locationForm.minutesMarginAfterBooking.$error.number">Inget giltigt antal</span>
@@ -51,7 +51,7 @@
 
                 <div ng-show="furnituring.Selected">
                     Max
-                    <select-max-people use-model="furnituring.MaxPeople"></select-max-people>
+                    <select-max-people max-people-options="location.MaxPeople" use-model="furnituring.MaxPeople" stop-parent-event="click"></select-max-people>
                     pers.
                 </div>
             </label>

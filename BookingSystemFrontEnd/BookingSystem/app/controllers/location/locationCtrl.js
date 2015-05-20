@@ -187,7 +187,7 @@
     })
 
     // Create Controller
-    .controller('LocationCreateCtrl', function($scope, $routeParams, $location, $rootScope, Location){
+    .controller('LocationCreateCtrl', function($scope, $routeParams, $location, $rootScope, Location, Furnituring, LocationFurnituring, LocationImage){
 
             var that = this;
             $scope.markers = [{ // Init marker on map
@@ -202,6 +202,7 @@
             $scope.location.GPSLongitude = "";
 
         /* Private methods START */
+
 
             // Add default map variables to scope
             that.initMapVariables = function() {
@@ -218,6 +219,7 @@
                     }
                 };
             };
+
 
             that.redirectToListPage = function(){
                 var objectType;
@@ -243,6 +245,44 @@
 
                 $scope.$apply();
             };
+
+            // Save new furniturings for location
+            that.saveLocationFurnituring = function(LocationId){
+                var furnituringsToSave,
+                    locationFurnituringResource,
+                    postDataArray = [];
+
+                // Filter out furniturings to save
+                furnituringsToSave = $scope.furniturings.filter(function(furnituring){
+                    return furnituring.Selected;
+                });
+
+                // Process each and one of the furniturings
+                furnituringsToSave.forEach(function(furnituring){
+
+                    postDataArray.push({
+                        LocationId: LocationId,
+                        FurnituringId: furnituring.FurnituringId,
+                        MaxPeople: furnituring.MaxPeople
+                    })
+                });
+
+                // Save
+                locationFurnituringResource = LocationFurnituring.saveForLocation(postDataArray);
+
+                // Return promise
+                return locationFurnituringResource.$promise;
+            };
+
+            // Upload image
+            that.uploadImage = function(LocationId) {
+                var locationImageHttp;
+
+                locationImageHttp = LocationImage.upload($scope.location.ImageForUpload, LocationId);
+
+                return locationImageHttp;
+            };
+
 
         /* Private methods END */
 
@@ -273,12 +313,36 @@
                     // If everything went ok
                     .then(function(response){
 
-                        $rootScope.FlashMessage = {
-                            type: 'success',
-                            message: 'Möbleringen "' + $scope.location.Name + '" skapades med ett lyckat resultat'
-                        };
+                        // Save furnituring
+                        that.saveLocationFurnituring(response.LocationId)
 
-                        that.redirectToListPage();
+                        .then(function() {
+
+                            // Upload image
+                            that.uploadImage(response.LocationId)
+
+                            // Image upload successful
+                            .success(function (data) {
+
+                                // Display success message
+                                $rootScope.FlashMessage = {
+                                    type: 'success',
+                                    message: 'Platsen "' + $scope.location.Name + '" sparades med ett lyckat resultat'
+                                };
+
+                                // Redirect
+                                that.redirectToListPage();
+
+                            })
+                        }).catch(function(something){
+
+                            console.log(something);
+
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Uppgifter om lokaler sparades men, möbleringen kunde inte sparas. Var god försök igen.'
+                            };
+                        });
 
                     // Something went wrong
                     }).catch(function(response) {
@@ -309,21 +373,18 @@
 
             that.initMapVariables();
 
+            // Get all available furniturings
+            $scope.furniturings = Furnituring.query();
+
         /* Initialization END */
     })
 
     // Edit Controller
-    .controller('LocationEditCtrl', function($scope, $routeParams, $location, $rootScope, $timeout, Location, LocationFurnituring, Furnituring, LocationFurnituringHelper){
+    .controller('LocationEditCtrl', function($scope, $routeParams, $location, $rootScope, $timeout, Location, LocationFurnituring, Furnituring, LocationFurnituringHelper, LocationImage){
 
             var that = this,
                 i;
                 $scope.markers = [];
-                $scope.maxPeopleRange = [];
-
-            // Init max people range
-            for(i = 0; i <= 2000; i++){
-                $scope.maxPeopleRange.push(i);
-            }
 
         /* Private methods START */
 
@@ -386,6 +447,7 @@
                 $scope.map.zoom = 18;
             };
 
+
             that.saveLocationFurnituring = function(){
                 var furnituringsToSave,
                     locationFurnituringResource,
@@ -425,17 +487,31 @@
 
             };
 
+            that.uploadImage = function(LocationId) {
+                var locationImageHttp;
+
+                locationImageHttp = LocationImage.upload($scope.location.ImageForUpload, LocationId);
+
+                return locationImageHttp;
+            };
+
             that.getLocationFurnituring = function(){
-                var locationFurniturings;
 
                 // Use Helper service to get all furnituring with existing locations furnituring selected.
-                locationFurniturings = LocationFurnituringHelper.getCombined($routeParams.locationId);
+                $scope.furniturings = LocationFurnituringHelper.getCombined($routeParams.locationId);
 
-                // When data is loaded. Add to scope.
-                locationFurniturings.$promise.finally(function(){
+            };
 
-                    $scope.furniturings = locationFurniturings;
-                });
+            that.saveSuccess = function() {
+
+                // Display success message
+                $rootScope.FlashMessage = {
+                    type: 'success',
+                    message: 'Platsen "' + $scope.location.Name + '" sparades med ett lyckat resultat'
+                };
+
+                // Redirect
+                that.redirectToListPage();
             };
 
         /* Private methods END */
@@ -455,21 +531,21 @@
 
             // Save location
             $scope.save = function(){
-                var locationFurnituringSavePromise;
+
+                // Prepare object to save
+                var locationObjectToSave = {
+                    LocationId: $routeParams.locationId,
+                    Name: $scope.location.Name,
+                    MaxPeople: $scope.location.MaxPeople,
+                    GPSLatitude: $scope.location.GPSLatitude,
+                    GPSLongitude: $scope.location.GPSLongitude,
+                    ImageSrc: $scope.location.ImageSrc,
+                    BookingPricePerHour: $scope.location.BookingPricePerHour,
+                    MinutesMarginAfterBooking: $scope.location.MinutesMarginAfterBooking
+                };
 
                 // Save location
-                Location.save(
-                    {
-                        LocationId: $routeParams.locationId,
-                        Name: $scope.location.Name,
-                        MaxPeople: $scope.location.MaxPeople,
-                        GPSLatitude: $scope.location.GPSLatitude,
-                        GPSLongitude: $scope.location.GPSLongitude,
-                        ImageSrc: $scope.location.ImageSrc,
-                        BookingPricePerHour: $scope.location.BookingPricePerHour,
-                        MinutesMarginAfterBooking: $scope.location.MinutesMarginAfterBooking
-                    }
-                ).$promise
+                Location.save(locationObjectToSave).$promise
 
                     // If everything went ok
                     .then(function(response){
@@ -477,14 +553,30 @@
                         // Save location furnituring
                         that.saveLocationFurnituring().finally(function(){
 
-                            // Display success message
-                            $rootScope.FlashMessage = {
-                                type: 'success',
-                                message: 'Platsen "' + $scope.location.Name + '" sparades med ett lyckat resultat'
-                            };
+                            console.log("here");
 
-                            // Redirect
-                            that.redirectToListPage();
+                            // Upload image
+                            if(typeof $scope.location.ImageForUpload !== 'undefined'){
+
+                                that.uploadImage(response.LocationId)
+
+                                // Image upload successful
+                                .success(function(){
+                                    that.saveSuccess();
+                                })
+                                // Image upload failed
+                                .error(function () {
+
+                                    $rootScope.FlashMessage = {
+                                        type: 'error',
+                                        message: 'Lokalen och dess möblering sparades, men det gick inte att ladda upp och spara den önskade bilden.'
+                                    };
+                                });
+                            }
+                            else {
+
+                                that.saveSuccess();
+                            }
                         });
 
                     // Something went wrong

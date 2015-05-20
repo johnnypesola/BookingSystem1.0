@@ -31,44 +31,18 @@
 
                             // Success
 
+                            // Scale image down to smaller size.
                             ImageResize.scaleImage(reader.result).then(function(imgData){
-                                var UploadObj;
-                                var UploadString;
 
+                                // Add base64 encoded image data to scope, replace current image displayed for user
+                                $scope.displayImageSrc = imgData;
 
-                                if($attrs.type === "Location"){
+                                // Return base64 encoded image from this directive to parent controller.
+                                $scope.base64EncodedImage = imgData.replace(/^data:image\/jpeg;base64,/, ""); //Replace unwanted characters for upload
 
-                                    // Remove invalid string
-                                    UploadString = imgData.replace(/^data:image\/jpeg;base64,/, "");
+                                // Resolve promise.
+                                deferred.resolve();
 
-                                    UploadObj = LocationImage.upload(UploadString, $attrs.id);
-                                }
-
-                                UploadObj
-                                    .success(function(data){
-
-                                        $rootScope.FlashMessage = {
-                                            type: 'success',
-                                            message: 'Bilden laddades upp och sparades.'
-                                        };
-
-                                        // Use the returned imgpath value from post request in parent scope image source
-                                        $scope.imageSrc = data.imgpath;
-
-                                        // Resolve promise
-                                        deferred.resolve(imgData)
-
-
-                                    })
-                                    .error(function(){
-
-                                        $rootScope.FlashMessage = {
-                                            type: 'error',
-                                            message: 'Det gick inte att ladda upp och spara den önskade bilden.'
-                                        };
-
-                                        deferred.reject();
-                                    })
                             });
                         });
                     };
@@ -107,11 +81,11 @@
 
             /* Scope methods START */
 
-                // Add a watch on imageSrc, Controls what image should be displayed to user.
+                // Add a watch on imageSrc, Controls what image should be displayed to user. Passed from parent controller
                 $scope.$watch('imageSrc', function(newValue, oldValue) {
 
                     if(typeof newValue !== 'undefined' && newValue !== ""){
-                        $scope.displayImageSrc = API_IMG_PATH_URL + newValue;
+                        $scope.displayImageSrc = API_IMG_PATH_URL + newValue + "?" + Date.now();
                     }
                     else {
                         $scope.displayImageSrc = PHOTO_MISSING_SRC;
@@ -168,7 +142,8 @@
 
                 },
                 scope: {
-                    imageSrc: '=imageSrc'
+                    imageSrc: '=imageSrc',
+                    base64EncodedImage: '=base64EncodedImage'
                 },
                 replace: true,
                 templateUrl: 'shared/directives/imageUploaderDirective.html',
@@ -189,12 +164,8 @@
                         // Get file from file input
                         file = (event.srcElement || event.target).files[0];
 
-                        // Prcess file.
-                        $scope.readUploadedFile(file).then(function(result) {
-
-                            // When image has been uploaded. Display new image to user
-                            $scope.displayImageSrc = result;
-                        });
+                        // Process file.
+                        $scope.readUploadedFile(file);
                     });
                 }
             }
