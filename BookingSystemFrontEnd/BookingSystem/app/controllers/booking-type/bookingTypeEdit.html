@@ -10,13 +10,38 @@
     ></page-header-buttons>
 
     <form name="bookingTypeForm">
+
+        <label>Har plats/lokal</label>
+        <div class="checkbox-radio-container" ng-init="bookingType.HasLocation=1">
+            <label>
+                <input type="radio" name="hasLocation" value="1" ng-model="bookingType.HasLocation" required> Ja
+            </label>
+            <label>
+                <input type="radio" name="hasLocation" value="0" ng-model="bookingType.HasLocation" required> Nej
+            </label>
+        </div>
+
         <label>Namn
-            <span ng-show="bookingTypeForm.name.$error.required">Var god ange</span>
+            <span ng-show="bookingTypeForm.name.$error.required" class="green">Var god ange</span>
             <span ng-show="bookingTypeForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
         <input type="text" name="name" ng-pattern="regExp.textField" ng-model="bookingType.Name" maxlength="50" required>
 
-        <button ng-click="save()" ng-disabled="!bookingTypeForm.$valid">Spara</button>
+        <label>Marginal före bokning (minuter)
+            <span ng-show="bookingTypeForm.minutesMarginBeforeBooking.$error.number">Inget giltigt antal</span>
+            <span ng-show="bookingTypeForm.minutesMarginBeforeBooking.$error.max">Får vara max {{Int16MaxValue}}</span>
+            <span ng-show="bookingTypeForm.minutesMarginBeforeBooking.$error.min">Får vara minst 0</span>
+        </label>
+        <input type="number" min="0" max="{{Int16MaxValue}}" name="minutesMarginBeforeBooking" ng-model="bookingType.MinutesMarginBeforeBooking">
+
+        <label>Marginal efter bokning (minuter)
+            <span ng-show="bookingTypeForm.minutesMarginAfterBooking.$error.number">Inget giltigt antal</span>
+            <span ng-show="bookingTypeForm.minutesMarginAfterBooking.$error.max">Får vara max {{Int16MaxValue}}</span>
+            <span ng-show="bookingTypeForm.minutesMarginAfterBooking.$error.min">Får vara minst 0</span>
+        </label>
+        <input type="number" min="0" max="{{Int16MaxValue}}" name="minutesMarginAfterBooking" ng-model="bookingType.MinutesMarginAfterBooking">
+
+        <button ng-click="save()" ng-disabled="!bookingTypeForm.$valid">Skapa</button>
         <button ng-click="abort()">Avbryt</button>
 
     </form>

@@ -134,7 +134,10 @@
             BookingType.save(
                 {
                     BookingTypeId: 0,
-                    Name: $scope.bookingType.Name
+                    Name: $scope.bookingType.Name,
+                    HasLocation: parseInt($scope.bookingType.HasLocation,10),
+                    MinutesMarginBeforeBooking: $scope.bookingType.MinutesMarginBeforeBooking,
+                    MinutesMarginAfterBooking: $scope.bookingType.MinutesMarginAfterBooking
                 }
             ).$promise
 
@@ -211,7 +214,10 @@
                 BookingType.save(
                     {
                         BookingTypeId: $routeParams.bookingTypeId,
-                        Name: $scope.bookingType.Name
+                        Name: $scope.bookingType.Name,
+                        HasLocation: parseInt($scope.bookingType.HasLocation,10),
+                        MinutesMarginBeforeBooking: $scope.bookingType.MinutesMarginBeforeBooking,
+                        MinutesMarginAfterBooking: $scope.bookingType.MinutesMarginAfterBooking
                     }
                 ).$promise
 

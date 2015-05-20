@@ -15,11 +15,23 @@
         <table class="list-table">
             <tr>
                 <th>Bokningstypsnamn</th>
+                <th>Har lokal/plats</th>
+                <th>Marginial i minuter före</th>
+                <th>Marginial i minuter efter</th>
                 <th></th>
             </tr>
             <tr ng-repeat="bookingType in bookingTypes">
                 <td>
                     {{bookingType.Name}}
+                </td>
+                <td>
+                    {{bookingType.HasLocation | boolean}}
+                </td>
+                <td>
+                    {{bookingType.MinutesMarginBeforeBooking}}
+                </td>
+                <td>
+                    {{bookingType.MinutesMarginAfterBooking}}
                 </td>
                 <td class="align-right">
                     <div item-action-buttons="bookingType.BookingTypeId"></div>
