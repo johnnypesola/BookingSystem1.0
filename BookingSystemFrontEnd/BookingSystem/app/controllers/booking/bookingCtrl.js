@@ -9,7 +9,7 @@
         // Load Dependencies
         [
             'bookingSystem.bookingServices',
-            'bookingSystem.customFilters',
+            'bookingSystem.commonFilters',
             'bookingSystem.calendarDirective',
             'bookingSystem.customerServices'
         ]

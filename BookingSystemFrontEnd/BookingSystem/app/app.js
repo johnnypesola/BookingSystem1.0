@@ -16,7 +16,7 @@
         'bookingSystem.location',
         'bookingSystem.resource',
         'bookingSystem.customer',
-        'bookingSystem.loadingDirective'
+        'bookingSystem.commonDirectives'
     ]);
 
     /*
@@ -30,7 +30,7 @@
     BookingSystem.constant('UPLOAD_IMG_MAX_WIDTH', '400');
     BookingSystem.constant('UPLOAD_IMG_MAX_HEIGHT', '400');
     BookingSystem.constant('PHOTO_MISSING_SRC', 'img/icons/photo_missing.svg');
-
+    BookingSystem.constant('OPTIONS_MAX_PEOPLE', 2000);
 
 
     BookingSystem.config(function($routeProvider) {

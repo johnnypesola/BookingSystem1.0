@@ -10,9 +10,8 @@
         [
             'bookingSystem.locationServices',
             'bookingSystem.furnituringServices',
-            'bookingSystem.customFilters',
-            'bookingSystem.itemActionButtonsDirective',
-            'bookingSystem.pageHeaderButtonsDirective',
+            'bookingSystem.commonFilters',
+            'bookingSystem.commonDirectives',
             'bookingSystem.imageUploaderDirective',
             'bookingSystem.imageResizeServices',
             'uiGmapgoogle-maps' // Google maps API

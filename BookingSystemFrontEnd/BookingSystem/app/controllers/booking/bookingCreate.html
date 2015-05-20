@@ -47,8 +47,7 @@
         <input type="number" min="0" max="{{Int16MaxValue}}" name="NumberOfPeople" ng-model="booking.NumberOfPeople" required >
 
         <label>Rabatt på allt i bokning (%)</label>
-        <select ng-init="booking.Discount=0" name="discount" ng-model="booking.Discount" ng-options="discount for discount in discountRange">
-        </select>
+        <select-percentage use-model="booking.Discount"></select-percentage>
 
         <!--
         <label>Betalningsform
