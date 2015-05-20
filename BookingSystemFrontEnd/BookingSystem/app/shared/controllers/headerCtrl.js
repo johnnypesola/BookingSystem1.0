@@ -30,6 +30,10 @@
                             location: "bokningstillfallen/lista"
                         },
                         {
+                            title: "Bokningstyper",
+                            location: "bokningstyper/lista"
+                        },
+                        {
                             title: "Lokalbokningar",
                             location: "lokalbokningar/lista"
                         },

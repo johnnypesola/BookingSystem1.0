@@ -30,44 +30,46 @@
                         $scope.$apply(function () {
 
                             // Success
-                            var imgData = ImageResize.scaleImage(reader.result);
-                            var UploadObj;
-                            var UploadString;
 
-                            if($attrs.type === "Location"){
-
-                                // Remove invalid string
-                                UploadString = imgData.replace(/^data:image\/jpeg;base64,/, "");
-
-                                UploadObj = LocationImage.upload(UploadString, $attrs.id);
-                            }
-
-                            UploadObj
-                            .success(function(data){
-
-                                $rootScope.FlashMessage = {
-                                    type: 'success',
-                                    message: 'Bilden laddades upp och sparades.'
-                                };
-
-                                // Use the returned imgpath value from post request in parent scope image source
-                                $scope.imageSrc = data.imgpath;
-
-                                // Resolve promise
-                                deferred.resolve(imgData)
+                            ImageResize.scaleImage(reader.result).then(function(imgData){
+                                var UploadObj;
+                                var UploadString;
 
 
-                            })
-                            .error(function(){
+                                if($attrs.type === "Location"){
 
-                                $rootScope.FlashMessage = {
-                                    type: 'error',
-                                    message: 'Det gick inte att ladda upp och spara den önskade bilden.'
-                                };
+                                    // Remove invalid string
+                                    UploadString = imgData.replace(/^data:image\/jpeg;base64,/, "");
 
-                                deferred.reject();
-                            })
+                                    UploadObj = LocationImage.upload(UploadString, $attrs.id);
+                                }
 
+                                UploadObj
+                                    .success(function(data){
+
+                                        $rootScope.FlashMessage = {
+                                            type: 'success',
+                                            message: 'Bilden laddades upp och sparades.'
+                                        };
+
+                                        // Use the returned imgpath value from post request in parent scope image source
+                                        $scope.imageSrc = data.imgpath;
+
+                                        // Resolve promise
+                                        deferred.resolve(imgData)
+
+
+                                    })
+                                    .error(function(){
+
+                                        $rootScope.FlashMessage = {
+                                            type: 'error',
+                                            message: 'Det gick inte att ladda upp och spara den önskade bilden.'
+                                        };
+
+                                        deferred.reject();
+                                    })
+                            });
                         });
                     };
                 };

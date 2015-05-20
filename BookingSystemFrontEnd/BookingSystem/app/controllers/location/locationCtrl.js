@@ -61,15 +61,21 @@
             // Convert markers from data fetched from backend to match google maps format.
             that.convertMarkers = function() {
 
-                $scope.markers.push(
+                $scope.markers[0] =
                     {
                         id: $scope.location.LocationId,
                         coords: {
                             latitude: $scope.location.GPSLatitude,
                             longitude: $scope.location.GPSLongitude
                         }
-                    }
-                );
+                    };
+
+                $scope.map.center = {
+                    latitude: $scope.location.GPSLatitude,
+                    longitude: $scope.location.GPSLongitude
+                };
+
+                $scope.map.zoom = 18;
             };
 
         /* Private methods END */
@@ -371,6 +377,13 @@
                             longitude: that.location.GPSLongitude
                         }
                 };
+
+                $scope.map.center = {
+                    latitude: that.location.GPSLatitude,
+                    longitude: that.location.GPSLongitude
+                };
+
+                $scope.map.zoom = 18;
             };
 
             that.saveLocationFurnituring = function(){

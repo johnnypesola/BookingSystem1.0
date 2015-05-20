@@ -11,7 +11,11 @@
 
         ])
 
-        .factory('ImageResize', function(UPLOAD_IMG_MAX_WIDTH, UPLOAD_IMG_MAX_HEIGHT) {
+        .factory('ImageResize', function(UPLOAD_IMG_MAX_WIDTH, UPLOAD_IMG_MAX_HEIGHT, $q) {
+
+            var img,
+                canvas,
+                deferred;
 
             /* Private functions START */
 
@@ -93,29 +97,48 @@
 
             return {
 
-                scaleImage: function (imgData, completionCallback) {
+                scaleImage: function (imgData) {
 
-                    var img = document.createElement('img'),
-                        canvas = document.createElement('canvas'),
-                        returnImageData;
+                    // Init variables
+                    img = document.createElement('img');
+                    canvas = document.createElement('canvas');
+                    deferred  = $q.defer();
 
                     img.src = imgData;
 
-                    canvas.width = img.width;
-                    canvas.height = img.height;
-                    canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+                    // When the image has been loaded.
+                    img.onload = function(){
 
-                    while (canvas.width >= (2 * UPLOAD_IMG_MAX_WIDTH)) {
-                        canvas = getHalfScaleCanvas(canvas);
-                    }
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                    if (canvas.width > UPLOAD_IMG_MAX_WIDTH) {
-                        canvas = scaleCanvasWithAlgorithm(canvas);
-                    }
+                        while (canvas.width >= (2 * UPLOAD_IMG_MAX_WIDTH)) {
+                            canvas = getHalfScaleCanvas(canvas);
+                        }
 
-                    returnImageData = canvas.toDataURL('image/jpeg', 1.0);
+                        if (canvas.width > UPLOAD_IMG_MAX_WIDTH) {
+                            canvas = scaleCanvasWithAlgorithm(canvas);
+                        }
 
-                    return returnImageData;
+                        returnImageData = canvas.toDataURL('image/jpeg', 1.0);
+
+                        /*
+                         // Remove invalid string
+                         returnImageData = returnImageData.replace(/^data:image\/jpeg;base64,/, "");
+
+                         */
+
+                        //returnImageData
+
+                        //console.log("inside imageResizeService RETURN " + returnImageData);
+
+
+                        deferred.resolve(returnImageData);
+                    };
+
+                    // Return promise
+                    return deferred.promise;
                 }
             }
         });

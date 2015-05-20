@@ -12,6 +12,7 @@
         'bookingSystem.version',
         'bookingSystem.header',
         'bookingSystem.booking',
+        'bookingSystem.bookingType',
         'bookingSystem.furnituring',
         'bookingSystem.location',
         'bookingSystem.resource',
@@ -51,6 +52,23 @@
             }).
             when('/bokningstillfallen/skapa', {
                 templateUrl: 'controllers/booking/bookingCreate.html'
+            }).
+
+            // BookingTypes
+            when('/bokningstyper/visa/:bookingTypeId', {
+                templateUrl: 'controllers/booking-type/bookingTypeShow.html'
+            }).
+            when('/bokningstyper/lista', {
+                templateUrl: 'controllers/booking-type/bookingTypeList.html'
+            }).
+            when('/bokningstyper/radera/:bookingTypeId', {
+                templateUrl: 'controllers/booking-type/bookingTypeDelete.html'
+            }).
+            when('/bokningstyper/redigera/:bookingTypeId', {
+                templateUrl: 'controllers/booking-type/bookingTypeEdit.html'
+            }).
+            when('/bokningstyper/skapa', {
+                templateUrl: 'controllers/booking-type/bookingTypeCreate.html'
             }).
 
             // Furniturings

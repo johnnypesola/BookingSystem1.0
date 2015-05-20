@@ -80,6 +80,14 @@
              }).success(callback);
              }
              */
-        });
+        })
+
+        .factory('BookingType', function($resource, API_URL){
+
+            return $resource(
+                API_URL + 'BookingType/:bookingTypeId',
+                {furnituringId: '@bookingTypeId'}
+            );
+        })
 
 })();

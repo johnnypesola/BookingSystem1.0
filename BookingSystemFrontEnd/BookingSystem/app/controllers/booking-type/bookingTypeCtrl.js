@@ -8,7 +8,7 @@
 
         // Load Dependencies
         [
-            'bookingSystem.bookingTypeServices',
+            'bookingSystem.bookingServices',
             'bookingSystem.commonFilters',
             'bookingSystem.commonDirectives'
         ]

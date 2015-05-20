@@ -176,7 +176,7 @@ namespace BookingSystem.Controllers
                         image.Height < 10
                        )
                     {
-                        throw new BadImageFormatException();
+                        throw new Exception("Maximum image dimensions are: Width: 400px and Height: 400px. Minimum image dimensions are: Width: 10px and Height 10px.");
                     }
 
                     UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@"~/{0}", IMAGE_PATH));
