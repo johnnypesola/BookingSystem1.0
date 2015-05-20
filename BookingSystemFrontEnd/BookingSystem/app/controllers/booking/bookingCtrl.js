@@ -100,7 +100,7 @@
             /* Initialization END */
     })
 
-    .controller('BookingCreateCtrl', function($scope, Booking, $rootScope, Customer){
+    .controller('BookingCreateCtrl', function($scope, Booking, $rootScope, Customer, $location){
         var that = this;
         var currentDateObj;
             $scope.discountRange = [];
@@ -110,6 +110,15 @@
                 $scope.discountRange.push(i);
             }
         /* Private methods START */
+
+            that.redirectToListPage = function(){
+                var objectType;
+
+                objectType = $location.path().split('/')[1];
+
+                // Go back to location list
+                $location.path(objectType + "/lista");
+            };
 
             that.initDateVariables = function () {
                 that.currentYear = currentDateObj.getFullYear();
@@ -124,6 +133,10 @@
         /* Private methods END */
 
         /* Public methods START */
+
+            $scope.abort = function(){
+                that.redirectToListPage();
+            };
 
         /* Initialization START */
 

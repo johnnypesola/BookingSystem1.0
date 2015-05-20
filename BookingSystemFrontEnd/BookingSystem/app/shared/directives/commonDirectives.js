@@ -37,7 +37,7 @@
             };
         })
 
-        .directive('selectPercentage', function($route, $routeParams, $location) {
+        .directive('selectPercentage', function() {
             return {
                 restrict: 'E',
                 replace: true,
@@ -61,6 +61,31 @@
                         }
 
                     /* Initialization END */
+                }
+            };
+        })
+
+        .directive('selectMaxPeople', function(OPTIONS_MAX_PEOPLE) {
+            return {
+                restrict: 'E',
+                replace: true,
+                template: '<select ng-model="model" ng-options="maxPeople for maxPeople in maxPeopleRange"></select>',
+                scope: {
+                    model: '=useModel'
+                },
+                controller: function($scope, $element, $attrs) {
+                    var i;
+                    $scope.maxPeopleRange = [];
+
+                /* Initialization START */
+
+                    $scope.model = $scope.model || 0;
+
+                    for(i = 0; i <= OPTIONS_MAX_PEOPLE; i++){
+                        $scope.maxPeopleRange.push(i)
+                    }
+
+                /* Initialization END */
                 }
             };
         })

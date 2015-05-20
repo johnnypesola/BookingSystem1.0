@@ -51,8 +51,7 @@
 
                 <div ng-show="furnituring.Selected">
                     Max
-                    <select ng-model="furnituring.MaxPeople" ng-options="maxPeople for maxPeople in maxPeopleRange">
-                    </select>
+                    <select-max-people use-model="furnituring.MaxPeople"></select-max-people>
                     pers.
                 </div>
             </label>
