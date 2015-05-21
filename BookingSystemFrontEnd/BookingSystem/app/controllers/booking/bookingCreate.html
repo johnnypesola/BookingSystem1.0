@@ -33,13 +33,13 @@
         <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name">
 
         <label>Bokningstyp
-            <span ng-show="bookingForm.name.$error.required">Var god ange</span>
+            <span ng-show="bookingForm.name.$error.required" class="green">Var god ange</span>
             <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
         <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name" required>
 
         <label>Antal personer (st)
-            <span ng-show="bookingForm.NumberOfPeople.$error.required">Var god ange</span>
+            <span ng-show="bookingForm.NumberOfPeople.$error.required" class="green">Var god ange</span>
             <span ng-show="bookingForm.NumberOfPeople.$error.number">Inget giltigt antal</span>
             <span ng-show="bookingForm.NumberOfPeople.$error.max">Får vara max {{Int16MaxValue}}</span>
             <span ng-show="bookingForm.NumberOfPeople.$error.min">Får vara minst 0</span>

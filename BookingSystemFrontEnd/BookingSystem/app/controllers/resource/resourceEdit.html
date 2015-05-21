@@ -11,13 +11,13 @@
 
     <form name="resourceForm">
         <label>Namn
-            <span ng-show="resourceForm.name.$error.required">Var god ange</span>
+            <span ng-show="resourceForm.name.$error.required" class="green">Var god ange</span>
             <span ng-show="resourceForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
         <input type="text" name="name" ng-pattern="regExp.textField" ng-model="resource.Name" maxlength="50" required>
 
         <label>Antal
-            <span ng-show="resourceForm.count.$error.required">Var god ange</span>
+            <span ng-show="resourceForm.count.$error.required" class="green">Var god ange</span>
             <span ng-show="resourceForm.count.$error.number">Inget giltigt värde</span>
             <span ng-show="resourceForm.count.$error.max">Får vara max {{Int16MaxValue}}</span>
             <span ng-show="resourceForm.count.$error.min">Får vara minst 0</span>
@@ -25,7 +25,7 @@
         <input type="number" min="0" max="{{Int16MaxValue}}" name="count" ng-model="resource.Count" required>
 
         <label>Antal under helgdagar
-            <span ng-show="resourceForm.weekEndCount.$error.required">Var god ange</span>
+            <span ng-show="resourceForm.weekEndCount.$error.required" class="green">Var god ange</span>
             <span ng-show="resourceForm.weekEndCount.$error.number">Inget giltigt värde</span>
             <span ng-show="resourceForm.weekEndCount.$error.max">Får vara max {{Int16MaxValue}}</span>
             <span ng-show="resourceForm.weekEndCount.$error.min">Får vara minst 0</span>
@@ -33,7 +33,7 @@
         <input type="number" min="0" max="{{Int16MaxValue}}" name="weekEndCount" ng-model="resource.WeekEndCount" required>
 
         <label>Bokningspris per timme (kr)
-            <span ng-show="resourceForm.bookingPricePerHour.$error.required">Var god ange</span>
+            <span ng-show="resourceForm.bookingPricePerHour.$error.required" class="green">Var god ange</span>
             <span ng-show="resourceForm.bookingPricePerHour.$error.number">Inget giltigt värde</span>
             <span ng-show="resourceForm.bookingPricePerHour.$error.max">Får vara max {{Int32MaxValue}}</span>
             <span ng-show="resourceForm.bookingPricePerHour.$error.min">Får vara minst 0</span>

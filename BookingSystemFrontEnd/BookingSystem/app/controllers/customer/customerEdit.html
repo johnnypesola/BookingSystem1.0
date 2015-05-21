@@ -13,38 +13,38 @@
         <label>Kundnummer</label>
         <input type="number" name="customerId" ng-pattern="regExp.textField" ng-model="customer.CustomerId" disabled="disabled">
         <label>Namn
-            <span ng-show="customerForm.name.$error.required">Var god ange</span>
+            <span ng-show="customerForm.name.$error.required" class="green">Var god ange</span>
             <span ng-show="customerForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
         <input type="text" name="name" ng-pattern="regExp.textField" ng-model="customer.Name" maxlength="50" required>
 
         <label>Adress
-            <span ng-show="customerForm.address.$error.required">Var god ange</span>
+            <span ng-show="customerForm.address.$error.required" class="green">Var god ange</span>
             <span ng-show="customerForm.address.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
         <input type="text" name="address" ng-pattern="regExp.textField" ng-model="customer.Address" maxlength="40" required>
 
         <label>Postnummer
-            <span ng-show="customerForm.postnumber.$error.required">Var god ange</span>
+            <span ng-show="customerForm.postnumber.$error.required" class="green">Var god ange</span>
             <span ng-show="customerForm.postnumber.$error.pattern">Skriv postnummer i följande format: 123 45</span>
         </label>
         <input type="text" name="postnumber" ng-pattern="regExp.postNumber" ng-model="customer.PostNumber" maxlength="6" required>
 
         <label>Ort
-            <span ng-show="customerForm.city.$error.required">Var god ange</span>
+            <span ng-show="customerForm.city.$error.required" class="green">Var god ange</span>
             <span ng-show="customerForm.city.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
         <input type="text" class="uppercase" name="city" ng-pattern="regExp.textField" ng-model="customer.City" maxlength="30" required>
 
         <label>E-postadress
-            <span ng-show="customerForm.emailAddress.$error.required">Var god ange</span>
+            <span ng-show="customerForm.emailAddress.$error.required" class="green">Var god ange</span>
             <span ng-show="customerForm.emailAddress.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
             <span ng-show="customerForm.emailAddress.$error.email">Ingen giltig e-postadress</span>
         </label>
         <input type="email" name="emailAddress" ng-pattern="regExp.textField" ng-model="customer.EmailAddress" maxlength="50" required>
 
         <label>Telefonnummer
-            <span ng-show="customerForm.phoneNumber.$error.required">Var god ange</span>
+            <span ng-show="customerForm.phoneNumber.$error.required" class="green">Var god ange</span>
             <span ng-show="customerForm.phoneNumber.$error.pattern">Får endast innehålla siffror och tecknet -</span>
         </label>
         <input type="text" name="phoneNumber" ng-pattern="regExp.phoneNumber" ng-model="customer.PhoneNumber" maxlength="20" required>
