@@ -56,6 +56,219 @@ namespace BookingSystem.Models
             return false;
         }
 
+        public void DeleteLocationBooking(int locationBookingId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup("appSchema.usp_LocationBookingDelete");
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add("@LocationBookingId", SqlDbType.Int).Value = locationBookingId;
+
+                    // Try to delete location from database.
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public IEnumerable<LocationBooking> GetLocationBookingsForPeriod(DateTime startTime, DateTime endTime)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List<LocationBooking> locationBookingsReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    locationBookingsReturnList = new List<LocationBooking>(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup("appSchema.usp_LocationBookingsForPeriod", DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add("@StartTime", SqlDbType.SmallDateTime).Value = startTime;
+                    cmd.Parameters.Add("@EndTime", SqlDbType.SmallDateTime).Value = endTime;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Booking object from database values and add to list
+                            locationBookingsReturnList.Add(new LocationBooking
+                            {
+                                LocationBookingId = reader.GetSafeInt32(reader.GetOrdinal("LocationBookingId")),
+                                BookingId = reader.GetSafeInt32(reader.GetOrdinal("BookingId")),
+                                Provisional = reader.GetBoolean(reader.GetOrdinal("Provisional")),
+                                LocationName = reader.GetSafeString(reader.GetOrdinal("LocationName")),
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
+                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal("MaxPeople")),
+                                FurnituringId = reader.GetSafeInt16(reader.GetOrdinal("FurnituringId")),
+                                FurnituringName = reader.GetSafeString(reader.GetOrdinal("FurnituringName")),
+                                StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
+                                EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking")),
+                                CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    locationBookingsReturnList.TrimExcess();
+
+                    // Return list
+                    return locationBookingsReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void InsertLocationBooking(LocationBooking locationBooking)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup("appSchema.usp_BookingCreate", DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add("@BookingId", SqlDbType.Int).Value = locationBooking.BookingId;
+                    cmd.Parameters.Add("@LocationId", SqlDbType.Int).Value = locationBooking.LocationId;
+                    cmd.Parameters.Add("@FurnituringId", SqlDbType.Int).Value = locationBooking.FurnituringId;
+                    cmd.Parameters.Add("@Provisional", SqlDbType.Bit).Value = locationBooking.Provisional;
+                    cmd.Parameters.Add("@StartTime", SqlDbType.SmallDateTime).Value = locationBooking.StartTime;
+                    cmd.Parameters.Add("@EndTime", SqlDbType.SmallDateTime).Value = locationBooking.EndTime;
+                    cmd.Parameters.Add("@NumberOfPeople", SqlDbType.SmallInt).Value = locationBooking.NumberOfPeople;
+
+                    // Add out parameter for Stored procedure
+                    cmd.Parameters.Add("@InsertId", SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+
+                    // Place database insert id into booking object.
+                    locationBooking.BookingId = (int)cmd.Parameters["@InsertId"].Value;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void UpdateLocationBooking(LocationBooking locationBooking)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup("appSchema.usp_BookingUpdate", DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add("@LocationBookingId", SqlDbType.Int).Value = locationBooking.LocationBookingId;
+                    cmd.Parameters.Add("@BookingId", SqlDbType.Int).Value = locationBooking.BookingId;
+                    cmd.Parameters.Add("@LocationId", SqlDbType.Int).Value = locationBooking.LocationId;
+                    cmd.Parameters.Add("@FurnituringId", SqlDbType.Int).Value = locationBooking.FurnituringId;
+                    cmd.Parameters.Add("@Provisional", SqlDbType.Bit).Value = locationBooking.Provisional;
+                    cmd.Parameters.Add("@StartTime", SqlDbType.SmallDateTime).Value = locationBooking.StartTime;
+                    cmd.Parameters.Add("@EndTime", SqlDbType.SmallDateTime).Value = locationBooking.EndTime;
+                    cmd.Parameters.Add("@NumberOfPeople", SqlDbType.SmallInt).Value = locationBooking.NumberOfPeople;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public LocationBooking GetLocationBookingById(int locationBookingId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup("appSchema.usp_LocationBookingList", DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add("@LocationBookingId", SqlDbType.Int).Value = locationBookingId;
+
+                    // Open connection to database
+                    connection.Open();
+
+                    // Try to read response from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if there is any return data to read
+                        if (reader.Read())
+                        {
+                            // Create new Booking object from database values and return a reference
+                            return new LocationBooking
+                            {
+                                LocationBookingId = reader.GetSafeInt32(reader.GetOrdinal("LocationBookingId")),
+                                BookingId = reader.GetSafeInt32(reader.GetOrdinal("BookingId")),
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
+                                FurnituringId = reader.GetSafeInt16(reader.GetOrdinal("FurnituringId")),
+                                StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
+                                EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
+                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
+                                CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
+                            };
+                        }
+                    }
+
+                    return null;
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            } // Connection is closed here
+        }
+
         public IEnumerable<CalendarBookingDay> CheckDayBookingsForPeriod(DateTime startTime, DateTime endTime)
         {
             // Create connection object

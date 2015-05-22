@@ -93,6 +93,7 @@
     <Compile Include="Controllers\BookingController.cs" />
     <Compile Include="Controllers\BookingTypeController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\LocationBookingController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\FurnituringController.cs" />
     <Compile Include="Controllers\LocationFurnituringController.cs" />
@@ -106,6 +107,7 @@
     <Compile Include="Models\BLL\BookingType.cs" />
     <Compile Include="Models\BLL\CalendarBookingDay.cs" />
     <Compile Include="Models\BLL\Customer.cs" />
+    <Compile Include="Models\BLL\LocationBooking.cs" />
     <Compile Include="Models\BLL\LocationFurnituring.cs" />
     <Compile Include="Models\BLL\Resource.cs" />
     <Compile Include="Models\BLL\Furnituring.cs" />

@@ -30,7 +30,7 @@
             that.initDateVariables = function () {
                 that.currentYear = currentDateObj.getFullYear();
                 that.currentMonth = currentDateObj.getMonth();
-                that.currentMonthName = currentDateObj.monthNamesArray[that.currentMonth];
+                that.currentMonthName = moment(currentDateObj).format('MMMM');
                 that.currentMonthNumberOfDays = new Date(that.currentYear, that.currentMonth + 1, 0).getDate();
 
                 that.currentMonthStartDateObj = new Date(that.currentYear, that.currentMonth, 1);

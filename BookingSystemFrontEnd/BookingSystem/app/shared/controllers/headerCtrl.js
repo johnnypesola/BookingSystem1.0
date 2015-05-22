@@ -34,9 +34,9 @@
                             location: "bokningstyper/lista"
                         },
                         {
-                            title: "Lokalbokningar",
+                            title: "Lokal/Plats-bokningar",
                             location: "lokalbokningar/lista"
-                        },
+                        }/*,
                         {
                             title: "Matbokningar",
                             location: "matbokningar/lista"
@@ -44,7 +44,7 @@
                         {
                             title: "Resursbokningar",
                             location: "resursbokningar/lista"
-                        }
+                        }*/
                     ]
                 },
                 {

@@ -51,7 +51,7 @@
                     return 'Måltid';
                 }
                 if(text === 'Location'){
-                    return 'Plats';
+                    return 'Lokal/Plats';
                 }
 
                 return text;
