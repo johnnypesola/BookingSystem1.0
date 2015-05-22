@@ -26,10 +26,10 @@
 
             that.currentYear = that.currentDateObj.getFullYear();
             that.currentMonth = that.currentDateObj.getMonth();
-            that.currentMonthName = that.currentDateObj.monthNamesArray[that.currentMonth];
+            that.currentMonthName = moment(that.currentDateObj).format('MMMM');
             that.currentMonthDay = that.currentDateObj.getDate();
-            that.currentMonthDayName = that.currentDateObj.dayNamesArray[that.currentMonthDay];
-            that.currentMonthNumberOfDays = new Date(that.currentYear, that.currentMonth + 1, 0).getDate();
+            that.currentMonthDayName = moment(that.currentDateObj).format('MMMM');
+            that.currentMonthNumberOfDays = moment(that.currentDateObj).daysInMonth();
 
             that.currentMonthStartDateObj = new Date(that.currentYear, that.currentMonth, 1);
             that.currentMonthEndDateObj = new Date(that.currentYear, that.currentMonth, that.currentMonthNumberOfDays);
@@ -49,9 +49,10 @@
         that.dayHasBookings = function(dayNumber) {
 
             // Loop through bookings for month
-            return  that.bookingsForMonthArray.some(function(element){
-                var _startDay = element.StartTime.getDate(),
-                    _endDay = element.EndTime.getDate();
+            return that.bookingsForMonthArray.some(function(element){
+
+                var _startDay = element.StartTime.date(),
+                    _endDay = element.EndTime.date();
 
                 // Check if days overlap
                 return (

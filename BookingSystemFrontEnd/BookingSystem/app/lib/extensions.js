@@ -36,27 +36,14 @@ Date.prototype.convertDateStringsToDates = function (input) {
         }
 
         // Variable  init
-        var match,
-            that = this;
+        var that = this;
             value = input[key];
 
         // Check for string properties which look like dates.
-        if (typeof value === "string" && (match = value.match(regexIso8601))) {
+        if (typeof value === "string" && (value.match(regexIso8601))) {
 
-            // Create new date object from regexp matches.
-            tmpDateObj = new Date(match[1], match[2] - 1, (+match[3]) + 1, match[4], match[5], match[6]);
-
-            // Need to to this in order to avoid timezone difference
-            input[key] = new Date(
-                tmpDateObj.getUTCFullYear(),
-                tmpDateObj.getUTCMonth(),
-                tmpDateObj.getUTCDate(),
-                tmpDateObj.getUTCHours(),
-                tmpDateObj.getUTCMinutes(),
-                tmpDateObj.getUTCSeconds()
-            );
-
-            console.log(input[key]);
+            // Use Moment lib to convert date string to date object
+            input[key] = moment(value);
 
         } else if (typeof value === "object") {
             // Recurse into object
@@ -64,10 +51,6 @@ Date.prototype.convertDateStringsToDates = function (input) {
         }
     }
 };
-
-// Month names
-Date.prototype.monthNamesArray = ["Januari", "Februari", "Mars", "April", "Maj", "Juni",
-    "Juli", "Augusti", "September", "Oktober", "November", "December"];
 
 // Day names
 Date.prototype.dayNamesArray = ["Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag", "Lördag", "Söndag"];

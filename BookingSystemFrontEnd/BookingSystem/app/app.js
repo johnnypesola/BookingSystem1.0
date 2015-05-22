@@ -177,7 +177,10 @@
                 longitude: 15.806483030319214
             },
             zoom: 1
-        }
+        };
+
+        // Set Moment date lib locale
+        moment.locale('sv');
     });
 
 
