@@ -118,6 +118,12 @@
             $location.path(objectType + "/lista");
         };
 
+        that.initVariables = function(){
+            $scope.bookingType = {};
+            $scope.bookingType.MinutesMarginBeforeBooking = 0;
+            $scope.bookingType.MinutesMarginAfterBooking = 0;
+        };
+
         /* Private methods END */
 
         /* Public methods START */
@@ -135,7 +141,7 @@
                 {
                     BookingTypeId: 0,
                     Name: $scope.bookingType.Name,
-                    HasLocation: parseInt($scope.bookingType.HasLocation,10),
+                    HasLocation: !!parseInt($scope.bookingType.HasLocation,10),
                     MinutesMarginBeforeBooking: $scope.bookingType.MinutesMarginBeforeBooking,
                     MinutesMarginAfterBooking: $scope.bookingType.MinutesMarginAfterBooking
                 }
@@ -179,6 +185,8 @@
 
         /* Initialization START */
 
+            that.initVariables();
+
         /* Initialization END */
     })
 
@@ -215,7 +223,7 @@
                     {
                         BookingTypeId: $routeParams.bookingTypeId,
                         Name: $scope.bookingType.Name,
-                        HasLocation: parseInt($scope.bookingType.HasLocation,10),
+                        HasLocation: !!parseInt($scope.bookingType.HasLocation,10),
                         MinutesMarginBeforeBooking: $scope.bookingType.MinutesMarginBeforeBooking,
                         MinutesMarginAfterBooking: $scope.bookingType.MinutesMarginAfterBooking
                     }

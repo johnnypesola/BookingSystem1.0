@@ -182,7 +182,7 @@ namespace BookingSystem.Controllers
             }
 
             // Respond that the booking was created and redirect
-            return CreatedAtRoute("DefaultApi", new { id = booking.BookingId }, booking);
+            return Ok(booking);  //CreatedAtRoute("DefaultApi", new { id = booking.BookingId }, booking);
 
         }
 

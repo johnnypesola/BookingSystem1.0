@@ -460,7 +460,7 @@
                     }
                 );
 
-                // Save new furniturings for location
+                // After previous furniturings were deleted. Save new furniturings for location
                 locationFurnituringResource.$promise.finally(function() {
 
                     // Filter out furniturings to save

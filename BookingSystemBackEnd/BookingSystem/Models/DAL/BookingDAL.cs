@@ -355,7 +355,6 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add("@CreatedByUserId", SqlDbType.Int).Value = booking.CreatedByUserId;
                     cmd.Parameters.Add("@ModifiedByUserId", SqlDbType.Int).Value = booking.ModifiedByUserId;
                     cmd.Parameters.Add("@ResponsibleUserId", SqlDbType.Int).Value = booking.ResponsibleUserId;
-                    cmd.Parameters.Add("@PayMethodId", SqlDbType.Int).Value = booking.PayMethodId;
                     
                     // Add out parameter for Stored procedure
                     cmd.Parameters.Add("@InsertId", SqlDbType.Int).Direction = ParameterDirection.Output;

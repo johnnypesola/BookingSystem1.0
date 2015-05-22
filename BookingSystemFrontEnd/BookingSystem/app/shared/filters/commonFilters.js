@@ -26,7 +26,7 @@
 
         .filter('boolean', function() {
             return function(text) {
-                return (text === 'true' ? 'Ja' : 'Nej');
+                return (text === true ? 'Ja' : 'Nej');
             }
         })
 

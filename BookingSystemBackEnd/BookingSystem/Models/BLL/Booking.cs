@@ -17,12 +17,11 @@ namespace BookingSystem.Models
         public string Name { get; set; }
 
         [Required(ErrorMessage = "BookingTypeId is required.")]
-        [Range(0, int.MaxValue, ErrorMessage = "BookingTypeId is out of range.")]
+        [Range(0, Int16.MaxValue, ErrorMessage = "BookingTypeId is out of range.")]
         public int BookingTypeId { get; set; }
 
-        [Required(ErrorMessage = "CustomerId is required.")]
         [Range(0, int.MaxValue, ErrorMessage = "CustomerId is out of range.")]
-        public int CustomerId { get; set; }
+        public int? CustomerId { get; set; }
 
         [Required(ErrorMessage = "Provisional is required.")]
         public bool Provisional { get; set; }
@@ -39,13 +38,13 @@ namespace BookingSystem.Models
         public string Notes { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "CreatedByUserId is out of range.")]
-        public int CreatedByUserId { get; set; }
+        public int? CreatedByUserId { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "ModifiedByUserId is out of range.")]
-        public int ModifiedByUserId { get; set; }
+        public int? ModifiedByUserId { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "ResponsibleUserId is out of range.")]
-        public int ResponsibleUserId { get; set; }
+        public int? ResponsibleUserId { get; set; }
 
         // Extra datafields retrieved from database/stored procedure
         [StringLength(50, ErrorMessage = "CustomerName must not exceed 50 chars.")]

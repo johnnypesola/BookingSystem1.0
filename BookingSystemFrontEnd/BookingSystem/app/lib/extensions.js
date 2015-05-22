@@ -24,7 +24,8 @@ Date.prototype.BookingSystemGetSmallDateTime = function () {
 Date.prototype.convertDateStringsToDates = function (input) {
 
     // Regex string
-    var regexIso8601 = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d$/;
+    //var regexIso8601 = /\d{4}-[01]\d-[0-3]\dT[0-2]\d:[0-5]\d:[0-5]\d$/;
+    var regexIso8601 = /(\d{4})-([01]\d)-([0-3]\d)T([0-2]\d):([0-5]\d):([0-5]\d)$/;
 
     // Ignore things that aren't objects.
     if (typeof input !== "object") return input;
@@ -42,21 +43,21 @@ Date.prototype.convertDateStringsToDates = function (input) {
         // Check for string properties which look like dates.
         if (typeof value === "string" && (match = value.match(regexIso8601))) {
 
-            var milliseconds = Date.parse(match[0]);
-            if (!isNaN(milliseconds)) {
+            // Create new date object from regexp matches.
+            tmpDateObj = new Date(match[1], match[2] - 1, (+match[3]) + 1, match[4], match[5], match[6]);
 
-                tmpDateObj = new Date(milliseconds);
+            // Need to to this in order to avoid timezone difference
+            input[key] = new Date(
+                tmpDateObj.getUTCFullYear(),
+                tmpDateObj.getUTCMonth(),
+                tmpDateObj.getUTCDate(),
+                tmpDateObj.getUTCHours(),
+                tmpDateObj.getUTCMinutes(),
+                tmpDateObj.getUTCSeconds()
+            );
 
-                // Need to to this in order to avoid timezone difference
-                input[key] = new Date(
-                    tmpDateObj.getUTCFullYear(),
-                    tmpDateObj.getUTCMonth(),
-                    tmpDateObj.getUTCDate(),
-                    tmpDateObj.getUTCHours(),
-                    tmpDateObj.getUTCMinutes(),
-                    tmpDateObj.getUTCSeconds()
-                );
-            }
+            console.log(input[key]);
+
         } else if (typeof value === "object") {
             // Recurse into object
             that.convertDateStringsToDates(value);

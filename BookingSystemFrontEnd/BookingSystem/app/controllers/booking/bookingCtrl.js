@@ -100,7 +100,7 @@
             /* Initialization END */
     })
 
-    .controller('BookingCreateCtrl', function($scope, Booking, $rootScope, Customer, $location){
+    .controller('BookingCreateCtrl', function($scope, Booking, $rootScope, Customer, BookingType, $location){
         var that = this;
         var currentDateObj;
             $scope.discountRange = [];
@@ -120,14 +120,31 @@
                 $location.path(objectType + "/lista");
             };
 
-            that.initDateVariables = function () {
-                that.currentYear = currentDateObj.getFullYear();
-                that.currentMonth = currentDateObj.getMonth();
-                that.currentMonthName = currentDateObj.monthNamesArray[that.currentMonth];
-                that.currentMonthNumberOfDays = new Date(that.currentYear, that.currentMonth + 1, 0).getDate();
+            that.getOtherDisplayData = function (){
+                // Get customers
+                $scope.customers = Customer.query();
 
-                that.currentMonthStartDateObj = new Date(that.currentYear, that.currentMonth, 1);
-                that.currentMonthEndDateObj = new Date(that.currentYear, that.currentMonth, that.currentMonthNumberOfDays);
+                // After customers have been fetched
+                $scope.customers.$promise.then(function(){
+
+                    // Get booking types
+                    $scope.bookingTypes = BookingType.query();
+
+                    $scope.bookingTypes.$promise.catch(function(){
+                        $rootScope.FlashMessage = {
+                            type: 'error',
+                            message: 'Bokningstyper kunde inte hämtas.'
+                        };
+                    });
+                });
+
+                // In case locations furniturings cannot be fetched, display an error to user.
+                $scope.customers.$promise.catch(function(){
+                    $rootScope.FlashMessage = {
+                        type: 'error',
+                        message: 'Kunder kunde inte hämtas.'
+                    };
+                });
             };
 
         /* Private methods END */
@@ -138,23 +155,64 @@
                 that.redirectToListPage();
             };
 
+            // Save bookingType
+            $scope.save = function(){
+
+                // Save bookingType
+                Booking.save(
+                    {
+                        BookingId: 0,
+                        Name: $scope.booking.Name,
+                        BookingTypeId: $scope.booking.BookingTypeId,
+                        CustomerId: $scope.booking.CustomerId,
+                        Provisional: !!parseInt($scope.booking.Provisional,10),
+                        NumberOfPeople: $scope.booking.NumberOfPeople,
+                        Discount: $scope.booking.Discount,
+                        Notes: $scope.booking.Notes,
+                        CreatedByUserId: 1, //Temporary value, users not implemented
+                        ModifiedByUserId: 1, //Temporary value, users not implemented
+                        ResponsibleUserId: 1 //Temporary value, users not implemented
+                    }
+                ).$promise
+
+                    // If everything went ok
+                    .then(function(response){
+
+
+                        $rootScope.FlashMessage = {
+                            type: 'success',
+                            message: 'Bokningstillfället "' + $scope.booking.Name + '" skapades med ett lyckat resultat'
+                        };
+
+                        that.redirectToListPage();
+
+                        // Something went wrong
+                    }).catch(function(response) {
+
+                        // If there there was a foreign key reference
+                        if (response.status == 409){
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Det finns redan ett bokningstillfälle som heter "' + $scope.booking.Name +
+                                '". Två bokningstillfällen kan inte heta lika.'
+                            };
+                        }
+
+                        // If there was a problem with the in-data
+                        else {
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Ett oväntat fel uppstod när bokningstillfället skulle sparas'
+                            };
+                        }
+                    });
+            };
+
         /* Initialization START */
 
-            // Get customers
-            $scope.customers = Customer.query();
+            // Get bookingtypes and customers
+            that.getOtherDisplayData();
 
-            // In case locations furniturings cannot be fetched, display an error to user.
-            $scope.customers.$promise.catch(function(){
-                $rootScope.FlashMessage = {
-                    type: 'error',
-                    message: 'Kunder kunde inte hämtas.'
-                };
-            });
-
-            // Init date to now
-            currentDateObj = new Date();
-
-            that.initDateVariables();
 
         /* Initialization END */
 

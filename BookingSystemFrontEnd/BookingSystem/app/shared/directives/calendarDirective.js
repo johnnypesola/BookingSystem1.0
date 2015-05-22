@@ -55,7 +55,7 @@
 
                 // Check if days overlap
                 return (
-                _startDay == dayNumber || _endDay == dayNumber || // Days match
+                _startDay === dayNumber || _endDay === dayNumber || // Days match
                 _startDay < dayNumber && _endDay > dayNumber // Overlaps
                 )
             });
@@ -107,8 +107,6 @@
                 }
             );
 
-
-
             // In case bookings cannot be fetched, display an error to user.
             that.bookingsForMonthArray.$promise.catch(function(){
 
@@ -120,6 +118,8 @@
 
             // Convert date strings to date objects
             that.bookingsForMonthArray.$promise.then(function(){
+
+                //console.log(that.bookingsForMonthArray);
 
                 // Execute callback
                 callback();
@@ -240,6 +240,12 @@
                 restrict: 'A',
                 replace: false,
                 scope: false,
+                link: function (scope, element, attr) {
+                    // Prevent select element on double click
+                    element.bind("mousedown", function (e) {
+                        e.preventDefault();
+                    });
+                },
                 controller: function($scope, $element, $attrs) {
 
                     if($attrs.direction === 'next') {

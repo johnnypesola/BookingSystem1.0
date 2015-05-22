@@ -53,11 +53,11 @@
                         {
                             title: "Lokaler / Platser",
                             location: "platser/lista"
-                        },
+                        },/*
                         {
                             title: "Lokalmöbleringar",
                             location: "lokalmobleringar/lista"
-                        },
+                        },*/
                         {
                             title: "Möbleringar",
                             location: "mobleringar/lista"

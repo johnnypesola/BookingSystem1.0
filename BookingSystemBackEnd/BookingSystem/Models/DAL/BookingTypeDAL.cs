@@ -246,6 +246,7 @@ namespace BookingSystem.Models
                     cmd = this.Setup("appSchema.usp_BookingTypeUpdate", DALOptions.closedConnection);
 
                     // Add in parameters for Stored procedure
+                    cmd.Parameters.Add("@BookingTypeId", SqlDbType.SmallInt).Value = BookingType.BookingTypeId;
                     cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = BookingType.Name;
                     cmd.Parameters.Add("@HasLocation", SqlDbType.Bit).Value = BookingType.HasLocation;
                     cmd.Parameters.Add("@MinutesMarginBeforeBooking", SqlDbType.SmallInt).Value = BookingType.MinutesMarginBeforeBooking;

@@ -22,6 +22,10 @@
             </label>
         </div>
 
+        <label>Bokningstyp</label>
+        <select name="customer" ng-init="booking.BookingTypeId = 0" ng-model="booking.BookingTypeId" ng-options="bookingType.BookingTypeId as bookingType.Name for bookingType in bookingTypes">
+        </select>
+
         <label>Kund</label>
         <select name="customer" ng-model="booking.CustomerId" ng-options="customer.CustomerId as customer.Name for customer in customers">
             <option value="">(Ingen)</option>
@@ -31,12 +35,6 @@
             <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
         <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name">
-
-        <label>Bokningstyp
-            <span ng-show="bookingForm.name.$error.required" class="green">Var god ange</span>
-            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
-        </label>
-        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name" required>
 
         <label>Antal personer (st)
             <span ng-show="bookingForm.NumberOfPeople.$error.required" class="green">Var god ange</span>
