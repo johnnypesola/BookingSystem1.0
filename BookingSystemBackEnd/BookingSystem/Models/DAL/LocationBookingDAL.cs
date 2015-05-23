@@ -119,8 +119,8 @@ namespace BookingSystem.Models
                                 Provisional = reader.GetBoolean(reader.GetOrdinal("Provisional")),
                                 LocationName = reader.GetSafeString(reader.GetOrdinal("LocationName")),
                                 LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
-                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
-                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal("MaxPeople")),
+                                NumberOfPeople = reader.GetSafeInt32(reader.GetOrdinal("NumberOfPeople")),
+                                MaxPeople = reader.GetSafeInt32(reader.GetOrdinal("MaxPeople")),
                                 FurnituringId = reader.GetSafeInt16(reader.GetOrdinal("FurnituringId")),
                                 FurnituringName = reader.GetSafeString(reader.GetOrdinal("FurnituringName")),
                                 StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
@@ -220,6 +220,56 @@ namespace BookingSystem.Models
             }
         }
 
+        public IEnumerable<LocationBooking> GetLocationBookings()
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List<LocationBooking> locationBookingsReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    locationBookingsReturnList = new List<LocationBooking>(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup("appSchema.usp_LocationBookingList");
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Location object from database values and add to list
+                            locationBookingsReturnList.Add(new LocationBooking
+                            {
+                                LocationBookingId = reader.GetSafeInt32(reader.GetOrdinal("LocationBookingId")),
+                                BookingId = reader.GetSafeInt32(reader.GetOrdinal("BookingId")),
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
+                                FurnituringId = reader.GetSafeInt16(reader.GetOrdinal("FurnituringId")),
+                                StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
+                                EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
+                                NumberOfPeople = reader.GetSafeInt32(reader.GetOrdinal("NumberOfPeople")),
+                                CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    locationBookingsReturnList.TrimExcess();
+
+                    // Return list
+                    return locationBookingsReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
         public LocationBooking GetLocationBookingById(int locationBookingId)
         {
             // Create connection object
@@ -253,7 +303,7 @@ namespace BookingSystem.Models
                                 FurnituringId = reader.GetSafeInt16(reader.GetOrdinal("FurnituringId")),
                                 StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
                                 EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
-                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
+                                NumberOfPeople = reader.GetSafeInt32(reader.GetOrdinal("NumberOfPeople")),
                                 CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
                             };
                         }
@@ -267,65 +317,6 @@ namespace BookingSystem.Models
                     throw new ApplicationException(DAL_ERROR_MSG);
                 }
             } // Connection is closed here
-        }
-
-        public IEnumerable<CalendarBookingDay> CheckDayBookingsForPeriod(DateTime startTime, DateTime endTime)
-        {
-            // Create connection object
-            using (this.CreateConnection())
-            {
-                try
-                {
-                    // Declare List of objects
-                    List<CalendarBookingDay> calendarBookingDayReturnList;
-                    SqlCommand cmd;
-
-                    // Create list object
-                    calendarBookingDayReturnList = new List<CalendarBookingDay>(100);
-
-                    // Connect to database and execute given stored procedure
-                    cmd = this.Setup("appSchema.usp_BookingCheckDays", DALOptions.closedConnection);
-
-                    // Add parameters for Stored procedure
-                    cmd.Parameters.Add("@StartTime", SqlDbType.SmallDateTime).Value = startTime;
-                    cmd.Parameters.Add("@EndTime", SqlDbType.SmallDateTime).Value = endTime;
-
-
-                    // Open DB connection
-                    connection.Open();
-
-                    // Get all data from stored procedure
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        // Get column indexes from known column names. Does not matter if columns change order.
-                        int StarTimeIndex = reader.GetOrdinal("StartTime");
-                        int EndTimeIndex = reader.GetOrdinal("EndTime");
-
-                        // Get all data rows
-                        while (reader.Read())
-                        {
-                            calendarBookingDayReturnList.Add(
-                                new CalendarBookingDay
-                                {
-                                    // Create new Booking object from database values and add to list
-                                    StartTime = reader.GetSafeDateTime(StarTimeIndex),
-                                    EndTime = reader.GetSafeDateTime(EndTimeIndex)
-                                }
-                            );
-                        }
-                    }
-
-                    // Remove unused list rows, free memory.
-                    calendarBookingDayReturnList.TrimExcess();
-
-                    // Return list
-                    return calendarBookingDayReturnList;
-                }
-                catch
-                {
-                    throw new ApplicationException(DAL_ERROR_MSG);
-                }
-            }
         }
     }
 }

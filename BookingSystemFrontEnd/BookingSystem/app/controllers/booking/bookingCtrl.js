@@ -44,8 +44,7 @@
                 that.bookings = Booking.queryMoreForPeriod(
                     {
                         fromDate: that.currentMonthStartDateObj.BookingSystemGetYearsMonthsDays(),
-                        toDate: that.currentMonthEndDateObj.BookingSystemGetYearsMonthsDays(),
-                        type: 'all'
+                        toDate: that.currentMonthEndDateObj.BookingSystemGetYearsMonthsDays()
                     });
 
                 // In case bookings cannot be fetched, display an error to user.
@@ -103,12 +102,7 @@
     .controller('BookingCreateCtrl', function($scope, Booking, $rootScope, Customer, BookingType, $location){
         var that = this;
         var currentDateObj;
-            $scope.discountRange = [];
 
-            // Init discount range
-            for(i = 0; i <= 100; i++){
-                $scope.discountRange.push(i);
-            }
         /* Private methods START */
 
             that.redirectToListPage = function(){

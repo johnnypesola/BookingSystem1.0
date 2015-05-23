@@ -334,9 +334,7 @@
                                 that.redirectToListPage();
 
                             })
-                        }).catch(function(something){
-
-                            console.log(something);
+                        }).catch(function(){
 
                             $rootScope.FlashMessage = {
                                 type: 'error',

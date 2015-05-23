@@ -11,6 +11,7 @@ namespace BookingSystem.Models
 
         // Fields
         private BookingDAL _bookingDAL;
+        private SharedDAL _sharedDAL;
 
         // Properties
         private BookingDAL BookingDAL
@@ -18,6 +19,13 @@ namespace BookingSystem.Models
             get
             {
                 return _bookingDAL ?? (_bookingDAL = new BookingDAL());
+            }
+        }
+        private SharedDAL SharedDAL
+        {
+            get
+            {
+                return _sharedDAL ?? (_sharedDAL = new SharedDAL());
             }
         }
 
@@ -68,9 +76,9 @@ namespace BookingSystem.Models
             return BookingDAL.GetBookingsForPeriod(startTime, endTime).AsQueryable();
         }
 
-        public IEnumerable<CalendarBookingDay> CheckDaysForPeriod(DateTime startTime, DateTime endTime, String type)
+        public IEnumerable<CalendarBookingDay> CheckDaysForPeriod(DateTime startTime, DateTime endTime)
         {
-            return BookingDAL.CheckDayBookingsForPeriod(startTime, endTime, type);
+            return SharedDAL.CheckDayBookingsForPeriod(startTime, endTime, "all");
         }
 
         public IQueryable<Booking> GetPageWise(string sortColumns, int maximumRows, int startRowIndex)

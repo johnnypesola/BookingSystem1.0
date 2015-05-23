@@ -15,6 +15,7 @@
         'bookingSystem.bookingType',
         'bookingSystem.furnituring',
         'bookingSystem.location',
+        'bookingSystem.locationBooking',
         'bookingSystem.resource',
         'bookingSystem.customer',
         'bookingSystem.commonDirectives'
@@ -106,6 +107,23 @@
             }).
             when('/platser/karta', {
                 templateUrl: 'controllers/location/locationMap.html'
+            }).
+
+            // LocationBookings
+            when('/lokalbokningar/visa/:locationBookingId', {
+                templateUrl: 'controllers/location-booking/locationBookingShow.html'
+            }).
+            when('/lokalbokningar/lista', {
+                templateUrl: 'controllers/location-booking/locationBookingList.html'
+            }).
+            when('/lokalbokningar/radera/:locationBookingId', {
+                templateUrl: 'controllers/location-booking/locationBookingDelete.html'
+            }).
+            when('/lokalbokningar/redigera/:locationBookingId', {
+                templateUrl: 'controllers/location-booking/locationBookingEdit.html'
+            }).
+            when('/lokalbokningar/skapa', {
+                templateUrl: 'controllers/location-booking/locationBookingCreate.html'
             }).
 
             // Resources

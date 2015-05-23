@@ -44,7 +44,6 @@ namespace BookingSystem.Models
 
             // Delete Location
             LocationDAL.DeleteLocation(LocationId);
-
         }
 
         public Location GetLocation(int LocationId)

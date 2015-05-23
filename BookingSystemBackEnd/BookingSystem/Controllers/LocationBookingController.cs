@@ -7,9 +7,11 @@ using System.Web.Http;
 using BookingSystem.Models;
 using System.Web.Http.Cors;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace BookingSystem.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class LocationBookingBookingController : ApiController
     {
         
@@ -57,6 +59,54 @@ namespace BookingSystem.Controllers
                 return InternalServerError();
             }
             
+        }
+
+        // Get info if there are any bookings for a period
+        [Route("api/LocationBooking/period/{fromDate:datetime}/{toDate:datetime}/{moreOrLess}")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult Get(string fromDate, string toDate, String moreOrLess)
+        {
+            DateTime startTime, endTime;
+
+            try
+            {
+                startTime = Convert.ToDateTime(fromDate);
+                endTime = Convert.ToDateTime(toDate);
+
+                // Check how much data is requested
+                if (moreOrLess == "more")
+                {
+                    // Get bookings
+                    IEnumerable<LocationBooking> bookings = locationBookingService.GetForPeriod(startTime, endTime);
+
+                    if (bookings == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(bookings);
+                }
+                else if (moreOrLess == "less")
+                {
+                    // Get bookings
+                    IEnumerable<CalendarBookingDay> bookings = locationBookingService.CheckDayBookingsForPeriod(startTime, endTime);
+
+                    if (bookings == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(bookings);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch
+            {
+                return InternalServerError();
+            }
         }
 
         // POST: api/LocationBooking

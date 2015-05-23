@@ -105,24 +105,16 @@ namespace BookingSystem.Controllers
         }
 
         // Get info if there are any bookings for a period
-        [Route("api/Booking/period/{fromDate:datetime}/{toDate:datetime}/{type}/{moreOrLess}")]
+        [Route("api/Booking/period/{fromDate:datetime}/{toDate:datetime}/{moreOrLess}")]
         [AcceptVerbs("GET")]
-        public IHttpActionResult Get(string fromDate, string toDate, string type, String moreOrLess)
+        public IHttpActionResult Get(string fromDate, string toDate, String moreOrLess)
         {
             DateTime startTime, endTime;
-            Regex typeRegex;
 
             try
             {
                 startTime = Convert.ToDateTime(fromDate);
                 endTime = Convert.ToDateTime(toDate);
-
-                // Try to validate type
-                typeRegex = new Regex(ValidationExtensions.BOOKING_TYPE_REGEXP);
-                if (!typeRegex.IsMatch(type))
-                {
-                    return NotFound();
-                }
 
                 // Check how much data is requested
                 if (moreOrLess == "more")
@@ -140,7 +132,7 @@ namespace BookingSystem.Controllers
                 else if (moreOrLess == "less")
                 {
                     // Get bookings
-                    IEnumerable<CalendarBookingDay> bookings = bookingService.CheckDaysForPeriod(startTime, endTime, type);
+                    IEnumerable<CalendarBookingDay> bookings = bookingService.CheckDaysForPeriod(startTime, endTime);
 
                     if (bookings == null)
                     {

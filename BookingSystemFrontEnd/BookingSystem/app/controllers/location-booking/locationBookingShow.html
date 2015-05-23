@@ -1,0 +1,32 @@
+<section class="content-container" ng-controller="FurnituringShowCtrl">
+    <h2>
+        Visa Möblering
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
+
+    <div class="show-container">
+
+        <h3>{{furnituring.Name}}</h3>
+
+        <table class="show-table">
+            <tr>
+                <th>Namn</th>
+                <td>{{furnituring.Name}}</td>
+            </tr>
+            <tr>
+                <th>Alternativ</th>
+                <td><div class="place-left" item-action-buttons="furnituring.FurnituringId"></div></td>
+            </tr>
+        </table>
+
+    </div>
+
+    <button ng-click="back()">Tillbaka</button>
+
+</section>
+

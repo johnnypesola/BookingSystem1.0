@@ -38,7 +38,7 @@ input[type=text], input[type=date], input[type=number], input[type=email], selec
     box-shadow:         inset 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
 }
 
-input:disabled {
+input:disabled, select:disabled {
     background: #FFFFFF !important;
     border: 1px solid #EEEEEE !important;
 
@@ -488,10 +488,10 @@ section.content-container {
 
 
 
-            section.content-container form label span {
+            section.content-container form label span, section.content-container form span.invalid {
                 line-height: 17px;
                 padding: 0 2px;
-                display: block;
+                display: inline-block;
                 float: right;
                 font-size: 12px;
                 background: #F08362;
@@ -514,7 +514,7 @@ section.content-container {
                 border-bottom: solid 5px transparent;
             }
 
-                section.content-container form label span.green {
+                section.content-container form label span.green, section.content-container form span.green {
                     background: #5BA87A;
                 }
 
@@ -1106,11 +1106,15 @@ section.content-container {
 }
 
 .float-right {
-    float: right;
+    float: right !important;
 }
 
 .float-left {
-    float: left;
+    float: left !important;
+}
+
+.no-float {
+    float: none !important;
 }
 
 .uppercase {

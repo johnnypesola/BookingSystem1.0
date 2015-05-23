@@ -20,7 +20,7 @@ namespace BookingSystem
 
         IQueryable<BookingContainer> GetForPeriod(DateTime startTime, DateTime endTime);
 
-        IEnumerable<CalendarBookingDay> CheckDaysForPeriod(DateTime startTime, DateTime endTime, String type);
+        IEnumerable<CalendarBookingDay> CheckDaysForPeriod(DateTime startTime, DateTime endTime);
 
         IQueryable<Booking> GetPageWise(string sortColumns, int maximumRows, int startRowIndex);
 

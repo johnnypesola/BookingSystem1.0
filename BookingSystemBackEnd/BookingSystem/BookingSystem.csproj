@@ -124,6 +124,7 @@
     <Compile Include="Models\DAL\LocationDAL.cs" />
     <Compile Include="Models\DAL\LocationFurnituringDAL.cs" />
     <Compile Include="Models\DAL\ResourceDAL.cs" />
+    <Compile Include="Models\DAL\SharedDAL.cs" />
     <Compile Include="Models\FurnituringService.cs" />
     <Compile Include="Models\LocationBookingService.cs" />
     <Compile Include="Models\LocationFurnituringService.cs" />

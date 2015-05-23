@@ -1,0 +1,64 @@
+<section class="content-container" ng-controller="LocationBookingCreateCtrl">
+    <h2>
+        Skapa Lokal/Plats-bokning
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
+
+    <form name="locationbookingForm">
+        <label>Bokningstillfälle</label>
+        <select ng-model="locationBooking.BookingId" ng-options='booking.BookingId as booking.Name for booking in bookings'>
+            <option ng-show="" value="" >(Välj bokningstillfälle)</option>
+        </select>
+
+        <label>Startdatum
+            <span ng-show="locationbookingForm.startDate.$error.required" class="green">Var god ange</span>
+            <span ng-show="locationbookingForm.startDate.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="date" name="startDate" ng-pattern="regExp.textField" ng-model="StartDate" maxlength="50" required>
+
+        <label>Starttid
+            <span ng-show="locationbookingForm.startTime.$error.required" class="green">Var god ange</span>
+        </label>
+        <input type="time" name="startTime" ng-model="StartTime" maxlength="50" required>
+
+        <label>Slutdatum
+            <span ng-show="locationbookingForm.endDate.$error.required" class="green">Var god ange</span>
+            <span ng-show="locationbookingForm.endDate.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="date" name="endDate" ng-pattern="regExp.textField" ng-model="EndDate" maxlength="50" required>
+
+        <label>Sluttid
+            <span ng-show="locationbookingForm.endTime.$error.required" class="green">Var god ange</span>
+        </label>
+        <input type="time" name="endTime" ng-model="EndTime" maxlength="50" required>
+
+        <label>Lokal</label>
+        <select ng-change="updateFurniturings()" ng-model="locationBooking.LocationId" ng-options="location.LocationId as location.Name for location in locations">
+            <option ng-show="!furniturings.length" value="">(Välj lokal)</option>
+        </select>
+        <span class="no-float invalid bg-dark-purple" ng-show="showInfoAboutNoFurniturings">Inga möbleringar finns för vald lokal.</span>
+
+        <label>Möblering</label>
+        <select ng-disabled="!furniturings.length" ng-model="locationBooking.SelectedFurnituring" ng-options='furnituring as (furnituring.FurnituringName+ " (max " + furnituring.MaxPeople + " pers.)") for furnituring in furniturings'>
+            <option ng-show="!locationBooking.SelectedFurnituring" value="" >(Välj möblering)</option>
+        </select>
+
+
+        <label>Antal personer
+            <span ng-show="locationbookingForm.numberOfPeople.$error.required && locationBooking.SelectedFurnituring" class="green">Var god ange</span>
+            <span ng-show="locationbookingForm.numberOfPeople.$error.number">Inget giltigt antal</span>
+            <span ng-show="locationBooking.NumberOfPeople > locationBooking.SelectedFurnituring.MaxPeople">Får vara max {{locationBooking.SelectedFurnituring.MaxPeople}}</span>
+            <span ng-show="locationbookingForm.numberOfPeople.$error.min">Får vara minst 0</span>
+        </label>
+        <input type="number" min="0" max="{{locationBooking.SelectedFurnituring.MaxPeople}}" name="numberOfPeople" ng-model="locationBooking.NumberOfPeople" required ng-disabled="!locationBooking.SelectedFurnituring">
+        <div>
+            <button ng-click="save()" ng-disabled="!locationbookingForm.$valid">Skapa</button>
+            <button ng-click="abort()">Avbryt</button>
+        </div>
+    </form>
+</section>

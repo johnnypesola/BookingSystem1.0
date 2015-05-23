@@ -10,6 +10,7 @@ namespace BookingSystem.Models
     {
         // Fields
         private LocationBookingDAL _locationBookingDAL;
+        private SharedDAL _sharedDAL;
 
         // Properties
         private LocationBookingDAL LocationBookingDAL
@@ -19,10 +20,17 @@ namespace BookingSystem.Models
                 return _locationBookingDAL ?? (_locationBookingDAL = new LocationBookingDAL());
             }
         }
+        private SharedDAL SharedDAL
+        {
+            get
+            {
+                return _sharedDAL ?? (_sharedDAL = new SharedDAL());
+            }
+        }
 
         public IEnumerable<CalendarBookingDay> CheckDayBookingsForPeriod(DateTime startTime, DateTime endTime)
         {
-            return LocationBookingDAL.CheckDayBookingsForPeriod(startTime, endTime);
+            return SharedDAL.CheckDayBookingsForPeriod(startTime, endTime, "location");
         }
 
         public IQueryable<LocationBooking> GetForPeriod(DateTime startTime, DateTime endTime)

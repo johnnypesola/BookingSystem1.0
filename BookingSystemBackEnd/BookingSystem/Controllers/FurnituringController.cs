@@ -13,7 +13,6 @@ namespace BookingSystem.Controllers
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class FurnituringController : ApiController
     {
-
         // Set up Service.
         FurnituringService furnituringService = new FurnituringService();  
 

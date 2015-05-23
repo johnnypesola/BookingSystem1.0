@@ -1,36 +1,36 @@
 /**
- * Created by jopes on 2015-04-12.
+ * Created by jopes on 2015-05-22.
  */
 
 (function(){
     // Declare module
-    angular.module('bookingSystem.bookingServices',
+    angular.module('bookingSystem.locationBookingServices',
 
         // Dependencies
         [
             'ngResource'
         ])
 
-        .factory('Booking', function($resource, API_URL){
+        .factory('LocationBooking', function($resource, API_URL){
 
             return $resource(
-                API_URL + 'Booking',
+                API_URL + 'LocationBooking',
                 {},
                 {
                     // Get bookings for specified day
-                    queryDay: {
-                        url: API_URL + 'Booking/day/:date',
+                    /*queryDay: {
+                        url: API_URL + 'LocationBooking/day/:date',
                         id: '@id',
                         method: 'GET',
                         isArray: true,
                         params: {
                             date: '@date'
                         }
-                    },
+                    },*/
 
                     // Get bookings for a specified period
                     queryLessForPeriod: {
-                        url: API_URL + 'Booking/period/:fromDate/:toDate/less',
+                        url: API_URL + 'LocationBooking/period/:fromDate/:toDate/less',
                         id: '@id',
                         method: 'GET',
                         isArray: true,
@@ -41,7 +41,7 @@
                     },
                     // Get bookings for a specified period
                     queryMoreForPeriod: {
-                        url: API_URL + 'Booking/period/:fromDate/:toDate/more',
+                        url: API_URL + 'LocationBooking/period/:fromDate/:toDate/more',
                         id: '@id',
                         method: 'GET',
                         isArray: true,
@@ -52,13 +52,4 @@
                     }
                 });
         })
-
-        .factory('BookingType', function($resource, API_URL){
-
-            return $resource(
-                API_URL + 'BookingType/:bookingTypeId',
-                {furnituringId: '@bookingTypeId'}
-            );
-        })
-
 })();

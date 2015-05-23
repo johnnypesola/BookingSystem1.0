@@ -1,0 +1,50 @@
+<section class="content-container" ng-controller="LocationBookingListCtrl">
+    <h2>
+        Lista över Lokal/Plats-bokningar
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+
+    <page-header-buttons
+        show-calendar="true"
+        show-list="true"
+        show-add="true"
+        show-search="true"
+    ></page-header-buttons>
+
+    <section class="list-container">
+
+        <a change-month-button direction="prev" class="prev-month">&#8592;</a>
+        <h3>{{currentMonthName}} {{currentYear}}</h3>
+        <a change-month-button direction="next" class="next-month">&#8594;</a>
+
+        <table class="list-table">
+            <tr>
+                <th>Preliminär</th>
+                <th>Lokal</th>
+                <th>Möblering</th>
+                <th>Personer</th>
+                <th>Max antal personer</th>
+                <th>Marginal efter bokning</th>
+                <th>Bokningsvärde</th>
+                <th>Starttid</th>
+                <th>Sluttid</th>
+                <th></th>
+
+            </tr>
+            <tr ng-repeat="locationBooking in locationBookings">
+                <td>{{locationBooking.Provisional | boolean}}</td>
+                <td>{{locationBooking.LocationName}}</td>
+                <td>{{locationBooking.FurnituringName}}</td>
+                <td class="align-right">{{locationBooking.NumberOfPeople | count}}</td>
+                <td class="align-right">{{locationBooking.MaxPeople | count}}</td>
+                <td>{{locationBooking.MinutesMarginAfterBooking}}</td>
+                <td>{{locationBooking.CalculatedBookingPrice | kr}}</td>
+                <td class="date">{{locationBooking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                <td class="date">{{locationBooking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+                <td class="align-right">
+                    <div item-action-buttons="booking.BookingId"></div>
+                </td>
+            </tr>
+        </table>
+    </section>
+</section>
