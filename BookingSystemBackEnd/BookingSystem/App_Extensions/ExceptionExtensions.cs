@@ -16,6 +16,17 @@ namespace BookingSystem
             : base(message, inner){}
     }
 
+    public class DoubleBookingException : Exception
+    {
+        public DoubleBookingException(){}
+
+        public DoubleBookingException(string message)
+            : base(message) {}
+
+        public DoubleBookingException(string message, Exception inner)
+            : base(message, inner) {}
+    }
+
     public class ApprovedException : Exception
     {
         public ApprovedException() { }

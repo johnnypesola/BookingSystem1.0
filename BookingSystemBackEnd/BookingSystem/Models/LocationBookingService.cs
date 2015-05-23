@@ -47,7 +47,7 @@ namespace BookingSystem.Models
             if (locationBooking.Validate(out validationResults))
             {
                 // If a new booking should be created
-                if (locationBooking.BookingId == 0)
+                if (locationBooking.LocationBookingId == 0)
                 {
                     LocationBookingDAL.InsertLocationBooking(locationBooking);
                 }

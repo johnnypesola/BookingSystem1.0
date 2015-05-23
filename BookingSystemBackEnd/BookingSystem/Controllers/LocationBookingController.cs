@@ -125,11 +125,7 @@ namespace BookingSystem.Controllers
             {
                 locationBookingService.SaveLocationBooking(locationBooking);
             }
-            catch (DataBaseEntryNotFoundException)
-            {
-                return NotFound();
-            }
-            catch (DuplicateNameException)
+            catch (DoubleBookingException)
             {
                 return Conflict();
             }
@@ -143,7 +139,7 @@ namespace BookingSystem.Controllers
             }
 
             // Respond that the booking was created and redirect
-            return Ok(locationBooking); //CreatedAtRoute("DefaultApi", new { id = locationBooking.LocationBookingId }, locationBooking);
+            return Ok(locationBooking);
         }
 
         // DELETE: api/LocationBooking/5

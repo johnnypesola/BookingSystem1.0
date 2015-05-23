@@ -149,10 +149,10 @@
                 that.redirectToListPage();
             };
 
-            // Save bookingType
+            // Save booking
             $scope.save = function(){
 
-                // Save bookingType
+                // Save booking
                 Booking.save(
                     {
                         BookingId: 0,

@@ -149,10 +149,10 @@
     })
 
     // Create Controller
-    .controller('LocationBookingCreateCtrl', function($scope, $routeParams, $location, $rootScope, LocationBooking, LocationFurnituring, Location){
+    .controller('LocationBookingCreateCtrl', function($scope, $routeParams, $location, $rootScope, LocationBooking, LocationFurnituring, Location, BookingType, Customer, Booking, $q) {
 
             var that = this;
-            $scope.furniturings = [];
+                $scope.furniturings = [];
 
         /* Private methods START */
 
@@ -174,14 +174,158 @@
                 that.redirectToListPage();
             };
 
+            that.getLocations = function(){
+
+                // Get locations
+                $scope.locations = Location.query();
+
+                $scope.locations.$promise.catch(function(){
+                    $rootScope.FlashMessage = {
+                        type: 'error',
+                        message: 'Lokaler kunde inte hämtas.'
+                    };
+                });
+
+                // Return promise
+                return $scope.locations.$promise;
+            };
+
+            that.getBookingTypes = function(){
+
+                // Get booking types
+                $scope.bookingTypes = BookingType.query();
+
+                $scope.bookingTypes.$promise.catch(function(){
+                    $rootScope.FlashMessage = {
+                        type: 'error',
+                        message: 'Bokningstyper kunde inte hämtas.'
+                    };
+                });
+
+                // Return promise
+                return $scope.bookingTypes.$promise;
+            };
+
+            that.getCustomers = function(){
+
+                // Get customers
+                $scope.customers = Customer.query();
+
+                // In case locations furniturings cannot be fetched, display an error to user.
+                $scope.customers.$promise.catch(function(){
+                    $rootScope.FlashMessage = {
+                        type: 'error',
+                        message: 'Kunder kunde inte hämtas.'
+                    };
+                });
+
+                return $scope.customers.$promise;
+            };
+
+            that.getOtherDisplayData = function (){
+
+                that.getBookingTypes()
+
+                    // If booking types were fetched
+                    .then(function(){
+
+                        that.getCustomers()
+
+                            // If customers were fetched
+                            .then(function(){
+
+                                that.getLocations();
+                            })
+                    })
+            };
+
+
+
+            // Save booking
+            that.saveBooking = function(){
+
+                var deferred = $q.defer(),
+                    promise = deferred.promise;
+
+                // Only save booking once.
+                if(typeof that.booking === 'undefined'){
+
+                    // Save booking
+                    promise = Booking.save(
+                        {
+                            BookingId: 0,
+                            Name: $scope.booking.Name,
+                            BookingTypeId: $scope.booking.BookingTypeId,
+                            CustomerId: $scope.booking.CustomerId,
+                            Provisional: !!parseInt($scope.booking.Provisional,10),
+                            NumberOfPeople: $scope.locationBooking.NumberOfPeople,
+                            Discount: 0,
+                            CreatedByUserId: 1, //Temporary value, users not implemented
+                            ModifiedByUserId: 1, //Temporary value, users not implemented
+                            ResponsibleUserId: 1 //Temporary value, users not implemented
+                        }
+                    ).$promise
+
+                        // If everything went ok
+                        .then(function(createdBooking){
+
+                            // Make created booking accessable from other metods
+                            that.booking = createdBooking;
+
+                            $rootScope.FlashMessage = {
+                                type: 'success',
+                                message: 'Bokningstillfället "' + $scope.booking.Name + '" skapades med ett lyckat resultat'
+                            };
+
+                            // Resolve promise
+                            deferred.resolve();
+
+                            // Something went wrong
+                        }).catch(function(response) {
+
+                            // If there there was a foreign key reference
+                            if (response.status == 409){
+                                $rootScope.FlashMessage = {
+                                    type: 'error',
+                                    message: 'Det finns redan ett bokningstillfälle som heter "' + $scope.booking.Name +
+                                    '". Två bokningstillfällen kan inte heta lika.'
+                                };
+                            }
+
+                            // If there was a problem with the in-data
+                            else {
+                                $rootScope.FlashMessage = {
+                                    type: 'error',
+                                    message: 'Ett oväntat fel uppstod när bokningstillfället skulle sparas'
+                                };
+                            }
+                        });
+
+                } else {
+
+
+                    // Bookings does not need to be saved. Resolve promise
+                    deferred.resolve();
+                }
+
+                // Return promise
+                return promise;
+
+            };
+
+
+
             // Save locationBooking
-            $scope.save = function(){
+            that.saveLocationBooking = function(){
+
+                var deferred = $q.defer(),
+                    promise = deferred.promise;
 
                 // Save locationBooking
                 LocationBooking.save(
                     {
+                        BookingId: that.booking.BookingId,
                         LocationBookingId: 0,
-                        BookingId: $scope.locationBooking.BookingId,
                         LocationId: $scope.locationBooking.LocationId,
                         FurnituringId: $scope.locationBooking.SelectedFurnituring.FurnituringId,
                         StartTime: moment($scope.StartDate + " " + $scope.StartTime).toDate(),
@@ -196,10 +340,11 @@
 
                         $rootScope.FlashMessage = {
                             type: 'success',
-                            message: 'Möbleringen "' + $scope.locationBooking.Name + '" skapades med ett lyckat resultat'
+                            message: 'Lokal/plats-bokningen skapades med ett lyckat resultat'
                         };
 
-                        that.redirectToListPage();
+                        // Resolve promise
+                        deferred.resolve();
 
                     // Something went wrong
                     }).catch(function(response) {
@@ -208,8 +353,7 @@
                         if (response.status == 409){
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message: 'Det finns redan en lokal/plats-bokning som heter "' + $scope.locationBooking.Name +
-                                '". Två lokal/plats-bokningar kan inte heta lika.'
+                                message: 'Lokalen är tyvärr redan bokad under vald tidsram.'
                             };
                         }
 
@@ -221,6 +365,27 @@
                             };
                         }
                     });
+
+                return promise;
+            };
+
+            // Save booking and location booking
+            $scope.save = function(){
+
+                that.saveBooking()
+
+                // If booking was saved
+                .then(function(){
+
+                        that.saveLocationBooking()
+
+                            // If location booking was saved
+                            .then(function(){
+
+                                that.redirectToListPage();
+
+                            });
+                    })
             };
 
             $scope.updateFurniturings = function() {
@@ -256,8 +421,8 @@
 
         /* Initialization START */
 
-            // Get all available locations
-            $scope.locations = Location.query();
+            // Get other data used in form
+            that.getOtherDisplayData();
 
         /* Initialization END */
     })

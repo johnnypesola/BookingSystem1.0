@@ -154,13 +154,12 @@ namespace BookingSystem.Models
                     SqlCommand cmd;
 
                     // Connect to database
-                    cmd = this.Setup("appSchema.usp_BookingCreate", DALOptions.closedConnection);
+                    cmd = this.Setup("appSchema.usp_LocationBookingCreate", DALOptions.closedConnection);
 
                     // Add in parameters for Stored procedure
                     cmd.Parameters.Add("@BookingId", SqlDbType.Int).Value = locationBooking.BookingId;
                     cmd.Parameters.Add("@LocationId", SqlDbType.Int).Value = locationBooking.LocationId;
                     cmd.Parameters.Add("@FurnituringId", SqlDbType.Int).Value = locationBooking.FurnituringId;
-                    cmd.Parameters.Add("@Provisional", SqlDbType.Bit).Value = locationBooking.Provisional;
                     cmd.Parameters.Add("@StartTime", SqlDbType.SmallDateTime).Value = locationBooking.StartTime;
                     cmd.Parameters.Add("@EndTime", SqlDbType.SmallDateTime).Value = locationBooking.EndTime;
                     cmd.Parameters.Add("@NumberOfPeople", SqlDbType.SmallInt).Value = locationBooking.NumberOfPeople;
@@ -177,8 +176,13 @@ namespace BookingSystem.Models
                     // Place database insert id into booking object.
                     locationBooking.BookingId = (int)cmd.Parameters["@InsertId"].Value;
                 }
-                catch
+                catch (Exception exception)
                 {
+                    if (exception.Message == "The location is already booked at the given time.")
+                    {
+                        throw new DoubleBookingException(exception.Message);
+                    }
+                    // Throw exception
                     throw new ApplicationException(DAL_ERROR_MSG);
                 }
             }
