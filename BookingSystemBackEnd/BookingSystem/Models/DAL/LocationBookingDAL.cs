@@ -119,7 +119,7 @@ namespace BookingSystem.Models
                                 Provisional = reader.GetBoolean(reader.GetOrdinal("Provisional")),
                                 LocationName = reader.GetSafeString(reader.GetOrdinal("LocationName")),
                                 LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
-                                NumberOfPeople = reader.GetSafeInt32(reader.GetOrdinal("NumberOfPeople")),
+                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
                                 MaxPeople = reader.GetSafeInt32(reader.GetOrdinal("MaxPeople")),
                                 FurnituringId = reader.GetSafeInt16(reader.GetOrdinal("FurnituringId")),
                                 FurnituringName = reader.GetSafeString(reader.GetOrdinal("FurnituringName")),
@@ -224,7 +224,7 @@ namespace BookingSystem.Models
             }
         }
 
-        public IEnumerable<LocationBooking> GetLocationBookings()
+        public IEnumerable<LocationBooking> GetLocationBookings(int? BookingId = null)
         {
             // Create connection object
             using (this.CreateConnection())
@@ -237,8 +237,16 @@ namespace BookingSystem.Models
                     // Create list object
                     locationBookingsReturnList = new List<LocationBooking>(50);
 
+
                     // Connect to database and execute given stored procedure
                     cmd = this.Setup("appSchema.usp_LocationBookingList");
+
+                    // Get locations for BookingId if defined
+                    if (BookingId != null)
+                    {
+                        // Add parameter for Stored procedure
+                        cmd.Parameters.Add("@BookingId", SqlDbType.Int).Value = BookingId;
+                    }
 
                     // Get all data from stored procedure
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -255,8 +263,11 @@ namespace BookingSystem.Models
                                 FurnituringId = reader.GetSafeInt16(reader.GetOrdinal("FurnituringId")),
                                 StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
                                 EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
-                                NumberOfPeople = reader.GetSafeInt32(reader.GetOrdinal("NumberOfPeople")),
+                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
                                 CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
+
+                                LocationName = reader.GetSafeString(reader.GetOrdinal("LocationName")),
+                                FurnituringName = reader.GetSafeString(reader.GetOrdinal("FurnituringName"))
                             });
                         }
                     }
@@ -307,7 +318,7 @@ namespace BookingSystem.Models
                                 FurnituringId = reader.GetSafeInt16(reader.GetOrdinal("FurnituringId")),
                                 StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
                                 EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
-                                NumberOfPeople = reader.GetSafeInt32(reader.GetOrdinal("NumberOfPeople")),
+                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
                                 CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
                             };
                         }

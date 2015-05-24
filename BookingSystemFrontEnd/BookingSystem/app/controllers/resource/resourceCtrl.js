@@ -26,23 +26,9 @@
 
         /* Private methods START */
 
-        that.redirectToListPage = function(){
-            var objectType;
-
-            objectType = $location.path().split('/')[1];
-
-            // Go back to location list
-            $location.path(objectType + "/lista");
-        };
-
         /* Private methods END */
 
         /* Public methods START */
-
-        // Abort editing
-        $scope.back = function(){
-            that.redirectToListPage();
-        };
 
         /* Public methods END */
 
@@ -109,71 +95,57 @@
 
         /* Private methods START */
 
-        that.redirectToListPage = function(){
-            var objectType;
-
-            objectType = $location.path().split('/')[1];
-
-            // Go back to location list
-            $location.path(objectType + "/lista");
-        };
-
         /* Private methods END */
 
         /* Public methods START */
 
-        // Abort creating
-        $scope.abort = function(){
-            that.redirectToListPage();
-        };
-
-        // Save resource
-        $scope.save = function(){
-
             // Save resource
-            Resource.save(
-                {
-                    ResourceId: 0,
-                    Name: $scope.resource.Name,
-                    Count: $scope.resource.Count,
-                    BookingPricePerHour: $scope.resource.BookingPricePerHour,
-                    MinutesMarginAfterBooking: $scope.resource.MinutesMarginAfterBooking,
-                    WeekEndCount: $scope.resource.WeekEndCount
-                }
-            ).$promise
+            $scope.save = function(){
 
-                // If everything went ok
-                .then(function(response){
-
-
-                    $rootScope.FlashMessage = {
-                        type: 'success',
-                        message: 'Resursen "' + $scope.resource.Name + '" skapades med ett lyckat resultat'
-                    };
-
-                    that.redirectToListPage();
-
-                // Something went wrong
-                }).catch(function(response) {
-
-                    // If there there was a foreign key reference
-                    if (response.status == 409){
-                        $rootScope.FlashMessage = {
-                            type: 'error',
-                            message: 'Det finns redan en resurs som heter "' + $scope.resource.Name +
-                            '". Två resurser kan inte heta lika.'
-                        };
+                // Save resource
+                Resource.save(
+                    {
+                        ResourceId: 0,
+                        Name: $scope.resource.Name,
+                        Count: $scope.resource.Count,
+                        BookingPricePerHour: $scope.resource.BookingPricePerHour,
+                        MinutesMarginAfterBooking: $scope.resource.MinutesMarginAfterBooking,
+                        WeekEndCount: $scope.resource.WeekEndCount
                     }
+                ).$promise
 
-                    // If there was a problem with the in-data
-                    else {
+                    // If everything went ok
+                    .then(function(response){
+
+
                         $rootScope.FlashMessage = {
-                            type: 'error',
-                            message: 'Ett oväntat fel uppstod när resursen skulle sparas'
+                            type: 'success',
+                            message: 'Resursen "' + $scope.resource.Name + '" skapades med ett lyckat resultat'
                         };
-                    }
-                });
-        };
+
+                        history.back();
+
+                    // Something went wrong
+                    }).catch(function(response) {
+
+                        // If there there was a foreign key reference
+                        if (response.status == 409){
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Det finns redan en resurs som heter "' + $scope.resource.Name +
+                                '". Två resurser kan inte heta lika.'
+                            };
+                        }
+
+                        // If there was a problem with the in-data
+                        else {
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Ett oväntat fel uppstod när resursen skulle sparas'
+                            };
+                        }
+                    });
+            };
 
         /* Public methods END */
 
@@ -190,23 +162,9 @@
 
         /* Private methods START */
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
         /* Private methods END */
 
         /* Public methods START */
-
-            // Abort editing
-            $scope.abort = function(){
-                that.redirectToListPage();
-            };
 
             // Save resource
             $scope.save = function(){
@@ -231,7 +189,7 @@
                             message: 'Resursen "' + $scope.resource.Name + '" sparades med ett lyckat resultat'
                         };
 
-                        that.redirectToListPage();
+                        history.back();
 
                     // Something went wrong
                     }).catch(function(response) {
@@ -260,7 +218,7 @@
                                 message: 'Resursen "' + $scope.resource.Name + '" existerar inte längre. Hann kanske någon radera den?'
                             };
 
-                            that.redirectToListPage();
+                            history.back();
                         }
                     });
             };
@@ -297,15 +255,6 @@
 
         /* Private methods START */
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
         /* Private methods END */
 
         /* Public methods START */
@@ -328,7 +277,7 @@
                             message: 'Resursen "' + $scope.resource.Name + '" raderades med ett lyckat resultat'
                         };
 
-                        that.redirectToListPage();
+                        history.back();
                     })
                     // Something went wrong
                     .catch(function(response) {
@@ -362,13 +311,8 @@
                             };
                         }
 
-                    that.redirectToListPage();
+                        history.back();
                 });
-            };
-
-            // Abort deletion
-            $scope.abort = function(){
-                that.redirectToListPage();
             };
 
         /* Public methods END */

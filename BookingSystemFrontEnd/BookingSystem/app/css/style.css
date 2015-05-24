@@ -478,6 +478,17 @@ section.content-container {
             color: #AAAAAA;
         }
 
+        section.content-container form span.info {
+            display: inline-block;
+            margin: 4px 2px 14px 2px;
+            border-radius: 4px;
+            padding: 5px 10px 5px 30px;
+            color: #FFFFFF;
+            background: url('../img/icons/page_message_icons.svg') left;
+            background-repeat: no-repeat;
+            background-position: 8px 9px;
+        }
+
         section.content-container form label {
             font-weight: normal;
             line-height: 30px;
@@ -485,8 +496,6 @@ section.content-container {
             display: block;
             margin: 0 0 2px 0;
         }
-
-
 
             section.content-container form label span, section.content-container form span.invalid {
                 line-height: 17px;
@@ -663,6 +672,7 @@ section.content-container {
         border: 1px solid #E0E0E0;
         border-right: none;
         border-collapse: collapse;
+        text-align: center;
     }
 
     section.content-container .list-table div {
@@ -744,8 +754,16 @@ section.content-container {
             display: inline-block;
         }
 
+        section.content-container a.add-to-content-button {
+            position: static !important;
+            text-align: center;
+            font-size: 34px !important;
+            line-height: 36px !important;
+        }
+
         section.content-container a.next-month,
-        section.content-container a.prev-month
+        section.content-container a.prev-month,
+        section.content-container a.add-to-content-button
         {
             font-size: 26px;
             display: inline-block;
@@ -765,7 +783,10 @@ section.content-container {
             box-shadow:         inset 0px 0px 8px 0px rgba(0, 0, 0, 0.05);
         }
 
-        section.content-container a.next-month:hover, section.content-container a.prev-month:hover {
+        section.content-container a.next-month:hover,
+        section.content-container a.prev-month:hover,
+        section.content-container a.add-to-content-button:hover
+        {
             cursor: pointer;
             background-color: #FFD77F;
         }

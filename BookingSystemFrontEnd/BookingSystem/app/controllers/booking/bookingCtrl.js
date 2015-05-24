@@ -21,6 +21,42 @@
     })
 
     // Controller
+
+    .controller('BookingShowCtrl', function($scope, $routeParams, $location, $rootScope, Booking){
+
+        var that = this;
+
+        /* Private methods START */
+
+        /* Private methods END */
+
+        /* Public methods START */
+
+        /* Public methods END */
+
+
+        /* Initialization START */
+
+        var booking = Booking.get(
+            {
+                bookingId: $routeParams.bookingId
+            }
+        );
+
+        // In case bookings cannot be fetched, display an error to user.
+        booking.$promise.catch(function(){
+
+            $rootScope.FlashMessage = {
+                type: 'error',
+                message: 'Bokningstillfället kunde inte hämtas, var god försök igen.'
+            };
+        });
+
+        $scope.booking = booking;
+
+        /* Initialization END */
+    })
+
     .controller('BookingListCtrl', function($scope, Booking, $rootScope){
             var that = this;
             var currentDateObj;
@@ -105,15 +141,6 @@
 
         /* Private methods START */
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
             that.getOtherDisplayData = function (){
                 // Get customers
                 $scope.customers = Customer.query();
@@ -145,10 +172,6 @@
 
         /* Public methods START */
 
-            $scope.abort = function(){
-                that.redirectToListPage();
-            };
-
             // Save booking
             $scope.save = function(){
 
@@ -178,7 +201,7 @@
                             message: 'Bokningstillfället "' + $scope.booking.Name + '" skapades med ett lyckat resultat'
                         };
 
-                        that.redirectToListPage();
+                        history.back();
 
                         // Something went wrong
                     }).catch(function(response) {

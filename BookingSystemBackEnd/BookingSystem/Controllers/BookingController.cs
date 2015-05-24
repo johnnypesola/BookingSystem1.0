@@ -14,11 +14,13 @@ namespace BookingSystem.Controllers
     public class BookingController : ApiController
     {
         public IBookingService bookingService;
+        public LocationBookingService locationBookingService;
 
         // Constructor
         public BookingController()
         {
             bookingService = new BookingService();
+            locationBookingService = new LocationBookingService();
         }
 
         // Constructor for testing (mocking service)
@@ -63,11 +65,20 @@ namespace BookingSystem.Controllers
         {
             try
             {
+                // Get booking
                 Booking booking = bookingService.Get(BookingId);
+
                 if (booking == null)
                 {
                     return NotFound();
                 }
+
+                // Create list to cointain location bookings
+                booking.LocationBookings = new List<LocationBooking>(50);
+
+                // Get all location bookings
+                booking.LocationBookings = locationBookingService.GetLocationBookings(booking.BookingId);
+
                 return Ok(booking);
             }
             catch
@@ -89,7 +100,7 @@ namespace BookingSystem.Controllers
                 startTime = Convert.ToDateTime(date).StartOfDay();
                 endTime = Convert.ToDateTime(date).EndOfDay();
 
-                IEnumerable<BookingContainer> bookings = bookingService.GetForPeriod(startTime, endTime);
+                IEnumerable<Booking> bookings = bookingService.GetForPeriod(startTime, endTime);
 
                 if (bookings == null)
                 {
@@ -120,11 +131,21 @@ namespace BookingSystem.Controllers
                 if (moreOrLess == "more")
                 {
                     // Get bookings
-                    IEnumerable<BookingContainer> bookings = bookingService.GetForPeriod(startTime, endTime);
+                    IEnumerable<Booking> bookings = bookingService.GetForPeriod(startTime, endTime);
 
                     if (bookings == null)
                     {
                         return NotFound();
+                    }
+
+                    // Get location bookings for bookings.
+                    foreach (Booking booking in bookings)
+                    {
+                        // Create list to cointain location bookings
+                        booking.LocationBookings = new List<LocationBooking>(50);
+
+                        // Get all location bookings
+                        booking.LocationBookings = locationBookingService.GetLocationBookings(booking.BookingId);
                     }
 
                     return Ok(bookings);

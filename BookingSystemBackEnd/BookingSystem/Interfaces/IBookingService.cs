@@ -18,7 +18,7 @@ namespace BookingSystem
 
         IEnumerable<Booking> Get();
 
-        IQueryable<BookingContainer> GetForPeriod(DateTime startTime, DateTime endTime);
+        IQueryable<Booking> GetForPeriod(DateTime startTime, DateTime endTime);
 
         IEnumerable<CalendarBookingDay> CheckDaysForPeriod(DateTime startTime, DateTime endTime);
 

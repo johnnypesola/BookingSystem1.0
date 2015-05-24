@@ -21,33 +21,32 @@
         <table class="list-table">
             <tr>
                 <th>Bokningsnamn</th>
-                <th>Preliminär</th>
-                <th>Kund</th>
-                <th>Personer</th>
-                <th>Typ</th>
-                <th>Typnamn</th>
-                <th>Antal</th>
                 <th>Starttid</th>
                 <th>Sluttid</th>
+                <th>Preliminär</th>
+                <th>Bokningstyp</th>
+                <th>Kund</th>
+                <th>Personer</th>
+                <th>Pris</th>
+                <th>Antal bokningar</th>
                 <th></th>
 
             </tr>
             <tr ng-repeat="booking in bookings">
-                <td>{{booking.BookingName}}</td>
-                <td>{{booking.Provisional | boolean}}</td>
-                <td>{{booking.CustomerName}}</td>
-                <td class="align-right">{{booking.NumberOfPeople | count}}</td>
-                <td>{{booking.Type | bookingType}}</td>
-                <td>{{booking.TypeName}}</td>
-                <td>{{booking.Count | count}}</td>
+                <td>{{booking.Name}}</td>
                 <td class="date">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
                 <td class="date">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+                <td>{{booking.Provisional | boolean}}</td>
+                <td>{{booking.BookingTypeName}}</td>
+                <td>{{booking.CustomerName}}</td>
+                <td class="align-right">{{booking.NumberOfPeople | count}}</td>
+                <td class="align-right">{{booking.CalculatedBookingPrice | kr}}</td>
+                <td class="align-right">{{booking.LocationBookings.length | count}}</td>
                 <td class="align-right">
                     <div item-action-buttons="booking.BookingId"></div>
                 </td>
-                <!--<td class="align-right">{{booking.CalculatedBookingPrice | kr }}</td>
-                <td class="align-right">{{booking.Discount | percentage }}</td>-->
             </tr>
         </table>
+
     </section>
 </section>

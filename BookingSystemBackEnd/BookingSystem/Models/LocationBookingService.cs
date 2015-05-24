@@ -87,9 +87,9 @@ namespace BookingSystem.Models
             return LocationBookingDAL.GetLocationBookingById(LocationBookingId);
         }
 
-        public IEnumerable<LocationBooking> GetLocationBookings()
+        public IEnumerable<LocationBooking> GetLocationBookings(int? BookingId = null)
         {
-            return LocationBookingDAL.GetLocationBookings();
+            return LocationBookingDAL.GetLocationBookings(BookingId);
         }
 
         public void LocationBookingDelete(int LocationBookingId)

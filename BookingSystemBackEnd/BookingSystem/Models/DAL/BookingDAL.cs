@@ -64,16 +64,21 @@ namespace BookingSystem.Models
                             {
                                 BookingId = reader.GetSafeInt32(reader.GetOrdinal("BookingId")),
                                 Name = reader.GetSafeString(reader.GetOrdinal("Name")),
+                                BookingTypeId = reader.GetSafeInt16(reader.GetOrdinal("BookingTypeId")),
                                 CustomerId = reader.GetSafeInt32(reader.GetOrdinal("CustomerId")),
-                                CustomerName = reader.GetSafeString(reader.GetOrdinal("CustomerName")),
                                 Provisional = reader.GetBoolean(reader.GetOrdinal("Provisional")),
                                 NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
                                 Discount = reader.GetSafeDecimal(reader.GetOrdinal("Discount")),
-                                CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
                                 Notes = reader.GetSafeString(reader.GetOrdinal("Notes")),
-                                CreatedByUserId = reader.GetSafeInt32(reader.GetOrdinal("CreatedByUserId")),
-                                ModifiedByUserId = reader.GetSafeInt32(reader.GetOrdinal("ModifiedByUserId")),
-                                ResponsibleUserId = reader.GetSafeInt32(reader.GetOrdinal("ResponsibleUserId"))
+                                CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
+                                StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
+                                EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
+
+                                BookingTypeName = reader.GetSafeString(reader.GetOrdinal("BookingTypeName")),
+                                CustomerName = reader.GetSafeString(reader.GetOrdinal("CustomerName"))
+                                //CreatedByUserId = reader.GetSafeInt32(reader.GetOrdinal("CreatedByUserId")),
+                                //ModifiedByUserId = reader.GetSafeInt32(reader.GetOrdinal("ModifiedByUserId")),
+                                //ResponsibleUserId = reader.GetSafeInt32(reader.GetOrdinal("ResponsibleUserId"))
                             };
                         }
                     }
@@ -215,18 +220,18 @@ namespace BookingSystem.Models
             }
         }
 
-        public IEnumerable<BookingContainer> GetBookingsForPeriod(DateTime startTime, DateTime endTime)
+        public IEnumerable<Booking> GetBookingsForPeriod(DateTime startTime, DateTime endTime)
         {
             // Create connection object
             using (this.CreateConnection())
             {
                 try
                 {
-                    List<BookingContainer> bookingsReturnList;
+                    List<Booking> bookingsReturnList;
                     SqlCommand cmd;
 
                     // Create list object
-                    bookingsReturnList = new List<BookingContainer>(50);
+                    bookingsReturnList = new List<Booking>(50);
 
                     // Connect to database and execute given stored procedure
                     cmd = this.Setup("appSchema.usp_BookingsForPeriod", DALOptions.closedConnection);
@@ -245,20 +250,25 @@ namespace BookingSystem.Models
                         while (reader.Read())
                         {
                             // Create new Booking object from database values and add to list
-                            bookingsReturnList.Add(new BookingContainer
-                            {
+                            bookingsReturnList.Add(new Booking
+                            {                               
                                 BookingId = reader.GetSafeInt32(reader.GetOrdinal("BookingId")),
-                                BookingName = reader.GetSafeString(reader.GetOrdinal("BookingName")),
-                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
-                                Provisional = reader.GetBoolean(reader.GetOrdinal("Provisional")),
-                                CustomerName = reader.GetSafeString(reader.GetOrdinal("CustomerName")),
+                                Name = reader.GetSafeString(reader.GetOrdinal("Name")),
+                                BookingTypeId = reader.GetSafeInt16(reader.GetOrdinal("BookingTypeId")),
                                 CustomerId = reader.GetSafeInt32(reader.GetOrdinal("CustomerId")),
-                                TypeName = reader.GetSafeString(reader.GetOrdinal("TypeName")),
-                                Type = reader.GetSafeString(reader.GetOrdinal("Type")),
-                                TypeId = reader.GetSafeInt32(reader.GetOrdinal("TypeId")),
-                                Count = reader.GetSafeInt32(reader.GetOrdinal("Count")),
+                                Provisional = reader.GetBoolean(reader.GetOrdinal("Provisional")),
+                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
+                                Discount = reader.GetSafeDecimal(reader.GetOrdinal("Discount")),
+                                Notes = reader.GetSafeString(reader.GetOrdinal("Notes")),
+                                CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
                                 StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
-                                EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime"))
+                                EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
+
+                                BookingTypeName = reader.GetSafeString(reader.GetOrdinal("BookingTypeName")),
+                                CustomerName = reader.GetSafeString(reader.GetOrdinal("CustomerName"))
+                                //CreatedByUserId = reader.GetSafeInt32(reader.GetOrdinal("CreatedByUserId")),
+                                //ModifiedByUserId = reader.GetSafeInt32(reader.GetOrdinal("ModifiedByUserId")),
+                                //ResponsibleUserId = reader.GetSafeInt32(reader.GetOrdinal("ResponsibleUserId"))
                             });
                         }
                     }

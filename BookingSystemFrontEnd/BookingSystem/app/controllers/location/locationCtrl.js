@@ -38,15 +38,6 @@
 
         /* Private methods START */
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
             // Add default map variables to scope
             that.initMapVariables = function() {
 
@@ -81,11 +72,6 @@
         /* Private methods END */
 
         /* Public methods START */
-
-            // Abort editing
-            $scope.back = function(){
-                that.redirectToListPage();
-            };
 
         /* Public methods END */
 
@@ -221,15 +207,6 @@
             };
 
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
             that.moveMarkerOnClick = function(map, eventName, args) {
 
                 // Refresh location variables
@@ -288,11 +265,6 @@
 
         /* Public methods START */
 
-            // Abort creating
-            $scope.abort = function(){
-                that.redirectToListPage();
-            };
-
             // Save location
             $scope.save = function(){
 
@@ -331,7 +303,7 @@
                                 };
 
                                 // Redirect
-                                that.redirectToListPage();
+                                history.back();
 
                             })
                         }).catch(function(){
@@ -385,15 +357,6 @@
                 $scope.markers = [];
 
         /* Private methods START */
-
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
 
             // Add default map variables to scope
             that.initMapVariables = function() {
@@ -509,7 +472,7 @@
                 };
 
                 // Redirect
-                that.redirectToListPage();
+                history.back();
             };
 
         /* Private methods END */
@@ -520,11 +483,6 @@
             $scope.onMarkerDragEnd = function($event) {
                 $scope.location.GPSLatitude = $event.position.lat();
                 $scope.location.GPSLongitude = $event.position.lng();
-            };
-
-            // Abort editing
-            $scope.abort = function(){
-                that.redirectToListPage();
             };
 
             // Save location
@@ -605,7 +563,7 @@
                                 message: 'Platsen "' + $scope.location.Name + '" existerar inte längre. Hann kanske någon radera den?'
                             };
 
-                            that.redirectToListPage();
+                            history.back();
                         }
                     });
             };
@@ -674,15 +632,6 @@
 
         /* Private methods START */
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
         /* Private methods END */
 
         /* Public methods START */
@@ -705,7 +654,7 @@
                             message: 'Platsen "' + $scope.location.Name + '" raderades med ett lyckat resultat'
                         };
 
-                        that.redirectToListPage();
+                        history.back();
                     })
                     // Something went wrong
                     .catch(function(response) {
@@ -739,13 +688,8 @@
                             };
                         }
 
-                    that.redirectToListPage();
+                        history.back();
                 });
-            };
-
-            // Abort deletion
-            $scope.abort = function(){
-                that.redirectToListPage();
             };
 
         /* Public methods END */
@@ -780,24 +724,6 @@
                 that.locations = [];
 
         /* Private methods START */
-
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
-            that.redirectToEditPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/redigera/" + $scope.visibleLocation.LocationId);
-            };
 
             // Convert markers from data fetched from backend to match google maps format.
             that.convertMarkers = function() {
@@ -841,16 +767,6 @@
 
 
         /* Public methods START */
-
-            // Back
-            $scope.back = function(){
-                that.redirectToListPage();
-            };
-
-            // Back
-            $scope.edit = function(){
-                that.redirectToEditPage();
-            };
 
         /* Public methods END */
 

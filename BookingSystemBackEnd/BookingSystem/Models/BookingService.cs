@@ -71,7 +71,7 @@ namespace BookingSystem.Models
             return BookingDAL.GetBookings();
         }
 
-        public IQueryable<BookingContainer> GetForPeriod(DateTime startTime, DateTime endTime)
+        public IQueryable<Booking> GetForPeriod(DateTime startTime, DateTime endTime)
         {
             return BookingDAL.GetBookingsForPeriod(startTime, endTime).AsQueryable();
         }

@@ -45,6 +45,9 @@
             }).
 
             // Bookings
+            when('/bokningstillfallen/visa/:bookingId', {
+                templateUrl: 'controllers/booking/bookingShow.html'
+            }).
             when('/bokningstillfallen/lista', {
                 templateUrl: 'controllers/booking/bookingList.html'
             }).
@@ -122,7 +125,10 @@
             when('/lokalbokningar/redigera/:locationBookingId', {
                 templateUrl: 'controllers/location-booking/locationBookingEdit.html'
             }).
-            when('/lokalbokningar/skapa', {
+            when('/lokalbokningar/skapa/', {
+                templateUrl: 'controllers/location-booking/locationBookingCreate.html'
+            }).
+            when('/lokalbokningar/skapa/:bookingId', {
                 templateUrl: 'controllers/location-booking/locationBookingCreate.html'
             }).
 

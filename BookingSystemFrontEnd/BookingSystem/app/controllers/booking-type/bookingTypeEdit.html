@@ -42,7 +42,7 @@
         <input type="number" min="0" max="{{Int16MaxValue}}" name="minutesMarginAfterBooking" ng-model="bookingType.MinutesMarginAfterBooking">
 
         <button ng-click="save()" ng-disabled="!bookingTypeForm.$valid">Spara</button>
-        <button ng-click="abort()">Avbryt</button>
+        <button back-button>Avbryt</button>
 
     </form>
 </section>

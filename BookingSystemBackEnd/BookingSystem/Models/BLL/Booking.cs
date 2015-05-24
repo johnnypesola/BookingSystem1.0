@@ -46,18 +46,22 @@ namespace BookingSystem.Models
         [Range(0, int.MaxValue, ErrorMessage = "ResponsibleUserId is out of range.")]
         public int? ResponsibleUserId { get; set; }
 
+
+
         // Extra datafields retrieved from database/stored procedure
         [StringLength(50, ErrorMessage = "CustomerName must not exceed 50 chars.")]
         public string CustomerName { get; set; }
 
-        [Range(0, Int16.MaxValue, ErrorMessage = "MaxPeople is out of range.")]
-        public int MaxPeople { get; set; }
+        [StringLength(50, ErrorMessage = "BookingTypeName must not exceed 50 chars.")]
+        public string BookingTypeName { get; set; }
 
         public decimal CalculatedBookingPrice { get; set; }
 
-        public decimal TotalBookingValue { get; set; }
+        public DateTime StartTime { get; set; }
 
-        [Range(0, Int16.MaxValue, ErrorMessage = "PayMethodId is out of range.")]
-        public int PayMethodId { get; set; }
+        public DateTime EndTime { get; set; }
+
+        // Extra field for children arrays
+        public IEnumerable<LocationBooking> LocationBookings { get; set; }
     }
 }

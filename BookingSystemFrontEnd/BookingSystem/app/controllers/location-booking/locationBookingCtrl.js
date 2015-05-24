@@ -27,23 +27,9 @@
 
         /* Private methods START */
 
-        that.redirectToListPage = function(){
-            var objectType;
-
-            objectType = $location.path().split('/')[1];
-
-            // Go back to location list
-            $location.path(objectType + "/lista");
-        };
-
         /* Private methods END */
 
         /* Public methods START */
-
-            // Back button
-            $scope.back = function(){
-                that.redirectToListPage();
-            };
 
         /* Public methods END */
 
@@ -157,28 +143,23 @@
 
         /* Private methods START */
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
         /* Private methods END */
 
         /* Public methods START */
 
-            // Abort creating
-            $scope.abort = function(){
-                that.redirectToListPage();
-            };
-
             that.getLocations = function(){
+
+                var deferred = $q.defer(),
+                    promise = deferred.promise;
 
                 // Get locations
                 $scope.locations = Location.query();
+
+                // Success
+                $scope.locations.$promise.then(function(){
+                    // Resolve promise
+                    deferred.resolve();
+                });
 
                 $scope.locations.$promise.catch(function(){
                     $rootScope.FlashMessage = {
@@ -188,39 +169,65 @@
                 });
 
                 // Return promise
-                return $scope.locations.$promise;
+                return promise;
             };
 
             that.getBookingTypes = function(){
 
+                var deferred = $q.defer(),
+                    promise = deferred.promise;
+
                 // Get booking types
                 $scope.bookingTypes = BookingType.query();
 
+                // Success
+                $scope.bookingTypes.$promise.then(function(){
+                    // Resolve promise
+                    deferred.resolve();
+                });
+
+                // Could not fetch booking types
                 $scope.bookingTypes.$promise.catch(function(){
                     $rootScope.FlashMessage = {
                         type: 'error',
                         message: 'Bokningstyper kunde inte hämtas.'
                     };
+
+                    // Reject promise
+                    deferred.reject();
                 });
 
                 // Return promise
-                return $scope.bookingTypes.$promise;
+                return promise;
             };
 
             that.getCustomers = function(){
 
+                var deferred = $q.defer(),
+                    promise = deferred.promise;
+
                 // Get customers
                 $scope.customers = Customer.query();
 
-                // In case locations furniturings cannot be fetched, display an error to user.
+                // Success
+                $scope.customers.$promise.then(function(){
+
+                    // Resolve promise
+                    deferred.resolve();
+                });
+
+                // In case customers cannot be fetched, display an error to user.
                 $scope.customers.$promise.catch(function(){
                     $rootScope.FlashMessage = {
                         type: 'error',
                         message: 'Kunder kunde inte hämtas.'
                     };
+
+                    // Reject promise
+                    deferred.reject();
                 });
 
-                return $scope.customers.$promise;
+                return promise;
             };
 
             that.getOtherDisplayData = function (){
@@ -248,8 +255,8 @@
                 var deferred = $q.defer(),
                     promise = deferred.promise;
 
-                // Only save booking once.
-                if(typeof that.booking === 'undefined'){
+                // Only save booking if needed.
+                if($scope.bookingId == 0){
 
                     // Save booking
                     promise = Booking.save(
@@ -271,7 +278,7 @@
                         .then(function(createdBooking){
 
                             // Make created booking accessable from other metods
-                            that.booking = createdBooking;
+                            $scope.bookingId = createdBooking.BookingId;
 
                             $rootScope.FlashMessage = {
                                 type: 'success',
@@ -324,7 +331,7 @@
                 // Save locationBooking
                 LocationBooking.save(
                     {
-                        BookingId: that.booking.BookingId,
+                        BookingId: $scope.bookingId,
                         LocationBookingId: 0,
                         LocationId: $scope.locationBooking.LocationId,
                         FurnituringId: $scope.locationBooking.SelectedFurnituring.FurnituringId,
@@ -382,7 +389,7 @@
                             // If location booking was saved
                             .then(function(){
 
-                                that.redirectToListPage();
+                                history.back();
 
                             });
                     })
@@ -416,34 +423,6 @@
                 }
             };
 
-            $scope.validateEndDate = function(value){
-
-                var StartDateObj = moment($scope.StartDate + " " + $scope.StartTime).toDate();
-                var EndDateObj = moment(value + " " + $scope.EndTime).toDate();
-/*
-                console.log('validateEndDate');
-                console.log(StartDateObj);
-                console.log(EndDateObj);
-
-                console.log(EndDateObj >= StartDateObj);
-*/
-                return (EndDateObj >= StartDateObj);
-            };
-
-            $scope.validateEndTime = function(value){
-
-                var StartDateObj = moment($scope.StartDate + " " + $scope.StartTime).toDate();
-                var EndDateObj = moment($scope.EndDate + " " + value).toDate();
-/*
-                console.log('validateEndTime');
-                console.log(StartDateObj);
-                console.log(EndDateObj);
-
-                console.log(EndDateObj >= StartDateObj);
-*/
-                return (EndDateObj >= StartDateObj);
-            };
-
         /* Public methods END */
 
 
@@ -451,6 +430,9 @@
 
             // Get other data used in form
             that.getOtherDisplayData();
+
+            // Get booking id from route params
+            $scope.bookingId = $routeParams.bookingId || 0;
 
         /* Initialization END */
     })
@@ -462,23 +444,9 @@
 
         /* Private methods START */
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
         /* Private methods END */
 
         /* Public methods START */
-
-            // Abort editing
-            $scope.abort = function(){
-                that.redirectToListPage();
-            };
 
             // Save locationBooking
             $scope.save = function(){
@@ -499,7 +467,7 @@
                             message: 'Lokal/plats-bokningen "' + $scope.locationBooking.Name + '" sparades med ett lyckat resultat'
                         };
 
-                        that.redirectToListPage();
+                        history.back();
 
                     // Something went wrong
                     }).catch(function(response) {
@@ -528,7 +496,7 @@
                                 message: 'Lokal/plats-bokningen "' + $scope.locationBooking.Name + '" existerar inte längre. Hann kanske någon radera den?'
                             };
 
-                            that.redirectToListPage();
+                            history.back();
                         }
                     });
             };
@@ -565,15 +533,6 @@
 
         /* Private methods START */
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
         /* Private methods END */
 
         /* Public methods START */
@@ -596,7 +555,7 @@
                             message: 'Lokal/plats-bokningen "' + $scope.locationBooking.Name + '" raderades med ett lyckat resultat'
                         };
 
-                        that.redirectToListPage();
+                        history.back();
                     })
                     // Something went wrong
                     .catch(function(response) {
@@ -630,13 +589,8 @@
                             };
                         }
 
-                    that.redirectToListPage();
+                        history.back();
                 });
-            };
-
-            // Abort deletion
-            $scope.abort = function(){
-                that.redirectToListPage();
             };
 
         /* Public methods END */

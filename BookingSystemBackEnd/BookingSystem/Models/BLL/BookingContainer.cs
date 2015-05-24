@@ -33,5 +33,6 @@ namespace BookingSystem.Models
 
         public DateTime EndTime { get; set; }
 
+        public IEnumerable<LocationBooking> LocationBookings { get; set; }
     }
 }

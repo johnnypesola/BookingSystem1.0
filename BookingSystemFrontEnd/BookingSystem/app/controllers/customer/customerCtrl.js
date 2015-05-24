@@ -26,23 +26,10 @@
 
         /* Private methods START */
 
-        that.redirectToListPage = function(){
-            var objectType;
-
-            objectType = $location.path().split('/')[1];
-
-            // Go back to location list
-            $location.path(objectType + "/lista");
-        };
-
         /* Private methods END */
 
         /* Public methods START */
 
-            // Back button
-            $scope.back = function(){
-                that.redirectToListPage();
-            };
 
         /* Public methods END */
 
@@ -109,23 +96,9 @@
 
         /* Private methods START */
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
         /* Private methods END */
 
         /* Public methods START */
-
-            // Abort creating
-            $scope.abort = function(){
-                that.redirectToListPage();
-            };
 
             // Save customer
             $scope.save = function(){
@@ -155,7 +128,7 @@
                             message: 'Kunden "' + $scope.customer.Name + '" skapades med ett lyckat resultat'
                         };
 
-                        that.redirectToListPage();
+                        history.back();
 
                     // Something went wrong
                     }).catch(function(response) {
@@ -197,23 +170,9 @@
 
         /* Private methods START */
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
         /* Private methods END */
 
         /* Public methods START */
-
-            // Abort editing
-            $scope.abort = function(){
-                that.redirectToListPage();
-            };
 
             // Save customer
             $scope.save = function(){
@@ -242,7 +201,7 @@
                             message: 'Kunden "' + $scope.customer.Name + '" sparades med ett lyckat resultat'
                         };
 
-                        that.redirectToListPage();
+                        history.back();
 
                     // Something went wrong
                     }).catch(function(response) {
@@ -271,7 +230,7 @@
                                 message: 'Kunden "' + $scope.customer.Name + '" existerar inte längre. Hann kanske någon radera den?'
                             };
 
-                            that.redirectToListPage();
+                            history.back();
                         }
                     });
             };
@@ -312,15 +271,6 @@
 
         /* Private methods START */
 
-            that.redirectToListPage = function(){
-                var objectType;
-
-                objectType = $location.path().split('/')[1];
-
-                // Go back to location list
-                $location.path(objectType + "/lista");
-            };
-
         /* Private methods END */
 
         /* Public methods START */
@@ -343,7 +293,7 @@
                             message: 'Kunden "' + $scope.customer.Name + '" raderades med ett lyckat resultat'
                         };
 
-                        that.redirectToListPage();
+                        history.back();
                     })
                     // Something went wrong
                     .catch(function(response) {
@@ -377,13 +327,8 @@
                             };
                         }
 
-                    that.redirectToListPage();
+                        history.back();
                 });
-            };
-
-            // Abort deletion
-            $scope.abort = function(){
-                that.redirectToListPage();
             };
 
         /* Public methods END */
