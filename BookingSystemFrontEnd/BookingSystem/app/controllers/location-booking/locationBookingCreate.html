@@ -11,6 +11,10 @@
 
     <form name="locationbookingForm">
 
+        <validate-date-time ng-model="scope"></validate-date-time>
+
+        {{locationbookingForm.$error|json}}
+
         <p>Bokningstillfälle kommer att skapas automatiskt</p>
 
         <label>Preliminär bokning</label>
@@ -38,26 +42,31 @@
         <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name">
 
         <label>Startdatum
+            <span ng-show="locationbookingForm.$error.dateTimeOutOfRange">Starttidpunkten måste vara före Sluttidpunkten.</span>
             <span ng-show="locationbookingForm.startDate.$error.required" class="green">Var god ange</span>
             <span ng-show="locationbookingForm.startDate.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
-        <input type="date" name="startDate" ng-pattern="regExp.textField" ng-model="StartDate" maxlength="50" required>
+        <input type="date" name="startDate" ng-pattern="regExp.textField" ng-model="StartDate" required>
 
         <label>Starttid
+            <span ng-show="locationbookingForm.$error.dateTimeOutOfRange">Starttidpunkten måste vara före Sluttidpunkten.</span>
             <span ng-show="locationbookingForm.startTime.$error.required" class="green">Var god ange</span>
         </label>
-        <input type="time" name="startTime" ng-model="StartTime" maxlength="50" required>
+        <input type="time" name="startTime" ng-model="StartTime" required>
 
         <label>Slutdatum
+            <span ng-show="locationbookingForm.$error.dateTimeOutOfRange">Starttidpunkten måste vara före Sluttidpunkten.</span>
             <span ng-show="locationbookingForm.endDate.$error.required" class="green">Var god ange</span>
             <span ng-show="locationbookingForm.endDate.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>
-        <input type="date" name="endDate" ng-pattern="regExp.textField" ng-model="EndDate" maxlength="50" required>
+        <input type="date" name="endDate" ng-pattern="regExp.textField" ng-model="EndDate" required>
 
         <label>Sluttid
+            <span ng-show="locationbookingForm.$error.dateTimeOutOfRange">Starttidpunkten måste vara före Sluttidpunkten.</span>
             <span ng-show="locationbookingForm.endTime.$error.required" class="green">Var god ange</span>
+            <span ng-show="locationbookingForm.endTime.$error.outOfRange && !locationbookingForm.endTime.$error.required">Sluttidpunkten måste vara efter Starttidpunkten</span>
         </label>
-        <input type="time" name="endTime" ng-model="EndTime" maxlength="50" required>
+        <input type="time" name="endTime" ng-model="EndTime" required>
 
         <label>Lokal</label>
         <select ng-change="updateFurniturings()" ng-model="locationBooking.LocationId" ng-options="location.LocationId as location.Name for location in locations">

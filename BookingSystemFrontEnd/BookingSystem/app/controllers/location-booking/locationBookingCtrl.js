@@ -10,7 +10,8 @@
         [
             'bookingSystem.locationBookingServices',
             'bookingSystem.commonFilters',
-            'bookingSystem.commonDirectives'
+            'bookingSystem.commonDirectives',
+            'ui.validate'
         ]
     )
 
@@ -303,7 +304,6 @@
 
                 } else {
 
-
                     // Bookings does not need to be saved. Resolve promise
                     deferred.resolve();
                 }
@@ -414,6 +414,34 @@
                 else {
                     $scope.furnituring = [];
                 }
+            };
+
+            $scope.validateEndDate = function(value){
+
+                var StartDateObj = moment($scope.StartDate + " " + $scope.StartTime).toDate();
+                var EndDateObj = moment(value + " " + $scope.EndTime).toDate();
+/*
+                console.log('validateEndDate');
+                console.log(StartDateObj);
+                console.log(EndDateObj);
+
+                console.log(EndDateObj >= StartDateObj);
+*/
+                return (EndDateObj >= StartDateObj);
+            };
+
+            $scope.validateEndTime = function(value){
+
+                var StartDateObj = moment($scope.StartDate + " " + $scope.StartTime).toDate();
+                var EndDateObj = moment($scope.EndDate + " " + value).toDate();
+/*
+                console.log('validateEndTime');
+                console.log(StartDateObj);
+                console.log(EndDateObj);
+
+                console.log(EndDateObj >= StartDateObj);
+*/
+                return (EndDateObj >= StartDateObj);
             };
 
         /* Public methods END */

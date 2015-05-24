@@ -249,6 +249,120 @@
                     });
                 }
             };
+        })
+
+        .directive('validateDateTime', function () {
+            return {
+                restrict: 'E',
+                require: 'ngModel',
+                link: function (scope, element, attr, ctrl) {
+
+                    var validateDateTime = function(){
+                        var StartDateObj, EndDateObj;
+
+                        // Check that all dates variables are defined
+                        if(
+                            typeof scope.StartDate !== 'undefined' &&
+                            typeof scope.StartTime !== 'undefined' &&
+                            typeof scope.EndDate !== 'undefined' &&
+                            typeof scope.EndTime !== 'undefined'
+                        ){
+                            // Convert to date objects
+                            StartDateObj = moment(scope.StartDate + " " + scope.StartTime).toDate();
+                            EndDateObj = moment(scope.EndDate + " " + scope.EndTime).toDate();
+
+                            if (EndDateObj > StartDateObj){
+
+                                ctrl.$setValidity('dateTimeOutOfRange', true);
+                            }
+                            else {
+
+                                ctrl.$setValidity('dateTimeOutOfRange', false);
+                            }
+                        }
+                    };
+
+                    // Add watches to all Date and Time input fields
+                    scope.$watch('StartDate', function(newValue, oldValue){
+                        validateDateTime();
+                    }, true); //enable deep dirty checking
+                    scope.$watch('StartTime', function(newValue, oldValue){
+                        validateDateTime();
+                    }, true); //enable deep dirty checking
+                    scope.$watch('EndDate', function(newValue, oldValue){
+                        validateDateTime();
+                    }, true); //enable deep dirty checking
+                    scope.$watch('EndTime', function(newValue, oldValue){
+                        validateDateTime();
+                    }, true); //enable deep dirty checking
+                }
+            };
+
+            ////////
+/*
+                link: function(scope, elem, attr, ctrl) {
+                    scope.$watch(attr.shareValidate, function(newArr, oldArr) {
+                        var sum = 0;
+                        angular.forEach(newArr, function(entity, i) {
+                            sum += entity.share;
+                        });
+                        if (sum === 100) {
+                            ctrl.$setValidity('share', true);
+                            scope.path.offers.invalidShares = false;
+                        }
+                        else {
+                            ctrl.$setValidity('share', false);
+                            scope.path.offers.invalidShares = true;
+                        }
+                    }, true); //enable deep dirty checking
+                }
+
+
+            /////////
+
+            return {
+                // restrict to an attribute type.
+                restrict: 'A',
+
+                // element must have ng-model attribute.
+                require: 'ngModel',
+
+                // scope = the parent scope
+                // elem = the element the directive is on
+                // attr = a dictionary of attributes on the element
+                // ctrl = the controller for ngModel.
+                link: function(scope, elem, attr, ctrl) {
+
+                    //get the regex flags from the regex-validate-flags="" attribute (optional)
+                    var flags = attr.regexValidateFlags || '';
+
+                    // create the regex obj.
+                    var regex = new RegExp(attr.regexValidate, flags);
+
+                    // add a parser that will process each time the value is
+                    // parsed into the model when the user updates it.
+                    ctrl.$parsers.unshift(function(value) {
+                        // test and set the validity after update.
+                        var valid = regex.test(value);
+                        ctrl.$setValidity('regexValidate', valid);
+
+                        // if it's valid, return the value to the model,
+                        // otherwise return undefined.
+                        return valid ? value : undefined;
+                    });
+
+                    // add a formatter that will process each time the value
+                    // is updated on the DOM element.
+                    ctrl.$formatters.unshift(function(value) {
+                        // validate.
+                        ctrl.$setValidity('regexValidate', regex.test(value));
+
+                        // return the value or nothing will be written to the DOM.
+                        return value;
+                    });
+                }
+            };
+            */
         });
 
 
