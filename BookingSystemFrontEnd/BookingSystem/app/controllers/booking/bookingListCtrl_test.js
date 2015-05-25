@@ -66,7 +66,7 @@ describe('module: bookingSystem.booking', function() {
         var testDateVars = function() {
             expect($scope.currentYear).toEqual(testCurrentDateObj.getFullYear());
             expect(BookingCtrl.currentMonth).toEqual(testCurrentDateObj.getMonth());
-            expect($scope.currentMonthName).toEqual(testCurrentDateObj.monthNamesArray[testCurrentDateObj.getMonth()]);
+            expect($scope.currentMonthName).toEqual(moment(testCurrentDateObj).format('MMMM'));
             expect(BookingCtrl.currentMonthNumberOfDays).toEqual(new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth() + 1, 0).getDate());
             expect(BookingCtrl.currentMonthStartDateObj).toEqual(new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth(), 1));
             expect(BookingCtrl.currentMonthEndDateObj).toEqual(new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth(), BookingCtrl.currentMonthNumberOfDays));

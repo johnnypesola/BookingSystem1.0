@@ -19,6 +19,7 @@ module.exports = function(config){
         'app/lib/angular-google-maps.min.js',
         'app/lib/lodash.min.js',
         'app/lib/google-maps-api.js',
+        'app/lib/moment-with-locales.min.js',
         'app/shared/**/*.html'
     ],
 

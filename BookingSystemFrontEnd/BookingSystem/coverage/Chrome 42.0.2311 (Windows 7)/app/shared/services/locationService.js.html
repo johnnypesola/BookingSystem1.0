@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./app/shared/services/locationService.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header medium">
+    <h1>Code coverage report for <span class="entity">./app/shared/services/locationService.js</span></h1>
+    <h2>
+        Statements: <span class="metric">73.91% <small>(17 / 23)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">50% <small>(2 / 4)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">80% <small>(8 / 10)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">73.91% <small>(17 / 23)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/shared/services/</a> &#187; locationService.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-yes">6</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * Created by jopes on 2015-04-12.
+ */
+&nbsp;
+(function(){
+    // Declare module
+    angular.module('bookingSystem.locationServices',
+&nbsp;
+        // Dependencies
+        [
+            'ngResource',
+            'bookingSystem.furnituringServices'
+        ])
+&nbsp;
+        .factory('Location', <span class="fstat-no" title="function not covered" >function($resource, API_URL){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            return $resource(</span>
+                API_URL + 'Location/:locationId',
+                {locationId: '@locationId'}
+            );
+&nbsp;
+            /*
+             query: function (callback){
+             $http({
+             method: 'GET',
+             url: 'http://192.168.1.4:8080/BookingSystem/api/Booking',
+             cache: false
+             }).success(callback);
+             },
+&nbsp;
+             queryBetweenDates: function (callback){
+             $http({
+             method: 'GET',
+             url: 'http://192.168.1.4:8080/BookingSystem/api/Booking',
+             cache: false
+             }).success(callback);
+             }
+             */
+        })
+&nbsp;
+        .factory('LocationImage', function($http, API_URL) {
+&nbsp;
+            return {
+                upload : <span class="fstat-no" title="function not covered" >function(imageData, locationId) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    return $http(</span>
+                        {
+                            method: 'POST',
+                            url: API_URL + 'Location/image/' + locationId,
+                            data: imageData,
+                            headers: {'Content-Type': undefined}
+                        }
+                    );
+                }
+            }
+        })
+&nbsp;
+        .factory('LocationFurnituringHelper', function(LocationFurnituring, Furnituring) {
+&nbsp;
+            return {
+&nbsp;
+                // Get location specific furniturings and all furniturings combined. (specific furniturings selected)
+                // For use in checkboxes and such.
+                getCombined : function(locationId){
+                    var furniturings,
+                        locationFurniturings;
+&nbsp;
+                    // Get all available furniturings
+                    furniturings = Furnituring.query();
+&nbsp;
+                    // Get saved furniturings for this locations
+                    locationFurniturings = LocationFurnituring.queryForLocation({locationId: locationId});
+&nbsp;
+                    // When all available furniturings have been fetched
+                    furniturings.$promise.finally(function(){
+&nbsp;
+                        // When location available furniturings have been fetched
+                        locationFurniturings.$promise.finally(function(){
+&nbsp;
+                            // Mark saved furniturings for this locations as selected
+                            furniturings.forEach(function(availableFurnituring) {
+                                var match = false;
+                                // If there are any existing location furniturings, mark them as selected
+                                locationFurniturings.forEach(function(locationFurnituring) {
+&nbsp;
+                                    <span class="missing-if-branch" title="if path not taken" >I</span>if (availableFurnituring.FurnituringId == locationFurnituring.FurnituringId) {
+<span class="cstat-no" title="statement not covered" >                                        availableFurnituring.Selected = true;</span>
+<span class="cstat-no" title="statement not covered" >                                        availableFurnituring.MaxPeople = locationFurnituring.MaxPeople;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                        match = true;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                                        return;</span>
+                                    }
+                                });
+&nbsp;
+                                <span class="missing-if-branch" title="else path not taken" >E</span>if(!match){
+                                    availableFurnituring.Selected = false;
+                                    availableFurnituring.MaxPeople = 0;
+                                }
+                            })
+                        });
+                    });
+&nbsp;
+                    // Return furniturings with promise
+                    return furniturings;
+                }
+            }
+        })
+})();
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon May 25 2015 02:50:20 GMT+0200 (Västeuropa, sommartid)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

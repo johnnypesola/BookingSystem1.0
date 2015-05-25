@@ -68,22 +68,11 @@ describe('module: bookingSystem.customer', function() {
 
      describe('CustomerEditCtrl controller', function(){
 
-         it('should call redirect() after abort() method', inject(function($controller, _Customer_) {
+
+         it('should call history.back() and create a FlashMessage after successful Customer editing', inject(function($rootScope, $controller, _Customer_, $routeParams) {
 
              // Spy on existing controller method
-             spyOn(CustomerEditCtrl, 'redirectToListPage');
-
-             // Exec method to be tested
-             $scope.abort();
-
-             // Check that page was redirected was called
-             expect(CustomerEditCtrl.redirectToListPage).toHaveBeenCalled();
-         }));
-
-         it('should call redirect() and create a FlashMessage after successful Customer editing', inject(function($rootScope, $controller, _Customer_, $routeParams) {
-
-             // Spy on existing controller method
-             spyOn(CustomerEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Mock scope variable
              $scope.customer = { Name : 'Test'};
@@ -106,7 +95,7 @@ describe('module: bookingSystem.customer', function() {
              expect($rootScope.FlashMessage).toBeDefined();
 
              // Check that page was redirected was called
-             expect(CustomerEditCtrl.redirectToListPage).toHaveBeenCalled();
+             expect(history.back).toHaveBeenCalled();
          }));
 
          it('should create a FlashMessage after duplicate Customer editing', inject(function($rootScope, $controller, _Customer_, $q) {
@@ -119,7 +108,7 @@ describe('module: bookingSystem.customer', function() {
              });
 
              // Spy on existing controller method
-             spyOn(CustomerEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Mock scope variable
              $scope.customer = { Name : 'Test' };
@@ -136,7 +125,7 @@ describe('module: bookingSystem.customer', function() {
              expect($rootScope.FlashMessage.message).toEqual('Det finns redan en kund som heter "Test". Två kunder kan inte heta lika.');
 
              // Check that redirection was NOT called
-             expect(CustomerEditCtrl.redirectToListPage).not.toHaveBeenCalled();
+             expect(history.back).not.toHaveBeenCalled();
          }));
 
          it('should create a FlashMessage after unsuccessful Customer editing', inject(function($rootScope, $controller, _Customer_, $q) {
@@ -149,7 +138,7 @@ describe('module: bookingSystem.customer', function() {
              });
 
              // Spy on existing controller method
-             spyOn(CustomerEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Mock scope variable
              $scope.customer = { Name : 'Test' };
@@ -166,7 +155,7 @@ describe('module: bookingSystem.customer', function() {
              expect($rootScope.FlashMessage.message).toEqual('Ett oväntat fel uppstod när kunden skulle sparas');
 
              // Check that redirection was NOT called
-             expect(CustomerEditCtrl.redirectToListPage).not.toHaveBeenCalled();
+             expect(history.back).not.toHaveBeenCalled();
          }));
 
          it('should create a FlashMessage after unsuccessful Customer editing (customer deleted)', inject(function($rootScope, $controller, _Customer_, $q) {
@@ -179,7 +168,7 @@ describe('module: bookingSystem.customer', function() {
              });
 
              // Spy on existing controller method
-             spyOn(CustomerEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Mock scope variable
              $scope.customer = { Name : 'Test' };
@@ -196,7 +185,7 @@ describe('module: bookingSystem.customer', function() {
              expect($rootScope.FlashMessage.message).toEqual('Kunden "Test" existerar inte längre. Hann kanske någon radera den?');
 
              // Check that redirection was NOT called
-             expect(CustomerEditCtrl.redirectToListPage).toHaveBeenCalled();
+             expect(history.back).toHaveBeenCalled();
          }));
 
      // Tests END

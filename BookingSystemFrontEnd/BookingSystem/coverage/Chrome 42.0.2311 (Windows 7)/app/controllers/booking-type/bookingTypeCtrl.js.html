@@ -1,0 +1,1086 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./app/controllers/booking-type/bookingTypeCtrl.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header low">
+    <h1>Code coverage report for <span class="entity">./app/controllers/booking-type/bookingTypeCtrl.js</span></h1>
+    <h2>
+        Statements: <span class="metric">3.57% <small>(2 / 56)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">0% <small>(0 / 21)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">9.52% <small>(2 / 21)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">3.57% <small>(2 / 56)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/controllers/booking-type/</a> &#187; bookingTypeCtrl.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * Created by jopes on 2015-04-15.
+ */
+&nbsp;
+(function(){
+    // Declare module
+    angular.module('bookingSystem.bookingType',
+&nbsp;
+        // Load Dependencies
+        [
+            'bookingSystem.bookingServices',
+            'bookingSystem.commonFilters',
+            'bookingSystem.commonDirectives'
+        ]
+    )
+&nbsp;
+    // Routes for startPage
+    .config(function($routeProvider) {
+&nbsp;
+    })
+&nbsp;
+    // Show Controller
+    .controller('BookingTypeShowCtrl', <span class="fstat-no" title="function not covered" >function($scope, $routeParams, $location, $rootScope, BookingType){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var that = this;</span>
+&nbsp;
+        /* Private methods START */
+&nbsp;
+        /* Private methods END */
+&nbsp;
+        /* Public methods START */
+&nbsp;
+        /* Public methods END */
+&nbsp;
+&nbsp;
+        /* Initialization START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        var bookingType = BookingType.get(</span>
+            {
+                bookingTypeId: $routeParams.bookingTypeId
+            }
+        );
+&nbsp;
+        // In case bookingTypes cannot be fetched, display an error to user.
+<span class="cstat-no" title="statement not covered" >        bookingType.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            $rootScope.FlashMessage = {</span>
+                type: 'error',
+                message: 'Bokningstypen kunde inte hämtas, var god försök igen.'
+            };
+        });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        $scope.bookingType = bookingType;</span>
+&nbsp;
+        /* Initialization END */
+    })
+&nbsp;
+    // List Controller
+    .controller('BookingTypeListCtrl', <span class="fstat-no" title="function not covered" >function($scope, BookingType, $rootScope){</span>
+&nbsp;
+        /* Private methods START */
+&nbsp;
+&nbsp;
+        /* Private methods END */
+&nbsp;
+&nbsp;
+&nbsp;
+            /* Public methods START */
+&nbsp;
+&nbsp;
+            /* Public methods END */
+&nbsp;
+            /* Initialization START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var bookingTypes = BookingType.query();</span>
+&nbsp;
+            // In case bookingType cannot be fetched, display an error to user.
+<span class="cstat-no" title="statement not covered" >            bookingTypes.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $rootScope.FlashMessage = {</span>
+                    type: 'error',
+                    message: 'Bokningstyper kunde inte hämtas, var god försök igen.'
+                };
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            $scope.bookingTypes = bookingTypes;</span>
+&nbsp;
+            /* Initialization END */
+    })
+&nbsp;
+    // Create Controller
+    .controller('BookingTypeCreateCtrl', <span class="fstat-no" title="function not covered" >function($scope, $routeParams, $location, $rootScope, BookingType){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var that = this;</span>
+&nbsp;
+        /* Private methods START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        that.initVariables = <span class="fstat-no" title="function not covered" >function(){</span></span>
+<span class="cstat-no" title="statement not covered" >            $scope.bookingType = {};</span>
+<span class="cstat-no" title="statement not covered" >            $scope.bookingType.MinutesMarginBeforeBooking = 0;</span>
+<span class="cstat-no" title="statement not covered" >            $scope.bookingType.MinutesMarginAfterBooking = 0;</span>
+        };
+&nbsp;
+        /* Private methods END */
+&nbsp;
+        /* Public methods START */
+&nbsp;
+        // Save bookingType
+<span class="cstat-no" title="statement not covered" >        $scope.save = <span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+            // Save bookingType
+<span class="cstat-no" title="statement not covered" >            BookingType.save(</span>
+                {
+                    BookingTypeId: 0,
+                    Name: $scope.bookingType.Name,
+                    HasLocation: !!parseInt($scope.bookingType.HasLocation,10),
+                    MinutesMarginBeforeBooking: $scope.bookingType.MinutesMarginBeforeBooking,
+                    MinutesMarginAfterBooking: $scope.bookingType.MinutesMarginAfterBooking
+                }
+            ).$promise
+&nbsp;
+                // If everything went ok
+                .then(<span class="fstat-no" title="function not covered" >function(response){</span>
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    $rootScope.FlashMessage = {</span>
+                        type: 'success',
+                        message: 'Bokningstypen "' + $scope.bookingType.Name + '" skapades med ett lyckat resultat'
+                    };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    history.back();</span>
+&nbsp;
+                // Something went wrong
+                }).catch(<span class="fstat-no" title="function not covered" >function(response) {</span>
+&nbsp;
+                    // If there there was a foreign key reference
+<span class="cstat-no" title="statement not covered" >                    if (response.status == 409){</span>
+<span class="cstat-no" title="statement not covered" >                        $rootScope.FlashMessage = {</span>
+                            type: 'error',
+                            message: 'Det finns redan en bokningstyp som heter "' + $scope.bookingType.Name +
+                            '". Två bokningstyper kan inte heta lika.'
+                        };
+                    }
+&nbsp;
+                    // If there was a problem with the in-data
+                    else {
+<span class="cstat-no" title="statement not covered" >                        $rootScope.FlashMessage = {</span>
+                            type: 'error',
+                            message: 'Ett oväntat fel uppstod när bokningstypen skulle sparas'
+                        };
+                    }
+                });
+        };
+&nbsp;
+        /* Public methods END */
+&nbsp;
+&nbsp;
+        /* Initialization START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            that.initVariables();</span>
+&nbsp;
+        /* Initialization END */
+    })
+&nbsp;
+    // Edit Controller
+    .controller('BookingTypeEditCtrl', <span class="fstat-no" title="function not covered" >function($scope, $routeParams, $location, $rootScope, BookingType){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var that = this;</span>
+&nbsp;
+        /* Private methods START */
+&nbsp;
+        /* Private methods END */
+&nbsp;
+        /* Public methods START */
+&nbsp;
+            // Save bookingType
+<span class="cstat-no" title="statement not covered" >            $scope.save = <span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+                // Save bookingType
+<span class="cstat-no" title="statement not covered" >                BookingType.save(</span>
+                    {
+                        BookingTypeId: $routeParams.bookingTypeId,
+                        Name: $scope.bookingType.Name,
+                        HasLocation: !!parseInt($scope.bookingType.HasLocation,10),
+                        MinutesMarginBeforeBooking: $scope.bookingType.MinutesMarginBeforeBooking,
+                        MinutesMarginAfterBooking: $scope.bookingType.MinutesMarginAfterBooking
+                    }
+                ).$promise
+&nbsp;
+                    // If everything went ok
+                    .then(<span class="fstat-no" title="function not covered" >function(response){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        $rootScope.FlashMessage = {</span>
+                            type: 'success',
+                            message: 'Bokningstypen "' + $scope.bookingType.Name + '" sparades med ett lyckat resultat'
+                        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        history.back();</span>
+&nbsp;
+                    // Something went wrong
+                    }).catch(<span class="fstat-no" title="function not covered" >function(response) {</span>
+&nbsp;
+                        // If there there was a foreign key reference
+<span class="cstat-no" title="statement not covered" >                        if (response.status == 409){</span>
+<span class="cstat-no" title="statement not covered" >                            $rootScope.FlashMessage = {</span>
+                                type: 'error',
+                                message:    'Det finns redan en bokningstyp som heter "' + $scope.bookingType.Name +
+                                '". Två bokningstyper kan inte heta lika.'
+                            };
+                        }
+&nbsp;
+                        // If there was a problem with the in-data
+                        else <span class="cstat-no" title="statement not covered" >if (response.status == 400 || response.status == 500){</span>
+<span class="cstat-no" title="statement not covered" >                            $rootScope.FlashMessage = {</span>
+                                type: 'error',
+                                message: 'Ett oväntat fel uppstod när bokningstypen skulle sparas'
+                            };
+                        }
+&nbsp;
+                        // If the entry was not found
+<span class="cstat-no" title="statement not covered" >                        if (response.status == 404) {</span>
+<span class="cstat-no" title="statement not covered" >                            $rootScope.FlashMessage = {</span>
+                                type: 'error',
+                                message: 'Bokningstypen "' + $scope.bookingType.Name + '" existerar inte längre. Hann kanske någon radera den?'
+                            };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                            history.back();</span>
+                        }
+                    });
+            };
+&nbsp;
+        /* Public methods END */
+&nbsp;
+&nbsp;
+        /* Initialization START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var bookingType = BookingType.get(</span>
+                {
+                    bookingTypeId: $routeParams.bookingTypeId
+                }
+            );
+&nbsp;
+            // In case bookingTypes cannot be fetched, display an error to user.
+<span class="cstat-no" title="statement not covered" >            bookingType.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $rootScope.FlashMessage = {</span>
+                    type: 'error',
+                    message: 'Bokningstypen kunde inte hämtas, var god försök igen.'
+                };
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            $scope.bookingType = bookingType;</span>
+&nbsp;
+        /* Initialization END */
+    })
+&nbsp;
+    // Delete Controller
+    .controller('BookingTypeDeleteCtrl', <span class="fstat-no" title="function not covered" >function($scope, $routeParams, BookingType, $location, $rootScope){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var that = this;</span>
+&nbsp;
+        /* Private methods START */
+&nbsp;
+        /* Private methods END */
+&nbsp;
+        /* Public methods START */
+&nbsp;
+            // Confirm deletion
+<span class="cstat-no" title="statement not covered" >            $scope.confirm = <span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+                // Delete bookingType
+<span class="cstat-no" title="statement not covered" >                BookingType.delete(</span>
+                    {
+                        bookingTypeId: $routeParams.bookingTypeId
+                    }
+                ).$promise
+&nbsp;
+                    // If everything went ok
+                    .then(<span class="fstat-no" title="function not covered" >function(response) {</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        $rootScope.FlashMessage = {</span>
+                            type: 'success',
+                            message: 'Bokningstypen "' + $scope.bookingType.Name + '" raderades med ett lyckat resultat'
+                        };
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        history.back();</span>
+                    })
+                    // Something went wrong
+                    .catch(<span class="fstat-no" title="function not covered" >function(response) {</span>
+&nbsp;
+                        // If there there was a foreign key reference
+<span class="cstat-no" title="statement not covered" >                        if (</span>
+                            response.status == 400 &amp;&amp;
+                            response.data.Message !== 'undefined' &amp;&amp;
+                            response.data.Message === 'Foreign key references exists'
+                        ){
+<span class="cstat-no" title="statement not covered" >                            $rootScope.FlashMessage = {</span>
+                                type: 'error',
+                                message:    'Bokningstypen kan inte raderas eftersom det finns' +
+                                            ' en bokning eller en resurs som refererar till bokningstypen'
+                            };
+                        }
+&nbsp;
+                        // If there was a problem with the in-data
+                        else <span class="cstat-no" title="statement not covered" >if (response.status == 400 || response.status == 500){</span>
+<span class="cstat-no" title="statement not covered" >                            $rootScope.FlashMessage = {</span>
+                                type: 'error',
+                                message: 'Ett oväntat fel uppstod när bokningstypen skulle tas bort'
+                            };
+                        }
+&nbsp;
+                        // If the entry was not found
+<span class="cstat-no" title="statement not covered" >                        if (response.status == 404) {</span>
+<span class="cstat-no" title="statement not covered" >                            $rootScope.FlashMessage = {</span>
+                                type: 'error',
+                                message: 'Bokningstypen "' + $scope.bookingType.Name + '" existerar inte längre. Hann kanske någon radera den?'
+                            };
+                        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                        history.back();</span>
+                });
+            };
+&nbsp;
+        /* Public methods END */
+&nbsp;
+        /* Initialization START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var bookingType = BookingType.get(</span>
+                {
+                    bookingTypeId: $routeParams.bookingTypeId
+                }
+            );
+&nbsp;
+            // In case bookingTypes cannot be fetched, display an error to user.
+<span class="cstat-no" title="statement not covered" >            bookingType.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $rootScope.FlashMessage = {</span>
+                    type: 'error',
+                    message: 'Bokningstypen kunde inte hämtas, var god försök igen.'
+                };
+            });
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            $scope.bookingType = bookingType;</span>
+&nbsp;
+        /* Initialization END */
+    });
+&nbsp;
+})();</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon May 25 2015 02:50:20 GMT+0200 (Västeuropa, sommartid)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

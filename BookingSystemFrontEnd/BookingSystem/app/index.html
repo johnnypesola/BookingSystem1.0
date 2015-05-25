@@ -26,8 +26,11 @@
 
       <header ng-controller="HeaderCtrl">
           <h1>Bokningssystemet</h1>
+          <!--
           <a class="header-button-add" href="" ng-click="displayAddForm(true)"></a>
           <a class="header-button-search" href="" ng-click="displaySearchForm(true)"></a>
+
+          -->
           <a class="header-button-user" href=""></a>
 
           <nav class="main-menu">
@@ -44,7 +47,7 @@
                   </li>
               </ul>
           </nav>
-
+<!--
           <section class="add-form-container" ng-show="addFormIsVisible">
               <h3>Skapa ny</h3>
               <div class="categories">
@@ -160,7 +163,7 @@
 
           <section class="log-out-container">
           </section>
-
+-->
       </header>
 
       <section class="flash-message-container" ng-controller="FlashMessageCtrl" ng-show="messageVisible">
@@ -233,7 +236,7 @@
         <script src="lib/moment-with-locales.min.js"></script>
 
         <!-- Angular UI Utils Validate lib -->
-        <script src="lib/ui-utils-validate.js"></script>
+        <!--<script src="lib/ui-utils-validate.js"></script>-->
 
         <!-- Other -->
         <script src="components/version/version.js"></script>

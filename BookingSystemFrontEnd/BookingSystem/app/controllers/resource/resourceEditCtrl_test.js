@@ -68,22 +68,10 @@ describe('module: bookingSystem.resource', function() {
 
      describe('ResourceEditCtrl controller', function(){
 
-         it('should call redirect() after abort() method', inject(function($controller, _Resource_) {
+         it('should call history.back() and create a FlashMessage after successful Resource editing', inject(function($rootScope, $controller, _Resource_, $routeParams) {
 
              // Spy on existing controller method
-             spyOn(ResourceEditCtrl, 'redirectToListPage');
-
-             // Exec method to be tested
-             $scope.abort();
-
-             // Check that page was redirected was called
-             expect(ResourceEditCtrl.redirectToListPage).toHaveBeenCalled();
-         }));
-
-         it('should call redirect() and create a FlashMessage after successful Resource editing', inject(function($rootScope, $controller, _Resource_, $routeParams) {
-
-             // Spy on existing controller method
-             spyOn(ResourceEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Mock scope variable
              $scope.resource = { Name : 'Test'};
@@ -106,7 +94,7 @@ describe('module: bookingSystem.resource', function() {
              expect($rootScope.FlashMessage).toBeDefined();
 
              // Check that page was redirected was called
-             expect(ResourceEditCtrl.redirectToListPage).toHaveBeenCalled();
+             expect(history.back).toHaveBeenCalled();
          }));
 
          it('should create a FlashMessage after duplicate Resource editing', inject(function($rootScope, $controller, _Resource_, $q) {
@@ -119,7 +107,7 @@ describe('module: bookingSystem.resource', function() {
              });
 
              // Spy on existing controller method
-             spyOn(ResourceEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Mock scope variable
              $scope.resource = { Name : 'Test' };
@@ -136,7 +124,7 @@ describe('module: bookingSystem.resource', function() {
              expect($rootScope.FlashMessage.message).toEqual('Det finns redan en resurs som heter "Test". Två resurser kan inte heta lika.');
 
              // Check that redirection was NOT called
-             expect(ResourceEditCtrl.redirectToListPage).not.toHaveBeenCalled();
+             expect(history.back).not.toHaveBeenCalled();
          }));
 
          it('should create a FlashMessage after unsuccessful Resource editing', inject(function($rootScope, $controller, _Resource_, $q) {
@@ -149,7 +137,7 @@ describe('module: bookingSystem.resource', function() {
              });
 
              // Spy on existing controller method
-             spyOn(ResourceEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Mock scope variable
              $scope.resource = { Name : 'Test' };
@@ -166,7 +154,7 @@ describe('module: bookingSystem.resource', function() {
              expect($rootScope.FlashMessage.message).toEqual('Ett oväntat fel uppstod när resursen skulle sparas');
 
              // Check that redirection was NOT called
-             expect(ResourceEditCtrl.redirectToListPage).not.toHaveBeenCalled();
+             expect(history.back).not.toHaveBeenCalled();
          }));
 
          it('should create a FlashMessage after unsuccessful Resource editing (resource deleted)', inject(function($rootScope, $controller, _Resource_, $q) {
@@ -179,7 +167,7 @@ describe('module: bookingSystem.resource', function() {
              });
 
              // Spy on existing controller method
-             spyOn(ResourceEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Mock scope variable
              $scope.resource = { Name : 'Test' };
@@ -196,7 +184,7 @@ describe('module: bookingSystem.resource', function() {
              expect($rootScope.FlashMessage.message).toEqual('Resursen "Test" existerar inte längre. Hann kanske någon radera den?');
 
              // Check that redirection was NOT called
-             expect(ResourceEditCtrl.redirectToListPage).toHaveBeenCalled();
+             expect(history.back).toHaveBeenCalled();
          }));
 
      // Tests END

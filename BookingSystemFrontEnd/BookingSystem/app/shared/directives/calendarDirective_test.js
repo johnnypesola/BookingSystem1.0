@@ -181,8 +181,8 @@ describe('directive: calendarDirective', function() {
 
         expect($scope.datedata.currentYear).toEqual(testCurrentDateObj.getFullYear());
         expect($scope.datedata.currentMonth).toEqual(testCurrentDateObj.getMonth());
-        expect($scope.datedata.currentMonthName).toEqual(testCurrentDateObj.monthNamesArray[testCurrentDateObj.getMonth()]);
-        expect($scope.datedata.currentDayName).toEqual(calendarController.currentDateObj.dayNamesArray[calendarController.currentMonthDay]);
+        expect($scope.datedata.currentMonthName).toEqual(moment(testCurrentDateObj).format('MMMM'));
+        expect($scope.datedata.currentDayName).toEqual(moment(testCurrentDateObj).format('dddd'));
         expect($scope.datedata.currentMonthNumberOfDays).toEqual(new Date(testCurrentDateObj.getFullYear(), testCurrentDateObj.getMonth() + 1, 0).getDate());
         expect($scope.datedata.calendarDays).toEqual(calendarController.calendarDaysArray);
     });

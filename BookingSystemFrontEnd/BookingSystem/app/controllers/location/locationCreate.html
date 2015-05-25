@@ -37,7 +37,7 @@
         </label>
         <input type="number" min="0" max="{{Int32MaxValue}}" name="bookingPricePerHour" ng-model="location.BookingPricePerHour" step="0.01" required>
 
-        <label>Marginal efter bokning (minuter)
+        <label>Marginal i minuter efter bokning
             <span ng-show="locationForm.minutesMarginAfterBooking.$error.number">Inget giltigt antal</span>
             <span ng-show="locationForm.minutesMarginAfterBooking.$error.max">Får vara max {{Int16MaxValue}}</span>
             <span ng-show="locationForm.minutesMarginAfterBooking.$error.min">Får vara minst 0</span>

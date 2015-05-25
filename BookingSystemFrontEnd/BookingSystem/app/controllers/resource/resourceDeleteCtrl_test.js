@@ -68,22 +68,10 @@ describe('module: bookingSystem.resource', function() {
 
     describe('ResourceDeleteCtrl controller', function(){
 
-        it('should call redirect() after abort() method', inject(function($controller, _Resource_) {
+        it('should call history.back() and create a FlashMessage after successful Resource Deleting', inject(function($rootScope, $controller, _Resource_, $routeParams) {
 
             // Spy on existing controller method
-            spyOn(ResourceDeleteCtrl, 'redirectToListPage');
-
-            // Exec method to be tested
-            $scope.abort();
-
-            // Check that page was redirected was called
-            expect(ResourceDeleteCtrl.redirectToListPage).toHaveBeenCalled();
-        }));
-
-        it('should call redirect() and create a FlashMessage after successful Resource Deleting', inject(function($rootScope, $controller, _Resource_, $routeParams) {
-
-            // Spy on existing controller method
-            spyOn(ResourceDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.resource = { Name : 'Test'};
@@ -105,7 +93,7 @@ describe('module: bookingSystem.resource', function() {
             expect($rootScope.FlashMessage).toBeDefined();
 
             // Check that page was redirected was called
-            expect(ResourceDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            expect(history.back).toHaveBeenCalled();
         }));
 
         it('should create a FlashMessage after protected Resource Deleteing', inject(function($rootScope, $controller, _Resource_, $q, $routeParams) {
@@ -118,7 +106,7 @@ describe('module: bookingSystem.resource', function() {
             });
 
             // Spy on existing controller method
-            spyOn(ResourceDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.resource = { Name : 'Test' };
@@ -139,7 +127,7 @@ describe('module: bookingSystem.resource', function() {
             ' en resursbokning som refererar till resursen');
 
             // Check that redirection was NOT called
-            expect(ResourceDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            expect(history.back).toHaveBeenCalled();
         }));
 
         it('should create a FlashMessage after unsuccessful (status 500) Resource Deleteing', inject(function($rootScope, $controller, _Resource_, $q, $routeParams) {
@@ -152,7 +140,7 @@ describe('module: bookingSystem.resource', function() {
             });
 
             // Spy on existing controller method
-            spyOn(ResourceDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.resource = { Name : 'Test' };
@@ -172,7 +160,7 @@ describe('module: bookingSystem.resource', function() {
             expect($rootScope.FlashMessage.message).toEqual('Ett oväntat fel uppstod när resursen skulle tas bort');
 
             // Check that redirection was NOT called
-            expect(ResourceDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            expect(history.back).toHaveBeenCalled();
         }));
 
         it('should create a FlashMessage after unsuccessful (status 400) Resource Deleteing', inject(function($rootScope, $controller, _Resource_, $q, $routeParams) {
@@ -185,7 +173,7 @@ describe('module: bookingSystem.resource', function() {
             });
 
             // Spy on existing controller method
-            spyOn(ResourceDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.resource = { Name : 'Test' };
@@ -205,7 +193,7 @@ describe('module: bookingSystem.resource', function() {
             expect($rootScope.FlashMessage.message).toEqual('Ett oväntat fel uppstod när resursen skulle tas bort');
 
             // Check that redirection was NOT called
-            expect(ResourceDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            expect(history.back).toHaveBeenCalled();
         }));
 
 
@@ -219,7 +207,7 @@ describe('module: bookingSystem.resource', function() {
             });
 
             // Spy on existing controller method
-            spyOn(ResourceDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.resource = { Name : 'Test' };
@@ -239,7 +227,7 @@ describe('module: bookingSystem.resource', function() {
             expect($rootScope.FlashMessage.message).toEqual('Resursen "Test" existerar inte längre. Hann kanske någon radera den?');
 
             // Check that redirection was NOT called
-            expect(ResourceDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            expect(history.back).toHaveBeenCalled();
         }));
 
         // Tests END

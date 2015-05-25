@@ -24,6 +24,9 @@
     /*
      'http://localhost:6796/api/'
      'http://192.168.1.4:8080/BookingSystem/api/');
+
+     BookingSystem.constant('API_URL', 'http://www.pesola.se:8080/BookingSystem/api/');
+     BookingSystem.constant('API_IMG_PATH_URL', 'http://www.pesola.se:8080/BookingSystem/');
      */
 
     // Define API url, used in services

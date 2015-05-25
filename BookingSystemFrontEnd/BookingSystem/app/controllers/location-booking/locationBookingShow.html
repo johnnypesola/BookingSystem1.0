@@ -1,6 +1,6 @@
-<section class="content-container" ng-controller="FurnituringShowCtrl">
+<section class="content-container" ng-controller="LocationBookingShowCtrl">
     <h2>
-        Visa Möblering
+        Visa Lokal/Plats-bokning
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
     <page-header-buttons
@@ -11,12 +11,40 @@
 
     <div class="show-container">
 
-        <h3>{{furnituring.Name}}</h3>
+        <h3>{{locationBooking.LocationName}}</h3>
 
         <table class="show-table">
             <tr>
-                <th>Namn</th>
-                <td>{{furnituring.Name}}</td>
+                <th>Starttid</th>
+                <td>{{locationBooking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+            </tr>
+            <tr>
+                <th>Sluttid</th>
+                <td>{{locationBooking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+            </tr>
+            <tr>
+                <th>Preliminär</th>
+                <td>{{locationBooking.Provisional | boolean}}</td>
+            </tr>
+            <tr>
+                <th>Lokal</th>
+                <td>{{locationBooking.LocationName}}</td>
+            </tr>
+            <tr>
+                <th>Möblering</th>
+                <td>{{locationBooking.FurnituringName}}</td>
+            </tr>
+            <tr>
+                <th>Antal personer</th>
+                <td>{{locationBooking.NumberOfPeople | count}}</td>
+            </tr>
+            <tr>
+                <th>Marginal i minuter efter bokning</th>
+                <td>{{locationBooking.MinutesMarginAfterBooking | minutes}}</td>
+            </tr>
+            <tr>
+                <th>Bokningspris</th>
+                <td>{{locationBooking.CalculatedBookingPrice | kr}}</td>
             </tr>
             <tr>
                 <th>Alternativ</th>

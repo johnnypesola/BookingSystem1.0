@@ -68,22 +68,10 @@ describe('module: bookingSystem.customer', function() {
 
     describe('CustomerDeleteCtrl controller', function(){
 
-        it('should call redirect() after abort() method', inject(function($controller, _Customer_) {
+        it('should call history.back() and create a FlashMessage after successful Customer Deleting', inject(function($rootScope, $controller, _Customer_, $routeParams) {
 
             // Spy on existing controller method
-            spyOn(CustomerDeleteCtrl, 'redirectToListPage');
-
-            // Exec method to be tested
-            $scope.abort();
-
-            // Check that page was redirected was called
-            expect(CustomerDeleteCtrl.redirectToListPage).toHaveBeenCalled();
-        }));
-
-        it('should call redirect() and create a FlashMessage after successful Customer Deleting', inject(function($rootScope, $controller, _Customer_, $routeParams) {
-
-            // Spy on existing controller method
-            spyOn(CustomerDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.customer = { Name : 'Test'};
@@ -105,7 +93,7 @@ describe('module: bookingSystem.customer', function() {
             expect($rootScope.FlashMessage).toBeDefined();
 
             // Check that page was redirected was called
-            expect(CustomerDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            expect(history.back).toHaveBeenCalled();
         }));
 
         it('should create a FlashMessage after protected Customer Deleteing', inject(function($rootScope, $controller, _Customer_, $q, $routeParams) {
@@ -118,7 +106,7 @@ describe('module: bookingSystem.customer', function() {
             });
 
             // Spy on existing controller method
-            spyOn(CustomerDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.customer = { Name : 'Test' };
@@ -138,8 +126,8 @@ describe('module: bookingSystem.customer', function() {
             expect($rootScope.FlashMessage.message).toEqual('Kunden kan inte raderas eftersom det finns' +
             ' en annan kund eller ett bokningstillfälle som refererar till kunden');
 
-            // Check that redirection was NOT called
-            expect(CustomerDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            // Check that redirection was called
+            expect(history.back).toHaveBeenCalled();
         }));
 
         it('should create a FlashMessage after unsuccessful (status 500) Customer Deleteing', inject(function($rootScope, $controller, _Customer_, $q, $routeParams) {
@@ -152,7 +140,7 @@ describe('module: bookingSystem.customer', function() {
             });
 
             // Spy on existing controller method
-            spyOn(CustomerDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.customer = { Name : 'Test' };
@@ -171,8 +159,8 @@ describe('module: bookingSystem.customer', function() {
             // Check that FlashMessage exists
             expect($rootScope.FlashMessage.message).toEqual('Ett oväntat fel uppstod när kunden skulle tas bort');
 
-            // Check that redirection was NOT called
-            expect(CustomerDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            // Check that redirection was called
+            expect(history.back).toHaveBeenCalled();
         }));
 
         it('should create a FlashMessage after unsuccessful (status 400) Customer Deleteing', inject(function($rootScope, $controller, _Customer_, $q, $routeParams) {
@@ -185,7 +173,7 @@ describe('module: bookingSystem.customer', function() {
             });
 
             // Spy on existing controller method
-            spyOn(CustomerDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.customer = { Name : 'Test' };
@@ -204,8 +192,8 @@ describe('module: bookingSystem.customer', function() {
             // Check that FlashMessage exists
             expect($rootScope.FlashMessage.message).toEqual('Ett oväntat fel uppstod när kunden skulle tas bort');
 
-            // Check that redirection was NOT called
-            expect(CustomerDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            // Check that redirection was called
+            expect(history.back).toHaveBeenCalled();
         }));
 
 
@@ -219,7 +207,7 @@ describe('module: bookingSystem.customer', function() {
             });
 
             // Spy on existing controller method
-            spyOn(CustomerDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.customer = { Name : 'Test' };
@@ -238,8 +226,8 @@ describe('module: bookingSystem.customer', function() {
             // Check that FlashMessage exists
             expect($rootScope.FlashMessage.message).toEqual('Kunden "Test" existerar inte längre. Hann kanske någon radera den?');
 
-            // Check that redirection was NOT called
-            expect(CustomerDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            // Check that redirection was called
+            expect(history.back).toHaveBeenCalled();
         }));
 
         // Tests END

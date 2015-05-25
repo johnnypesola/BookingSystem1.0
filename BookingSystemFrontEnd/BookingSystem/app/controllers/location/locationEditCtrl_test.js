@@ -110,22 +110,10 @@ describe('module: bookingSystem.location', function() {
 
      describe('LocationEditCtrl controller', function(){
 
-         it('should call redirect() after abort() method', inject(function($controller, _Location_) {
+         it('should call history.back() and create a FlashMessage after successful Location editing', inject(function($rootScope, $controller, _Location_, $routeParams) {
 
              // Spy on existing controller method
-             spyOn(LocationEditCtrl, 'redirectToListPage');
-
-             // Exec method to be tested
-             $scope.abort();
-
-             // Check that page was redirected was called
-             expect(LocationEditCtrl.redirectToListPage).toHaveBeenCalled();
-         }));
-
-         it('should call redirect() and create a FlashMessage after successful Location editing', inject(function($rootScope, $controller, _Location_, $routeParams) {
-
-             // Spy on existing controller method
-             spyOn(LocationEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Mock scope variable
              $scope.location = { Name : 'Test'};
@@ -148,7 +136,7 @@ describe('module: bookingSystem.location', function() {
              expect($rootScope.FlashMessage).toBeDefined();
 
              // Check that page was redirected was called
-             expect(LocationEditCtrl.redirectToListPage).toHaveBeenCalled();
+             expect(history.back).toHaveBeenCalled();
          }));
 
          it('should create a FlashMessage after duplicate Location editing', inject(function($rootScope, $controller, _Location_, $q) {
@@ -161,7 +149,7 @@ describe('module: bookingSystem.location', function() {
              });
 
              // Spy on existing controller method
-             spyOn(LocationEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Wait until location has been fetched and added to scope before proceeding
              LocationEditCtrl.location.$promise.then(function() {
@@ -183,7 +171,7 @@ describe('module: bookingSystem.location', function() {
                  expect($rootScope.FlashMessage.message).toEqual('Det finns redan en plats som heter "Test". Två platser kan inte heta lika.');
 
                  // Check that redirection was NOT called
-                 expect(LocationEditCtrl.redirectToListPage).not.toHaveBeenCalled();
+                 expect(history.back).toHaveBeenCalled();
 
              });
          }));
@@ -199,7 +187,7 @@ describe('module: bookingSystem.location', function() {
              });
 
              // Spy on existing controller method
-             spyOn(LocationEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Wait until location has been fetched and added to scope before proceeding
              LocationEditCtrl.location.$promise.then(function(){
@@ -219,7 +207,7 @@ describe('module: bookingSystem.location', function() {
                  expect($rootScope.FlashMessage.message).toEqual('Ett oväntat fel uppstod när platsen skulle sparas');
 
                  // Check that redirection was NOT called
-                 expect(LocationEditCtrl.redirectToListPage).not.toHaveBeenCalled();
+                 expect(history.back).toHaveBeenCalled();
 
              });
 
@@ -235,7 +223,7 @@ describe('module: bookingSystem.location', function() {
              });
 
              // Spy on existing controller method
-             spyOn(LocationEditCtrl, 'redirectToListPage');
+             spyOn(history, 'back');
 
              // Wait until location has been fetched and added to scope before proceeding
              LocationEditCtrl.location.$promise.then(function() {
@@ -255,7 +243,7 @@ describe('module: bookingSystem.location', function() {
                  expect($rootScope.FlashMessage.message).toEqual('Platsen "Test" existerar inte längre. Hann kanske någon radera den?');
 
                  // Check that redirection was NOT called
-                 expect(LocationEditCtrl.redirectToListPage).toHaveBeenCalled();
+                 expect(history.back).toHaveBeenCalled();
              });
          }));
 

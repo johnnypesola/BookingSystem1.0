@@ -33,8 +33,8 @@ describe('filter: commonFilters', function () {
     it('should display correct boolean', function () {
 
         // Use filter
-        var trueResult = $filter('boolean')('true');
-        var falseResult = $filter('boolean')('false');
+        var trueResult = $filter('boolean')(true);
+        var falseResult = $filter('boolean')(false);
 
         // Check result
         expect(trueResult).toBe('Ja');
@@ -79,7 +79,7 @@ describe('filter: commonFilters', function () {
         // Check result
         expect(resourceResult).toBe('Resurs');
         expect(mealResult).toBe('Måltid');
-        expect(locationResult).toBe('Plats');
+        expect(locationResult).toBe('Lokal/Plats');
 
         expect(wrongResult).toBe('Wrong');
     });

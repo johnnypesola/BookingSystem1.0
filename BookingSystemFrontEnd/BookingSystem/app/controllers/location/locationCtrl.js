@@ -509,8 +509,6 @@
                         // Save location furnituring
                         that.saveLocationFurnituring().finally(function(){
 
-                            console.log("here");
-
                             // Upload image
                             if(typeof $scope.location.ImageForUpload !== 'undefined'){
 

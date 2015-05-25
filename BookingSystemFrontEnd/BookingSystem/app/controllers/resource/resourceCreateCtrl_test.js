@@ -68,22 +68,10 @@ describe('module: bookingSystem.resource', function() {
 
     describe('ResourceCreateCtrl controller', function(){
 
-        it('should call redirect() after abort() method', inject(function($controller, _Resource_) {
-
-            // Spy on existing controller method
-            spyOn(ResourceCreateCtrl, 'redirectToListPage');
-
-            // Exec method to be tested
-            $scope.abort();
-
-            // Check that page was redirected was called
-            expect(ResourceCreateCtrl.redirectToListPage).toHaveBeenCalled();
-        }));
-
         it('should call redirect() and create a FlashMessage after successful Resource creation', inject(function($rootScope, $controller, _Resource_) {
 
             // Spy on existing controller method
-            spyOn(ResourceCreateCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.resource = { Name : 'Test' };
@@ -103,7 +91,7 @@ describe('module: bookingSystem.resource', function() {
             expect($rootScope.FlashMessage).toBeDefined();
 
             // Check that page was redirected was called
-            expect(ResourceCreateCtrl.redirectToListPage).toHaveBeenCalled();
+            expect(history.back).toHaveBeenCalled();
         }));
 
         it('should create a FlashMessage after duplicate Resource creation', inject(function($rootScope, $controller, _Resource_, $q) {
@@ -116,7 +104,7 @@ describe('module: bookingSystem.resource', function() {
             });
 
             // Spy on existing controller method
-            spyOn(ResourceCreateCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.resource = { Name : 'Test' };
@@ -133,7 +121,7 @@ describe('module: bookingSystem.resource', function() {
             expect($rootScope.FlashMessage.message).toEqual('Det finns redan en resurs som heter "Test". Två resurser kan inte heta lika.');
 
             // Check that redirection was NOT called
-            expect(ResourceCreateCtrl.redirectToListPage).not.toHaveBeenCalled();
+            expect(history.back).not.toHaveBeenCalled()
         }));
 
         it('should create a FlashMessage after unsuccessful Resource creation', inject(function($rootScope, $controller, _Resource_, $q) {
@@ -146,7 +134,7 @@ describe('module: bookingSystem.resource', function() {
             });
 
             // Spy on existing controller method
-            spyOn(ResourceCreateCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.resource = { Name : 'Test' };
@@ -163,7 +151,7 @@ describe('module: bookingSystem.resource', function() {
             expect($rootScope.FlashMessage.message).toEqual('Ett oväntat fel uppstod när resursen skulle sparas');
 
             // Check that redirection was NOT called
-            expect(ResourceCreateCtrl.redirectToListPage).not.toHaveBeenCalled();
+            expect(history.back).not.toHaveBeenCalled();
         }));
 
         // Tests END

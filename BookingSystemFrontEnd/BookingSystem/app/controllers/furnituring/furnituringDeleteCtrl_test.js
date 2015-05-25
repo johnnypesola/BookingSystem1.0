@@ -68,22 +68,10 @@ describe('module: bookingSystem.furnituring', function() {
 
     describe('FurnituringDeleteCtrl controller', function(){
 
-        it('should call redirect() after abort() method', inject(function($controller, _Furnituring_) {
+        it('should call history.back() and create a FlashMessage after successful Furnituring Deleting', inject(function($rootScope, $controller, _Furnituring_, $routeParams) {
 
             // Spy on existing controller method
-            spyOn(FurnituringDeleteCtrl, 'redirectToListPage');
-
-            // Exec method to be tested
-            $scope.abort();
-
-            // Check that page was redirected was called
-            expect(FurnituringDeleteCtrl.redirectToListPage).toHaveBeenCalled();
-        }));
-
-        it('should call redirect() and create a FlashMessage after successful Furnituring Deleting', inject(function($rootScope, $controller, _Furnituring_, $routeParams) {
-
-            // Spy on existing controller method
-            spyOn(FurnituringDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.furnituring = { Name : 'Test'};
@@ -105,7 +93,7 @@ describe('module: bookingSystem.furnituring', function() {
             expect($rootScope.FlashMessage).toBeDefined();
 
             // Check that page was redirected was called
-            expect(FurnituringDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            expect(history.back).toHaveBeenCalled();
         }));
 
         it('should create a FlashMessage after protected Furnituring Deleteing', inject(function($rootScope, $controller, _Furnituring_, $q, $routeParams) {
@@ -118,7 +106,7 @@ describe('module: bookingSystem.furnituring', function() {
             });
 
             // Spy on existing controller method
-            spyOn(FurnituringDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.furnituring = { Name : 'Test' };
@@ -138,8 +126,8 @@ describe('module: bookingSystem.furnituring', function() {
             expect($rootScope.FlashMessage.message).toEqual('Möbleringen kan inte raderas eftersom det finns' +
             ' en lokalbokning eller en lokalmöblering som refererar till möbleringen');
 
-            // Check that redirection was NOT called
-            expect(FurnituringDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            // Check that redirection was called
+            expect(history.back).toHaveBeenCalled();
         }));
 
         it('should create a FlashMessage after unsuccessful (status 500) Furnituring Deleteing', inject(function($rootScope, $controller, _Furnituring_, $q, $routeParams) {
@@ -152,7 +140,7 @@ describe('module: bookingSystem.furnituring', function() {
             });
 
             // Spy on existing controller method
-            spyOn(FurnituringDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.furnituring = { Name : 'Test' };
@@ -171,8 +159,8 @@ describe('module: bookingSystem.furnituring', function() {
             // Check that FlashMessage exists
             expect($rootScope.FlashMessage.message).toEqual('Ett oväntat fel uppstod när möbleringen skulle tas bort');
 
-            // Check that redirection was NOT called
-            expect(FurnituringDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            // Check that redirection was called
+            expect(history.back).toHaveBeenCalled();
         }));
 
         it('should create a FlashMessage after unsuccessful (status 400) Furnituring Deleteing', inject(function($rootScope, $controller, _Furnituring_, $q, $routeParams) {
@@ -185,7 +173,7 @@ describe('module: bookingSystem.furnituring', function() {
             });
 
             // Spy on existing controller method
-            spyOn(FurnituringDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.furnituring = { Name : 'Test' };
@@ -204,8 +192,8 @@ describe('module: bookingSystem.furnituring', function() {
             // Check that FlashMessage exists
             expect($rootScope.FlashMessage.message).toEqual('Ett oväntat fel uppstod när möbleringen skulle tas bort');
 
-            // Check that redirection was NOT called
-            expect(FurnituringDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            // Check that redirection was called
+            expect(history.back).toHaveBeenCalled();
         }));
 
 
@@ -219,7 +207,7 @@ describe('module: bookingSystem.furnituring', function() {
             });
 
             // Spy on existing controller method
-            spyOn(FurnituringDeleteCtrl, 'redirectToListPage');
+            spyOn(history, 'back');
 
             // Mock scope variable
             $scope.furnituring = { Name : 'Test' };
@@ -238,8 +226,8 @@ describe('module: bookingSystem.furnituring', function() {
             // Check that FlashMessage exists
             expect($rootScope.FlashMessage.message).toEqual('Möbleringen "Test" existerar inte längre. Hann kanske någon radera den?');
 
-            // Check that redirection was NOT called
-            expect(FurnituringDeleteCtrl.redirectToListPage).toHaveBeenCalled();
+            // Check that redirection was called
+            expect(history.back).toHaveBeenCalled();
         }));
 
         // Tests END

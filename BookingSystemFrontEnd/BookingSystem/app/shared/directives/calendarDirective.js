@@ -28,7 +28,7 @@
             that.currentMonth = that.currentDateObj.getMonth();
             that.currentMonthName = moment(that.currentDateObj).format('MMMM');
             that.currentMonthDay = that.currentDateObj.getDate();
-            that.currentMonthDayName = moment(that.currentDateObj).format('MMMM');
+            that.currentMonthDayName = moment(that.currentDateObj).format('dddd');
             that.currentMonthNumberOfDays = moment(that.currentDateObj).daysInMonth();
 
             that.currentMonthStartDateObj = new Date(that.currentYear, that.currentMonth, 1);

@@ -10,8 +10,7 @@
         [
             'bookingSystem.locationBookingServices',
             'bookingSystem.commonFilters',
-            'bookingSystem.commonDirectives',
-            'ui.validate'
+            'bookingSystem.commonDirectives'
         ]
     )
 
@@ -143,10 +142,6 @@
 
         /* Private methods START */
 
-        /* Private methods END */
-
-        /* Public methods START */
-
             that.getLocations = function(){
 
                 var deferred = $q.defer(),
@@ -247,8 +242,6 @@
                     })
             };
 
-
-
             // Save booking
             that.saveBooking = function(){
 
@@ -320,8 +313,6 @@
 
             };
 
-
-
             // Save locationBooking
             that.saveLocationBooking = function(){
 
@@ -375,6 +366,10 @@
 
                 return promise;
             };
+
+        /* Private methods END */
+
+        /* Public methods START */
 
             // Save booking and location booking
             $scope.save = function(){
@@ -444,6 +439,34 @@
 
         /* Private methods START */
 
+            that.initLocationBooking = function(){
+
+                $scope.locationBooking = LocationBooking.get(
+                    {
+                        locationBookingId: $routeParams.locationBookingId
+                    }
+                );
+
+                // Location booking was fetches successfully
+                $scope.locationBooking.$promise.then(function(){
+
+                    // Parse date variables
+                    $scope.StartDate = moment($scope.locationBooking.StartDate).format('YYYY-MM-DD');
+                    $scope.StartTime = moment($scope.locationBooking.StartTime).format('HH:mm');
+                    $scope.EndDate = moment($scope.locationBooking.EndDate).format('YYYY-MM-DD');
+                    $scope.EndTime = moment($scope.locationBooking.EndTime).format('HH:mm');
+                });
+
+                // In case locationBookings cannot be fetched, display an error to user.
+                $scope.locationBooking.$promise.catch(function(){
+
+                    $rootScope.FlashMessage = {
+                        type: 'error',
+                        message: 'Lokal/plats-bokningen kunde inte hämtas, var god försök igen.'
+                    };
+                });
+            };
+
         /* Private methods END */
 
         /* Public methods START */
@@ -506,22 +529,7 @@
 
         /* Initialization START */
 
-            var locationBooking = LocationBooking.get(
-                {
-                    locationBookingId: $routeParams.locationBookingId
-                }
-            );
-
-            // In case locationBookings cannot be fetched, display an error to user.
-            locationBooking.$promise.catch(function(){
-
-                $rootScope.FlashMessage = {
-                    type: 'error',
-                    message: 'Lokal/plats-bokningen kunde inte hämtas, var god försök igen.'
-                };
-            });
-
-            $scope.locationBooking = locationBooking;
+            that.initLocationBooking();
 
         /* Initialization END */
     })

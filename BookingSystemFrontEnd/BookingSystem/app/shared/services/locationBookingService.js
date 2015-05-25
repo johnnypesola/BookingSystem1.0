@@ -14,8 +14,8 @@
         .factory('LocationBooking', function($resource, API_URL){
 
             return $resource(
-                API_URL + 'LocationBooking',
-                {},
+                API_URL + 'LocationBooking/:locationBookingId',
+                {locationBookingId: '@locationBookingId'},
                 {
                     // Get bookings for specified day
                     /*queryDay: {
