@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\App_Extensions\DateExtensions.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem
+{
+    public static class DateExtensions
+    {
+
+        // Day extensions
+        public static DateTime StartOfDay(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, date.Day, 0, 0, 0, 0);
+        }
+
+        public static DateTime EndOfDay(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, date.Day, 23, 59, 59, 999);
+        }
+
+
+        // Month extensions
+
+        public static DateTime StartOfMonth(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, 1, 0, 0, 0, 0);
+
+
+        }
+
+        public static DateTime EndOfMonth(this DateTime date)
+        {
+            return new DateTime(date.Year, date.Month, DateTime.DaysInMonth(date.Year, date.Month), 23, 59, 59, 999);
+        }
+
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[27,13,27,71,0],[34,13,34,118,0],[14,13,14,78,1],[19,13,19,83,1]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\LocationService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class LocationService
+    {
+        // Fields
+        private LocationDAL _locationDAL;
+
+        // Properties
+        private LocationDAL LocationDAL
+        {
+            get
+            {
+                return _locationDAL ?? (_locationDAL = new LocationDAL());
+            }
+        }
+
+        // Methods
+        public void LocationDelete(Location Location)
+        {
+            LocationDelete(Location.LocationId);
+        }
+
+        public void LocationDelete(int LocationId)
+        {
+            if (LocationId &lt; 0)
+            {
+                throw new FormatException(&quot;Invalid LocationId&quot;);
+            }
+
+            // Check that the Location exists before deletion
+            Location Location = LocationDAL.GetLocationById(LocationId);
+
+            // If there is no Location
+            if (Location == null)
+            {
+                throw new DataBaseEntryNotFoundException(&quot;Location does not exist&quot;);
+            }
+
+            // Delete Location
+            LocationDAL.DeleteLocation(LocationId);
+        }
+
+        public Location GetLocation(int LocationId)
+        {
+            if (LocationId &lt; 0)
+            {
+                throw new ApplicationException(&quot;Invalid LocationId&quot;);
+            }
+
+            return LocationDAL.GetLocationById(LocationId);
+        }
+
+        public IEnumerable&lt;Location&gt; GetLocations()
+        {
+            return LocationDAL.GetLocations();
+        }
+
+        public IEnumerable&lt;Location&gt; GetPageWise(string sortColumn, int pageSize, int pageIndex, out int totalRowCount)
+        {
+            return LocationDAL.GetLocationsPageWise(sortColumn, pageSize, pageIndex, out totalRowCount);
+        }
+
+        public void SaveLocation(Location Location)
+        {
+            // Preparare validation return data
+            ICollection&lt;ValidationResult&gt; validationResults;
+
+            // Try to validate given data
+            if (Location.Validate(out validationResults))
+            {
+                // If a new Location should be created
+                if (Location.LocationId == 0)
+                {
+                    LocationDAL.InsertLocation(Location);
+                }
+                // Existing Location should be updated
+                else
+                {
+                    // Check that the Location exists before update
+                    if (LocationDAL.GetLocationById(Location.LocationId) == null)
+                    {
+                        throw new DataBaseEntryNotFoundException();
+                    }
+
+                    // Update Location
+                    LocationDAL.UpdateLocation(Location);
+                }
+            }
+            // Validation failed
+            else
+            {
+                // Create exception
+                ApplicationException exception = new ApplicationException(&quot;Location object contained invalid values.&quot;);
+
+                // Add validation data to exception.
+                exception.Data.Add(&quot;ValidationResults&quot;, validationResults);
+
+                throw exception;
+            }
+        }
+
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[26,13,26,49,0],[27,9,27,10,0],[33,17,33,65,0],[42,17,42,85,0],[53,17,53,70,0],[66,13,66,105,0],[88,25,88,68,0],[99,17,99,120,0],[102,17,102,76,0],[104,17,104,33,0],[19,17,19,75,1],[31,13,31,32,1],[37,13,37,73,1],[40,13,40,34,1],[46,13,46,52,1],[47,9,47,10,1],[51,13,51,32,1],[56,13,56,60,1],[61,13,61,47,1],[75,13,75,58,1],[78,17,78,46,1],[80,21,80,58,1],[86,21,86,82,1],[92,21,92,58,1]]);
+    </script>
+  </body>
+</html>

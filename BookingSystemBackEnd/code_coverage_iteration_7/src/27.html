@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\DAL\SharedDAL.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class SharedDAL : DALBase
+    {
+        public IEnumerable&lt;CalendarBookingDay&gt; CheckDayBookingsForPeriod(DateTime startTime, DateTime endTime, String type)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    // Declare List of objects
+                    List&lt;CalendarBookingDay&gt; calendarBookingDayReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    calendarBookingDayReturnList = new List&lt;CalendarBookingDay&gt;(100);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_BookingCheckDays&quot;, DALOptions.closedConnection);
+
+                    // Add parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@StartTime&quot;, SqlDbType.VarChar, 19).Value = startTime;
+                    cmd.Parameters.Add(&quot;@EndTime&quot;, SqlDbType.VarChar, 19).Value = endTime;
+                    cmd.Parameters.Add(&quot;@Type&quot;, SqlDbType.VarChar, 10).Value = type;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            calendarBookingDayReturnList.Add(
+                                new CalendarBookingDay
+                                {
+                                    // Create new Booking object from database values and add to list
+                                    StartTime = reader.GetSafeDateTime(reader.GetOrdinal(&quot;StartTime&quot;)),
+                                    EndTime = reader.GetSafeDateTime(reader.GetOrdinal(&quot;EndTime&quot;)),
+                                    Type = reader.GetSafeString(reader.GetOrdinal(&quot;Type&quot;))
+                                }
+                            );
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    calendarBookingDayReturnList.TrimExcess();
+
+                    // Return list
+                    return calendarBookingDayReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[61,17,61,22,0],[63,21,63,67,0],[15,13,15,18,1],[24,21,24,86,1],[27,21,27,101,1],[30,21,30,95,1],[31,21,31,91,1],[32,21,32,85,1],[35,21,35,39,1],[38,28,38,70,1],[43,29,51,31,1],[41,25,41,46,1],[56,21,56,63,1],[59,21,59,57,1],[66,9,66,10,1]]);
+    </script>
+  </body>
+</html>

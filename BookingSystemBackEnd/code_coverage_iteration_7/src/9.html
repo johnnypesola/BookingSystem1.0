@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Controllers\LocationBookingController.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using BookingSystem.Models;
+using System.Web.Http.Cors;
+using System.Data;
+using System.Text.RegularExpressions;
+
+namespace BookingSystem.Controllers
+{
+    [EnableCors(origins: &quot;*&quot;, headers: &quot;*&quot;, methods: &quot;*&quot;)]
+    public class LocationBookingBookingController : ApiController
+    {
+        
+        // Set up Service.
+        LocationBookingService locationBookingService = new LocationBookingService();  
+
+        // GET: api/LocationBooking
+        [Route(&quot;api/LocationBooking&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get()
+        {
+            try
+            {
+                IEnumerable&lt;LocationBooking&gt; locationBookings = locationBookingService.GetLocationBookings();
+
+                if (locationBookings == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(locationBookings);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // GET: api/LocationBooking/5
+        [Route(&quot;api/LocationBooking/{LocationBookingId:int}&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get(int LocationBookingId)
+        {
+            try
+            {
+                LocationBooking locationBooking = locationBookingService.GetLocationBooking(LocationBookingId);
+                if (locationBooking == null)
+                {
+                    return NotFound();
+                }
+                return Ok(locationBooking);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+            
+        }
+
+        // Get info if there are any bookings for a period
+        [Route(&quot;api/LocationBooking/period/{fromDate:datetime}/{toDate:datetime}/{moreOrLess}&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get(string fromDate, string toDate, String moreOrLess)
+        {
+            DateTime startTime, endTime;
+
+            try
+            {
+                startTime = Convert.ToDateTime(fromDate);
+                endTime = Convert.ToDateTime(toDate);
+
+                // Check how much data is requested
+                if (moreOrLess == &quot;more&quot;)
+                {
+                    // Get bookings
+                    IEnumerable&lt;LocationBooking&gt; bookings = locationBookingService.GetForPeriod(startTime, endTime);
+
+                    if (bookings == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(bookings);
+                }
+                else if (moreOrLess == &quot;less&quot;)
+                {
+                    // Get bookings
+                    IEnumerable&lt;CalendarBookingDay&gt; bookings = locationBookingService.CheckDayBookingsForPeriod(startTime, endTime);
+
+                    if (bookings == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(bookings);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // POST: api/LocationBooking
+        [Route(&quot;api/LocationBooking&quot;)]
+        [AcceptVerbs(&quot;POST&quot;)]
+        public IHttpActionResult Post(LocationBooking locationBooking)
+        {
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Try to save locationBooking
+            try
+            {
+                locationBookingService.SaveLocationBooking(locationBooking);
+            }
+            catch (DoubleBookingException)
+            {
+                return Conflict();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            // Respond that the booking was created and redirect
+            return Ok(locationBooking);
+        }
+
+        // DELETE: api/LocationBooking/5
+        [Route(&quot;api/LocationBooking/{LocationBookingId:int}&quot;)]
+        [AcceptVerbs(&quot;DELETE&quot;)]
+        public IHttpActionResult Delete(int LocationBookingId)
+        {
+            try
+            {
+                locationBookingService.LocationBookingDelete(LocationBookingId);
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[28,17,28,110,0],[30,17,30,46,0],[32,21,32,39,0],[35,17,35,45,0],[37,13,37,18,0],[39,17,39,46,0],[41,9,41,10,0],[53,21,53,39,0],[57,13,57,18,0],[59,17,59,46,0],[84,25,84,43,0],[89,22,89,47,0],[92,21,92,133,0],[94,21,94,42,0],[96,25,96,43,0],[99,21,99,41,0],[103,21,103,39,0],[106,13,106,18,0],[108,17,108,46,0],[120,17,120,47,0],[128,13,128,43,0],[130,17,130,35,0],[132,13,132,48,0],[134,17,134,54,0],[136,13,136,18,0],[138,17,138,46,0],[143,9,143,10,0],[152,17,152,81,0],[154,13,154,36,0],[156,17,156,37,0],[158,13,158,51,0],[160,17,160,35,0],[162,13,162,48,0],[164,17,164,54,0],[166,13,166,18,0],[168,17,168,46,0],[171,13,171,25,0],[172,9,172,10,0],[50,17,50,112,1],[51,17,51,45,1],[55,17,55,44,1],[62,9,62,10,1],[73,17,73,58,1],[74,17,74,54,1],[77,17,77,42,1],[80,21,80,117,1],[82,21,82,42,1],[87,21,87,41,1],[110,9,110,10,1],[118,13,118,37,1],[126,17,126,77,1],[142,13,142,40,1],[19,9,19,86,1]]);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Controllers\CustomerController.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using BookingSystem.Models;
+using System.Web.Http.Cors;
+using System.Data;
+
+namespace BookingSystem.Controllers
+{
+    [EnableCors(origins: &quot;*&quot;, headers: &quot;*&quot;, methods: &quot;*&quot;)]
+    public class CustomerController : ApiController
+    {
+        // Set up Service.
+        CustomerService customerService = new CustomerService();
+
+        // GET: api/Customer
+        [Route(&quot;api/Customer&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get()
+        {
+            try
+            {
+                IEnumerable&lt;Customer&gt; customers = customerService.GetCustomers();
+
+                if (customers == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(customers);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // GET: api/Customer/5
+        [Route(&quot;api/Customer/{CustomerId:int}&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get(int CustomerId)
+        {
+            try
+            {
+                Customer customer = customerService.GetCustomer(CustomerId);
+                if (customer == null)
+                {
+                    return NotFound();
+                }
+                return Ok(customer);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // POST: api/Customer
+        [Route(&quot;api/Customer&quot;)]
+        [AcceptVerbs(&quot;POST&quot;)]
+        public IHttpActionResult Post(Customer customer)
+        {
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Try to save customer
+            try
+            {
+                customerService.SaveCustomer(customer);
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DuplicateNameException)
+            {
+                return Conflict();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            // Respond that the booking was created and redirect
+            return Ok(customer); //CreatedAtRoute(&quot;DefaultApi&quot;, new { id = customer.CustomerId }, customer);
+        }
+
+        // DELETE: api/Customer/5
+        [Route(&quot;api/Customer/{CustomerId:int}&quot;)]
+        [AcceptVerbs(&quot;DELETE&quot;)]
+        public IHttpActionResult Delete(int CustomerId)
+        {
+            try
+            {
+                customerService.DeleteCustomer(CustomerId);
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[30,21,30,39,0],[35,13,35,18,0],[37,17,37,46,0],[51,21,51,39,0],[55,13,55,18,0],[57,17,57,46,0],[69,17,69,47,0],[77,13,77,51,0],[79,17,79,35,0],[81,13,81,43,0],[83,17,83,35,0],[85,13,85,48,0],[87,17,87,54,0],[89,13,89,18,0],[91,17,91,46,0],[96,9,96,10,0],[107,13,107,36,0],[109,17,109,37,0],[111,13,111,51,0],[113,17,113,35,0],[115,13,115,48,0],[117,17,117,54,0],[119,13,119,18,0],[121,17,121,46,0],[125,9,125,10,0],[26,17,26,82,1],[28,17,28,39,1],[33,17,33,38,1],[39,9,39,10,1],[48,17,48,77,1],[49,17,49,38,1],[53,17,53,37,1],[59,9,59,10,1],[67,13,67,37,1],[75,17,75,56,1],[95,13,95,33,1],[105,17,105,60,1],[124,13,124,25,1],[17,9,17,65,1]]);
+    </script>
+  </body>
+</html>

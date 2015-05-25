@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Controllers\LocationController.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using BookingSystem.Models;
+using System.Web.Http.Cors;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Web;
+using Newtonsoft.Json.Linq;
+
+namespace BookingSystem.Controllers
+{
+    [EnableCors(origins: &quot;*&quot;, headers: &quot;*&quot;, methods: &quot;*&quot;)]
+    public class LocationController : ApiController
+    {
+        // Shared variables
+        const string IMAGE_PATH = &quot;Content/upload/img/location&quot;;
+
+        // Set up Service.
+        LocationService locationService = new LocationService();
+
+        // GET: api/Location
+        [Route(&quot;api/Location&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get()
+        {
+            try
+            {
+                IEnumerable&lt;Location&gt; locations = locationService.GetLocations();
+
+                if (locations == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(locations);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // GET: api/Location/5
+        [Route(&quot;api/Location/{LocationId:int}&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get(int LocationId)
+        {
+            try
+            {
+                Location location = locationService.GetLocation(LocationId);
+                if (location == null)
+                {
+                    return NotFound();
+                }
+                return Ok(location);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // POST: api/Location
+        [Route(&quot;api/Location&quot;)]
+        [AcceptVerbs(&quot;POST&quot;)]
+        public IHttpActionResult Post(Location location)
+        {
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Try to save location
+            try
+            {
+                locationService.SaveLocation(location);
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DuplicateNameException)
+            {
+                return Conflict();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            // Respond that the booking was created and redirect
+            return Ok(location); //CreatedAtRoute(&quot;DefaultApi&quot;, new { id = location.LocationId }, location);
+        }
+
+        // DELETE: api/Location/5
+        [Route(&quot;api/Location/{LocationId:int}&quot;)]
+        [AcceptVerbs(&quot;DELETE&quot;)]
+        public IHttpActionResult Delete(int LocationId)
+        {
+            string UploadImagePath, imageLocation;
+
+            try
+            {
+                // Delete info from database
+                locationService.LocationDelete(LocationId);
+                
+                // Get uploadpath
+                UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@&quot;~/{0}&quot;, IMAGE_PATH));
+
+                // Build full image path
+                imageLocation = String.Format(&quot;{0}/{1}.jpg&quot;, UploadImagePath, LocationId);
+
+                // Remove uploaded file if it exists
+                if(File.Exists(@imageLocation))
+                {
+                    File.Delete(@imageLocation);
+                }
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }            
+
+            return Ok();
+        }
+
+        // POST a picture for a location
+        [Route(&quot;api/Location/image/{LocationId:int}&quot;)]
+        [AcceptVerbs(&quot;POST&quot;)]
+        [HttpPost]
+        public IHttpActionResult Post(int LocationId)
+        {
+            MemoryStream ms;
+            string base64string;
+            byte[] bytes;
+            Image image;
+            string UploadImagePath;
+            JObject returnData;
+
+            try
+            {
+                // Check that location with specific Id exists
+                Location location = locationService.GetLocation(LocationId);
+                if (location == null)
+                {
+                    return NotFound();
+                }
+
+                // Process image data
+                base64string = Request.Content.ReadAsStringAsync().Result;
+
+                bytes = Convert.FromBase64String(base64string);
+
+                using (ms = new MemoryStream(bytes))
+                {
+                    image = Image.FromStream(ms);
+
+                    // Check image dimensions
+                    if (
+                        image.Width &gt; 400 ||
+                        image.Height &gt; 400 ||
+                        image.Width &lt; 10 ||
+                        image.Height &lt; 10
+                       )
+                    {
+                        throw new Exception(&quot;Maximum image dimensions are: Width: 400px and Height: 400px. Minimum image dimensions are: Width: 10px and Height 10px.&quot;);
+                    }
+
+                    // Build uploadpath
+                    UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@&quot;~/{0}&quot;, IMAGE_PATH));
+
+                    // Save image
+                    image.Save(String.Format(&quot;{0}/{1}.jpg&quot;, UploadImagePath, LocationId), System.Drawing.Imaging.ImageFormat.Jpeg);
+                }
+
+                // Update location with image path.
+                location.ImageSrc = String.Format(&quot;{0}/{1}.jpg&quot;, IMAGE_PATH, LocationId);
+
+                locationService.SaveLocation(location);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            // Build return JSON object
+            returnData = JObject.Parse(String.Format(&quot;{{ &#39;imgpath&#39; : &#39;{0}/{1}.jpg&#39;}}&quot;, IMAGE_PATH, LocationId));
+
+            // Return path to uploaded image
+            return Ok(returnData);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[37,21,37,39,0],[42,13,42,18,0],[44,17,44,46,0],[58,21,58,39,0],[62,13,62,18,0],[64,17,64,46,0],[76,17,76,47,0],[84,13,84,51,0],[86,17,86,35,0],[88,13,88,43,0],[90,17,90,35,0],[92,13,92,48,0],[94,17,94,54,0],[96,13,96,18,0],[98,17,98,46,0],[103,9,103,10,0],[126,21,126,49,0],[129,13,129,36,0],[131,17,131,37,0],[133,13,133,51,0],[135,17,135,35,0],[137,13,137,48,0],[139,17,139,54,0],[141,13,141,18,0],[143,17,143,46,0],[147,9,147,10,0],[168,21,168,39,0],[188,25,188,169,0],[203,13,203,32,0],[205,17,205,46,0],[213,9,213,10,0],[33,17,33,82,1],[35,17,35,39,1],[40,17,40,38,1],[46,9,46,10,1],[55,17,55,77,1],[56,17,56,38,1],[60,17,60,37,1],[66,9,66,10,1],[74,13,74,37,1],[82,17,82,56,1],[102,13,102,33,1],[115,17,115,60,1],[118,17,118,107,1],[121,17,121,91,1],[124,17,124,48,1],[146,13,146,25,1],[165,17,165,77,1],[166,17,166,38,1],[172,17,172,75,1],[174,17,174,64,1],[176,17,176,22,1],[178,21,178,50,1],[181,21,186,25,1],[192,21,192,111,1],[195,21,195,132,1],[199,17,199,90,1],[201,17,201,56,1],[209,13,209,113,1],[212,13,212,35,1],[24,9,24,65,1]]);
+    </script>
+  </body>
+</html>

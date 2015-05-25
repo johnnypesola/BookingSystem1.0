@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\App_Extensions\ExceptionExtensions.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem
+{
+    public class DataBaseEntryNotFoundException : Exception
+    {
+        public DataBaseEntryNotFoundException(){}
+
+        public DataBaseEntryNotFoundException(string message)
+            : base(message){}
+
+        public DataBaseEntryNotFoundException(string message, Exception inner)
+            : base(message, inner){}
+    }
+
+    public class DoubleBookingException : Exception
+    {
+        public DoubleBookingException(){}
+
+        public DoubleBookingException(string message)
+            : base(message) {}
+
+        public DoubleBookingException(string message, Exception inner)
+            : base(message, inner) {}
+    }
+
+    public class ApprovedException : Exception
+    {
+        public ApprovedException() { }
+
+        public ApprovedException(string message)
+            : base(message) { }
+
+        public ApprovedException(string message, Exception inner)
+            : base(message, inner) { }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[10,9,10,48,0],[10,49,10,50,0],[15,9,16,35,0],[16,36,16,37,0],[21,9,21,40,0],[21,41,21,42,0],[23,9,24,28,0],[24,30,24,31,0],[26,9,27,35,0],[27,37,27,38,0],[32,9,32,35,0],[32,38,32,39,0],[37,9,38,35,0],[38,38,38,39,0],[12,9,13,28,1],[13,29,13,30,1],[34,9,35,28,1],[35,31,35,32,1]]);
+    </script>
+  </body>
+</html>

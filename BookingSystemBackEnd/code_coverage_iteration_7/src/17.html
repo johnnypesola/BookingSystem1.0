@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\CustomerService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class CustomerService
+    {
+    // Fields
+        private CustomerDAL _customerDAL;
+
+    // Properties
+        private CustomerDAL CustomerDAL {
+            get {
+                return _customerDAL ?? (_customerDAL = new CustomerDAL());
+            }
+        }
+
+    // Methods
+        public void DeleteCustomer(Customer customer)
+        {
+            DeleteCustomer(customer.CustomerId);
+        }
+
+        public void DeleteCustomer(int customerId)
+        {
+            if(customerId &lt; 0)
+            {
+                throw new ApplicationException(&quot;Ogiltigt kund-id p&#229;tr&#228;ffades vid borttagning.&quot;);
+            }
+
+            // Check that the customer exists before deletion
+            Customer customer = CustomerDAL.GetCustomerById(customerId);
+
+            // If there is no customer
+            if (customer == null)
+            {
+                throw new ApplicationException(&quot;Kunden &#228;r redan borttagen.&quot;);
+            }
+            // If there are bookings using this customer
+            else if (customer.TotalBookings &gt; 0)
+            {
+                throw new ApplicationException(String.Format(&quot;Det g&#229;r inte att ta ta bort kunden &#39;{0}&#39; eftersom det finns bokningar kopplade till den.&quot;, customer.Name));
+            }
+            // If there are child-customers to this customer
+            else if (customer.ChildCustomers &gt; 0)
+            {
+                throw new ApplicationException(String.Format(&quot;Det g&#229;r inte att ta ta bort kunden &#39;{0}&#39; eftersom det finns andra kunder som ing&#229;r i denna kund.&quot;, customer.Name));
+            }
+
+            // Delete customer
+            CustomerDAL.DeleteCustomer(customerId);
+
+        }
+
+        public Customer GetCustomer(int customerId)
+        {
+            if (customerId &lt; 0)
+            {
+                throw new ApplicationException(&quot;Ogiltigt kund-ID p&#229;tr&#228;ffades vid h&#228;mtning.&quot;);
+            }
+
+            return CustomerDAL.GetCustomerById(customerId);
+        }
+
+        public IEnumerable&lt;Customer&gt; GetCustomers()
+        {
+            return CustomerDAL.GetCustomers();
+        }
+
+        public IQueryable&lt;Customer&gt; GetCustomersPageWise(string sortColumns, int maximumRows, int startRowIndex, out int TotalRowCount)
+        {
+            // Calculate correct startpageIndex
+            int startPageIndex = (startRowIndex / maximumRows) + 1;
+
+            // Sort columns
+            string sortColumnNames = (sortColumns != null ? sortColumns.Split(&#39;,&#39;)[0] : &quot;&quot;);
+
+            // Get customers from DAL
+            return CustomerDAL.GetCustomersPageWise(sortColumnNames, maximumRows, startPageIndex, out TotalRowCount).AsQueryable();
+        }
+
+        public void SaveCustomer(Customer customer)
+        {
+            // Preparare validation return data
+            ICollection&lt;ValidationResult&gt; validationResults;
+
+            // Try to validate given data
+            if(customer.Validate(out validationResults))
+            {
+                // If a new customer should be created
+                if(customer.CustomerId == 0)
+                {
+                    CustomerDAL.InsertCustomer(customer);
+                }
+                // Existing customer should be updated
+                else
+                {
+                    // Check that the customer exists before update
+                    if(CustomerDAL.GetCustomerById(customer.CustomerId) == null)
+                    {
+                        throw new ApplicationException(String.Format(&quot;Kunden {0} som skulle uppdateras &#228;r tyv&#228;rr borttagen.&quot;, customer.Name));
+                    }
+
+                    // Update existing customer
+                    CustomerDAL.UpdateCustomer(customer);
+                }
+            }
+            // Validation failed
+            else
+            {
+                // Create exception
+                ApplicationException exception = new ApplicationException(&quot;Kundobjektet inneh&#246;ll felaktiga v&#228;rden. Var god f&#246;rs&#246;k igen.&quot;);
+                
+                // Add validation data to exception.
+                exception.Data.Add(&quot;ValidationResults&quot;, validationResults);
+
+                throw exception;
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[24,13,24,49,0],[25,9,25,10,0],[31,17,31,97,0],[40,17,40,78,0],[45,17,45,170,0],[50,17,50,178,0],[62,17,62,94,0],[76,13,76,68,0],[79,13,79,93,0],[82,13,82,132,0],[104,25,104,143,0],[115,17,115,139,0],[118,17,118,76,0],[120,17,120,33,0],[17,17,17,75,1],[29,13,29,31,1],[35,13,35,73,1],[38,13,38,34,1],[43,18,43,49,1],[48,18,48,50,1],[54,13,54,52,1],[56,9,56,10,1],[60,13,60,32,1],[65,13,65,60,1],[70,13,70,47,1],[91,13,91,57,1],[94,17,94,45,1],[96,21,96,58,1],[102,21,102,81,1],[108,21,108,58,1]]);
+    </script>
+  </body>
+</html>

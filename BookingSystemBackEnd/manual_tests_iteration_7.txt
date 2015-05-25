@@ -1,0 +1,71 @@
+### Manuella tester gjorda i Angular gränssnittet
+
+# Bokningstillfällen
+Går att visa Bokningskalenders månader med händelser | JA
+Går att visa Bokningskalenders dagar med händelser | DELVIS information saknas
+Går att visa Bokningslista händelser | JA
+Går att skapa bokningstillfälle | NEJ
+Går att redigera bokningstillfälle | NEJ
+Går att visa bokningstillfälle | JA
+Går att skapa lokalbokningar till bokningstillfället när den visas | JA
+Går att radera bokningstillfälle | NEJ
+
+# Lokaler
+Går att visa lista över lokaler | JA
+Går att redigera lokal | JA
+Går att lägga till lokal | JA 
+Går att radera lokal | JA
+Får rätt felmeddelande när man försöker spara lokal med lika namn som en annan | JA
+Får rätt felmeddelande när man försöker skapa lokal med lika namn som en annan | JA
+
+Går att spara plats för lokal | JA
+Går att visa lokaler på karta och klicka på dem för att få mera information | JA
+Går att ladda upp bild på lokal | DELVIS Webbläsaren förstår inte när en bild skrivs över.
+
+
+# Möbleringar
+Går att visa lista över möbleringar | JA
+Går att radera möblering | DELVIS Möbleringen går att radera men kan vidarebefordra en till visningläget där möbleringen inte längre finns
+Går att lägga till möblering | JA
+Går att Döpa om möblering | JA
+Får rätt felmeddelande när man försöker spara möblering med lika namn som en annan | JA
+Får rätt felmeddelande när man försöker skapa möblering med lika namn som en annan | JA
+
+Får rätt felmeddelande när man försöker radera möblering som används i lokal | JA
+
+# Resurser
+Går att visa lista över resurser | JA
+Går att radera resurs | JA
+Går att lägga till resurs | JA
+Går att Döpa om resurs | JA
+Får rätt felmeddelande när man försöker spara resurs med lika namn som en annan | JA
+Får rätt felmeddelande när man försöker skapa resurs med lika namn som en annan | JA
+
+Får rätt felmeddelande när man försöker radera resurs som är bokad | JA
+
+# Kunder
+Går att visa lista över kunder | JA
+Går att radera kunder | JA
+Går att lägga till kunder | JA, dock krångligt med POSTNR.
+Går att Döpa om kund | JA
+Får rätt felmeddelande när man försöker spara kund med lika namn som en annan | NEJ <- måste begränsas på något sätt
+Får rätt felmeddelande när man försöker skapa kund med lika namn som en annan | NEJ <- måste begränsas på något sätt
+
+# Lokalmöblering
+Går att lägga till Lokalmöblering | JA
+Går att radera Lokalmöblering | JA
+Går att spara högre antal personer än vad som anges lokalmöbleringens max antal. Måste till en databas constraint + angular.
+
+# Lokalbokning
+Går att visa lista över lokalbokningar | JA
+Går att radera lokalbokningar | NEJ
+Går att lägga till lokalbokningar | JA, går Dock att ange över max antal personer. Ingen Databas constraint eller angular constraint.
+Går att ändra lokalbokningar | NEJ
+
+
+# Bokningstyper
+Bokningstypers namn är unika | JA
+Går att ändra bokningstyp | JA
+Går att skapa bokningstyp | JA
+Går att radera bokningstyp | JA
+Går att inte att radera bokningstyper som har referenser | NEJ
