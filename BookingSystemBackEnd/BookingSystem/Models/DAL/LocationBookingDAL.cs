@@ -198,14 +198,13 @@ namespace BookingSystem.Models
                     SqlCommand cmd;
 
                     // Connect to database
-                    cmd = this.Setup("appSchema.usp_BookingUpdate", DALOptions.closedConnection);
+                    cmd = this.Setup("appSchema.usp_LocationBookingUpdate", DALOptions.closedConnection);
 
                     // Add in parameters for Stored procedure
                     cmd.Parameters.Add("@LocationBookingId", SqlDbType.Int).Value = locationBooking.LocationBookingId;
                     cmd.Parameters.Add("@BookingId", SqlDbType.Int).Value = locationBooking.BookingId;
                     cmd.Parameters.Add("@LocationId", SqlDbType.Int).Value = locationBooking.LocationId;
                     cmd.Parameters.Add("@FurnituringId", SqlDbType.Int).Value = locationBooking.FurnituringId;
-                    cmd.Parameters.Add("@Provisional", SqlDbType.Bit).Value = locationBooking.Provisional;
                     cmd.Parameters.Add("@StartTime", SqlDbType.SmallDateTime).Value = locationBooking.StartTime;
                     cmd.Parameters.Add("@EndTime", SqlDbType.SmallDateTime).Value = locationBooking.EndTime;
                     cmd.Parameters.Add("@NumberOfPeople", SqlDbType.SmallInt).Value = locationBooking.NumberOfPeople;
@@ -216,8 +215,12 @@ namespace BookingSystem.Models
                     // Execute insert to database
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception exception)
                 {
+                    if (exception.Message == "The location is already booked at the given time.")
+                    {
+                        throw new DoubleBookingException(exception.Message);
+                    }
                     // Throw exception
                     throw new ApplicationException(DAL_ERROR_MSG);
                 }
@@ -320,6 +323,9 @@ namespace BookingSystem.Models
                                 EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
                                 NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
                                 CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
+
+                                LocationName = reader.GetSafeString(reader.GetOrdinal("LocationName")),
+                                FurnituringName = reader.GetSafeString(reader.GetOrdinal("FurnituringName"))
                             };
                         }
                     }

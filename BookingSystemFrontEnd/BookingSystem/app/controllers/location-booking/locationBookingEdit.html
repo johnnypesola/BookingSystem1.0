@@ -51,10 +51,10 @@
         <label>Möblering
             <span ng-show="locationbookingForm.furnituring.$error.required && furniturings.length" class="green no-float">Var god ange</span>
         </label>
+
         <select name="furnituring" ng-disabled="!furniturings.length" ng-model="locationBooking.SelectedFurnituring" ng-options='furnituring as (furnituring.FurnituringName+ " (max " + furnituring.MaxPeople + " pers.)") for furnituring in furniturings' required>
             <option ng-show="!locationBooking.SelectedFurnituring" value="" >(Välj möblering)</option>
         </select>
-
 
         <label>Antal personer
             <span ng-show="locationbookingForm.numberOfPeople.$error.required && locationBooking.SelectedFurnituring" class="green">Var god ange</span>
@@ -64,7 +64,7 @@
         </label>
         <input type="number" min="0" ng-max="locationBooking.SelectedFurnituring.MaxPeople" name="numberOfPeople" ng-model="locationBooking.NumberOfPeople" required ng-disabled="!locationBooking.SelectedFurnituring">
         <div>
-            <button ng-click="save()" ng-disabled="!locationbookingForm.$valid">Skapa</button>
+            <button ng-click="save()" ng-disabled="!locationbookingForm.$valid">Spara</button>
             <button back-button>Avbryt</button>
         </div>
     </form>

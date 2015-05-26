@@ -433,13 +433,16 @@
     })
 
     // Edit Controller
-    .controller('LocationBookingEditCtrl', function($scope, $routeParams, $location, $rootScope, LocationBooking){
+    .controller('LocationBookingEditCtrl', function($scope, $routeParams, $location, $rootScope, LocationBooking, LocationFurnituring, Location, $q){
 
             var that = this;
 
         /* Private methods START */
 
             that.initLocationBooking = function(){
+
+                var deferred = $q.defer(),
+                    promise = deferred.promise;
 
                 $scope.locationBooking = LocationBooking.get(
                     {
@@ -455,6 +458,9 @@
                     $scope.StartTime = moment($scope.locationBooking.StartTime).format('HH:mm');
                     $scope.EndDate = moment($scope.locationBooking.EndDate).format('YYYY-MM-DD');
                     $scope.EndTime = moment($scope.locationBooking.EndTime).format('HH:mm');
+
+                    // Resolve promise
+                    deferred.resolve();
                 });
 
                 // In case locationBookings cannot be fetched, display an error to user.
@@ -465,6 +471,33 @@
                         message: 'Lokal/plats-bokningen kunde inte hämtas, var god försök igen.'
                     };
                 });
+
+                return promise;
+            };
+
+            that.getLocations = function(){
+
+                var deferred = $q.defer(),
+                    promise = deferred.promise;
+
+                // Get locations
+                $scope.locations = Location.query();
+
+                // Success
+                $scope.locations.$promise.then(function(){
+                    // Resolve promise
+                    deferred.resolve();
+                });
+
+                $scope.locations.$promise.catch(function(){
+                    $rootScope.FlashMessage = {
+                        type: 'error',
+                        message: 'Lokaler kunde inte hämtas.'
+                    };
+                });
+
+                // Return promise
+                return promise;
             };
 
         /* Private methods END */
@@ -477,8 +510,18 @@
                 // Save locationBooking
                 LocationBooking.save(
                     {
+                        /*
+                        BookingId: 0,
                         LocationBookingId: $routeParams.locationBookingId,
-                        Name: $scope.locationBooking.Name
+                        Name: $scope.locationBooking.Name*/
+
+                        BookingId: $scope.locationBooking.BookingId,
+                        LocationBookingId: $routeParams.locationBookingId,
+                        LocationId: $scope.locationBooking.LocationId,
+                        FurnituringId: $scope.locationBooking.SelectedFurnituring.FurnituringId,
+                        StartTime: moment($scope.StartDate + " " + $scope.StartTime).toDate(),
+                        EndTime: moment($scope.EndDate + " " + $scope.EndTime).toDate(),
+                        NumberOfPeople: $scope.locationBooking.NumberOfPeople
                     }
                 ).$promise
 
@@ -487,7 +530,7 @@
 
                         $rootScope.FlashMessage = {
                             type: 'success',
-                            message: 'Lokal/plats-bokningen "' + $scope.locationBooking.Name + '" sparades med ett lyckat resultat'
+                            message: 'Lokal/plats-bokningen sparades med ett lyckat resultat'
                         };
 
                         history.back();
@@ -499,8 +542,7 @@
                         if (response.status == 409){
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message:    'Det finns redan en lokal/plats-bokning som heter "' + $scope.locationBooking.Name +
-                                '". Två lokal/plats-bokningar kan inte heta lika.'
+                                message:    'Det finns redan en annan lokal/plats-bokning som krockar med den här bokningen.'
                             };
                         }
 
@@ -516,7 +558,7 @@
                         if (response.status == 404) {
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message: 'Lokal/plats-bokningen "' + $scope.locationBooking.Name + '" existerar inte längre. Hann kanske någon radera den?'
+                                message: 'Lokal/plats-bokningen existerar inte längre. Hann kanske någon radera den?'
                             };
 
                             history.back();
@@ -524,12 +566,57 @@
                     });
             };
 
+            $scope.updateFurniturings = function() {
+
+                var i;
+
+                // Get all available furniturings for selected location
+                if(!!$scope.locationBooking.LocationId){
+                    $scope.furniturings = LocationFurnituring.queryForLocation(
+                        {
+                            locationId: $scope.locationBooking.LocationId
+                        }
+                    );
+
+                    // If furniturings could not be fetched
+                    $scope.furniturings.$promise.catch(function(){
+                        $rootScope.FlashMessage = {
+                            type: 'error',
+                            message: 'Möbleringar för vald lokal kunde inte hämtas.'
+                        };
+                    })
+                        // If furniturings were fetch successfully
+                        .then(function(){
+
+                            // Show message in view if needed.
+                            $scope.showInfoAboutNoFurniturings = !$scope.furniturings.length;
+
+                            // Select correct furnituring which is defined in location booking.
+                            for(i = 0; i < $scope.furniturings.length; i++){
+                                if($scope.locationBooking.FurnituringId == $scope.furniturings[i].FurnituringId){
+                                    $scope.locationBooking.SelectedFurnituring =  $scope.furniturings[i];
+                                }
+                            }
+                        });
+                }
+                else {
+                    $scope.furnituring = [];
+                }
+            };
+
         /* Public methods END */
 
 
         /* Initialization START */
 
-            that.initLocationBooking();
+            that.initLocationBooking().then(function(){
+
+                that.getLocations().then(function(){
+
+                    $scope.updateFurniturings();
+                });
+            });
+
 
         /* Initialization END */
     })
@@ -560,7 +647,7 @@
 
                         $rootScope.FlashMessage = {
                             type: 'success',
-                            message: 'Lokal/plats-bokningen "' + $scope.locationBooking.Name + '" raderades med ett lyckat resultat'
+                            message: 'Lokal/plats-bokningen raderades med ett lyckat resultat'
                         };
 
                         history.back();
@@ -593,7 +680,7 @@
                         if (response.status == 404) {
                             $rootScope.FlashMessage = {
                                 type: 'error',
-                                message: 'Lokal/plats-bokningen "' + $scope.locationBooking.Name + '" existerar inte längre. Hann kanske någon radera den?'
+                                message: 'Lokal/plats-bokningen existerar inte längre. Hann kanske någon radera den?'
                             };
                         }
 

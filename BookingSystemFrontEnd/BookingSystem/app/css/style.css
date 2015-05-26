@@ -474,6 +474,7 @@ section.content-container {
     }
 
         section.content-container form h3, section.content-container .show-container h3 {
+            text-transform: none;
             font-size: 26px;
             color: #AAAAAA;
         }

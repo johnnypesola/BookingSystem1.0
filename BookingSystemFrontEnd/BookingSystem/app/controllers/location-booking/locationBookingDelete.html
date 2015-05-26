@@ -1,6 +1,6 @@
-<section class="content-container" ng-controller="FurnituringDeleteCtrl">
+<section class="content-container" ng-controller="LocationBookingDeleteCtrl">
     <h2>
-        Radera möblering
+        Radera Lokal/Plats-bokning
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
     <page-header-buttons
@@ -10,7 +10,44 @@
     ></page-header-buttons>
 
     <div class="align-center">
-    <p>Vill du verkligen radera möbleringen <strong class="text-dark-purple">{{furnituring.Name}}</strong>?</p>
+        <div class="show-container">
+            <h3>Vill du verkligen radera bokningen?</h3>
+            <table class="show-table">
+                <tr>
+                    <th>Starttid</th>
+                    <td>{{locationBooking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+                </tr>
+                <tr>
+                    <th>Sluttid</th>
+                    <td>{{locationBooking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+                </tr>
+                <tr>
+                    <th>Preliminär</th>
+                    <td>{{locationBooking.Provisional | boolean}}</td>
+                </tr>
+                <tr>
+                    <th>Lokal</th>
+                    <td>{{locationBooking.LocationName}}</td>
+                </tr>
+                <tr>
+                    <th>Möblering</th>
+                    <td>{{locationBooking.FurnituringName}}</td>
+                </tr>
+                <tr>
+                    <th>Antal personer</th>
+                    <td>{{locationBooking.NumberOfPeople | count}}</td>
+                </tr>
+                <tr>
+                    <th>Marginal i minuter efter bokning</th>
+                    <td>{{locationBooking.MinutesMarginAfterBooking | minutes}}</td>
+                </tr>
+                <tr>
+                    <th>Bokningspris</th>
+                    <td>{{locationBooking.CalculatedBookingPrice | kr}}</td>
+                </tr>
+            </table>
+        </div>
+
         <button ng-click="confirm()">Ja</button>
         <button back-button>Nej</button>
     </div>
