@@ -1,25 +1,25 @@
 /**
- * Created by jopes on 2015-04-12.
+ * Created by jopes on 2015-05-22.
  */
 
 (function(){
     // Declare module
-    angular.module('bookingSystem.bookingServices',
+    angular.module('bookingSystem.resourceBookingServices',
 
         // Dependencies
         [
             'ngResource'
         ])
 
-        .factory('Booking', function($resource, API_URL){
+        .factory('ResourceBooking', function($resource, API_URL){
 
             return $resource(
-                API_URL + 'Booking/:bookingId',
-                {bookingId: '@bookingId'},
+                API_URL + 'ResourceBooking/:resourceBookingId',
+                {locationBookingId: '@resourceBookingId'},
                 {
                     // Get bookings for a specified period
                     queryLessForPeriod: {
-                        url: API_URL + 'Booking/period/:fromDate/:toDate/less',
+                        url: API_URL + 'ResourceBooking/period/:fromDate/:toDate/less',
                         id: '@id',
                         method: 'GET',
                         isArray: true,
@@ -30,7 +30,7 @@
                     },
                     // Get bookings for a specified period
                     queryMoreForPeriod: {
-                        url: API_URL + 'Booking/period/:fromDate/:toDate/more',
+                        url: API_URL + 'ResourceBooking/period/:fromDate/:toDate/more',
                         id: '@id',
                         method: 'GET',
                         isArray: true,
@@ -41,13 +41,4 @@
                     }
                 });
         })
-
-        .factory('BookingType', function($resource, API_URL){
-
-            return $resource(
-                API_URL + 'BookingType/:bookingTypeId',
-                {bookingId: '@bookingTypeId'}
-            );
-        })
-
 })();

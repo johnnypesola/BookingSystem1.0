@@ -35,7 +35,7 @@
     BookingSystem.constant('UPLOAD_IMG_MAX_WIDTH', '400');
     BookingSystem.constant('UPLOAD_IMG_MAX_HEIGHT', '400');
     BookingSystem.constant('PHOTO_MISSING_SRC', 'img/icons/photo_missing.svg');
-    BookingSystem.constant('OPTIONS_MAX_PEOPLE', 2000);
+    BookingSystem.constant('OPTIONS_MAX_PEOPLE', 1000);
 
 
     BookingSystem.config(function($routeProvider) {
@@ -134,6 +134,9 @@
             when('/lokalbokningar/skapa/:bookingId', {
                 templateUrl: 'controllers/location-booking/locationBookingCreate.html'
             }).
+            when('/lokalbokningar/kalender', {
+                templateUrl: 'controllers/location-booking/locationBookingCalendar.html'
+            }).
 
             // Resources
             when('/resurser/visa/:resourceId', {
@@ -186,8 +189,7 @@
         $rootScope.regExp = {
             textField : new RegExp("^[0-9a-zA-ZåäöÅÄÖé\\-_&\.,~\\^@()/%\\s\!]*$"),
             postNumber : new RegExp("^[0-9]{3}\\s[0-9]{2}$"),
-            phoneNumber : new RegExp("^[0-9\\-\\s]*$"),
-
+            phoneNumber : new RegExp("^[0-9\\-\\s]*$")
         };
 
         // Image path
@@ -210,17 +212,4 @@
         moment.locale('sv');
     });
 
-
-    // Automatically convert all $http ISO 6801 date strings to date objects from backend (affected: $http $provider).
-    // Does not work well with tests!
-    /*
-    BookingSystem.config(["$httpProvider", function ($httpProvider) {
-        $httpProvider.defaults.transformResponse.push(function(responseData){
-
-            var dateObj = new Date();
-            dateObj.convertDateStringsToDates(responseData);
-            return responseData;
-        });
-    }]);
-    */
 })();

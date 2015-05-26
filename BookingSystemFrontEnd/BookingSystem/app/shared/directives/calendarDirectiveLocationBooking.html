@@ -1,0 +1,51 @@
+<section class="calendar-container">
+    <a change-month-button direction="prev" class="prev-month">&#8592;</a>
+    <h3>{{datedata.currentMonthName}} {{datedata.currentYear}}</h3>
+    <a change-month-button direction="next" class="next-month">&#8594;</a>
+
+    <div class="calendar-day-names">
+        <span>Mån</span>
+        <span>Tis</span>
+        <span>Ons</span>
+        <span>Tor</span>
+        <span>Fre</span>
+        <span>Lör</span>
+        <span>Sön</span>
+    </div>
+    <div class="calendar-day-numbers">
+        <a href="" ng-repeat="day in datedata.calendarDays" booking-calendar-day number="{{day.number}}" index="{{day.index}}" ng-class="day.cssClassName">
+            {{day.number}}
+        </a>
+    </div>
+
+    <section ng-show="datedata.bookings.length">
+        <h3>{{dateHeaderString}}</h3>
+
+        <table class="list-table" ng-show="datedata.bookings.length">
+            <tr>
+                <th>Starttid</th>
+                <th>Sluttid</th>
+                <th>Lokal</th>
+                <th>Preliminär</th>
+                <th>Möblering</th>
+                <th>Personer / Max</th>
+                <th>Marginal efter bokning</th>
+                <th>Pris</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="booking in datedata.bookings">
+                <td class="date">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                <td class="date">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+                <td>{{booking.LocationName}}</td>
+                <td>{{booking.Provisional | boolean}}</td>
+                <td>{{booking.FurnituringName}}</td>
+                <td class="align-right">{{booking.NumberOfPeople | count}} / {{booking.MaxPeople | count}}</td>
+                <td>{{booking.MinutesMarginAfterBooking | minutes}}</td>
+                <td>{{booking.CalculatedBookingPrice | kr}}</td>
+                <td class="align-right">
+                    <div item-action-buttons="booking.BookingId"></div>
+                </td>
+            </tr>
+        </table>
+    </section>
+</section>

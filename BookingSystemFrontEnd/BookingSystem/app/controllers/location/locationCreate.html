@@ -51,7 +51,7 @@
 
                 <div ng-show="furnituring.Selected" stop-event="click">
                     Max
-                    <select-max-people max-people-options="location.MaxPeople" use-model="furnituring.MaxPeople"></select-max-people>
+                    <select-max-people max-people-options="location.MaxPeople" ng-model="furnituring.MaxPeople" use-model="furnituring.MaxPeople" stop-parent-event="click"></select-max-people>
                     pers.
                 </div>
             </label>

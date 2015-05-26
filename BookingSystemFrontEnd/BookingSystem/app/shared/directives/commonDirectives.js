@@ -4,6 +4,12 @@
 
 
 (function(){
+
+    // Shared functions
+    var isValueEmpty = function(value) {
+        return angular.isUndefined(value) || value === '' || value === null || value !== value;
+    };
+
     // Declare module
     angular.module('bookingSystem.commonDirectives',
 
@@ -68,44 +74,62 @@
         .directive('selectMaxPeople', function(OPTIONS_MAX_PEOPLE) {
             return {
                 restrict: 'E',
+                require: 'ngModel',
                 replace: true,
                 template: '<div><span ng-show="isErrorVisible">Max {{maxPeopleOptions}}</span><select ng-model="model" ng-options="maxPeople for maxPeople in maxPeopleRange"></select></div>',
                 scope: {
                     model: '=useModel',
                     maxPeopleOptions: '=maxPeopleOptions'
                 },
-                controller: function($scope, $element, $attrs) {
+                link: function(scope, elem, attr, ctrl) {
                     var i,
                         that = this;
 
-                    $scope.isErrorVisible = false;
+                    scope.isErrorVisible = false;
 
                     that.generateOptions = function(){
 
-                        $scope.maxPeopleRange = [];
+                        scope.maxPeopleRange = [];
 
                         for(i = 0; i <= OPTIONS_MAX_PEOPLE; i++){
-                            $scope.maxPeopleRange.push(i);
+                            scope.maxPeopleRange.push(i);
                         }
                     };
 
-                /* Initialization START */
+                    /* Initialization START */
 
-                    $scope.model = $scope.model || 0;
+                    scope.model = scope.model || 0;
 
-                    $scope.$watch('maxPeopleOptions', function(){
-                        $scope.isErrorVisible = $scope.model > $scope.maxPeopleOptions;
+                    scope.$watch('maxPeopleOptions', function(){
 
-                        //that.generateOptions();
+                        if(scope.model > scope.maxPeopleOptions){
+                            scope.isErrorVisible = true;
+                            ctrl.$setValidity('dateTimeOutOfRange', false);
+                        }
+                        else {
+                            scope.isErrorVisible = false;
+                            ctrl.$setValidity('dateTimeOutOfRange', true);
+                        }
                     });
 
-                    $scope.$watch('model', function(){
-                        $scope.isErrorVisible = $scope.model > $scope.maxPeopleOptions;
+                    scope.$watch('model', function(){
+
+                        if(scope.model > scope.maxPeopleOptions){
+                            scope.isErrorVisible = true;
+                            ctrl.$setValidity('dateTimeOutOfRange', false);
+                        }
+                        else {
+                            scope.isErrorVisible = false;
+                            ctrl.$setValidity('dateTimeOutOfRange', true);
+                        }
                     });
 
                     that.generateOptions();
 
-                /* Initialization END */
+                    /* Initialization END */
+                },
+                controller: function($scope, $element, $attrs) {
+
                 }
             };
         })
@@ -279,6 +303,61 @@
             };
         })
 
+        .directive('ngMin', function() {
+            return {
+                restrict: 'A',
+                require: 'ngModel',
+                link: function(scope, elem, attr, ctrl) {
+                    scope.$watch(attr.ngMin, function(){
+                        ctrl.$setViewValue(ctrl.$viewValue);
+                    });
+                    var minValidator = function(value) {
+                        var min = scope.$eval(attr.ngMin) || 0;
+                        if (!isValueEmpty(value) && value < min) {
+                            ctrl.$setValidity('ngMin', false);
+                            return undefined;
+                        } else {
+                            ctrl.$setValidity('ngMin', true);
+                            return value;
+                        }
+                    };
+
+                    ctrl.$parsers.push(minValidator);
+                    ctrl.$formatters.push(minValidator);
+                }
+            };
+        })
+
+        .directive('ngMax', function() {
+                return {
+                    restrict: 'A',
+                    require: 'ngModel',
+                    link: function (scope, elem, attr, ctrl) {
+
+                        function isEmpty(value) {
+                            return angular.isUndefined(value) || value === '' || value === null || value !== value;
+                        }
+
+                        scope.$watch(attr.ngMax, function () {
+                            ctrl.$setViewValue(ctrl.$viewValue);
+                        });
+                        var maxValidator = function (value) {
+                            var max = scope.$eval(attr.ngMax) || Infinity;
+                            if (!isValueEmpty(value) && value > max) {
+                                ctrl.$setValidity('ngMax', false);
+                                return undefined;
+                            } else {
+                                ctrl.$setValidity('ngMax', true);
+                                return value;
+                            }
+                        };
+
+                        ctrl.$parsers.push(maxValidator);
+                        ctrl.$formatters.push(maxValidator);
+                    }
+                }
+        })
+
         .directive('validateDateTime', function () {
             return {
                 restrict: 'E',
@@ -313,7 +392,6 @@
                     };
 
                     // Add watches to all Date and Time input fields
-
                     scope.$watch('StartDate', function(newValue, oldValue){
                         validateDateTime();
                     }, true); //enable deep dirty checking

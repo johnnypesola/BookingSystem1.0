@@ -91,10 +91,10 @@
         <label>Antal personer
             <span ng-show="locationbookingForm.numberOfPeople.$error.required && locationBooking.SelectedFurnituring" class="green">Var god ange</span>
             <span ng-show="locationbookingForm.numberOfPeople.$error.number">Inget giltigt antal</span>
-            <span ng-show="locationBooking.NumberOfPeople > locationBooking.SelectedFurnituring.MaxPeople">Får vara max {{locationBooking.SelectedFurnituring.MaxPeople}}</span>
+            <span ng-show="locationbookingForm.numberOfPeople.$error.ngMax">Får vara max {{locationBooking.SelectedFurnituring.MaxPeople}}</span>
             <span ng-show="locationbookingForm.numberOfPeople.$error.min">Får vara minst 0</span>
         </label>
-        <input type="number" min="0" max="{{locationBooking.SelectedFurnituring.MaxPeople}}" name="numberOfPeople" ng-model="locationBooking.NumberOfPeople" required ng-disabled="!locationBooking.SelectedFurnituring">
+        <input type="number" min="0" ng-max="locationBooking.SelectedFurnituring.MaxPeople" name="numberOfPeople" ng-model="locationbookingForm.NumberOfPeople" required ng-disabled="!locationBooking.SelectedFurnituring">
         <div>
             <button ng-click="save()" ng-disabled="!locationbookingForm.$valid">Skapa</button>
             <button back-button>Avbryt</button>

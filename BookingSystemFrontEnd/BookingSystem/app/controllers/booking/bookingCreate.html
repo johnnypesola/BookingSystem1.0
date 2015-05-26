@@ -47,13 +47,6 @@
         <label>Rabatt på allt i bokning (%)</label>
         <select-percentage use-model="booking.Discount"></select-percentage>
 
-        <!--
-        <label>Betalningsform
-            <span ng-show="bookingForm.name.$error.required">Var god ange</span>
-            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
-        </label>
-        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name" required>
-        -->
         <label>Anteckningar
             <span ng-show="customerForm.notes.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
         </label>

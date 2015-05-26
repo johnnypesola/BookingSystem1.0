@@ -78,7 +78,7 @@ namespace BookingSystem.Models
 
         public IEnumerable<CalendarBookingDay> CheckDaysForPeriod(DateTime startTime, DateTime endTime)
         {
-            return SharedDAL.CheckDayBookingsForPeriod(startTime, endTime, "all");
+            return SharedDAL.CheckDayBookingsForPeriod(startTime, endTime, "booking");
         }
 
         public IQueryable<Booking> GetPageWise(string sortColumns, int maximumRows, int startRowIndex)

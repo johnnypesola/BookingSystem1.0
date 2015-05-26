@@ -89,6 +89,7 @@ namespace BookingSystem.Controllers
         }
 
         // Get detailed bookings for day
+        /*
         [Route("api/Booking/day/{date:datetime?}")]
         [AcceptVerbs("GET")]
         public IHttpActionResult Get(string date)
@@ -114,7 +115,8 @@ namespace BookingSystem.Controllers
             }
             
         }
-
+        */
+         
         // Get info if there are any bookings for a period
         [Route("api/Booking/period/{fromDate:datetime}/{toDate:datetime}/{moreOrLess}")]
         [AcceptVerbs("GET")]
