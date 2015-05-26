@@ -77,7 +77,7 @@ namespace BookingSystem.Controllers
                 if (moreOrLess == "more")
                 {
                     // Get bookings
-                    IEnumerable<LocationBooking> bookings = locationBookingService.GetForPeriod(startTime, endTime);
+                    IEnumerable<LocationBooking> bookings = locationBookingService.GetForPeriod(startTime.StartOfDay(), endTime.EndOfDay());
 
                     if (bookings == null)
                     {

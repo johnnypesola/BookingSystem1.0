@@ -18,7 +18,11 @@
         <h3>{{currentMonthName}} {{currentYear}}</h3>
         <a change-month-button direction="next" class="next-month">&#8594;</a>
 
-        <table class="list-table">
+        <div ng-show="noItemsFound">
+            <span class="info bg-light-blue">Inga bokningar hittades för månaden</span>
+        </div>
+
+        <table class="list-table" ng-show="bookings.length">
             <tr>
                 <th>Bokningsnamn</th>
                 <th>Starttid</th>
@@ -33,12 +37,12 @@
 
             </tr>
             <tr ng-repeat="booking in bookings">
-                <td>{{booking.Name}}</td>
+                <td ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyString}}</td>
                 <td class="date">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
                 <td class="date">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
                 <td>{{booking.Provisional | boolean}}</td>
                 <td>{{booking.BookingTypeName}}</td>
-                <td>{{booking.CustomerName}}</td>
+                <td ng-class="{'empty-string': !booking.CustomerName.length}">{{booking.CustomerName | emptyString}}</td>
                 <td class="align-right">{{booking.NumberOfPeople | count}}</td>
                 <td class="align-right">{{booking.CalculatedBookingPrice | kr}}</td>
                 <td class="align-right">{{booking.LocationBookings.length | count}}</td>

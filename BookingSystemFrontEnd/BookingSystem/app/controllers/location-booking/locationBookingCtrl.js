@@ -82,6 +82,11 @@
                         toDate: that.currentMonthEndDateObj.BookingSystemGetYearsMonthsDays()
                     });
 
+                // Success
+                that.locationBookings.$promise.then(function(){
+                    $scope.noItemsFound = !that.locationBookings.length;
+                });
+
                 // In case bookings cannot be fetched, display an error to user.
                 that.locationBookings.$promise.catch(function(){
 
@@ -326,8 +331,8 @@
                         LocationBookingId: 0,
                         LocationId: $scope.locationBooking.LocationId,
                         FurnituringId: $scope.locationBooking.SelectedFurnituring.FurnituringId,
-                        StartTime: moment($scope.StartDate + " " + $scope.StartTime).toDate(),
-                        EndTime: moment($scope.EndDate + " " + $scope.EndTime).toDate(),
+                        StartTime: moment($scope.StartDate + " " + $scope.StartTime).format(),
+                        EndTime: moment($scope.EndDate + " " + $scope.EndTime).format(),
                         NumberOfPeople: $scope.locationBooking.NumberOfPeople
                     }
                 ).$promise
@@ -510,17 +515,12 @@
                 // Save locationBooking
                 LocationBooking.save(
                     {
-                        /*
-                        BookingId: 0,
-                        LocationBookingId: $routeParams.locationBookingId,
-                        Name: $scope.locationBooking.Name*/
-
                         BookingId: $scope.locationBooking.BookingId,
                         LocationBookingId: $routeParams.locationBookingId,
                         LocationId: $scope.locationBooking.LocationId,
                         FurnituringId: $scope.locationBooking.SelectedFurnituring.FurnituringId,
-                        StartTime: moment($scope.StartDate + " " + $scope.StartTime).toDate(),
-                        EndTime: moment($scope.EndDate + " " + $scope.EndTime).toDate(),
+                        StartTime: moment($scope.StartDate + " " + $scope.StartTime).format(),
+                        EndTime: moment($scope.EndDate + " " + $scope.EndTime).format(),
                         NumberOfPeople: $scope.locationBooking.NumberOfPeople
                     }
                 ).$promise

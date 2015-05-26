@@ -83,6 +83,11 @@
                         toDate: that.currentMonthEndDateObj.BookingSystemGetYearsMonthsDays()
                     });
 
+                // Success
+                that.bookings.$promise.then(function(){
+                    $scope.noItemsFound = !that.bookings.length;
+                });
+
                 // In case bookings cannot be fetched, display an error to user.
                 that.bookings.$promise.catch(function(){
 

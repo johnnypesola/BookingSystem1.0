@@ -17,7 +17,11 @@
         <h3>{{currentMonthName}} {{currentYear}}</h3>
         <a change-month-button direction="next" class="next-month">&#8594;</a>
 
-        <table class="list-table">
+        <div ng-show="noItemsFound">
+            <span class="info bg-light-blue">Inga bokningar hittades för månaden</span>
+        </div>
+
+        <table class="list-table" ng-show="locationBookings.length">
             <tr>
                 <th>Starttid</th>
                 <th>Sluttid</th>
@@ -39,9 +43,9 @@
                 <td>{{locationBooking.FurnituringName}}</td>
                 <td class="align-right">{{locationBooking.NumberOfPeople | count}}</td>
                 <td class="align-right">{{locationBooking.MaxPeople | count}}</td>
-                <td>{{locationBooking.MinutesMarginAfterBooking}}</td>
-                <td>{{locationBooking.CalculatedBookingPrice | kr}}</td>
-                <td class="align-right">
+                <td class="align-right">{{locationBooking.MinutesMarginAfterBooking | minutes}}</td>
+                <td class="align-right">{{locationBooking.CalculatedBookingPrice | kr}}</td>
+                <td>
                     <div item-action-buttons="locationBooking.LocationBookingId"></div>
                 </td>
             </tr>

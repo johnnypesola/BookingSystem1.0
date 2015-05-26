@@ -13,17 +13,17 @@
             'bookingSystem.resourceBookingServices'
         ])
 
-    // Directive specific controllers START
+        // Directive specific controllers START
         .controller('BookingCalendarInternalCtrl', function($scope, $element, $attrs, Booking, LocationBooking, ResourceBooking, $rootScope) {
 
-        /* Declare variables START */
+            /* Declare variables START */
             var that = this,
                 i;
-                that.bookingType = $attrs.bookingType;
+            that.bookingType = $attrs.bookingType;
 
-        /* Declare variables END */
+            /* Declare variables END */
 
-        /* Object methods START */
+            /* Object methods START */
 
             that.declareBookingTypeService = function(){
 
@@ -186,9 +186,9 @@
                 });
             };
 
-        /* Object methods END */
+            /* Object methods END */
 
-        /* Scope methods START */
+            /* Scope methods START */
 
             $scope.changeToPreviousMonth = function(){
                 that.currentDateObj = new Date(that.currentYear, that.currentMonth - 1);
@@ -244,10 +244,10 @@
                 }
             };
 
-        /* Scope methods END */
+            /* Scope methods END */
 
 
-        /* Initialization START */
+            /* Initialization START */
 
             // Init date to now
             that.currentDateObj = new Date();
@@ -257,12 +257,12 @@
             that.declareBookingTypeService();
             that.updateCalendarContent();
 
-        /* Initialization END */
+            /* Initialization END */
 
-    })
-    // Directive specific controllers END
+        })
+        // Directive specific controllers END
 
-    // Directives START
+        // Directives START
         .directive('bookingCalendar', ['Booking', function(Booking) {
             return {
                 restrict: 'E',

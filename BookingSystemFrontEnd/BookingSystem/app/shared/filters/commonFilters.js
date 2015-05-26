@@ -42,6 +42,15 @@
             }
         })
 
+        .filter('emptyString', function() {
+            return function(text) {
+                if(text.length == 0){
+                    return '(Ingen)';
+                }
+                return text;
+            }
+        })
+
         .filter('bookingType', function() {
             return function(text) {
                 if(text === 'Resource'){

@@ -16,7 +16,7 @@
         <table class="show-table">
             <tr>
                 <th>Namn</th>
-                <td>{{booking.Name}}</td>
+                <td ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyString}}</td>
             </tr>
             <tr>
                 <th>Starttid</th>
@@ -36,7 +36,7 @@
             </tr>
             <tr>
                 <th>Namn på kund</th>
-                <td>{{booking.CustomerName}}</td>
+                <td ng-class="{'empty-string': !booking.CustomerName.length}">{{booking.CustomerName | emptyString}}</td>
             </tr>
             <tr>
                 <th>Antal personer</th>
