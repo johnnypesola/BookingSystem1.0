@@ -342,6 +342,7 @@ namespace BookingSystem.Models
                     cmd = this.Setup("appSchema.usp_BookingUpdate", DALOptions.closedConnection);
 
                     // Add in parameters for Stored procedure
+                    cmd.Parameters.Add("@BookingId", SqlDbType.Int).Value = booking.BookingId;
                     cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = booking.Name;
                     cmd.Parameters.Add("@BookingTypeId", SqlDbType.SmallInt).Value = booking.BookingTypeId;
                     cmd.Parameters.Add("@CustomerId", SqlDbType.Int).Value = booking.CustomerId;
@@ -349,8 +350,8 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add("@NumberOfPeople", SqlDbType.SmallInt).Value = booking.NumberOfPeople;
                     cmd.Parameters.Add("@Discount", SqlDbType.Decimal).Value = booking.Discount;
                     cmd.Parameters.Add("@Notes", SqlDbType.VarChar, 200).Value = booking.Notes;
-                    cmd.Parameters.Add("@ModifiedByUserId", SqlDbType.Int).Value = booking.ModifiedByUserId;
-                    cmd.Parameters.Add("@ResponsibleUserId", SqlDbType.Int).Value = booking.ResponsibleUserId;
+                    //cmd.Parameters.Add("@ModifiedByUserId", SqlDbType.Int).Value = booking.ModifiedByUserId;
+                    //cmd.Parameters.Add("@ResponsibleUserId", SqlDbType.Int).Value = booking.ResponsibleUserId;
 
                     // Open DB connection
                     connection.Open();

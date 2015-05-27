@@ -1,16 +1,20 @@
-<section class="content-container" ng-controller="BookingCreateCtrl">
+<section class="content-container" ng-controller="BookingEditCtrl">
     <h2>
-        Skapa Bokningstillfälle
+        Redigera Bokningstillfälle
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
     <page-header-buttons
-        show-calendar="true"
-        show-list="true"
-        show-add="true"
-        show-search="true"
-    ></page-header-buttons>
+            show-list="true"
+            show-add="true"
+            show-search="true">
+    </page-header-buttons>
 
     <form name="bookingForm">
+
+        <label>Namn på bokningstillfälle
+            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name">
 
         <label>Preliminär bokning</label>
         <div class="checkbox-radio-container" ng-init="booking.Provisional=1">
@@ -31,11 +35,6 @@
             <option value="">(Ingen)</option>
         </select>
 
-        <label>Namn på bokning
-            <span ng-show="bookingForm.name.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
-        </label>
-        <input type="text" name="name" ng-pattern="regExp.textField" ng-model="booking.Name">
-
         <label>Antal personer (st)
             <span ng-show="bookingForm.NumberOfPeople.$error.required" class="green">Var god ange</span>
             <span ng-show="bookingForm.NumberOfPeople.$error.number">Inget giltigt antal</span>
@@ -52,9 +51,36 @@
         </label>
         <textarea name="notes" ng-pattern="regExp.textField" ng-model="booking.Notes" maxlength="200"></textarea>
 
-
-        <button ng-click="save()" ng-disabled="!bookingForm.$valid">Skapa</button>
-        <button back-button>Avbryt</button>
-
+        <div ng-show="booking.LocationBookings">
+            <h2>Lokalbokningar <a add-to-content-button="lokalbokningar" add-argument="booking.BookingId" class="float-right" title="Lägg till lokalbokning"></a></h2>
+            <table class="list-table">
+                <tr>
+                    <th>Starttid</th>
+                    <th>Sluttid</th>
+                    <th>Lokal/Plats-namn</th>
+                    <th>Möblering</th>
+                    <th>Antal personer</th>
+                    <th>Bokningspris</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="locationBooking in booking.LocationBookings">
+                    <td class="date">{{locationBooking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                    <td class="date">{{locationBooking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                    <td>{{locationBooking.LocationName}}</td>
+                    <td>{{locationBooking.FurnituringName}}</td>
+                    <td class="align-right">{{locationBooking.NumberOfPeople | count}}</td>
+                    <td class="align-right">{{locationBooking.CalculatedBookingPrice | kr}}</td>
+                    <td class="align-right">
+                        <div item-action-buttons="locationBooking.LocationBookingId" object-type="lokalbokningar"></div>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </form>
+
+    <div>
+        <button ng-click="save()" ng-disabled="!bookingForm.$valid">Spara</button>
+        <button back-button>Avbryt</button>
+    </div>
+
 </section>

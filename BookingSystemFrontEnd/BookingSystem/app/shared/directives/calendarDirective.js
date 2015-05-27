@@ -72,8 +72,8 @@
                     var monthNumber;
 
                     // Add leading zero if needed
-                    dayNumber = ("0" + dayNumber).slice(-2);
-                    monthNumber = ("0" + (that.currentMonth + 1)).slice(-2);
+                    dayNumber = $BookSysUtil.String.addLeadingZero(dayNumber);
+                    monthNumber = $BookSysUtil.String.addLeadingZero(that.currentMonth + 1);
 
                     // Generate start of day date and end of day date objects.
                     var startOfDay = moment(that.currentYear + "-" + monthNumber + "-" + dayNumber + " 00:00").toDate();
@@ -137,8 +137,8 @@
                 // Get bookings
                 that.bookingsForMonthArray = that.bookingTypeService.queryLessForPeriod(
                     {
-                        fromDate: that.currentMonthStartDateObj.BookingSystemGetYearsMonthsDays(),
-                        toDate: that.currentMonthEndDateObj.BookingSystemGetYearsMonthsDays()
+                        fromDate: moment(that.currentMonthStartDateObj).format('YYYY-MM-DD'),
+                        toDate: moment(that.currentMonthEndDateObj).format('YYYY-MM-DD')
                     }
                 );
 
@@ -179,7 +179,7 @@
 
                 that.getBookingsForMonth(function(){
 
-                    that.currentDateObj.convertDateStringsToDates(that.bookingsForMonthArray);
+                    $BookSysUtil.Date.convertStringsToDates(that.bookingsForMonthArray);
 
                     that.prepareCalendarDays();
                     that.addVarsToScope();

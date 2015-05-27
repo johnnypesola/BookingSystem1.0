@@ -87,35 +87,6 @@ namespace BookingSystem.Controllers
             }
             
         }
-
-        // Get detailed bookings for day
-        /*
-        [Route("api/Booking/day/{date:datetime?}")]
-        [AcceptVerbs("GET")]
-        public IHttpActionResult Get(string date)
-        {
-            DateTime startTime, endTime;
-
-            try
-            {
-                startTime = Convert.ToDateTime(date).StartOfDay();
-                endTime = Convert.ToDateTime(date).EndOfDay();
-
-                IEnumerable<Booking> bookings = bookingService.GetForPeriod(startTime, endTime);
-
-                if (bookings == null)
-                {
-                    return NotFound();
-                }
-                return Ok(bookings);
-            }
-            catch
-            {
-                return InternalServerError();
-            }
-            
-        }
-        */
          
         // Get info if there are any bookings for a period
         [Route("api/Booking/period/{fromDate:datetime}/{toDate:datetime}/{moreOrLess}")]

@@ -62,7 +62,7 @@
                         for(i = 0; i <= 100; i++){
                             $scope.percentageRange.push({
                                 name: i + '%',
-                                value: i
+                                value: (i / 100)
                             })
                         }
 

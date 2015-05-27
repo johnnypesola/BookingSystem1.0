@@ -56,6 +56,7 @@ textarea {
     height: 100px !important;
     line-height: 22px !important;
     padding: 2px !important;
+    margin: 0 0 40px 0 !important;
 }
 
 button {
@@ -751,7 +752,7 @@ section.content-container {
 
         section.content-container h3 {
             text-transform: capitalize;
-            margin: 7px 0 14px 0;
+            margin: 14px 0;
             display: inline-block;
         }
 

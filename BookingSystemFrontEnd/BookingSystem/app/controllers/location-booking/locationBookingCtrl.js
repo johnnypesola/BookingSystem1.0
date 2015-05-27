@@ -78,8 +78,8 @@
                 // Store bookings in private variable
                 that.locationBookings = LocationBooking.queryMoreForPeriod(
                     {
-                        fromDate: that.currentMonthStartDateObj.BookingSystemGetYearsMonthsDays(),
-                        toDate: that.currentMonthEndDateObj.BookingSystemGetYearsMonthsDays()
+                        fromDate: moment(that.currentMonthStartDateObj).format('YYYY-MM-DD'),
+                        toDate: moment(that.currentMonthEndDateObj).format('YYYY-MM-DD')
                     });
 
                 // Success

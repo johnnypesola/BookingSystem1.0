@@ -52,10 +52,14 @@
                 templateUrl: 'controllers/booking/bookingShow.html'
             }).
             when('/bokningstillfallen/lista', {
-                templateUrl: 'controllers/booking/bookingList.html'
+                templateUrl: 'controllers/booking/bookingList.html',
+                reloadOnSearch: false
             }).
             when('/bokningstillfallen/kalender', {
                 templateUrl: 'controllers/booking/bookingCalendar.html'
+            }).
+            when('/bokningstillfallen/redigera/:bookingId', {
+                templateUrl: 'controllers/booking/bookingEdit.html'
             }).
             when('/bokningstillfallen/skapa', {
                 templateUrl: 'controllers/booking/bookingCreate.html'

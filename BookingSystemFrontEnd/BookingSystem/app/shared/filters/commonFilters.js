@@ -44,7 +44,7 @@
 
         .filter('emptyString', function() {
             return function(text) {
-                if(text.length == 0){
+                if(typeof text !== 'undefined' && text.length == 0){
                     return '(Ingen)';
                 }
                 return text;
