@@ -49,6 +49,8 @@
                 type: 'error',
                 message: 'Kunden kunde inte hämtas, var god försök igen.'
             };
+
+            $scope.customer = null;
         });
 
         $scope.customer = customer;
@@ -257,6 +259,8 @@
                     type: 'error',
                     message: 'Kunden kunde inte hämtas, var god försök igen.'
                 };
+
+                $scope.customer = null;
             });
 
             $scope.customer = that.customer;
@@ -348,6 +352,8 @@
                     type: 'error',
                     message: 'Kunden kunde inte hämtas, var god försök igen.'
                 };
+
+                $scope.customer = null;
             });
 
             $scope.customer = customer;

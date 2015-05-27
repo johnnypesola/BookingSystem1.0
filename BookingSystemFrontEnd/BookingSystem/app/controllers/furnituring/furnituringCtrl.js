@@ -48,6 +48,8 @@
                 type: 'error',
                 message: 'Möbleringen kunde inte hämtas, var god försök igen.'
             };
+
+            $scope.furnituring = null;
         });
 
         $scope.furnituring = furnituring;
@@ -60,17 +62,15 @@
 
         /* Private methods START */
 
-
         /* Private methods END */
 
 
+        /* Public methods START */
 
-            /* Public methods START */
+        /* Public methods END */
 
 
-            /* Public methods END */
-
-            /* Initialization START */
+        /* Initialization START */
 
             var furniturings = Furnituring.query();
 
@@ -85,7 +85,7 @@
 
             $scope.furniturings = furniturings;
 
-            /* Initialization END */
+        /* Initialization END */
     })
 
     // Create Controller
@@ -233,6 +233,8 @@
                     type: 'error',
                     message: 'Möbleringen kunde inte hämtas, var god försök igen.'
                 };
+
+                $scope.furnituring = null;
             });
 
             $scope.furnituring = furnituring;
@@ -324,6 +326,8 @@
                     type: 'error',
                     message: 'Möbleringen kunde inte hämtas, var god försök igen.'
                 };
+
+                $scope.furnituring = null;
             });
 
             $scope.furnituring = furnituring;

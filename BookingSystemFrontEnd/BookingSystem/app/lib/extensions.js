@@ -46,4 +46,3 @@ $BookSysUtil = {};
     $BookSysUtil.String.addLeadingZero = function(str){
         return ("0" + str).slice(-2);
     };
-

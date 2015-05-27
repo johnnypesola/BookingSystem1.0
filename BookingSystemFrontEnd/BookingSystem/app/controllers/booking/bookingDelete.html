@@ -1,0 +1,90 @@
+<section class="content-container" ng-controller="BookingDeleteCtrl" ng-show="booking">
+    <h2>
+        Radera Bokningstillfälle
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+        show-calendar="true"
+        show-list="true"
+        show-add="true"
+        show-search="true"
+    ></page-header-buttons>
+
+    <div class="align-center">
+        <div class="show-container">
+            <h3>Vill du verkligen radera bokningstillfället?</h3>
+
+            <table class="show-table">
+                <tr>
+                    <th>Namn</th>
+                    <td ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyString}}</td>
+                </tr>
+                <tr ng-show="booking.StartTime.length">
+                    <th>Starttid</th>
+                    <td>{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+                </tr>
+                <tr  ng-show="booking.EndTime.length">
+                    <th>Sluttid</th>
+                    <td>{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+                </tr>
+                <tr>
+                    <th>Preliminär</th>
+                    <td>{{booking.Provisional | boolean}}</td>
+                </tr>
+                <tr>
+                    <th>Typ av bokning</th>
+                    <td>{{booking.BookingTypeName}}</td>
+                </tr>
+                <tr>
+                    <th>Namn på kund</th>
+                    <td ng-class="{'empty-string': !booking.CustomerName.length}">{{booking.CustomerName | emptyString}}</td>
+                </tr>
+                <tr>
+                    <th>Antal personer</th>
+                    <td>{{booking.NumberOfPeople | count}}</td>
+                </tr>
+                <tr>
+                    <th>Bokningspris</th>
+                    <td>{{booking.CalculatedBookingPrice | kr}}</td>
+                </tr>
+                <tr>
+                    <th>Rabatt</th>
+                    <td>{{booking.Discount | percentage}}</td>
+                </tr>
+                <tr>
+                    <th>Anteckningar</th>
+                    <td>{{booking.Notes}}</td>
+                </tr>
+            </table>
+
+            <div ng-show="booking.LocationBookings">
+                <h2>Lokalbokningar som kommer att raderas</h2>
+
+                <table class="list-table">
+                    <tr>
+                        <th>Starttid</th>
+                        <th>Sluttid</th>
+                        <th>Lokal/Plats-namn</th>
+                        <th>Möblering</th>
+                        <th>Antal personer</th>
+                        <th>Bokningspris</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="locationBooking in booking.LocationBookings">
+                        <td class="date">{{locationBooking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                        <td class="date">{{locationBooking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                        <td>{{locationBooking.LocationName}}</td>
+                        <td>{{locationBooking.FurnituringName}}</td>
+                        <td class="align-right">{{locationBooking.NumberOfPeople | count}}</td>
+                        <td class="align-right">{{locationBooking.CalculatedBookingPrice | kr}}</td>
+                        <td class="align-right">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <button ng-click="confirm()">Ja</button>
+        <button back-button>Nej</button>
+    </div>
+</section>

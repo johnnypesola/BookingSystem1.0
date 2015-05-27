@@ -1,4 +1,4 @@
-<section class="content-container" ng-controller="BookingShowCtrl">
+<section class="content-container" ng-controller="BookingShowCtrl" ng-show="booking">
     <h2>
         Visa Bokningstillfälle
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
@@ -18,13 +18,13 @@
                 <th>Namn</th>
                 <td ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyString}}</td>
             </tr>
-            <tr>
+            <tr ng-show="booking.StartTime.length">
                 <th>Starttid</th>
-                <td>{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                <td>{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
             </tr>
-            <tr>
+            <tr ng-show="booking.EndTime.length">
                 <th>Sluttid</th>
-                <td>{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                <td>{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
             </tr>
             <tr>
                 <th>Preliminär</th>
@@ -60,9 +60,14 @@
             </tr>
         </table>
 
-        <div ng-show="booking.LocationBookings">
+        <div>
             <h2>Lokalbokningar <a add-to-content-button="lokalbokningar" add-argument="booking.BookingId" class="float-right" title="Lägg till lokalbokning"></a></h2>
-            <table class="list-table">
+
+            <div ng-show="noLocationBookingsFound">
+                <span class="info bg-light-blue">Inga lokal/plats-bokningar hittades för bokningstillfället</span>
+            </div>
+
+            <table class="list-table" ng-show="booking.LocationBookings">
                 <tr>
                     <th>Starttid</th>
                     <th>Sluttid</th>

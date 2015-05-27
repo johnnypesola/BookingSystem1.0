@@ -233,15 +233,24 @@
 
                     $scope.redirectToDeletePage = function(){
 
+                        // Clear eventual url parameters
+                        $location.url($location.path());
+
                         $location.path( that.getObjectType() + "/radera/" + $scope.id );
                     };
 
                     $scope.redirectToEditPage = function(){
 
+                        // Clear eventual url parameters
+                        $location.url($location.path());
+
                         $location.path( that.getObjectType() + "/redigera/" + $scope.id );
                     };
 
                     $scope.redirectToShowPage = function(){
+
+                        // Clear eventual url parameters
+                        $location.url($location.path());
 
                         $location.path( that.getObjectType() + "/visa/" + $scope.id );
                     };

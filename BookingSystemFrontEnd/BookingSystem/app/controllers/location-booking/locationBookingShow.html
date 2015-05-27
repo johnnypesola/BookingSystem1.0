@@ -1,9 +1,10 @@
-<section class="content-container" ng-controller="LocationBookingShowCtrl">
+<section class="content-container" ng-controller="LocationBookingShowCtrl" ng-show="locationBooking">
     <h2>
         Visa Lokal/Plats-bokning
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
     <page-header-buttons
+            show-calendar="true"
             show-list="true"
             show-add="true"
             show-search="true"
@@ -51,6 +52,7 @@
                 <td><div class="place-left" item-action-buttons="locationBooking.LocationBookingId"></div></td>
             </tr>
         </table>
+
 
     </div>
 

@@ -1,4 +1,4 @@
-<section class="content-container" ng-controller="ResourceDeleteCtrl">
+<section class="content-container" ng-controller="ResourceDeleteCtrl" ng-show="resource">
     <h2>
         Radera resurs
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
@@ -10,7 +10,7 @@
     ></page-header-buttons>
 
     <div class="align-center">
-    <p>Vill du verkligen radera resursen <strong class="text-dark-purple">{{resource.Name}}</strong>?</p>
+    <p>Vill du verkligen radera Resursen <strong class="text-dark-purple">{{resource.Name}}</strong>?</p>
         <button ng-click="confirm()">Ja</button>
         <button back-button>Nej</button>
     </div>

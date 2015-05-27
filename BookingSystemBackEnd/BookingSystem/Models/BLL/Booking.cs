@@ -57,9 +57,9 @@ namespace BookingSystem.Models
 
         public decimal CalculatedBookingPrice { get; set; }
 
-        public DateTime StartTime { get; set; }
+        public DateTime? StartTime { get; set; }
 
-        public DateTime EndTime { get; set; }
+        public DateTime? EndTime { get; set; }
 
         // Extra field for children arrays
         public IEnumerable<LocationBooking> LocationBookings { get; set; }

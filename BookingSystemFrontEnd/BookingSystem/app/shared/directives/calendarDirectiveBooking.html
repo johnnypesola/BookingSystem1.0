@@ -33,12 +33,12 @@
 
             </tr>
             <tr ng-repeat="booking in datedata.bookings">
-                <td>{{booking.Name}}</td>
+                <td ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyString}}</td>
                 <td class="date">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
                 <td class="date">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
                 <td>{{booking.Provisional | boolean}}</td>
                 <td>{{booking.BookingTypeName}}</td>
-                <td>{{booking.CustomerName}}</td>
+                <td ng-class="{'empty-string': !booking.CustomerName.length}">{{booking.CustomerName | emptyString}}</td>
                 <td class="align-right">{{booking.NumberOfPeople | count}}</td>
 
                 <td class="align-right">

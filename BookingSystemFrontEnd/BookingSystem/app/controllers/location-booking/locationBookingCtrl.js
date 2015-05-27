@@ -46,8 +46,10 @@
 
             $rootScope.FlashMessage = {
                 type: 'error',
-                message: 'Möbleringen kunde inte hämtas, var god försök igen.'
+                message: 'Lokal/Plats-bokningen kunde inte hämtas, var god försök igen.'
             };
+
+            $scope.locationBooking = null;
         });
 
         $scope.locationBooking = locationBooking;
@@ -56,13 +58,26 @@
     })
 
     // List Controller
-    .controller('LocationBookingListCtrl', function($scope, LocationBooking, $rootScope){
+    .controller('LocationBookingListCtrl', function($scope, LocationBooking, $rootScope, $location){
             var that = this;
             var currentDateObj;
 
             /* Private methods START */
 
             that.initDateVariables = function () {
+
+                // Get date strings from url params
+                var yearParam = $location.search().ar;
+                var monthParam = $location.search().manad;
+
+                // Convert url params to current date object, with fallback.
+                if(typeof yearParam !== 'undefined' && typeof monthParam !== 'undefined') {
+                    currentDateObj = moment(yearParam + "-" + $BookSysUtil.String.addLeadingZero(+monthParam + 1) + "-01").toDate();
+                }
+                else {
+                    currentDateObj = new Date();
+                }
+
                 that.currentYear = currentDateObj.getFullYear();
                 that.currentMonth = currentDateObj.getMonth();
                 that.currentMonthName = moment(currentDateObj).format('MMMM');
@@ -111,7 +126,18 @@
 
             /* Public methods START */
             $scope.changeToPreviousMonth = function(){
-                currentDateObj = new Date(that.currentYear, that.currentMonth - 1);
+
+                // Year overlap adjustment code
+                if(that.currentMonth == 0) {
+                    that.currentMonth = 11;
+                    that.currentYear -= 1;
+                }
+                else {
+                    that.currentMonth -= 1;
+                }
+
+                $location.search('ar', that.currentYear);
+                $location.search('manad', that.currentMonth);
 
                 that.initDateVariables();
                 that.getLocationBookings();
@@ -119,7 +145,9 @@
             };
 
             $scope.changeToNextMonth = function(){
-                currentDateObj = new Date(that.currentYear, that.currentMonth + 1);
+
+                $location.search('ar', that.currentYear);
+                $location.search('manad', that.currentMonth + 1);
 
                 that.initDateVariables();
                 that.getLocationBookings();
@@ -157,6 +185,7 @@
 
                 // Success
                 $scope.locations.$promise.then(function(){
+
                     // Resolve promise
                     deferred.resolve();
                 });
@@ -459,9 +488,9 @@
                 $scope.locationBooking.$promise.then(function(){
 
                     // Parse date variables
-                    $scope.StartDate = moment($scope.locationBooking.StartDate).format('YYYY-MM-DD');
+                    $scope.StartDate = moment($scope.locationBooking.StartTime).format('YYYY-MM-DD');
                     $scope.StartTime = moment($scope.locationBooking.StartTime).format('HH:mm');
-                    $scope.EndDate = moment($scope.locationBooking.EndDate).format('YYYY-MM-DD');
+                    $scope.EndDate = moment($scope.locationBooking.EndTime).format('YYYY-MM-DD');
                     $scope.EndTime = moment($scope.locationBooking.EndTime).format('HH:mm');
 
                     // Resolve promise
@@ -475,6 +504,8 @@
                         type: 'error',
                         message: 'Lokal/plats-bokningen kunde inte hämtas, var god försök igen.'
                     };
+
+                    $scope.locationBooking = null;
                 });
 
                 return promise;
@@ -705,6 +736,8 @@
                     type: 'error',
                     message: 'Lokal/plats-bokningen kunde inte hämtas, var god försök igen.'
                 };
+
+                $scope.locationBooking = null;
             });
 
             $scope.locationBooking = locationBooking;

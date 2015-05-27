@@ -1,12 +1,13 @@
-<section class="content-container" ng-controller="LocationBookingDeleteCtrl">
+<section class="content-container" ng-controller="LocationBookingDeleteCtrl" ng-show="locationBooking">
     <h2>
         Radera Lokal/Plats-bokning
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
     <page-header-buttons
-            show-list="true"
-            show-add="true"
-            show-search="true"
+        show-calendar="true"
+        show-list="true"
+        show-add="true"
+        show-search="true"
     ></page-header-buttons>
 
     <div class="align-center">

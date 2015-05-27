@@ -39,6 +39,18 @@ namespace BookingSystem
             return (!reader.IsDBNull(columnIndex) ? reader.GetDateTime(columnIndex) : new DateTime() );
         }
 
+        public static DateTime? GetSafeNullableDateTime(this SqlDataReader reader, int columnIndex)
+        {
+            if (!reader.IsDBNull(columnIndex))
+            {
+                return reader.GetDateTime(columnIndex);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public static bool GetSafeBoolean(this SqlDataReader reader, int columnIndex)
         {
             return (!reader.IsDBNull(columnIndex) ? reader.GetBoolean(columnIndex) : false);

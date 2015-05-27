@@ -48,6 +48,8 @@
                 type: 'error',
                 message: 'Bokningstypen kunde inte hämtas, var god försök igen.'
             };
+
+            $scope.bookingType = null;
         });
 
         $scope.bookingType = bookingType;
@@ -247,6 +249,8 @@
                     type: 'error',
                     message: 'Bokningstypen kunde inte hämtas, var god försök igen.'
                 };
+
+                $scope.bookingType = null;
             });
 
             $scope.bookingType = bookingType;
@@ -338,6 +342,8 @@
                     type: 'error',
                     message: 'Bokningstypen kunde inte hämtas, var god försök igen.'
                 };
+
+                $scope.bookingType = null;
             });
 
             $scope.bookingType = bookingType;

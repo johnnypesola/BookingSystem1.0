@@ -43,6 +43,12 @@
             }
         );
 
+        // Success
+        booking.$promise.then(function(){
+
+            $scope.noLocationBookingsFound = !booking.LocationBookings.length;
+        });
+
         // In case bookings cannot be fetched, display an error to user.
         booking.$promise.catch(function(){
 
@@ -50,9 +56,107 @@
                 type: 'error',
                 message: 'Bokningstillfället kunde inte hämtas, var god försök igen.'
             };
+
+            $scope.booking = null;
         });
 
         $scope.booking = booking;
+
+        /* Initialization END */
+    })
+
+    .controller('BookingDeleteCtrl', function($scope, $routeParams, $location, $rootScope, Booking, Redirect){
+
+        var that = this;
+
+        /* Private methods START */
+
+        /* Private methods END */
+
+        /* Public methods START */
+
+            // Confirm deletion
+            $scope.confirm = function(){
+
+                // Delete locationBooking
+                Booking.delete(
+                    {
+                        bookingId: $routeParams.bookingId
+                    }
+                ).$promise
+
+                    // If everything went ok
+                    .then(function(response) {
+
+                        $rootScope.FlashMessage = {
+                            type: 'success',
+                            message: 'Bokningstillfället och dess underliggande Lokal/plats-bokningar raderades med ett lyckat resultat'
+                        };
+
+                        Redirect.to('lista');
+
+                    })
+                    // Something went wrong
+                    .catch(function(response) {
+
+                        // If there there was a foreign key reference
+                        if (
+                            response.status == 400 &&
+                            response.data.Message !== 'undefined' &&
+                            response.data.Message === 'Foreign key references exists'
+                        ){
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message:    'Bokningstillfället kan inte raderas eftersom det finns' +
+                                ' någonting som refererar till bokningstillfället'
+                            };
+                        }
+
+                        // If there was a problem with the in-data
+                        else if (response.status == 400 || response.status == 500){
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Ett oväntat fel uppstod när bokningstillfället skulle tas bort'
+                            };
+                        }
+
+                        // If the entry was not found
+                        if (response.status == 404) {
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Bokningstillfället existerar inte längre. Hann kanske någon radera den?'
+                            };
+                        }
+
+                        history.back();
+                    });
+            };
+
+            /* Public methods END */
+
+        /* Public methods END */
+
+
+        /* Initialization START */
+
+            var booking = Booking.get(
+                {
+                    bookingId: $routeParams.bookingId
+                }
+            );
+
+            // In case bookings cannot be fetched, display an error to user.
+            booking.$promise.catch(function(){
+
+                $rootScope.FlashMessage = {
+                    type: 'error',
+                    message: 'Bokningstillfället kunde inte hämtas, var god försök igen.'
+                };
+
+                $scope.booking = null;
+            });
+
+            $scope.booking = booking;
 
         /* Initialization END */
     })
@@ -66,22 +170,16 @@
             that.initDateVariables = function () {
 
                 // Get date strings from url params
-                var yearParam = $location.search().year;
-                var monthParam = $location.search().month;
+                var yearParam = $location.search().ar;
+                var monthParam = $location.search().manad;
 
-                console.log(yearParam);
-                console.log(monthParam);
-
-                console.log(yearParam + "-" + $BookSysUtil.String.addLeadingZero(monthParam) + "-01");
-
+                // Convert url params to current date object, with fallback.
                 if(typeof yearParam !== 'undefined' && typeof monthParam !== 'undefined') {
                     currentDateObj = moment(yearParam + "-" + $BookSysUtil.String.addLeadingZero(+monthParam + 1) + "-01").toDate();
                 }
                 else {
                     currentDateObj = new Date();
                 }
-
-                console.log(currentDateObj);
 
                 that.currentYear = currentDateObj.getFullYear();
                 that.currentMonth = currentDateObj.getMonth();
@@ -132,25 +230,32 @@
 
         /* Public methods START */
             $scope.changeToPreviousMonth = function(){
-                //currentDateObj = new Date(that.currentYear, that.currentMonth - 1);
+
+                // Year overlap adjustment code
+                if(that.currentMonth == 0) {
+                    that.currentMonth = 11;
+                    that.currentYear -= 1;
+                }
+                else {
+                    that.currentMonth -= 1;
+                }
+
+                $location.search('ar', that.currentYear);
+                $location.search('manad', that.currentMonth);
 
                 that.initDateVariables();
                 that.getBookings();
                 that.addVarsToScope();
-
-                $location.search('year', that.currentYear);
-                $location.search('month', that.currentMonth - 1);
             };
 
             $scope.changeToNextMonth = function(){
-                //currentDateObj = new Date(that.currentYear, that.currentMonth + 1);
+
+                $location.search('ar', that.currentYear);
+                $location.search('manad', that.currentMonth + 1);
 
                 that.initDateVariables();
                 that.getBookings();
                 that.addVarsToScope();
-
-                $location.search('year', that.currentYear);
-                $location.search('month', that.currentMonth + 1);
             };
 
 
@@ -163,7 +268,7 @@
             /* Initialization END */
     })
 
-    .controller('BookingCreateCtrl', function($scope, Booking, $rootScope, Customer, BookingType){
+    .controller('BookingCreateCtrl', function($scope, Booking, $rootScope, Customer, BookingType, Redirect){
         var that = this;
         var currentDateObj;
 
@@ -229,7 +334,9 @@
                             message: 'Bokningstillfället "' + $scope.booking.Name + '" skapades med ett lyckat resultat'
                         };
 
-                        history.back();
+                        // Redirect to show booking view
+                        Redirect.to('visa/', response.BookingId);
+                        //history.back();
 
                         // Something went wrong
                     }).catch(function(response) {
@@ -257,7 +364,6 @@
 
             // Get bookingtypes and customers
             that.getOtherDisplayData();
-
 
         /* Initialization END */
 
@@ -295,6 +401,8 @@
                         type: 'error',
                         message: 'Bokningstillfället kunde inte hämtas, var god försök igen.'
                     };
+
+                    $scope.booking = null;
                 });
 
                 return promise;

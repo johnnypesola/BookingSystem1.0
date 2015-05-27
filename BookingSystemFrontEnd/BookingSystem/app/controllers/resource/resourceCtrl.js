@@ -35,22 +35,22 @@
 
         /* Initialization START */
 
-        var resource = Resource.get(
-            {
-                resourceId: $routeParams.resourceId
-            }
-        );
+            $scope.resource = Resource.get(
+                {
+                    resourceId: $routeParams.resourceId
+                }
+            );
 
-        // In case resources cannot be fetched, display an error to user.
-        resource.$promise.catch(function(){
+            // In case resources cannot be fetched, display an error to user.
+            $scope.resource.$promise.catch(function(){
 
-            $rootScope.FlashMessage = {
-                type: 'error',
-                message: 'Resursen kunde inte hämtas, var god försök igen.'
-            };
-        });
+                $rootScope.FlashMessage = {
+                    type: 'error',
+                    message: 'Resursen kunde inte hämtas, var god försök igen.'
+                };
 
-        $scope.resource = resource;
+                $scope.resource = null;
+            });
 
         /* Initialization END */
     })
@@ -60,22 +60,20 @@
 
         /* Private methods START */
 
-
         /* Private methods END */
 
 
+        /* Public methods START */
 
-            /* Public methods START */
+        /* Public methods END */
 
 
-            /* Public methods END */
+        /* Initialization START */
 
-            /* Initialization START */
-
-            var resources = Resource.query();
+            $scope.resources = Resource.query();
 
             // In case resource cannot be fetched, display an error to user.
-            resources.$promise.catch(function(){
+            $scope.resources.$promise.catch(function(){
 
                 $rootScope.FlashMessage = {
                     type: 'error',
@@ -83,9 +81,7 @@
                 };
             });
 
-            $scope.resources = resources;
-
-            /* Initialization END */
+        /* Initialization END */
     })
 
     // Create Controller
@@ -228,22 +224,22 @@
 
         /* Initialization START */
 
-            var resource = Resource.get(
+            $scope.resource = Resource.get(
                 {
                     resourceId: $routeParams.resourceId
                 }
             );
 
             // In case resources cannot be fetched, display an error to user.
-            resource.$promise.catch(function(){
+            $scope.resource.$promise.catch(function(){
 
                 $rootScope.FlashMessage = {
                     type: 'error',
                     message: 'Resursen kunde inte hämtas, var god försök igen.'
                 };
-            });
 
-            $scope.resource = resource;
+                $scope.resource = null;
+            });
 
         /* Initialization END */
     })
@@ -319,22 +315,22 @@
 
         /* Initialization START */
 
-            var resource = Resource.get(
+            $scope.resource = Resource.get(
                 {
                     resourceId: $routeParams.resourceId
                 }
             );
 
             // In case resources cannot be fetched, display an error to user.
-            resource.$promise.catch(function(){
+            $scope.resource.$promise.catch(function(){
 
                 $rootScope.FlashMessage = {
                     type: 'error',
                     message: 'Resursen kunde inte hämtas, var god försök igen.'
                 };
-            });
 
-            $scope.resource = resource;
+                $scope.resource = null;
+            });
 
         /* Initialization END */
     });

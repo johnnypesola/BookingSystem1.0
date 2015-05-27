@@ -18,7 +18,8 @@
         'bookingSystem.locationBooking',
         'bookingSystem.resource',
         'bookingSystem.customer',
-        'bookingSystem.commonDirectives'
+        'bookingSystem.commonDirectives',
+        'bookingSystem.commonServices'
     ]);
 
     /*
@@ -55,8 +56,12 @@
                 templateUrl: 'controllers/booking/bookingList.html',
                 reloadOnSearch: false
             }).
+            when('/bokningstillfallen/radera/:bookingId', {
+                templateUrl: 'controllers/booking/bookingDelete.html'
+            }).
             when('/bokningstillfallen/kalender', {
-                templateUrl: 'controllers/booking/bookingCalendar.html'
+                templateUrl: 'controllers/booking/bookingCalendar.html',
+                reloadOnSearch: false
             }).
             when('/bokningstillfallen/redigera/:bookingId', {
                 templateUrl: 'controllers/booking/bookingEdit.html'
@@ -139,7 +144,8 @@
                 templateUrl: 'controllers/location-booking/locationBookingCreate.html'
             }).
             when('/lokalbokningar/kalender', {
-                templateUrl: 'controllers/location-booking/locationBookingCalendar.html'
+                templateUrl: 'controllers/location-booking/locationBookingCalendar.html',
+                reloadOnSearch: false
             }).
 
             // Resources
@@ -181,7 +187,6 @@
                 templateUrl: 'shared/views/notFound.html'
             });
     });
-
 
     BookingSystem.run(function($rootScope, $location, API_IMG_PATH_URL) {
 

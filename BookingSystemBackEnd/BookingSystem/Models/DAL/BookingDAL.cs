@@ -71,8 +71,9 @@ namespace BookingSystem.Models
                                 Discount = reader.GetSafeDecimal(reader.GetOrdinal("Discount")),
                                 Notes = reader.GetSafeString(reader.GetOrdinal("Notes")),
                                 CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
-                                StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
-                                EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
+
+                                StartTime = reader.GetSafeNullableDateTime(reader.GetOrdinal("StartTime")),
+                                EndTime = reader.GetSafeNullableDateTime(reader.GetOrdinal("EndTime")),
 
                                 BookingTypeName = reader.GetSafeString(reader.GetOrdinal("BookingTypeName")),
                                 CustomerName = reader.GetSafeString(reader.GetOrdinal("CustomerName"))

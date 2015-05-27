@@ -1,12 +1,13 @@
-<section class="content-container" ng-controller="LocationBookingEditCtrl">
+<section class="content-container" ng-controller="LocationBookingEditCtrl" ng-show="locationBooking">
     <h2>
         Redigera Lokal/Plats-bokning
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
     <page-header-buttons
-            show-list="true"
-            show-add="true"
-            show-search="true"
+        show-calendar="true"
+        show-list="true"
+        show-add="true"
+        show-search="true"
     ></page-header-buttons>
 
     <form name="locationbookingForm">
@@ -68,4 +69,5 @@
             <button back-button>Avbryt</button>
         </div>
     </form>
+
 </section>

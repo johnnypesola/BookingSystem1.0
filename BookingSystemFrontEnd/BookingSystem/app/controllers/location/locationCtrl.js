@@ -84,17 +84,8 @@
                 }
             );
 
-            // In case locations cannot be fetched, display an error to user.
-            $scope.location.$promise.catch(function(){
-
-                $rootScope.FlashMessage = {
-                    type: 'error',
-                    message: 'Platsen kunde inte hämtas, var god försök igen.'
-                };
-            })
-
             // When location has been fetched
-            .then(function(){
+            $scope.location.$promise.then(function(){
 
                 // Add path to imageSrc
                 $scope.location.ImageSrc = ($scope.location.ImageSrc === "" ? PHOTO_MISSING_SRC : API_IMG_PATH_URL + $scope.location.ImageSrc);
@@ -134,6 +125,17 @@
                     },
                     true
                 );
+            })
+
+            // In case locations cannot be fetched, display an error to user.
+            .catch(function(){
+
+                $rootScope.FlashMessage = {
+                    type: 'error',
+                    message: 'Platsen kunde inte hämtas, var god försök igen.'
+                };
+
+                $scope.location = null;
             });
 
 
@@ -580,21 +582,11 @@
                 }
             );
 
-            // In case locations cannot be fetched, display an error to user.
-            that.location.$promise.catch(function(){
-
-                $rootScope.FlashMessage = {
-                    type: 'error',
-                    message: 'Platsen kunde inte hämtas, var god försök igen.'
-                };
-            })
-
-
             // When location has been fetched
-            .then(function(){
+            that.location.$promise.then(function(){
 
                 // Add locations to public scope
-                    $scope.location = that.location;
+                $scope.location = that.location;
 
                 // Init map variables
                 that.initMapVariables();
@@ -618,6 +610,17 @@
                     },
                     true
                 );
+            })
+
+            // In case locations cannot be fetched, display an error to user.
+            .catch(function(){
+
+                $rootScope.FlashMessage = {
+                    type: 'error',
+                    message: 'Platsen kunde inte hämtas, var god försök igen.'
+                };
+
+                $scope.location = null;
             });
 
         /* Initialization END */
@@ -707,6 +710,8 @@
                     type: 'error',
                     message: 'Platsen kunde inte hämtas, var god försök igen.'
                 };
+
+                $scope.location= null;
             });
 
             $scope.location = location;
