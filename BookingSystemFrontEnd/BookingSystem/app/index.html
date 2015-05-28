@@ -32,9 +32,15 @@
               <a class="header-button-user" href=""></a>
 
               <nav class="main-menu">
-                  <main-menu menu-items="menus"></main-menu>
+                  <main-menu
+                      menu-items="menus"
+                      selected-flap="selectedFlap"
+                      page-flaps="pageFlaps"
+                  ></main-menu>
               </nav>
           </div>
+
+          <pre style="text-align: left">{{selectedMainMenu | json}}</pre>
 
           <section class="flash-message-container" ng-controller="FlashMessageCtrl" ng-show="messageVisible">
               <div class="{{messageClass}}">
@@ -45,8 +51,8 @@
 
           <nav class="sub-menu">
               <ul>
-                  <li ng-repeat="subMenu in activeSubMenus" ng-class="{active: $index == selectedSubMenu}">
-                      <a href="#/{{subMenu.location}}" ng-click="selectSubMenu($index)">{{subMenu.title}}</a>
+                  <li ng-repeat="flap in pageFlaps" ng-class="{active: flap.isMenuActive}">
+                      <a href="#/{{flap.location}}" ng-click="selectFlap(flap)">{{flap.title}}</a>
                   </li>
               </ul>
           </nav>

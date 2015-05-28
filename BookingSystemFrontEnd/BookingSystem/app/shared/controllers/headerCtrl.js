@@ -16,12 +16,6 @@
     // Header Controller
     .controller('HeaderCtrl', function($scope, $rootScope, $location){
 
-            // Declare variables
-            var that = this;
-            var selectedMenus;
-            var selectedMainMenu;
-            var selectedSubMenu;
-
             // Declare Menu
             $scope.menus = [
 
@@ -76,7 +70,7 @@
                         }
                     ]
                 },
-    /*            {
+                /*{
                     title: "Användare"
                 },*/
                 {
@@ -87,8 +81,8 @@
                             location: "resurser/lista"
                         }
                     ]
-                },/*
-                {
+                },
+                /*{
                     title: "Mat",
                     submenus: [
                         {
@@ -115,22 +109,17 @@
 
         /* Object methods START */
 
+        /* Object methods END */
+
+        /* Public methods START */
+
+            $scope.selectFlap = function(flap){
+                $scope.selectedFlap = flap;
+            };
+
         /* Public methods END */
 
         /* Initialization START */
-
-            //that.selectCurrentLocationMenus();
-
-
-        // Watch changes on selectedMainMenu variable
-        /*
-        $scope.$watch('selectedMainMenu', function() {
-            console.log('selectedMainMenu is now ' + $scope.selectedMainMenu);
-
-            // Show sub-menus for selected main menu
-
-        });
-        */
 
         /* Initialization END */
     })

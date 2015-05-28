@@ -98,33 +98,33 @@
 
                     /* Initialization START */
 
-                    scope.model = scope.model || 0;
+                        scope.model = scope.model || 0;
 
-                    scope.$watch('maxPeopleOptions', function(){
+                        scope.$watch('maxPeopleOptions', function(){
 
-                        if(scope.model > scope.maxPeopleOptions){
-                            scope.isErrorVisible = true;
-                            ctrl.$setValidity('dateTimeOutOfRange', false);
-                        }
-                        else {
-                            scope.isErrorVisible = false;
-                            ctrl.$setValidity('dateTimeOutOfRange', true);
-                        }
-                    });
+                            if(scope.model > scope.maxPeopleOptions){
+                                scope.isErrorVisible = true;
+                                ctrl.$setValidity('dateTimeOutOfRange', false);
+                            }
+                            else {
+                                scope.isErrorVisible = false;
+                                ctrl.$setValidity('dateTimeOutOfRange', true);
+                            }
+                        });
 
-                    scope.$watch('model', function(){
+                        scope.$watch('model', function(){
 
-                        if(scope.model > scope.maxPeopleOptions){
-                            scope.isErrorVisible = true;
-                            ctrl.$setValidity('dateTimeOutOfRange', false);
-                        }
-                        else {
-                            scope.isErrorVisible = false;
-                            ctrl.$setValidity('dateTimeOutOfRange', true);
-                        }
-                    });
+                            if(scope.model > scope.maxPeopleOptions){
+                                scope.isErrorVisible = true;
+                                ctrl.$setValidity('dateTimeOutOfRange', false);
+                            }
+                            else {
+                                scope.isErrorVisible = false;
+                                ctrl.$setValidity('dateTimeOutOfRange', true);
+                            }
+                        });
 
-                    that.generateOptions();
+                        that.generateOptions();
 
                     /* Initialization END */
                 },
