@@ -24,9 +24,12 @@
                 controller: function($scope, $element, $attrs) {
 
                     var that = this,
-                        locationMenus,
-                        locationMainMenu,
-                        locationSubMenu;
+                        locationObjType,
+                        subMenuLocation,
+                        i, j,
+                        subMenu,
+                        mainMenu;
+
 
                     /* Initialization START */
 
@@ -77,13 +80,7 @@
                             // Check that we aren't on he index page.
                             if($location.path().length > 2){
 
-                                var iteratedMainMenu, i, j,
-                                    subMenu,
-                                    mainMenu;
-
-                                locationMenus = $location.path().split('/');
-                                locationMainMenu = locationMenus[1];
-                                locationSubMenu = locationMenus[2];
+                                locationObjType = $location.path().split('/')[1];
 
                                 // Loop through main menu items
                                 for(i = 0; i < $scope.menuItems.length; i+=1) {
@@ -98,11 +95,12 @@
                                             subMenu = mainMenu.submenus[j];
 
                                             // Get location url string from submenu
-                                            iteratedMainMenu = subMenu.location.split('/')[1];
+                                            subMenuLocation = subMenu.location.split('/')[1];
 
                                             // If this menus location string matches with location url string
-                                            if(iteratedMainMenu === locationMainMenu){
+                                            if(subMenuLocation === locationObjType){
 
+                                                // Set selected main menu
                                                 $scope.selectedMainMenu = mainMenu;
 
                                                 // Activate selected menu, deactivate the other siblings.
@@ -119,10 +117,10 @@
                                     // Main menu does not have any sub menus
                                     else {
                                         // Get location url string from mainmenu
-                                        iteratedMainMenu = mainMenu.location.split('/')[1];
+                                        subMenuLocation = mainMenu.location.split('/')[1];
 
                                         // If this menus location string matches with location url string
-                                        if(iteratedMainMenu === locationMainMenu){
+                                        if(subMenuLocation === locationObjType){
                                             $scope.selectedMainMenu = mainMenu;
 
                                             // Activate selected menu, deactivate the other siblings.
@@ -174,6 +172,9 @@
 
                             // Populate the outgoing pageFlaps object
                             $scope.pageFlaps = $scope.selectedMainMenu.submenus;
+
+                            // Set selected flap
+                            $scope.selectedFlap = submenu;
 
                             // Hide all sub menus
                             that.hideSubMenusAndShow();

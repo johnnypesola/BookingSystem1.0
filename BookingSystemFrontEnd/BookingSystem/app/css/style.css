@@ -304,7 +304,7 @@ header {
                 }
 
 
-    header nav.sub-menu {
+    header nav.flap-container {
 
         width: 870px;
         margin: 15px auto 0 auto;
@@ -315,14 +315,14 @@ header {
         text-align: left;
     }
 
-        header nav.sub-menu ul {
+        header nav.flap-container ul {
             width: 870px;
             display: block;
             margin: 0 auto;
             padding: 0;
         }
 
-            header nav.sub-menu ul li {
+            header nav.flap-container ul li {
                 display: inline-block;
                 background: #FFFFFF;
 
@@ -336,7 +336,7 @@ header {
                 margin: 0 4px 0 0;
             }
 
-                header nav.sub-menu ul li a {
+                header nav.flap-container ul li a {
                     display: inline-block;
                     text-decoration: none;
                     margin: 0;
@@ -348,12 +348,12 @@ header {
                     font-size: 15px;
                 }
 
-                    header nav.sub-menu ul li a:hover {
+                    header nav.flap-container ul li a:hover {
                         cursor: pointer;
                         color: #F08362;
                     }
 
-                    header nav.sub-menu ul li.active a {
+                    header nav.flap-container ul li.active a {
                         color: #73A0B5;
                         border-bottom: 1px solid #FFFFFF;
 
