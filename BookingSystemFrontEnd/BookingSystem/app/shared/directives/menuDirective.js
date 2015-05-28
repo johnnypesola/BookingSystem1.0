@@ -44,13 +44,9 @@
                         // Add watch to selectedFlap. Update page flaps with correct data
                         $scope.$watch('selectedFlap', function(){
 
-                            console.log("test");
-
-                            if(typeof($scope.pageFlaps) !== 'undefined'){
+                            if(typeof($scope.pageFlaps) !== 'undefined' && typeof $scope.selectedFlap !== 'undefined'){
                                 that.deActivateMenusAndActivate($scope.pageFlaps, $scope.selectedFlap);
                             }
-
-
                         });
 
                     /* Initialization END */
@@ -66,48 +62,76 @@
 
                         that.deActivateMenusAndActivate = function(menuItems, targetMenu){
                             menuItems.forEach(function(menu){
+
                                 menu.isMenuActive = (targetMenu == menu);
                             })
                         };
 
-                        // Find out selected main menu and sub menu and select them
+                        that.initMenu = function (menuContext, menu){
+
+                        };
+
+                        // Find out selected main menu and sub menu from url location and select them
                         that.selectCurrentLocationMenus = function(){
 
                             // Check that we aren't on he index page.
                             if($location.path().length > 2){
 
-                                var iteratedMainMenu,
-                                    i,
-                                    j,
-                                    submenu,
-                                    menu;
+                                var iteratedMainMenu, i, j,
+                                    subMenu,
+                                    mainMenu;
 
                                 locationMenus = $location.path().split('/');
                                 locationMainMenu = locationMenus[1];
                                 locationSubMenu = locationMenus[2];
 
-
+                                // Loop through main menu items
                                 for(i = 0; i < $scope.menuItems.length; i+=1) {
 
-                                    menu = $scope.menuItems[i];
+                                    mainMenu = $scope.menuItems[i];
 
-                                    for(j = 0; j < $scope.menuItems[i].submenus.length; j+=1) {
-                                        submenu = $scope.menuItems[i].submenus[j];
+                                    // Loop through sub menu items, if there is such
+                                    if(typeof mainMenu.submenus !== 'undefined'){
 
-                                        if(typeof submenu.location !== 'undefined'){
+                                        // Loop through sub menu items
+                                        for(j = 0; j < mainMenu.submenus.length; j+=1) {
+                                            subMenu = mainMenu.submenus[j];
+
                                             // Get location url string from submenu
-                                            iteratedMainMenu = submenu.location.split('/')[0];
+                                            iteratedMainMenu = subMenu.location.split('/')[1];
 
+                                            // If this menus location string matches with location url string
                                             if(iteratedMainMenu === locationMainMenu){
-                                                $scope.selectedMainMenu = $scope.menuItems[i];
+
+                                                $scope.selectedMainMenu = mainMenu;
+
+                                                // Activate selected menu, deactivate the other siblings.
+                                                that.deActivateMenusAndActivate(mainMenu.submenus, subMenu);
+
+                                                // Populate the outgoing pageFlaps object
+                                                $scope.pageFlaps = mainMenu.submenus;
 
                                                 // Avoid unnecessary iterations
                                                 break;
                                             }
                                         }
+                                    }
+                                    // Main menu does not have any sub menus
+                                    else {
+                                        // Get location url string from mainmenu
+                                        iteratedMainMenu = mainMenu.location.split('/')[1];
 
-                                        // Avoid unnecessary iterations
-                                        if($scope.selectedSubMenu) {
+                                        // If this menus location string matches with location url string
+                                        if(iteratedMainMenu === locationMainMenu){
+                                            $scope.selectedMainMenu = mainMenu;
+
+                                            // Activate selected menu, deactivate the other siblings.
+                                            that.deActivateMenusAndActivate($scope.menuItems, mainMenu);
+
+                                            // Populate the outgoing pageFlaps object
+                                            $scope.pageFlaps = [mainMenu];
+
+                                            // Avoid unnecessary iterations
                                             break;
                                         }
                                     }
@@ -123,11 +147,23 @@
                         $scope.selectMainMenu = function(menu) {
                             $scope.selectedMainMenu = menu;
 
-                            // Display active sub menus for clicked main menu
-                            $scope.visibleSubMenus = menu.submenus;
+                            // If there are any sub menus
+                            if(typeof menu.submenus !== 'undefined' ){
 
-                            // Mark sub menu as visible and hide other sub menus
-                            that.hideSubMenusAndShow(menu);
+                                // Display active sub menus for clicked main menu
+                                $scope.visibleSubMenus = menu.submenus;
+
+                                // Mark sub menu as visible and hide other sub menus
+                                that.hideSubMenusAndShow(menu);
+                            }
+                            // No sub menus.
+                            else {
+                                // Populate the outgoing pageFlaps object with the main menu itself
+                                $scope.pageFlaps = [$scope.selectedMainMenu];
+
+                                // Hide all sub menus
+                                that.hideSubMenusAndShow();
+                            }
                         };
 
                         // Method for when a sub menu is selected
@@ -148,17 +184,6 @@
                     /* Initialization START */
 
                         that.selectCurrentLocationMenus();
-
-
-                        // Watch changes on selectedMainMenu variable
-                        /*
-                         $scope.$watch('selectedMainMenu', function() {
-                         console.log('selectedMainMenu is now ' + $scope.selectedMainMenu);
-
-                         // Show sub-menus for selected main menu
-
-                         });
-                         */
 
                     /* Initialization END */
                 }

@@ -21,35 +21,30 @@
 
                 {
                     title: "Start",
-                    submenus: [
-                        {
-                            title: "Startsidan",
-                            location: "/"
-                        }
-                    ]
+                    location: "#/"
                 },
                 {
                     title: "Bokningar",
                     submenus: [
                         {
                             title: "Bokningstyper",
-                            location: "bokningstyper/lista"
+                            location: "#/bokningstyper/lista"
                         },
                         {
                             title: "Bokningstillfällen",
-                            location: "bokningstillfallen/lista"
+                            location: "#/bokningstillfallen/lista"
                         },
                         {
                             title: "Lokal/Plats-bokningar",
-                            location: "lokalbokningar/lista"
+                            location: "#/lokalbokningar/lista"
                         }/*,
                         {
                             title: "Matbokningar",
-                            location: "matbokningar/lista"
+                            location: "#/matbokningar/lista"
                         },
                         {
                             title: "Resursbokningar",
-                            location: "resursbokningar/lista"
+                            location: "#/resursbokningar/lista"
                         }*/
                     ]
                 },
@@ -58,7 +53,7 @@
                     submenus: [
                         {
                             title: "Lokaler / Platser",
-                            location: "platser/lista"
+                            location: "#/platser/lista"
                         },/*
                         {
                             title: "Lokalmöbleringar",
@@ -66,7 +61,7 @@
                         },*/
                         {
                             title: "Möbleringar",
-                            location: "mobleringar/lista"
+                            location: "#/mobleringar/lista"
                         }
                     ]
                 },
@@ -75,35 +70,25 @@
                 },*/
                 {
                     title: "Resurser",
-                    submenus: [
-                        {
-                            title: "Resurser",
-                            location: "resurser/lista"
-                        }
-                    ]
+                    location: "#/resurser/lista"
                 },
                 /*{
                     title: "Mat",
                     submenus: [
                         {
                             title: "Måltider",
-                            location: "maltider/lista"
+                            location: "#/maltider/lista"
                         },
                         {
                             title: "Måltidsegenskaper",
-                            location: "maltidsegenskaper/lista"
+                            location: "#/maltidsegenskaper/lista"
                         }
                     ]
                 },
                 */
                 {
                     title: "Kunder",
-                    submenus: [
-                        {
-                            title: "Kunder",
-                            location: "kunder/lista"
-                        }
-                    ]
+                    location: "#/kunder/lista"
                 }
             ];
 

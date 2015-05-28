@@ -250,6 +250,11 @@ header {
                 background-position: right 7px top 14px;
             }
 
+                header nav.main-menu ul li a.no-sub-menus {
+                    background: none;
+                    padding-right: 10px;
+                }
+
             header nav.main-menu ul li.active {
                 background-color: #FFFFFF;
                 text-shadow: none;

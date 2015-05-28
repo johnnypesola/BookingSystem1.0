@@ -1,10 +1,10 @@
 <ul>
     <li ng-repeat="menu in menuItems" ng-class="{active: menu.isMenuActive}">
-        <a href="" ng-click="selectMainMenu(menu)">{{menu.title}}</a>
+        <a href="" ng-href="{{menu.location}}" ng-click="selectMainMenu(menu)" ng-class="{'no-sub-menus' : menu.location}">{{menu.title}}</a>
 
         <ul class="overlay-sub-menu" ng-show="menu.isSubMenusVisible">
             <li ng-repeat="subMenu in visibleSubMenus" ng-class="{active: subMenu == selectedSubMenu}">
-                <a href="#/{{subMenu.location}}" ng-click="selectSubMenu(subMenu)">{{subMenu.title}}</a>
+                <a href="{{subMenu.location}}" ng-click="selectSubMenu(subMenu)">{{subMenu.title}}</a>
             </li>
         </ul>
     </li>

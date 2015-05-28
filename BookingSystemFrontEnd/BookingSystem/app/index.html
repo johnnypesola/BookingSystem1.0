@@ -52,7 +52,7 @@
           <nav class="sub-menu">
               <ul>
                   <li ng-repeat="flap in pageFlaps" ng-class="{active: flap.isMenuActive}">
-                      <a href="#/{{flap.location}}" ng-click="selectFlap(flap)">{{flap.title}}</a>
+                      <a href="{{flap.location}}" ng-click="selectFlap(flap)">{{flap.title}}</a>
                   </li>
               </ul>
           </nav>
