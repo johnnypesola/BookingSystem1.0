@@ -37,12 +37,14 @@
 
             </tr>
             <tr ng-repeat="booking in bookings">
-                <td ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyString}}</td>
+                <td class="align-left" ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyString}}</td>
                 <td class="date">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
                 <td class="date">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
                 <td>{{booking.Provisional | boolean}}</td>
                 <td>{{booking.BookingTypeName}}</td>
-                <td ng-class="{'empty-string': !booking.CustomerName.length}">{{booking.CustomerName | emptyString}}</td>
+                <td ng-class="{'empty-string': !booking.CustomerName.length}">
+                    <a ng-href="#/kunder/visa/{{booking.CustomerId}}">{{booking.CustomerName}}</a>
+                </td>
                 <td class="align-right">{{booking.NumberOfPeople | count}}</td>
                 <td class="align-right">{{booking.CalculatedBookingPrice | kr}}</td>
                 <td class="align-right">{{booking.LocationBookings.length | count}}</td>

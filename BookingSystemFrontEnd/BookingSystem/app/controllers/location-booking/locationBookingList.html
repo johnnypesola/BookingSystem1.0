@@ -38,7 +38,7 @@
                 <td class="date">{{locationBooking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
                 <td class="date">{{locationBooking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
                 <td>{{locationBooking.Provisional | boolean}}</td>
-                <td>{{locationBooking.LocationName}}</td>
+                <td><a ng-href="#/platser/visa/{{locationBooking.LocationId}}">{{locationBooking.LocationName}}</a></td>
                 <td>{{locationBooking.FurnituringName}}</td>
                 <td class="align-right">{{locationBooking.NumberOfPeople | count}}</td>
                 <td class="align-right">{{locationBooking.MaxPeople | count}}</td>

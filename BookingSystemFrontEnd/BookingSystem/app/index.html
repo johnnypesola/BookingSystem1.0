@@ -25,21 +25,28 @@
       <![endif]-->
 
       <header ng-controller="HeaderCtrl">
-          <h1>Bokningssystemet</h1>
-          <!--
-          <a class="header-button-add" href="" ng-click="displayAddForm(true)"></a>
-          <a class="header-button-search" href="" ng-click="displaySearchForm(true)"></a>
 
-          -->
-          <a class="header-button-user" href=""></a>
+          <div class="back-color-container">
+              <h1>Bokningssystemet</h1>
 
-          <nav class="main-menu">
-              <ul>
-                  <li ng-repeat="menu in menus" ng-class="{active: $index == selectedMainMenu}">
-                      <a href="" ng-click="selectMainMenu($index)">{{menu.title}}</a>
-                  </li>
-              </ul>
-          </nav>
+              <a class="header-button-user" href=""></a>
+
+              <nav class="main-menu">
+                  <ul>
+                      <li ng-repeat="menu in menus" ng-class="{active: $index == selectedMainMenu}">
+                          <a href="" ng-click="selectMainMenu($index)">{{menu.title}}</a>
+                      </li>
+                  </ul>
+              </nav>
+          </div>
+
+          <section class="flash-message-container" ng-controller="FlashMessageCtrl" ng-show="messageVisible">
+              <div class="{{messageClass}}">
+                  {{messageText}}
+                  <a href="" ng-click="hideMessage()">&#215;</a>
+              </div>
+          </section>
+
           <nav class="sub-menu">
               <ul>
                   <li ng-repeat="subMenu in activeSubMenus" ng-class="{active: $index == selectedSubMenu}">
@@ -47,131 +54,8 @@
                   </li>
               </ul>
           </nav>
-<!--
-          <section class="add-form-container" ng-show="addFormIsVisible">
-              <h3>Skapa ny</h3>
-              <div class="categories">
-                  <label class="bg-beige active">
-                      <input type="checkbox" checked> Bokningstillfälle
-                  </label>
-                  <label class="bg-dark-blue">
-                      <input type="checkbox"> Lokalbokning
-                  </label>
-                  <label class="bg-dark-green">
-                      <input type="checkbox"> Matbokning
-                  </label>
-                  <label class="bg-light-green">
-                      <input type="checkbox"> Resursbokning
-                  </label>
-                  <label class="bg-light-blue">
-                      <input type="checkbox"> Resurs
-                  </label>
-                  <label class="bg-magenta">
-                      <input type="checkbox"> Möblering
-                  </label>
-                  <label class="bg-orange">
-                      <input type="checkbox"> Lokalmöblering
-                  </label>
-                  <label class="bg-dark-purple">
-                      <input type="checkbox"> Kund
-                  </label>
-                  <label class="bg-red">
-                      <input type="checkbox"> Användare
-                  </label>
-                  <label class="bg-yellow">
-                      <input type="checkbox"> Maträtt
-                  </label>
-                  <label class="bg-light-purple">
-                      <input type="checkbox"> Lokal
-                  </label>
-              </div>
 
-              <h3>Efter värdet</h3>
-              <div>
-                  <input type="text">
-              </div>
-
-              <h3>Från och med</h3>
-              <div>
-                  <input type="date">
-              </div>
-
-              <h3>Till och med</h3>
-              <div>
-                  <input type="date">
-              </div>
-
-              <a class="close" href="" ng-click="displayAddForm(false)"></a>
-              <input type="submit" value="Skapa">
-          </section>
-          <section class="search-form-container" ng-show="searchFormIsVisible">
-              <h3>Sök igenom</h3>
-              <div class="categories">
-                  <label class="bg-beige active">
-                      <input type="checkbox" checked> Bokningstillfällen
-                  </label>
-                  <label class="bg-dark-blue">
-                      <input type="checkbox"> Lokalbokningar
-                  </label>
-                  <label class="bg-dark-green">
-                      <input type="checkbox"> Matbokningar
-                  </label>
-                  <label class="bg-light-green">
-                      <input type="checkbox"> Resursbokningar
-                  </label>
-                  <label class="bg-light-blue">
-                      <input type="checkbox"> Resurser
-                  </label>
-                  <label class="bg-magenta">
-                      <input type="checkbox"> Möbleringar
-                  </label>
-                  <label class="bg-orange">
-                      <input type="checkbox"> Lokalmöbleringar
-                  </label>
-                  <label class="bg-dark-purple">
-                      <input type="checkbox"> Kunder
-                  </label>
-                  <label class="bg-red">
-                      <input type="checkbox"> Användare
-                  </label>
-                  <label class="bg-yellow">
-                      <input type="checkbox"> Maträtter
-                  </label>
-                  <label class="bg-light-purple">
-                      <input type="checkbox"> Lokaler
-                  </label>
-              </div>
-
-              <h3>Efter värdet</h3>
-              <div>
-                  <input type="text">
-              </div>
-
-              <h3>Från och med</h3>
-              <div>
-                  <input type="date">
-              </div>
-
-              <h3>Till och med</h3>
-              <div>
-                  <input type="date">
-              </div>
-
-              <a class="close" href="" ng-click="displaySearchForm(false)"></a>
-              <input type="submit" value="Genomför Sökning">
-          </section>
-
-          <section class="log-out-container">
-          </section>
--->
       </header>
-
-      <section class="flash-message-container" ng-controller="FlashMessageCtrl" ng-show="messageVisible">
-          <div class="{{messageClass}}">
-              {{messageText}}
-              <a href="" ng-click="hideMessage()">&#215;</a>
-          </div>
-      </section>
 
       <section class="main-content-container" ng-view>
 

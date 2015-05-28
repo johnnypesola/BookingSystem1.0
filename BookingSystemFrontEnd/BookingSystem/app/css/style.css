@@ -5,13 +5,20 @@
 
 html {
     overflow-y: scroll;
+    height: 100%;
 }
 
 body {
     text-align: center;
-    background: #F2F1EF;
+    background: #BDC3CA;
     /*font-family: 'Open Sans', sans-serif;*/
     font-family: 'Oxygen', sans-serif;
+
+
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+
+    height: 100%;
 }
 
 h1, h2, h3, h4 {
@@ -45,6 +52,10 @@ input:disabled, select:disabled {
     -webkit-box-shadow: none !important;
     -moz-box-shadow:    none !important;
     box-shadow:         none !important;
+}
+
+a {
+    color: #6290a4;
 }
 
 select {
@@ -132,8 +143,6 @@ progress::-moz-progress-bar {
 }
 
 header {
-    background: #777777;
-
     min-height: 60px;
     position: relative;
 
@@ -145,19 +154,27 @@ header {
     box-shadow:         0px 0px 5px 0px rgba(50, 50, 50, 0.75);
     */
 
-    -webkit-box-shadow: inset 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
-    -moz-box-shadow:    inset 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
-    box-shadow:         inset 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
+
 }
+
+    header .back-color-container {
+        background: #616B77;
+        -webkit-box-shadow: inset 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
+        -moz-box-shadow:    inset 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
+        box-shadow:         inset 0px 0px 8px 0px rgba(0, 0, 0, 0.4);
+
+        min-height: 60px;
+    }
 
     header h1 {
         display: inline-block;
-        margin: 0 10px 0 0;
+        margin: 0px 10px 0 0;
         font-size: 26px;
-        line-height: 60px;
+        line-height: 54px;
         background: url('../img/icons/logo.svg') left no-repeat;
         padding: 0 0 0 50px;
         position: relative;
+        top: 2px;
         color: #FFFFFF;
         font-weight: normal;
         height: inherit;
@@ -216,6 +233,8 @@ header {
         }
             header nav.main-menu ul li {
                 display: inline-block;
+                border-radius: 2px;
+                margin: 0 2px;
             }
 
             header nav.main-menu ul li a {
@@ -223,21 +242,11 @@ header {
                 color: #FFFFFF;
                 display: inline-block;
                 margin: 0;
-                padding: 19px 25px 19px 10px;
+                padding: 5px 25px 5px 10px;
 
                 background: url('../img/icons/menu_marker.svg') no-repeat;
 
-                background-position: right 7px top 27px;
-
-                /*text-shadow: 1px 1px 0px rgba(0, 0, 0, 1);*/
-
-                /*border-right: 1px solid #888888;
-                border-left: 1px solid #888888;
-                border-top: 1px solid #888888;*/
-
-                /*border-top-left-radius: 5px;
-                border-top-right-radius: 5px;*/
-
+                background-position: right 7px top 14px;
             }
 
             header nav.main-menu ul li.active {
@@ -249,26 +258,26 @@ header {
                 cursor: pointer;
                 background-color: #FFFFFF;
                 color: #F08362 !important;
+                border-radius: 4px;
             }
 
             header nav.main-menu ul li.active a {
-                color: #73B0B5;
+                color: #73A0B5;
             }
 
     header nav.sub-menu {
-        min-height: 42px;
-        background: #FFFFFF;
-        color: #000000;
 
-        -webkit-box-shadow: 0px 0px 4px 0px rgba(50, 50, 50, 0.5);
-        -moz-box-shadow:    0px 0px 4px 0px rgba(50, 50, 50, 0.5);
-        box-shadow:         0px 0px 4px 0px rgba(50, 50, 50, 0.5);
+        width: 870px;
+        margin: 15px auto 0 auto;
+
+        min-height: 42px;
+        color: #000000;
 
         text-align: left;
     }
 
         header nav.sub-menu ul {
-            width: 840px;
+            width: 870px;
             display: block;
             margin: 0 auto;
             padding: 0;
@@ -276,6 +285,16 @@ header {
 
             header nav.sub-menu ul li {
                 display: inline-block;
+                background: #FFFFFF;
+
+                -webkit-box-shadow: 0px 0px 4px 0px rgba(50, 50, 50, 0.2);
+                -moz-box-shadow:    0px 0px 4px 0px rgba(50, 50, 50, 0.2);
+                box-shadow:         0px 0px 4px 0px rgba(50, 50, 50, 0.2);
+
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+
+                margin: 0 4px 0 0;
             }
 
                 header nav.sub-menu ul li:first-child {
@@ -293,8 +312,6 @@ header {
                     color: #666666;
 
                     font-size: 15px;
-                    border-right: 1px solid #EEEEEE;
-                    border-top: 1px solid #EEEEEE;
                 }
 
                     header nav.sub-menu ul li a:hover {
@@ -303,7 +320,15 @@ header {
                     }
 
                     header nav.sub-menu ul li.active a {
-                        color: #73B0B5;
+                        color: #73A0B5;
+                        border-bottom: 1px solid #FFFFFF;
+
+                        -webkit-box-shadow: 0px 10px 38px 0px rgba(0, 0, 0, 0.2);
+                        -moz-box-shadow:    0px 10px 38px 0px rgba(0, 0, 0, 0.2);
+                        box-shadow:         0px 10px 38px 0px rgba(0, 0, 0, 0.2);
+
+                        position: relative;
+                        z-index: 1;
                     }
 
 section.search-form-container, section.add-form-container {
@@ -403,7 +428,7 @@ section.flash-message-container {
 
         padding: 10px 40px 10px 10px;
         display: inline-block;
-        margin: 20px 20px 0 20px;
+        margin: 15px 0 0 0;
         border-radius: 3px;
         color: #FFFFFF;
         /*text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5); */
@@ -426,20 +451,23 @@ section.content-container {
     position: relative;
     width: 840px; /* 600 */
     line-height: 25px;
-    margin: 20px auto;
+    margin: 0 auto 20px auto;
     padding: 15px;
     background: #FFFFFF;
 
-    -webkit-box-shadow: 0px 0px 2px 0px rgba(50, 50, 50, 0.4);
-    -moz-box-shadow:    0px 0px 2px 0px rgba(50, 50, 50, 0.4);
-    box-shadow:         0px 0px 2px 0px rgba(50, 50, 50, 0.4);
+    -webkit-box-shadow: 0px 2px 2px 0px rgba(50, 50, 50, 0.4);
+    -moz-box-shadow:    0px 2px 2px 0px rgba(50, 50, 50, 0.4);
+    box-shadow:         0px 2px 2px 0px rgba(50, 50, 50, 0.4);
+
+    position: relative;
+    z-index: 1;
 }
 
     section.content-container h2 {
         font-weight: normal;
         margin: 0 0 15px 0;
         padding: 0;
-        color: #73B0B5;
+        color: #73A0B5;
         line-height: 34px;
         /*color: #E9A642;*/
         /*border-bottom: 1px solid #EEEEEE;*/
@@ -1113,7 +1141,11 @@ section.content-container {
 
 
 .align-right {
-    text-align: right;
+    text-align: right !important;
+}
+
+.align-left {
+    text-align: left !important;
 }
 
 .align-center {

@@ -36,7 +36,7 @@
             </tr>
             <tr>
                 <th>Namn på kund</th>
-                <td ng-class="{'empty-string': !booking.CustomerName.length}">{{booking.CustomerName | emptyString}}</td>
+                <td><a ng-href="#/kunder/visa/{{booking.CustomerId}}">{{booking.CustomerName}}</a></td>
             </tr>
             <tr>
                 <th>Antal personer</th>
@@ -80,7 +80,7 @@
                 <tr ng-repeat="locationBooking in booking.LocationBookings">
                     <td class="date">{{locationBooking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
                     <td class="date">{{locationBooking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
-                    <td>{{locationBooking.LocationName}}</td>
+                    <td><a ng-href="#/platser/visa/{{locationBooking.LocationId}}">{{locationBooking.LocationName}}</a></td>
                     <td>{{locationBooking.FurnituringName}}</td>
                     <td class="align-right">{{locationBooking.NumberOfPeople | count}}</td>
                     <td class="align-right">{{locationBooking.CalculatedBookingPrice | kr}}</td>

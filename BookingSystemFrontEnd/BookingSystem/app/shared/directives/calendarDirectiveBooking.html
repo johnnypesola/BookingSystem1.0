@@ -38,7 +38,7 @@
                 <td class="date">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
                 <td>{{booking.Provisional | boolean}}</td>
                 <td>{{booking.BookingTypeName}}</td>
-                <td ng-class="{'empty-string': !booking.CustomerName.length}">{{booking.CustomerName | emptyString}}</td>
+                <td><a ng-href="#/kunder/visa/{{booking.CustomerId}}">{{booking.CustomerName}}</a></td>
                 <td class="align-right">{{booking.NumberOfPeople | count}}</td>
 
                 <td class="align-right">

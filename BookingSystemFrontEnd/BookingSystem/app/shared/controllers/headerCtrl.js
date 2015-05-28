@@ -26,12 +26,12 @@
                     title: "Bokningar",
                     submenus: [
                         {
-                            title: "Bokningstillfällen",
-                            location: "bokningstillfallen/lista"
-                        },
-                        {
                             title: "Bokningstyper",
                             location: "bokningstyper/lista"
+                        },
+                        {
+                            title: "Bokningstillfällen",
+                            location: "bokningstillfallen/lista"
                         },
                         {
                             title: "Lokal/Plats-bokningar",
