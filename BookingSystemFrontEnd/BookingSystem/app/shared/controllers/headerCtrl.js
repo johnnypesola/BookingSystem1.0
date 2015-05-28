@@ -4,7 +4,9 @@
     // Controller
 
 (function(){
-    angular.module('bookingSystem.header', [])
+    angular.module('bookingSystem.header',
+        ['bookingSystem.menuDirective']
+    )
 
     // Routes for startPage
     .config(function($routeProvider) {
@@ -22,6 +24,16 @@
 
             // Declare Menu
             $scope.menus = [
+
+                {
+                    title: "Start",
+                    submenus: [
+                        {
+                            title: "Startsidan",
+                            location: "/"
+                        }
+                    ]
+                },
                 {
                     title: "Bokningar",
                     submenus: [
@@ -103,86 +115,11 @@
 
         /* Object methods START */
 
-            // Find out selected main menu and sub menu and select them
-            that.selectCurrentLocationMenus = function(){
-
-                // Check that we aren't on he index page.
-                if($location.path().length > 2){
-
-                    var iteratedMainMenu;
-
-                    selectedMenus = $location.path().split('/');
-                    selectedMainMenu = selectedMenus[1];
-                    selectedSubMenu = selectedMenus[2];
-
-                    $scope.menus.forEach(function(mainmenu, mindex, array){
-
-                        mainmenu.submenus.forEach(function(submenu, sindex, array){
-                            if(typeof submenu.location !== 'undefined'){
-
-                                iteratedMainMenu = submenu.location.split('/')[0];
-
-                                if(iteratedMainMenu === selectedMainMenu){
-                                    $scope.selectedMainMenu = mindex;
-
-                                    $scope.activeSubMenus = $scope.menus[mindex].submenus;
-
-                                    $scope.selectedSubMenu = sindex;
-
-                                    // Avoid unnecessary iterations
-                                    return;
-                                }
-                            }
-                        });
-
-                        // Avoid unnecessary iterations
-                        if($scope.selectedSubMenu) {
-                            return;
-                        }
-                    });
-
-                }
-                // No menu is selected, set index to 0.
-                else {
-                    $scope.selectedSubMenu = 0;
-                }
-            };
-
-        /* Object methods END */
-
-        /* Public methods START */
-
-            // Method for when a main menu is selected
-            $scope.selectMainMenu = function(index) {
-                $scope.selectedMainMenu = index;
-
-                // Display active sub menus for clicked main menu
-                $scope.activeSubMenus = $scope.menus[index].submenus;
-
-                // Deselect sub menu when main menu is clicked
-                $scope.selectedSubMenu = -1;
-            };
-
-            // Method for when a sub menu is selected
-            $scope.selectSubMenu = function(index) {
-                $scope.selectedSubMenu = index;
-            };
-
-            $scope.displayAddForm = function(value) {
-                $rootScope.addFormIsVisible = value;
-                $rootScope.searchFormIsVisible = false;
-            };
-
-            $scope.displaySearchForm = function(value) {
-                $rootScope.searchFormIsVisible = value;
-                $rootScope.addFormIsVisible = false;
-            };
-
         /* Public methods END */
 
         /* Initialization START */
 
-            that.selectCurrentLocationMenus();
+            //that.selectCurrentLocationMenus();
 
 
         // Watch changes on selectedMainMenu variable

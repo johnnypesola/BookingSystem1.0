@@ -32,11 +32,7 @@
               <a class="header-button-user" href=""></a>
 
               <nav class="main-menu">
-                  <ul>
-                      <li ng-repeat="menu in menus" ng-class="{active: $index == selectedMainMenu}">
-                          <a href="" ng-click="selectMainMenu($index)">{{menu.title}}</a>
-                      </li>
-                  </ul>
+                  <main-menu menu-items="menus"></main-menu>
               </nav>
           </div>
 
@@ -113,6 +109,7 @@
         <script src="shared/directives/imageUploaderDirective.js"></script>
         <script src="shared/controllers/headerCtrl.js"></script>
         <script src="shared/services/commonServices.js"></script>
+        <script src="shared/directives/menuDirective.js"></script>
 
         <script src="shared/services/imageResizeService.js"></script>
 
