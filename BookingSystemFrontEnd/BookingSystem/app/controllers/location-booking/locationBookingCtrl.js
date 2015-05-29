@@ -20,7 +20,7 @@
     })
 
     // Show Controller
-    .controller('LocationBookingShowCtrl', function($scope, $routeParams, $location, $rootScope, LocationBooking){
+    .controller('LocationBookingShowCtrl', function($scope, $routeParams, $location, $rootScope, LocationBooking, API_IMG_PATH_URL, PHOTO_MISSING_SRC){
 
         var that = this;
 
@@ -40,6 +40,12 @@
                 locationBookingId: $routeParams.locationBookingId
             }
         );
+
+        locationBooking.$promise.then(function(){
+
+            // Add path to LocationImageSrc
+            locationBooking.LocationImageSrc = (locationBooking.LocationImageSrc === "" ? PHOTO_MISSING_SRC : API_IMG_PATH_URL + locationBooking.LocationImageSrc);
+        });
 
         // In case locationBookings cannot be fetched, display an error to user.
         locationBooking.$promise.catch(function(){

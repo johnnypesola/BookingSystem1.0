@@ -91,7 +91,7 @@
     })
 
     // Create Controller
-    .controller('BookingTypeCreateCtrl', function($scope, $routeParams, $location, $rootScope, BookingType){
+    .controller('BookingTypeCreateCtrl', function($scope, $routeParams, $location, $rootScope, BookingType, Redirect){
 
             var that = this;
 
@@ -130,7 +130,8 @@
                         message: 'Bokningstypen "' + $scope.bookingType.Name + '" skapades med ett lyckat resultat'
                     };
 
-                    history.back();
+                    // Redirect to show booking view
+                    Redirect.to('visa/', response.BookingTypeId);
 
                 // Something went wrong
                 }).catch(function(response) {

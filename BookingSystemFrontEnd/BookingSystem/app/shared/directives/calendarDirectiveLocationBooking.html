@@ -23,24 +23,24 @@
 
         <table class="list-table" ng-show="datedata.bookings.length">
             <tr>
+                <th>Bokningstillfälle</th>
                 <th>Starttid</th>
                 <th>Sluttid</th>
-                <th>Lokal</th>
                 <th>Preliminär</th>
+                <th>Lokal/Plats</th>
                 <th>Möblering</th>
                 <th>Personer / Max</th>
-                <th>Marginal efter bokning</th>
                 <th>Pris</th>
                 <th></th>
             </tr>
             <tr ng-repeat="booking in datedata.bookings">
-                <td class="date">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
-                <td class="date">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
-                <td>{{booking.LocationName}}</td>
+                <td class="align-left"><a ng-href="#/bokningstillfallen/visa/{{booking.BookingId}}">{{booking.BookingName | emptyName}}</a></td>
+                <td class="date align-left">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                <td class="date align-left">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
                 <td>{{booking.Provisional | boolean}}</td>
+                <td><a ng-href="#/platser/visa/{{booking.LocationId}}">{{booking.LocationName}}</a></td>
                 <td>{{booking.FurnituringName}}</td>
                 <td class="align-right">{{booking.NumberOfPeople | count}} / {{booking.MaxPeople | count}}</td>
-                <td>{{booking.MinutesMarginAfterBooking | minutes}}</td>
                 <td>{{booking.CalculatedBookingPrice | kr}}</td>
                 <td class="align-right">
                     <div item-action-buttons="booking.LocationBookingId"></div>

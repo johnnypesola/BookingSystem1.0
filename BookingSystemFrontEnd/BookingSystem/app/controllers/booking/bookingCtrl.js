@@ -331,12 +331,11 @@
 
                         $rootScope.FlashMessage = {
                             type: 'success',
-                            message: 'Bokningstillfället "' + $scope.booking.Name + '" skapades med ett lyckat resultat'
+                            message: 'Bokningstillfället skapades med ett lyckat resultat'
                         };
 
                         // Redirect to show booking view
                         Redirect.to('visa/', response.BookingId);
-                        //history.back();
 
                         // Something went wrong
                     }).catch(function(response) {
@@ -466,7 +465,7 @@
 
                         $rootScope.FlashMessage = {
                             type: 'success',
-                            message: 'Bokningstillfället "' + $scope.booking.Name + '" skapades med ett lyckat resultat'
+                            message: 'Bokningstillfället skapades med ett lyckat resultat'
                         };
 
                         history.back();

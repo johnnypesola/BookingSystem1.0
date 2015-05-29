@@ -8,7 +8,6 @@ namespace BookingSystem.Models
 {
     public class LocationBooking
     {
-
         [Required(ErrorMessage = "LocationBookingId is required.")]
         [Range(0, int.MaxValue, ErrorMessage = "LocationBookingId is out of range.")]
         public int LocationBookingId { get; set; }
@@ -27,14 +26,17 @@ namespace BookingSystem.Models
         [Required(ErrorMessage = "EndTime is required.")]
         public DateTime EndTime { get; set; }
 
-
         // Extra datafields retrieved from database/stored procedure
+        public string BookingName { get; set; }
+
         public bool Provisional { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "LocationId is out of range.")]
         public int LocationId { get; set; }
 
         public string LocationName { get; set; }
+
+        public string LocationImageSrc { get; set; }
 
         [Range(0, Int16.MaxValue, ErrorMessage = "FurnituringId is out of range.")]
         public int FurnituringId { get; set; }

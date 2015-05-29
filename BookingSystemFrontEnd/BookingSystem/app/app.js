@@ -45,6 +45,9 @@
         $routeProvider.
             // Startpage
             when('/', {
+                redirectTo: '/start'
+            }).
+            when('/start', {
                 templateUrl: 'controllers/start/startCtrl.html'
             }).
 

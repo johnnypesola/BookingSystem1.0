@@ -92,7 +92,7 @@
     })
 
     // Create Controller
-    .controller('CustomerCreateCtrl', function($scope, $routeParams, $location, $rootScope, Customer){
+    .controller('CustomerCreateCtrl', function($scope, $routeParams, $location, $rootScope, Customer, Redirect){
 
             var that = this;
 
@@ -130,7 +130,8 @@
                             message: 'Kunden "' + $scope.customer.Name + '" skapades med ett lyckat resultat'
                         };
 
-                        history.back();
+                        // Redirect to show booking view
+                        Redirect.to('visa/', response.CustomerId);
 
                     // Something went wrong
                     }).catch(function(response) {

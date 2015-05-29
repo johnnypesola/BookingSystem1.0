@@ -128,9 +128,10 @@ namespace BookingSystem.Models
                                 Discount = reader.GetSafeDecimal(reader.GetOrdinal("Discount")),
                                 CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
                                 Notes = reader.GetSafeString(reader.GetOrdinal("Notes")),
-                                CreatedByUserId = reader.GetSafeInt32(reader.GetOrdinal("CreatedByUserId")),
-                                ModifiedByUserId = reader.GetSafeInt32(reader.GetOrdinal("ModifiedByUserId")),
-                                ResponsibleUserId = reader.GetSafeInt32(reader.GetOrdinal("ResponsibleUserId"))
+
+                                //CreatedByUserId = reader.GetSafeInt32(reader.GetOrdinal("CreatedByUserId")),
+                                //ModifiedByUserId = reader.GetSafeInt32(reader.GetOrdinal("ModifiedByUserId")),
+                                //ResponsibleUserId = reader.GetSafeInt32(reader.GetOrdinal("ResponsibleUserId"))
                             });
                         }
                     }

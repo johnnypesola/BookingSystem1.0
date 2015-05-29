@@ -36,10 +36,11 @@
                 <th></th>
 
             </tr>
+
             <tr ng-repeat="booking in bookings">
                 <td class="align-left" ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyString}}</td>
-                <td class="date">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
-                <td class="date">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+                <td class="date align-left">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                <td class="date align-left">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
                 <td>{{booking.Provisional | boolean}}</td>
                 <td>{{booking.BookingTypeName}}</td>
                 <td ng-class="{'empty-string': !booking.CustomerName.length}">

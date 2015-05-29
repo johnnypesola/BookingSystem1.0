@@ -4,9 +4,10 @@
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
     <page-header-buttons
-            show-list="true"
-            show-add="true"
-            show-search="true"
+        show-calendar="true"
+        show-list="true"
+        show-add="true"
+        show-search="true"
     ></page-header-buttons>
 
     <div class="show-container">
@@ -16,7 +17,7 @@
         <table class="show-table">
             <tr>
                 <th>Namn</th>
-                <td ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyString}}</td>
+                <td ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyName}}</td>
             </tr>
             <tr ng-show="booking.StartTime.length">
                 <th>Starttid</th>

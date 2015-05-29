@@ -22,27 +22,25 @@
 
         <table class="list-table" ng-show="locationBookings.length">
             <tr>
+                <th>Bokningstillfälle</th>
                 <th>Starttid</th>
                 <th>Sluttid</th>
                 <th>Preliminär</th>
-                <th>Lokal</th>
+                <th>Lokal/Plats</th>
                 <th>Möblering</th>
-                <th>Personer</th>
-                <th>Max antal personer</th>
-                <th>Marginal efter bokning</th>
+                <th>Personer / Max</th>
                 <th>Bokningspris</th>
                 <th></th>
-
             </tr>
+
             <tr ng-repeat="locationBooking in locationBookings">
-                <td class="date">{{locationBooking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
-                <td class="date">{{locationBooking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+                <td class="align-left"><a ng-href="#/bokningstillfallen/visa/{{locationBooking.BookingId}}">{{locationBooking.BookingName}}</a></td>
+                <td class="date align-left">{{locationBooking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                <td class="date align-left">{{locationBooking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
                 <td>{{locationBooking.Provisional | boolean}}</td>
                 <td><a ng-href="#/platser/visa/{{locationBooking.LocationId}}">{{locationBooking.LocationName}}</a></td>
                 <td>{{locationBooking.FurnituringName}}</td>
-                <td class="align-right">{{locationBooking.NumberOfPeople | count}}</td>
-                <td class="align-right">{{locationBooking.MaxPeople | count}}</td>
-                <td class="align-right">{{locationBooking.MinutesMarginAfterBooking | minutes}}</td>
+                <td class="align-right">{{locationBooking.NumberOfPeople | count}} / {{locationBooking.MaxPeople | count}}</td>
                 <td class="align-right">{{locationBooking.CalculatedBookingPrice | kr}}</td>
                 <td>
                     <div item-action-buttons="locationBooking.LocationBookingId"></div>

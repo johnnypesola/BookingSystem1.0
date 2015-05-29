@@ -21,7 +21,7 @@
 
                 {
                     title: "Start",
-                    location: "#/"
+                    location: "#/start"
                 },
                 {
                     title: "Bokningar",
@@ -52,17 +52,17 @@
                     title: "Lokaler / Platser",
                     submenus: [
                         {
+                            title: "Möbleringar",
+                            location: "#/mobleringar/lista"
+                        },
+                        {
                             title: "Lokaler / Platser",
                             location: "#/platser/lista"
-                        },/*
+                        }/*
                         {
                             title: "Lokalmöbleringar",
                             location: "lokalmobleringar/lista"
                         },*/
-                        {
-                            title: "Möbleringar",
-                            location: "#/mobleringar/lista"
-                        }
                     ]
                 },
                 /*{
@@ -97,10 +97,6 @@
         /* Object methods END */
 
         /* Public methods START */
-
-            $scope.selectFlap = function(flap){
-                $scope.selectedFlap = flap;
-            };
 
         /* Public methods END */
 
