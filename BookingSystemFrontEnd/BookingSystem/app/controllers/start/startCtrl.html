@@ -1,11 +1,20 @@
 <section class="content-container" ng-controller="StartCtrl">
     <h2>Välkommen till bokningssystemet</h2>
 
-    <div class="align-center" ng-show="emptyBookings.count">
+    <div ng-show="emptyBookings.count">
         <span class="info info bg-light-blue">Det finns {{emptyBookings.count | count}} tomma bokningstillfällen. <a href="#/bokningstillfallen/tomma">Visa</a></span>
     </div>
 
-    <div class="half-container">
+    <div class="small-container">
+        <h3>Vad vill du göra?</h3>
+
+        <a class="button" href="#/bokningstillfallen/skapa">Skapa ett nytt bokningstillfälle</a>
+        <a class="button" href="#/lokalbokningar/skapa">Boka en lokal</a>
+        <a class="button" href="#/kunder/skapa">Lägg till kund</a>
+
+    </div>
+
+    <div class="small-container">
         <h3>Dagens bokningar</h3>
 
         <div ng-show="noBookingsForTodayFound">
@@ -14,13 +23,14 @@
 
         <table class="list-table" ng-show="bookingsForToday.length">
             <tr>
-                <th>B.namn</th>
+                <th>Bokningstillfälle</th>
                 <th>Starttid</th>
                 <th>Sluttid</th>
-                <th>Prel.</th>
-                <th>B.typ</th>
+                <th>Preliminär</th>
+                <th>Bokningstyp</th>
                 <th>Kund</th>
                 <th>Personer</th>
+                <th>Antal bokningar</th>
                 <th></th>
             </tr>
 
@@ -34,6 +44,7 @@
                     <a ng-href="#/kunder/visa/{{booking.CustomerId}}">{{booking.CustomerName}}</a>
                 </td>
                 <td class="align-right">{{booking.NumberOfPeople | count}}</td>
+                <td class="align-right">{{booking.LocationBookings.length | count}}</td>
                 <td class="align-right">
                     <div item-action-buttons="booking.BookingId" object-type="bokningstillfallen"></div>
                 </td>
@@ -42,9 +53,8 @@
 
     </div>
 
-
-    <div class="half-container">
-        <h3>Lediga lokaler för idag</h3>
+    <div class="small-container">
+        <h3>Lokaler lediga idag</h3>
 
         <div ng-show="noLocationsFreeForTodayFound">
             <span class="info bg-light-blue">Inga lediga lokaler hittades för idag</span>
@@ -69,7 +79,7 @@
                     {{location.BookingPricePerHour | kr}}
                 </td>
                 <td class="align-right">
-                    <div item-action-buttons="location.LocationId" object-type="platser"></div>
+                    <div item-action-buttons="location.LocationId" object-type="platser" booking-type="lokalbokningar" render-book-icon="true"></div>
                 </td>
             </tr>
         </table>

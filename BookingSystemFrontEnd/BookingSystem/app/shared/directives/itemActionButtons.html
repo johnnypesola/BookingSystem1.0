@@ -1,6 +1,9 @@
 <div class="action-buttons-container">
     <a href="" class="show-actions-button" title="Alternativ"></a>
     <div class="actions" ng-show="actionsvisible">
-        <a href="" class="delete" ng-click="redirectToDeletePage()" title="Radera"></a><a href="" class="edit" ng-click="redirectToEditPage()" title="Redigera"></a><a href="" class="show" ng-click="redirectToShowPage()" title="Visa mer info"></a>
+        <a ng-show="renderShowIcon" href="" class="show" ng-click="redirectToShowPage()" title="Visa mer info"></a>
+        <a ng-show="renderEditIcon" href="" class="edit" ng-click="redirectToEditPage()" title="Redigera"></a>
+        <a ng-show="renderDeleteIcon" href="" class="delete" ng-click="redirectToDeletePage()" title="Radera"></a>
+        <a ng-show="renderBookIcon" href="" class="book" ng-click="redirectToBookingPage()" title="Boka denna"></a>
     </div>
 </div>

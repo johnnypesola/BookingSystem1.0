@@ -197,67 +197,96 @@
                 templateUrl: 'shared/directives/itemActionButtons.html',
                 scope: {
                     id: '=itemActionButtons',
-                    objectType: '@objectType'
+                    objectType: '@objectType',
+                    bookingType: '@bookingType',
+                    renderDeleteIcon: '=?renderDeleteIcon',
+                    renderEditIcon: '=?renderEditIcon',
+                    renderShowIcon: '=?renderShowIcon',
+                    renderBookIcon: '=?renderBookIcon'
                 },
                 link: function(){
 
                 },
                 controller: function($scope, $element, $attrs) {
 
-                    var that = this;
-
-                    $element.bind('click', function(event) {
-                        $scope.actionsvisible = true;
-                        $scope.$digest();
-                    });
-
-                    $element.bind('mouseleave', function(event){
-                        $scope.actionsvisible = false;
-                        $scope.$digest();
-                    });
-
                     /* Declare variables START */
+
+                        var that = this;
 
                     /* Declare variables END */
 
                     /* Private methods START */
 
-                    that.getObjectType = function(){
+                        that.initVariables = function(){
 
-                        return (typeof $scope.objectType !== 'undefined' ? $scope.objectType : $location.path().split('/')[1])
-                    };
+                            $scope.renderDeleteIcon = $scope.renderDeleteIcon || true;
+                            $scope.renderEditIcon = $scope.renderDeleteIcon || true;
+                            $scope.renderShowIcon = $scope.renderDeleteIcon || true;
+                        };
+
+                        that.bindEvents = function(){
+
+                            $element.bind('click', function(event) {
+                                $scope.actionsvisible = true;
+                                $scope.$digest();
+                            });
+
+                            $element.bind('mouseleave', function(event){
+                                $scope.actionsvisible = false;
+                                $scope.$digest();
+                            });
+                        };
+
+
+                        that.getObjectType = function(){
+
+                            return (typeof $scope.objectType !== 'undefined' ? $scope.objectType : $location.path().split('/')[1])
+                        };
 
                     /* Private methods END */
 
                     /* Public methods START */
 
-                    $scope.redirectToDeletePage = function(){
+                        $scope.redirectToDeletePage = function(){
 
-                        // Clear eventual url parameters
-                        $location.url($location.path());
+                            // Clear eventual url parameters
+                            $location.url($location.path());
 
-                        $location.path( that.getObjectType() + "/radera/" + $scope.id );
-                    };
+                            $location.path( that.getObjectType() + "/radera/" + $scope.id );
+                        };
 
-                    $scope.redirectToEditPage = function(){
+                        $scope.redirectToEditPage = function(){
 
-                        // Clear eventual url parameters
-                        $location.url($location.path());
+                            // Clear eventual url parameters
+                            $location.url($location.path());
 
-                        $location.path( that.getObjectType() + "/redigera/" + $scope.id );
-                    };
+                            $location.path( that.getObjectType() + "/redigera/" + $scope.id );
+                        };
 
-                    $scope.redirectToShowPage = function(){
+                        $scope.redirectToShowPage = function(){
 
-                        // Clear eventual url parameters
-                        $location.url($location.path());
+                            // Clear eventual url parameters
+                            $location.url($location.path());
 
-                        $location.path( that.getObjectType() + "/visa/" + $scope.id );
-                    };
+                            $location.path( that.getObjectType() + "/visa/" + $scope.id );
+                        };
+
+                        $scope.redirectToBookingPage = function(){
+
+                            // Clear eventual url parameters
+                            $location.url($location.path());
+
+                            $location.path( $scope.bookingType + "/skapa" );
+                            $location.search( "lokal-id", $scope.id );
+                        };
 
                     /* Public methods END */
 
                     /* Initialization START */
+
+                        that.bindEvents();
+
+                        that.initVariables();
 
                     /* Initialization END */
 

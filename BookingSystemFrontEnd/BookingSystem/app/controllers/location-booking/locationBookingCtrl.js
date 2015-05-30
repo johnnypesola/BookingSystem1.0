@@ -178,6 +178,7 @@
 
             var that = this;
                 $scope.furniturings = [];
+                $scope.locationBooking = {};
 
         /* Private methods START */
 
@@ -267,6 +268,9 @@
 
             that.getOtherDisplayData = function (){
 
+                var deferred = $q.defer(),
+                    promise = deferred.promise;
+
                 that.getBookingTypes()
 
                     // If booking types were fetched
@@ -277,9 +281,18 @@
                             // If customers were fetched
                             .then(function(){
 
-                                that.getLocations();
+                                that.getLocations()
+
+                                    // If locations were fetched
+                                    .then(function(){
+
+                                        // Resolve promise
+                                        deferred.resolve();
+                                    });
                             })
-                    })
+                    });
+
+                return promise;
             };
 
             // Save booking
@@ -464,10 +477,18 @@
         /* Initialization START */
 
             // Get other data used in form
-            that.getOtherDisplayData();
+            that.getOtherDisplayData()
+
+                .then(function(){
+
+
+                });
 
             // Get booking id from route params
             $scope.bookingId = $routeParams.bookingId || 0;
+
+            // Get location id from route params
+            $scope.locationBooking.LocationId = +$location.search()['lokal-id'];
 
         /* Initialization END */
     })
