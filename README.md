@@ -7,6 +7,6 @@ contain alot more functionality, like resource booking and such.
    
 The system itself contains a frontend written in AngularJS (v1.2.28) and a backend written in Asp.NET (Web Api 2). Microsoft SQL 2008 R2 is used as database.
    
-More specific documentation is available in the wiki in Swedish (Sorry about that).
+More specific documentation is available in the wiki in Swedish (Apologies to all who don't speak the language).
    
-// Johnny
+// Johnny Pesola
