@@ -1,6 +1,6 @@
 ### Booking system
 
-This is a booking system that was explicitly made for the course 1DV430 on Linnaeus University.  
+This is a booking system that was explicitly made for the course 1DV430 on Linnaeus University in the spring term of 2015.  
    
 At it's current state it's only possible to make location based bookings. But later versions of it will 
 contain alot more functionality, like resource booking and such.    
