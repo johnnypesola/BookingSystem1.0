@@ -6,3 +6,5 @@ At it's current state it's only possible to make location based bookings. But la
 contain alot more functionality, like resource booking and such.    
    
 Most of the documentation is available in the wiki in Swedish.
+   
+// Johnny
