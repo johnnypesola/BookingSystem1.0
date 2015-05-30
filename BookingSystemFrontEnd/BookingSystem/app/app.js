@@ -59,6 +59,10 @@
                 templateUrl: 'controllers/booking/bookingList.html',
                 reloadOnSearch: false
             }).
+            when('/bokningstillfallen/tomma', {
+                templateUrl: 'controllers/booking/bookingListEmpty.html',
+                reloadOnSearch: false
+            }).
             when('/bokningstillfallen/radera/:bookingId', {
                 templateUrl: 'controllers/booking/bookingDelete.html'
             }).

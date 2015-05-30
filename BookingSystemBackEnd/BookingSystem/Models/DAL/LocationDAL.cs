@@ -86,60 +86,6 @@ namespace BookingSystem.Models
             } // Connection is closed here
         }
 
-        /*
-        public Location GetLocationByName(string locationName)
-        {
-            // Create connection object
-            using (this.CreateConnection())
-            {
-                try
-                {
-                    SqlCommand cmd;
-
-                    // Connect to database
-                    cmd = this.Setup("appSchema.usp_LocationList", DALOptions.closedConnection);
-
-                    // Add parameter for Stored procedure
-                    cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = locationName;
-
-                    // Open connection to database
-                    connection.Open();
-
-                    // Try to read response from stored procedure
-                    using (SqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        // Check if there is any return data to read
-                        if (reader.Read())
-                        {
-                            // Create new Location object from database values and return a reference
-                            return new Location
-                            {
-                                LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
-                                Name = reader.GetSafeString(reader.GetOrdinal("Name")),
-                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal("MaxPeople")),
-                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLongitude")),
-                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLatitude")),
-                                ImageSrc = reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
-                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
-                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings")),
-                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal("TotalBookingValue")),
-                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking"))
-                            };
-                        }
-                    }
-
-                    return null;
-                }
-                catch
-                {
-                    // Throw exception
-                    throw new ApplicationException(DAL_ERROR_MSG);
-                }
-            } // Connection is closed here
-        }
-        */
-
-
         public IEnumerable<Location> GetLocations()
         {
             // Create connection object
@@ -174,6 +120,57 @@ namespace BookingSystem.Models
                                 BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
                                 TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings"))
                                 
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    locationsReturnList.TrimExcess();
+
+                    // Return list
+                    return locationsReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public IEnumerable<Location> GetLocationsFreeForPeriod(DateTime startTime, DateTime endTime)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List<Location> locationsReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    locationsReturnList = new List<Location>(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup("appSchema.usp_LocationsFreeForPeriod");
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add("@StartTime", SqlDbType.SmallDateTime).Value = startTime;
+                    cmd.Parameters.Add("@EndTime", SqlDbType.SmallDateTime).Value = endTime;
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Location object from database values and add to list
+                            locationsReturnList.Add(new Location
+                            {
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
+                                Name = reader.GetSafeString(reader.GetOrdinal("Name")),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal("MaxPeople")),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour"))
                             });
                         }
                     }

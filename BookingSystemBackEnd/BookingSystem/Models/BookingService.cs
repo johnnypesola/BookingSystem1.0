@@ -76,6 +76,16 @@ namespace BookingSystem.Models
             return BookingDAL.GetBookingsForPeriod(startTime, endTime).AsQueryable();
         }
 
+        public IEnumerable<Booking> GetEmpty()
+        {
+            return BookingDAL.GetEmptyBookings();
+        }
+
+        public int GetEmptyBookingsCount()
+        {
+            return BookingDAL.GetEmptyBookingsCount();
+        }
+
         public IEnumerable<CalendarBookingDay> CheckDaysForPeriod(DateTime startTime, DateTime endTime)
         {
             return SharedDAL.CheckDayBookingsForPeriod(startTime, endTime, "booking");

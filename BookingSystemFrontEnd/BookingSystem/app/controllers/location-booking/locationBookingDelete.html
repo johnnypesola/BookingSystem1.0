@@ -12,7 +12,10 @@
 
     <div class="align-center">
         <div class="show-container">
-            <h3>Vill du verkligen radera bokningen?</h3>
+            <h3 class="text-red">Vill du verkligen radera bokningen?</h3>
+
+            <img class="show-image" ng-src="{{locationBooking.LocationImageSrc}}" ng-show="locationBooking.LocationImageSrc">
+
             <table class="show-table">
                 <tr>
                     <th>Starttid</th>
@@ -37,6 +40,14 @@
                 <tr>
                     <th>Antal personer</th>
                     <td>{{locationBooking.NumberOfPeople | count}}</td>
+                </tr>
+                <tr>
+                    <th>Max personer</th>
+                    <td>{{locationBooking.MaxPeople | count}}</td>
+                </tr>
+                <tr>
+                    <th>Lediga platser</th>
+                    <td>{{locationBooking.MaxPeople-locationBooking.NumberOfPeople | count}}</td>
                 </tr>
                 <tr>
                     <th>Marginal i minuter efter bokning</th>

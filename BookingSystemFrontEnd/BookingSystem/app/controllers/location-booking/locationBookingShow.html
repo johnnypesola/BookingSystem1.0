@@ -42,11 +42,19 @@
                 <td>{{locationBooking.NumberOfPeople | count}}</td>
             </tr>
             <tr>
+                <th>Max personer</th>
+                <td>{{locationBooking.MaxPeople | count}}</td>
+            </tr>
+            <tr>
+                <th>Lediga platser</th>
+                <td>{{locationBooking.MaxPeople-locationBooking.NumberOfPeople | count}}</td>
+            </tr>
+            <tr>
                 <th>Marginal i minuter efter bokning</th>
                 <td>{{locationBooking.MinutesMarginAfterBooking | minutes}}</td>
             </tr>
             <tr>
-                <th>Bokningspris</th>
+                <th>Uträknat bokningspris</th>
                 <td>{{locationBooking.CalculatedBookingPrice | kr}}</td>
             </tr>
             <tr>
@@ -54,7 +62,6 @@
                 <td><div class="place-left" item-action-buttons="locationBooking.LocationBookingId"></div></td>
             </tr>
         </table>
-
 
     </div>
 

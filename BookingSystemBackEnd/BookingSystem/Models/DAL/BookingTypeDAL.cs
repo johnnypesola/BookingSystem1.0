@@ -9,7 +9,7 @@ namespace BookingSystem.Models
 {
     public class BookingTypeDAL : DALBase
     {
-                public void DeleteBookingType(int BookingTypeId)
+        public void DeleteBookingType(int BookingTypeId)
         {
             // Create connection object
             using (this.CreateConnection())
@@ -70,7 +70,9 @@ namespace BookingSystem.Models
                                 Name = reader.GetSafeString(reader.GetOrdinal("Name")),
                                 HasLocation = reader.GetSafeBoolean(reader.GetOrdinal("HasLocation")),
                                 MinutesMarginBeforeBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginBeforeBooking")),
-                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking"))
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking")),
+
+                                BookingTypeCount = reader.GetSafeInt32(reader.GetOrdinal("BookingTypeCount"))
                             };
                         }
                     }
@@ -99,7 +101,7 @@ namespace BookingSystem.Models
                     BookingTypesReturnList = new List<BookingType>(50);
 
                     // Connect to database and execute given stored procedure
-                    cmd = this.Setup("appSchema.usp_BookingTypeListSimple");
+                    cmd = this.Setup("appSchema.usp_BookingTypeList");
 
                     // Get all data from stored procedure
                     using (SqlDataReader reader = cmd.ExecuteReader())
@@ -114,7 +116,9 @@ namespace BookingSystem.Models
                                 Name = reader.GetSafeString(reader.GetOrdinal("Name")),
                                 HasLocation = reader.GetSafeBoolean(reader.GetOrdinal("HasLocation")),
                                 MinutesMarginBeforeBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginBeforeBooking")),
-                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking"))
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking")),
+
+                                BookingTypeCount = reader.GetSafeInt32(reader.GetOrdinal("BookingTypeCount"))
                             });
                         }
                     }
@@ -170,7 +174,9 @@ namespace BookingSystem.Models
                                 Name = reader.GetSafeString(reader.GetOrdinal("Name")),
                                 HasLocation = reader.GetSafeBoolean(reader.GetOrdinal("HasLocation")),
                                 MinutesMarginBeforeBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginBeforeBooking")),
-                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking"))
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking")),
+
+                                BookingTypeCount = reader.GetSafeInt32(reader.GetOrdinal("BookingTypeCount"))
                             });
                         }
                     }

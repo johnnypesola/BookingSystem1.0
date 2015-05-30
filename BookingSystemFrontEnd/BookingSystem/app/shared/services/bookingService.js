@@ -38,6 +38,20 @@
                             fromDate: '@fromDate',
                             toDate: '@toDate'
                         }
+                    },
+                    // Count empty bookings
+                    countEmpty: {
+                        url: API_URL + 'Booking/empty/count',
+                        id: '@id',
+                        method: 'GET',
+                        isArray: false
+                    },
+
+                    queryEmpty: {
+                        url: API_URL + 'Booking/empty/info',
+                        id: '@id',
+                        method: 'GET',
+                        isArray: true
                     }
                 });
         })

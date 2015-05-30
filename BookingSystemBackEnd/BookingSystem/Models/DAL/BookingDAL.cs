@@ -149,6 +149,105 @@ namespace BookingSystem.Models
             }
         }
 
+        public IEnumerable<Booking> GetEmptyBookings()
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List<Booking> bookingsReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    bookingsReturnList = new List<Booking>(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup("appSchema.usp_BookingListEmpty");
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Booking object from database values and add to list
+
+                            bookingsReturnList.Add(new Booking
+                            {
+                                BookingId = reader.GetSafeInt32(reader.GetOrdinal("BookingId")),
+                                Name = reader.GetSafeString(reader.GetOrdinal("Name")),
+                                CustomerId = reader.GetSafeInt32(reader.GetOrdinal("CustomerId")),
+                                CustomerName = reader.GetSafeString(reader.GetOrdinal("CustomerName")),
+                                Provisional = reader.GetBoolean(reader.GetOrdinal("Provisional")),
+                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
+                                Discount = reader.GetSafeDecimal(reader.GetOrdinal("Discount")),
+                                CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
+                                Notes = reader.GetSafeString(reader.GetOrdinal("Notes")),
+
+                                BookingTypeName = reader.GetSafeString(reader.GetOrdinal("BookingTypeName"))
+
+                                //CreatedByUserId = reader.GetSafeInt32(reader.GetOrdinal("CreatedByUserId")),
+                                //ModifiedByUserId = reader.GetSafeInt32(reader.GetOrdinal("ModifiedByUserId")),
+                                //ResponsibleUserId = reader.GetSafeInt32(reader.GetOrdinal("ResponsibleUserId"))
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    bookingsReturnList.TrimExcess();
+
+                    // Return list
+                    return bookingsReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public int GetEmptyBookingsCount()
+        {
+                        // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List<Booking> bookingsReturnList;
+                    SqlCommand cmd;
+
+                    int EmptyCount;
+
+                    // Create list object
+                    bookingsReturnList = new List<Booking>(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup("appSchema.usp_BookingListEmpty");
+
+                    // Add variable for stored procedure
+                    cmd.Parameters.Add("@CountEmpty", SqlDbType.Bit).Value = 1;
+
+                    // Try to read response from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if there is any return data to read
+                        if (reader.Read())
+                        {
+                            // Create new Booking object from database values and add to list
+                            return EmptyCount = reader.GetSafeInt32(reader.GetOrdinal("EmptyCount"));
+                        }
+                    }
+
+                    return 0;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
         public IEnumerable<Booking> GetBookingsPageWise(string sortColumn, int pageSize, int pageIndex, DateTime? startTime = null, DateTime? endTime = null)
         {
             // Create connection object

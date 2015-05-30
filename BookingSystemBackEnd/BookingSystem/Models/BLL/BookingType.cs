@@ -25,5 +25,8 @@ namespace BookingSystem.Models
 
         [Range(0, Int16.MaxValue, ErrorMessage = "MinutesMarginAfterBooking is out of range.")]
         public int MinutesMarginAfterBooking { get; set; }
+
+        // Extra datafields retrieved from database/stored procedure
+        public int BookingTypeCount { get; set; }
     }
 }

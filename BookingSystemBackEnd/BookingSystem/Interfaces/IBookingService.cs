@@ -18,6 +18,10 @@ namespace BookingSystem
 
         IEnumerable<Booking> Get();
 
+        IEnumerable<Booking> GetEmpty();
+
+        int GetEmptyBookingsCount();
+
         IQueryable<Booking> GetForPeriod(DateTime startTime, DateTime endTime);
 
         IEnumerable<CalendarBookingDay> CheckDaysForPeriod(DateTime startTime, DateTime endTime);

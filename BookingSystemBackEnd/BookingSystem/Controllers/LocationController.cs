@@ -65,6 +65,31 @@ namespace BookingSystem.Controllers
             }
         }
 
+        // GET: api/Location/5
+        [Route("api/Location/free/{fromDate:datetime}/{toDate:datetime}")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult Get(string fromDate, string toDate)
+        {
+            DateTime startTime, endTime;
+
+            try
+            {
+                startTime = Convert.ToDateTime(fromDate);
+                endTime = Convert.ToDateTime(toDate);
+
+                IEnumerable<Location> locations = locationService.GetLocationsFreeForPeriod(startTime.StartOfDay(), endTime.EndOfDay());
+                if (locations == null)
+                {
+                    return NotFound();
+                }
+                return Ok(locations);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
         // POST: api/Location
         [Route("api/Location")]
         [AcceptVerbs("POST")]
@@ -99,7 +124,7 @@ namespace BookingSystem.Controllers
             }
 
             // Respond that the booking was created and redirect
-            return Ok(location); //CreatedAtRoute("DefaultApi", new { id = location.LocationId }, location);
+            return Ok(location);
         }
 
         // DELETE: api/Location/5

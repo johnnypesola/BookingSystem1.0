@@ -1,9 +1,12 @@
-<section class="content-container" ng-controller="BookingListCtrl">
+<section class="content-container" ng-controller="BookingListEmptyCtrl">
 
     <h2>
-        Lista över Bokningstillfällen
+        Lista över tomma Bokningstillfällen utan underbokningar.
         <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
     </h2>
+    <p class="info bg-light-blue">
+        Dessa bokningstillfällen gör ingen direkt nytta i systemet. Om de inte används vid ett senare tillfälle så kan de tas bort med ett gott samvete.
+    </p>
 
     <page-header-buttons
         show-calendar="true"
@@ -14,40 +17,28 @@
 
     <section class="list-container">
 
-        <a change-month-button direction="prev" class="prev-month">&#8592;</a>
-        <h3>{{currentMonthName}} {{currentYear}}</h3>
-        <a change-month-button direction="next" class="next-month">&#8594;</a>
-
         <div ng-show="noItemsFound">
-            <span class="info bg-light-blue">Inga bokningar hittades för månaden</span>
+            <span class="info bg-light-blue">Inga bokningar kunde hittas.</span>
         </div>
 
         <table class="list-table" ng-show="bookings.length">
             <tr>
                 <th>Bokningsnamn</th>
-                <th>Starttid</th>
-                <th>Sluttid</th>
                 <th>Preliminär</th>
                 <th>Bokningstyp</th>
                 <th>Kund</th>
                 <th>Personer</th>
-                <th>Pris</th>
-                <th>Antal bokningar</th>
                 <th></th>
             </tr>
 
             <tr ng-repeat="booking in bookings">
                 <td class="align-left" ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyString}}</td>
-                <td class="date align-left">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
-                <td class="date align-left">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
                 <td>{{booking.Provisional | boolean}}</td>
                 <td>{{booking.BookingTypeName}}</td>
                 <td ng-class="{'empty-string': !booking.CustomerName.length}">
                     <a ng-href="#/kunder/visa/{{booking.CustomerId}}">{{booking.CustomerName}}</a>
                 </td>
                 <td class="align-right">{{booking.NumberOfPeople | count}}</td>
-                <td class="align-right">{{booking.CalculatedBookingPrice | kr}}</td>
-                <td class="align-right">{{booking.LocationBookings.length | count}}</td>
                 <td class="align-right">
                     <div item-action-buttons="booking.BookingId"></div>
                 </td>
@@ -55,4 +46,6 @@
         </table>
 
     </section>
+
+    <button back-button>Tillbaka</button>
 </section>

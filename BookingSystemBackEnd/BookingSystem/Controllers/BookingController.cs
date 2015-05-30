@@ -7,6 +7,7 @@ using System.Web.Http;
 using BookingSystem.Models;
 using System.Web.Http.Cors;
 using System.Text.RegularExpressions;
+using Newtonsoft.Json.Linq;
 
 namespace BookingSystem.Controllers
 {
@@ -56,6 +57,45 @@ namespace BookingSystem.Controllers
                 return InternalServerError();
             }
             
+        }
+
+        // GET: api/Booking/empty
+        [Route("api/Booking/empty/{infoOrCount}")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult GetEmpty(String infoOrCount)
+        {
+            try
+            {
+                IEnumerable<Booking> bookings;
+                int bookingsCount;
+                JObject returnData;
+
+                // Check how much data is requested
+                if (infoOrCount == "info")
+                {
+                    bookings = bookingService.GetEmpty();
+
+                    if (bookings == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(bookings);
+                }
+                else
+                {
+                    bookingsCount = bookingService.GetEmptyBookingsCount();
+
+                    // Build return JSON object
+                    returnData = JObject.Parse(String.Format("{{ 'count' : '{0}'}}", bookingsCount));
+
+                    return Ok(returnData);
+                }
+            }
+            catch
+            {
+                return InternalServerError();
+            }
         }
 
         // GET: api/Booking/5

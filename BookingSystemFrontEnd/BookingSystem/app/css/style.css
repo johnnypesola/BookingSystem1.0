@@ -417,6 +417,32 @@ section.content-container {
         /*border-bottom: 1px solid #EEEEEE;*/
     }
 
+    section.content-container .half-container {
+
+        display: inline-block;
+
+        margin: 3px;
+        font-size: 14px;
+        background: #FFFFFF;
+        padding: 5px;
+        width: 400px;
+
+        border-radius: 2px;
+
+        border: 1px solid #DDDDDD;
+        -webkit-box-shadow: inset 0 0 14px 0 rgba(0, 0, 0, 0.05);
+        -moz-box-shadow:    inset 0 0 14px 0 rgba(0, 0, 0, 0.05);
+        box-shadow:         inset 0 0 14px 0 rgba(0, 0, 0, 0.05);
+    }
+
+    section.content-container .half-container h3 {
+        display: block;
+        margin: 0 0 5px 0;
+        padding: 0 0 5px 3px;
+        border-bottom: 1px solid #EEEEEE;
+        text-transform: none;
+    }
+
     section.content-container form, section.content-container .show-container {
         font-size: 14px;
         background: #FFFFFF;
@@ -439,7 +465,7 @@ section.content-container {
             color: #AAAAAA;
         }
 
-        section.content-container span.info {
+        section.content-container span.info, section.content-container p.info {
             display: inline-block;
             margin: 4px 2px 14px 2px;
             border-radius: 4px;
@@ -448,6 +474,10 @@ section.content-container {
             background: url('../img/icons/page_message_icons.svg') left;
             background-repeat: no-repeat;
             background-position: 8px 9px;
+        }
+
+        section.content-container span.info a, section.content-container p.info a {
+            color: #FFFFFF;
         }
 
         section.content-container form label {
@@ -693,7 +723,7 @@ section.content-container {
     }
 
     section.content-container .list-table td.date {
-        font-size: 10px;
+        font-size: 11px;
         width: 55px;
     }
 
@@ -1136,7 +1166,7 @@ section.content-container {
     }
 
     .bg-light-blue {
-        background-color: #95D2D7 !important;
+        background-color: #7BC5CB !important;
     }
 
     .bg-dark-blue {

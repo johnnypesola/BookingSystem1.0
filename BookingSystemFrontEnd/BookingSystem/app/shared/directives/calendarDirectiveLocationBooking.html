@@ -40,7 +40,7 @@
                 <td>{{booking.Provisional | boolean}}</td>
                 <td><a ng-href="#/platser/visa/{{booking.LocationId}}">{{booking.LocationName}}</a></td>
                 <td>{{booking.FurnituringName}}</td>
-                <td class="align-right">{{booking.NumberOfPeople | count}} / {{booking.MaxPeople | count}}</td>
+                <td class="align-right">{{booking.NumberOfPeople}} / {{booking.MaxPeople | count}}</td>
                 <td>{{booking.CalculatedBookingPrice | kr}}</td>
                 <td class="align-right">
                     <div item-action-buttons="booking.LocationBookingId"></div>

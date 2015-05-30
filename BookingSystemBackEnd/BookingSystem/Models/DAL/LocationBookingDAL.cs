@@ -269,6 +269,7 @@ namespace BookingSystem.Models
                                 StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
                                 EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
                                 NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
+                                MaxPeople = reader.GetSafeInt32(reader.GetOrdinal("MaxPeople")),
                                 CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
 
                                 LocationName = reader.GetSafeString(reader.GetOrdinal("LocationName")),
@@ -325,6 +326,7 @@ namespace BookingSystem.Models
                                 StartTime = reader.GetSafeDateTime(reader.GetOrdinal("StartTime")),
                                 EndTime = reader.GetSafeDateTime(reader.GetOrdinal("EndTime")),
                                 NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
+                                MaxPeople = reader.GetSafeInt32(reader.GetOrdinal("MaxPeople")),
                                 CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
 
                                 LocationName = reader.GetSafeString(reader.GetOrdinal("LocationName")),

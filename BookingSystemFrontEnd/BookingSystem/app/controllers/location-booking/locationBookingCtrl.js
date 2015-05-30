@@ -659,7 +659,7 @@
     })
 
     // Delete Controller
-    .controller('LocationBookingDeleteCtrl', function($scope, $routeParams, LocationBooking, $location, $rootScope){
+    .controller('LocationBookingDeleteCtrl', function($scope, $routeParams, LocationBooking, $location, $rootScope, PHOTO_MISSING_SRC, API_IMG_PATH_URL){
 
             var that = this;
 
@@ -734,6 +734,13 @@
                     locationBookingId: $routeParams.locationBookingId
                 }
             );
+
+            locationBooking.$promise.then(function(){
+
+                // Add path to LocationImageSrc
+                locationBooking.LocationImageSrc = (locationBooking.LocationImageSrc === "" ? PHOTO_MISSING_SRC : API_IMG_PATH_URL + locationBooking.LocationImageSrc);
+            });
+
 
             // In case locationBookings cannot be fetched, display an error to user.
             locationBooking.$promise.catch(function(){

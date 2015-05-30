@@ -14,24 +14,24 @@
 
         <table class="list-table">
             <tr>
-                <th>Kundnr.</th>
                 <th>Kundnamn</th>
+                <th>Kundnr.</th>
                 <th>Ort</th>
                 <th>Överordnad kund</th>
                 <th></th>
             </tr>
             <tr ng-repeat="customer in customers">
-                <td class="align-right">
-                    {{customer.CustomerId}}
-                </td>
-                <td>
+                <td class="align-left">
                     {{customer.Name}}
                 </td>
-                <td>
+                <td class="align-left">
+                    {{customer.CustomerId}}
+                </td>
+                <td class="align-left">
                     {{customer.City}}
                 </td>
-                <td>
-                    {{customer.ParentCustomerName}}
+                <td class="align-left"  ng-class="{'empty-string': !customer.ParentCustomerName.length}">
+                    {{customer.ParentCustomerName | emptyString}}
                 </td>
                 <td class="align-right">
                     <div item-action-buttons="customer.CustomerId"></div>

@@ -61,6 +61,11 @@ namespace BookingSystem.Models
             return LocationDAL.GetLocations();
         }
 
+        public IEnumerable<Location> GetLocationsFreeForPeriod(DateTime startTime, DateTime endTime)
+        {
+            return LocationDAL.GetLocationsFreeForPeriod(startTime, endTime);
+        }
+
         public IEnumerable<Location> GetPageWise(string sortColumn, int pageSize, int pageIndex, out int totalRowCount)
         {
             return LocationDAL.GetLocationsPageWise(sortColumn, pageSize, pageIndex, out totalRowCount);

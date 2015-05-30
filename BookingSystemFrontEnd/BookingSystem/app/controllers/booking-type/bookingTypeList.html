@@ -18,20 +18,24 @@
                 <th>Har lokal/plats</th>
                 <th>Marginial i minuter före</th>
                 <th>Marginial i minuter efter</th>
+                <th>Antal bokningar</th>
                 <th></th>
             </tr>
             <tr ng-repeat="bookingType in bookingTypes">
-                <td>
+                <td class="align-left">
                     {{bookingType.Name}}
                 </td>
                 <td>
                     {{bookingType.HasLocation | boolean}}
                 </td>
                 <td>
-                    {{bookingType.MinutesMarginBeforeBooking}}
+                    {{bookingType.MinutesMarginBeforeBooking | minutes}}
                 </td>
                 <td>
-                    {{bookingType.MinutesMarginAfterBooking}}
+                    {{bookingType.MinutesMarginAfterBooking | minutes}}
+                </td>
+                <td>
+                    {{bookingType.BookingTypeCount | count}}
                 </td>
                 <td class="align-right">
                     <div item-action-buttons="bookingType.BookingTypeId"></div>

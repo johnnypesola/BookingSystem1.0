@@ -19,6 +19,22 @@
                 <td>{{bookingType.Name}}</td>
             </tr>
             <tr>
+                <th>Har lokal/plats</th>
+                <td>{{bookingType.HasLocation | boolean}}</td>
+            </tr>
+            <tr>
+                <th>Marginial i minuter före bokning</th>
+                <td>{{bookingType.MinutesMarginBeforeBooking | minutes}}</td>
+            </tr>
+            <tr>
+                <th>Marginial i minuter efter bokning</th>
+                <td>{{bookingType.MinutesMarginAfterBooking | minutes}}</td>
+            </tr>
+            <tr>
+                <th>Antal bokningar</th>
+                <td>{{bookingType.BookingTypeCount | count}}</td>
+            </tr>
+            <tr>
                 <th>Alternativ</th>
                 <td><div class="place-left" item-action-buttons="bookingType.BookingTypeId"></div></td>
             </tr>

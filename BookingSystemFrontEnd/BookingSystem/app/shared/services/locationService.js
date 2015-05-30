@@ -16,26 +16,20 @@
 
             return $resource(
                 API_URL + 'Location/:locationId',
-                {locationId: '@locationId'}
+                {locationId: '@locationId'},
+                {
+                    queryFreeForPeriod: {
+                        url: API_URL + 'Location/free/:fromDate/:toDate',
+                        id: '@id',
+                        method: 'GET',
+                        isArray: true,
+                        params: {
+                            fromDate: '@fromDate',
+                            toDate: '@toDate'
+                        }
+                    }
+                }
             );
-
-            /*
-             query: function (callback){
-             $http({
-             method: 'GET',
-             url: 'http://192.168.1.4:8080/BookingSystem/api/Booking',
-             cache: false
-             }).success(callback);
-             },
-
-             queryBetweenDates: function (callback){
-             $http({
-             method: 'GET',
-             url: 'http://192.168.1.4:8080/BookingSystem/api/Booking',
-             cache: false
-             }).success(callback);
-             }
-             */
         })
 
         .factory('LocationImage', function($http, API_URL) {
@@ -88,8 +82,6 @@
                                         availableFurnituring.MaxPeople = locationFurnituring.MaxPeople;
 
                                         match = true;
-
-                                        return;
                                     }
                                 });
 

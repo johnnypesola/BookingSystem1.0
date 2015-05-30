@@ -32,21 +32,21 @@
 
                     /* Initialization START */
 
-                        // Add watch to selectedMainMenu. Mark right menu in case it changes
-                        $scope.$watch('selectedMainMenu', function(something){
-
-                            that.disableAllButOne($scope.menuItems, 'isMenuActive', $scope.selectedMainMenu);
-                        });
-
                         // Detect when location / route / url is changed. For example when a <a> link is pressed.
-
                         $rootScope.$on("$routeChangeStart", function (event, next, current) {
 
                             // Select correct menu
                             that.selectCurrentLocationMenus();
-
                         });
 
+                        // Hide menu on mouse leave
+                        $element.bind('mouseleave', function(event){
+
+                            // Hide all sub menus
+                            that.disableAllButOne($scope.menuItems, 'isSubMenusVisible');
+
+                            $scope.$digest();
+                        });
 
                     /* Initialization END */
 
@@ -61,7 +61,7 @@
                         // Find out selected main menu and sub menu from url location and select them
                         that.selectCurrentLocationMenus = function(){
 
-                            // Check that we aren't on he index page.
+                            // Check that we aren't on the index page.
                             if($location.path().length > 2){
 
                                 locationObjType = $location.path().split('/')[1];
@@ -69,6 +69,7 @@
                                 // Loop through main menu items
                                 for(i = 0; i < $scope.menuItems.length; i+=1) {
 
+                                    // Get main menu
                                     mainMenu = $scope.menuItems[i];
 
                                     // Loop through sub menu items, if there is such
@@ -85,8 +86,7 @@
                                             if(subMenuLocation === locationObjType){
 
                                                 // Set selected main menu
-                                                $scope.selectedMainMenu = mainMenu;
-
+                                                that.disableAllButOne($scope.menuItems, 'isMenuActive', mainMenu);
 
                                                 // Populate the outgoing pageFlaps object
                                                 $scope.pageFlaps = mainMenu.submenus;
@@ -106,16 +106,15 @@
 
                                         // If this menus location string matches with location url string
                                         if(subMenuLocation === locationObjType){
-                                            $scope.selectedMainMenu = mainMenu;
 
                                             // Activate selected menu, deactivate the other siblings.
                                             that.disableAllButOne($scope.menuItems, 'isMenuActive', mainMenu);
 
-                                            // Disable other flaps
-                                            that.disableAllButOne($scope.menuItems, 'isFlapActive', mainMenu);
-
                                             // Populate the outgoing pageFlaps object
                                             $scope.pageFlaps = [mainMenu];
+
+                                            // Disable other flaps
+                                            that.disableAllButOne($scope.menuItems, 'isFlapActive', mainMenu);
 
                                             // Avoid unnecessary iterations
                                             break;
@@ -133,6 +132,9 @@
                         $scope.selectMainMenu = function(menu) {
                             $scope.selectedMainMenu = menu;
 
+                            // Toggle active main menu. (which is shown)
+                            that.disableAllButOne($scope.menuItems, 'isMenuActive', $scope.selectedMainMenu);
+
                             // If there are any sub menus
                             if(typeof menu.submenus !== 'undefined' ){
 
@@ -144,26 +146,16 @@
 
                             } else {
 
-                                //$scope.visibleSubMenus = menu;
+                                // Hide all sub menus
                                 that.disableAllButOne($scope.menuItems, 'isSubMenusVisible');
-
-                                $scope.pageFlaps = [$scope.selectedMainMenu];
-
-                                that.disableAllButOne($scope.menuItems, 'isFlapActive', menu);
                             }
                         };
 
                         // Method for when a sub menu is selected
                         $scope.selectSubMenu = function(submenu) {
 
-                             // Populate the outgoing pageFlaps object
-                            $scope.pageFlaps = $scope.selectedMainMenu.submenus;
-
                             // Hide all sub menus
                             that.disableAllButOne($scope.menuItems, 'isSubMenusVisible');
-
-                            // Disable other flaps
-                            that.disableAllButOne($scope.pageFlaps, 'isFlapActive', submenu);
                         };
 
                     /* Public methods END */

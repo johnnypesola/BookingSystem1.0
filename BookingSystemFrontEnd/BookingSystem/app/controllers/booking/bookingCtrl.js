@@ -203,7 +203,9 @@
 
                 // Success
                 that.bookings.$promise.then(function(){
+
                     $scope.noItemsFound = !that.bookings.length;
+
                 });
 
                 // In case bookings cannot be fetched, display an error to user.
@@ -259,13 +261,55 @@
             };
 
 
-            /* Initialization START */
+        /* Initialization START */
 
                 that.initDateVariables();
                 that.getBookings();
                 that.addVarsToScope();
 
-            /* Initialization END */
+        /* Initialization END */
+    })
+
+    .controller('BookingListEmptyCtrl', function($scope, Booking, $rootScope, $location){
+        var that = this;
+        var currentDateObj;
+
+        /* Private methods START */
+
+            // Get bookings
+            that.getBookings = function(){
+
+                // Store bookings in private variable
+                that.bookings = Booking.queryEmpty();
+
+                // Success
+                that.bookings.$promise.then(function(){
+
+                    $scope.noItemsFound = !that.bookings.length;
+                });
+
+                // In case bookings cannot be fetched, display an error to user.
+                that.bookings.$promise.catch(function(){
+
+                    $rootScope.FlashMessage = {
+                        type: 'error',
+                        message: 'Bokningarna kunde inte hämtas, var god försök igen.'
+                    };
+                });
+
+                // Display bookings to user
+                $scope.bookings = that.bookings;
+            };
+
+        /* Private methods END */
+
+        /* Public methods START */
+
+        /* Initialization START */
+
+            that.getBookings();
+
+        /* Initialization END */
     })
 
     .controller('BookingCreateCtrl', function($scope, Booking, $rootScope, Customer, BookingType, Redirect){
@@ -405,7 +449,6 @@
                 });
 
                 return promise;
-
             };
 
             that.getOtherDisplayData = function (){
@@ -465,7 +508,7 @@
 
                         $rootScope.FlashMessage = {
                             type: 'success',
-                            message: 'Bokningstillfället skapades med ett lyckat resultat'
+                            message: 'Bokningstillfället sparades med ett lyckat resultat'
                         };
 
                         history.back();
