@@ -11,7 +11,7 @@
         // Dependencies
         [])
 
-        .directive('mainMenu', function($route, $routeParams, $location, $rootScope) {
+        .directive('mainMenu', ["$route", "$routeParams", "$location", "$rootScope", function($route, $routeParams, $location, $rootScope) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -20,7 +20,7 @@
                     menuItems: '=menuItems',
                     pageFlaps: '=?pageFlaps'
                 },
-                controller: function($scope, $element, $attrs) {
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
 
                     var that = this,
                         locationObjType,
@@ -165,7 +165,7 @@
                         that.selectCurrentLocationMenus();
 
                     /* Initialization END */
-                }
+                }]
             };
-        });
+        }]);
 })();

@@ -12,7 +12,7 @@
 
         ])
 
-        .factory('Redirect', function ($location) {
+        .factory('Redirect', ["$location", function ($location) {
 
             return {
                 to: function (page, value) {
@@ -25,5 +25,5 @@
                     $location.path(objectType + "/" + page + (value || "") );
                 }
             }
-        })
+        }])
 })();

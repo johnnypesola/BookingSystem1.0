@@ -11,7 +11,7 @@
 
         ])
 
-        .factory('ImageResize', function(UPLOAD_IMG_MAX_WIDTH, UPLOAD_IMG_MAX_HEIGHT, $q) {
+        .factory('ImageResize', ["UPLOAD_IMG_MAX_WIDTH", "UPLOAD_IMG_MAX_HEIGHT", "$q", function(UPLOAD_IMG_MAX_WIDTH, UPLOAD_IMG_MAX_HEIGHT, $q) {
 
             var img,
                 canvas,
@@ -141,5 +141,5 @@
                     return deferred.promise;
                 }
             }
-        });
+        }]);
 })();

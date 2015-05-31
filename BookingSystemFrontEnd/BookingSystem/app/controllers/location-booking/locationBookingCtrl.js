@@ -15,12 +15,12 @@
     )
 
     // Routes for startPage
-    .config(function($routeProvider) {
+    .config(["$routeProvider", function($routeProvider) {
 
-    })
+    }])
 
     // Show Controller
-    .controller('LocationBookingShowCtrl', function($scope, $routeParams, $location, $rootScope, LocationBooking, API_IMG_PATH_URL, PHOTO_MISSING_SRC){
+    .controller('LocationBookingShowCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "LocationBooking", "API_IMG_PATH_URL", "PHOTO_MISSING_SRC", function($scope, $routeParams, $location, $rootScope, LocationBooking, API_IMG_PATH_URL, PHOTO_MISSING_SRC){
 
         var that = this;
 
@@ -61,10 +61,10 @@
         $scope.locationBooking = locationBooking;
 
         /* Initialization END */
-    })
+    }])
 
     // List Controller
-    .controller('LocationBookingListCtrl', function($scope, LocationBooking, $rootScope, $location){
+    .controller('LocationBookingListCtrl', ["$scope", "LocationBooking", "$rootScope", "$location", function($scope, LocationBooking, $rootScope, $location){
             var that = this;
             var currentDateObj;
 
@@ -171,10 +171,10 @@
             that.addVarsToScope();
 
             /* Initialization END */
-    })
+    }])
 
     // Create Controller
-    .controller('LocationBookingCreateCtrl', function($scope, $routeParams, $location, $rootScope, LocationBooking, LocationFurnituring, Location, BookingType, Customer, Booking, $q) {
+    .controller('LocationBookingCreateCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "LocationBooking", "LocationFurnituring", "Location", "BookingType", "Customer", "Booking", "$q", function($scope, $routeParams, $location, $rootScope, LocationBooking, LocationFurnituring, Location, BookingType, Customer, Booking, $q) {
 
             var that = this;
                 $scope.furniturings = [];
@@ -547,10 +547,10 @@
             that.addDateWatches();
 
         /* Initialization END */
-    })
+    }])
 
     // Edit Controller
-    .controller('LocationBookingEditCtrl', function($scope, $routeParams, $location, $rootScope, LocationBooking, LocationFurnituring, Location, $q){
+    .controller('LocationBookingEditCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "LocationBooking", "LocationFurnituring", "Location", "$q", function($scope, $routeParams, $location, $rootScope, LocationBooking, LocationFurnituring, Location, $q){
 
             var that = this;
 
@@ -733,10 +733,10 @@
 
 
         /* Initialization END */
-    })
+    }])
 
     // Delete Controller
-    .controller('LocationBookingDeleteCtrl', function($scope, $routeParams, LocationBooking, $location, $rootScope, PHOTO_MISSING_SRC, API_IMG_PATH_URL){
+    .controller('LocationBookingDeleteCtrl', ["$scope", "$routeParams", "LocationBooking", "$location", "$rootScope", "PHOTO_MISSING_SRC", "API_IMG_PATH_URL", function($scope, $routeParams, LocationBooking, $location, $rootScope, PHOTO_MISSING_SRC, API_IMG_PATH_URL){
 
             var that = this;
 
@@ -833,6 +833,6 @@
             $scope.locationBooking = locationBooking;
 
         /* Initialization END */
-    });
+    }]);
 
 })();

@@ -11,12 +11,12 @@
             'ngResource'
         ])
 
-        .factory('Resource', function($resource, API_URL){
+        .factory('Resource', ["$resource", "API_URL", function($resource, API_URL){
 
             return $resource(
                 API_URL + 'Resource/:resourceId',
                 {resourceId: '@resourceId'}
             );
-        });
+        }]);
 
 })();

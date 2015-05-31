@@ -19,7 +19,7 @@
     )
 
     // Config for module
-    .config(function($routeProvider, uiGmapGoogleMapApiProvider) {
+    .config(["$routeProvider", "uiGmapGoogleMapApiProvider", function($routeProvider, uiGmapGoogleMapApiProvider) {
 
         // Google maps API
         uiGmapGoogleMapApiProvider.configure({
@@ -28,10 +28,10 @@
             libraries: 'weather,geometry,visualization',
             language: 'sv'
         });
-    })
+    }])
 
     // Show Controller
-    .controller('LocationShowCtrl', function($scope, Location, $routeParams, $location, $rootScope, LocationFurnituring, API_IMG_PATH_URL, PHOTO_MISSING_SRC){
+    .controller('LocationShowCtrl', ["$scope", "Location", "$routeParams", "$location", "$rootScope", "LocationFurnituring", "API_IMG_PATH_URL", "PHOTO_MISSING_SRC", function($scope, Location, $routeParams, $location, $rootScope, LocationFurnituring, API_IMG_PATH_URL, PHOTO_MISSING_SRC){
 
             var that = this;
             $scope.markers = [];
@@ -140,10 +140,10 @@
 
 
         /* Initialization END */
-    })
+    }])
 
     // List Controller
-    .controller('LocationListCtrl', function($scope, Location, $rootScope){
+    .controller('LocationListCtrl', ["$scope", "Location", "$rootScope", function($scope, Location, $rootScope){
 
         /* Private methods START */
 
@@ -172,10 +172,10 @@
             $scope.locations = locations;
 
             /* Initialization END */
-    })
+    }])
 
     // Create Controller
-    .controller('LocationCreateCtrl', function($scope, $routeParams, $location, $rootScope, Location, Furnituring, LocationFurnituring, LocationImage){
+    .controller('LocationCreateCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Location", "Furnituring", "LocationFurnituring", "LocationImage", function($scope, $routeParams, $location, $rootScope, Location, Furnituring, LocationFurnituring, LocationImage){
 
             var that = this;
             $scope.markers = [{ // Init marker on map
@@ -361,10 +361,10 @@
             $scope.furniturings = Furnituring.query();
 
         /* Initialization END */
-    })
+    }])
 
     // Edit Controller
-    .controller('LocationEditCtrl', function($scope, $routeParams, $location, $rootScope, $timeout, Location, LocationFurnituring, Furnituring, LocationFurnituringHelper, LocationImage){
+    .controller('LocationEditCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "$timeout", "Location", "LocationFurnituring", "Furnituring", "LocationFurnituringHelper", "LocationImage", function($scope, $routeParams, $location, $rootScope, $timeout, Location, LocationFurnituring, Furnituring, LocationFurnituringHelper, LocationImage){
 
             var that = this,
                 i;
@@ -636,10 +636,10 @@
             });
 
         /* Initialization END */
-    })
+    }])
 
     // Delete Controller
-    .controller('LocationDeleteCtrl', function($scope, $routeParams, Location, $location, $rootScope){
+    .controller('LocationDeleteCtrl', ["$scope", "$routeParams", "Location", "$location", "$rootScope", function($scope, $routeParams, Location, $location, $rootScope){
 
             var that = this;
 
@@ -729,10 +729,10 @@
             $scope.location = location;
 
         /* Initialization END */
-    })
+    }])
 
     // Map Controller
-    .controller('LocationMapCtrl', function($scope, Location, $rootScope, $location, uiGmapGoogleMapApi, API_IMG_PATH_URL, PHOTO_MISSING_SRC){
+    .controller('LocationMapCtrl', ["$scope", "Location", "$rootScope", "$location", "uiGmapGoogleMapApi", "API_IMG_PATH_URL", "PHOTO_MISSING_SRC", function($scope, Location, $rootScope, $location, uiGmapGoogleMapApi, API_IMG_PATH_URL, PHOTO_MISSING_SRC){
 
             var that = this;
                 $scope.markers = [];
@@ -826,9 +826,9 @@
             });
 
         /* Initialization END */
-    })
+    }])
 
-    .controller('LocationSearchCtrl', function($scope, Location, $rootScope){
+    .controller('LocationSearchCtrl', ["$scope", "Location", "$rootScope", function($scope, Location, $rootScope){
         var that = this;
         var currentDateObj;
 
@@ -867,6 +867,6 @@
 
         /* Initialization END */
 
-    })
+    }])
 
 })();

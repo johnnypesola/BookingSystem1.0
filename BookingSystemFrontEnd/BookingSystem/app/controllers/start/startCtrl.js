@@ -15,12 +15,12 @@
     )
 
     // Routes for startPage
-    .config(function($routeProvider) {
+    .config(["$routeProvider", function($routeProvider) {
 
-    })
+    }])
 
     // Controller
-    .controller('StartCtrl', function($scope, Booking, $q, Location){
+    .controller('StartCtrl', ["$scope", "Booking", "$q", "Location", function($scope, Booking, $q, Location){
 
             var that = this;
 
@@ -141,7 +141,7 @@
 
         /* Initialization END */
 
-    });
+    }]);
 })();
 
 

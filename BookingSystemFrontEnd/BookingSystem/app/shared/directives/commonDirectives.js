@@ -2,7 +2,6 @@
  * Created by jopes on 2015-05-20.
  */
 
-
 (function(){
 
     // Shared functions
@@ -16,7 +15,7 @@
         // Dependencies
         [])
 
-        .directive('pageHeaderButtons', function($route, $routeParams, $location) {
+        .directive('pageHeaderButtons', ["$route", "$routeParams", "$location", function($route, $routeParams, $location) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -28,7 +27,7 @@
                     showAdd: '=showAdd',
                     showSearch: '=showSearch'
                 },
-                controller: function($scope, $element, $attrs) {
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
 
                     /* Initialization START */
 
@@ -39,9 +38,9 @@
 
                     /* Initialization END */
 
-                }
+                }]
             };
-        })
+        }])
 
         .directive('selectPercentage', function() {
             return {
@@ -51,7 +50,7 @@
                 scope: {
                     model: '=useModel'
                 },
-                controller: function($scope, $element, $attrs) {
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
                     var i;
                     $scope.percentageRange = [];
 
@@ -67,11 +66,11 @@
                         }
 
                     /* Initialization END */
-                }
+                }]
             };
         })
 
-        .directive('selectMaxPeople', function(OPTIONS_MAX_PEOPLE) {
+        .directive('selectMaxPeople', ["OPTIONS_MAX_PEOPLE", function(OPTIONS_MAX_PEOPLE) {
             return {
                 restrict: 'E',
                 require: 'ngModel',
@@ -128,11 +127,11 @@
 
                     /* Initialization END */
                 },
-                controller: function($scope, $element, $attrs) {
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
 
-                }
+                }]
             };
-        })
+        }])
 
         .directive('inputMaxPeople', function() {
             return {
@@ -143,7 +142,7 @@
                     model: '=useModel',
                     maxPeople: '=maxPeople'
                 },
-                controller: function($scope, $element, $attrs) {
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
                     var i, that = this;
 
                     /* Initialization START */
@@ -162,7 +161,7 @@
                     });
 
                     /* Initialization END */
-                }
+                }]
             };
         })
 
@@ -190,7 +189,7 @@
             };
         }])
 
-        .directive('itemActionButtons', function($route, $routeParams, $location) {
+        .directive('itemActionButtons', ["$route", "$routeParams", "$location", function($route, $routeParams, $location) {
             return {
                 restrict: 'A',
                 replace: true,
@@ -207,7 +206,7 @@
                 link: function(){
 
                 },
-                controller: function($scope, $element, $attrs) {
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
 
                     /* Declare variables START */
 
@@ -290,9 +289,9 @@
 
                     /* Initialization END */
 
-                }
+                }]
             };
-        })
+        }])
 
         .directive('backButton', function() {
             return {
@@ -307,7 +306,7 @@
             }
         })
 
-        .directive('addToContentButton', function($route, $routeParams, $location) {
+        .directive('addToContentButton', ["$route", "$routeParams", "$location", function($route, $routeParams, $location) {
             return {
                 restrict: 'A',
                 replace: true,
@@ -319,15 +318,15 @@
                 link: function(){
 
                 },
-                controller: function($scope, $element, $attrs) {
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
 
                     $scope.redirect = function(){
 
                         $location.path( $scope.objectType + "/skapa/" + $scope.addArgument );
                     };
-                }
+                }]
             };
-        })
+        }])
 
         .directive('stopParentEvent', function () {
             return {

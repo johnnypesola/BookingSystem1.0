@@ -12,7 +12,7 @@
             'bookingSystem.furnituringServices'
         ])
 
-        .factory('Location', function($resource, API_URL){
+        .factory('Location', ["$resource", "API_URL", function($resource, API_URL){
 
             return $resource(
                 API_URL + 'Location/:locationId',
@@ -40,9 +40,9 @@
                     }
                 }
             );
-        })
+        }])
 
-        .factory('LocationImage', function($http, API_URL) {
+        .factory('LocationImage', ["$http", "API_URL", function($http, API_URL) {
 
             return {
                 upload : function(imageData, locationId) {
@@ -57,9 +57,9 @@
                     );
                 }
             }
-        })
+        }])
 
-        .factory('LocationFurnituringHelper', function(LocationFurnituring, Furnituring) {
+        .factory('LocationFurnituringHelper', ["LocationFurnituring", "Furnituring", function(LocationFurnituring, Furnituring) {
 
             return {
 
@@ -107,5 +107,5 @@
                     return furniturings;
                 }
             }
-        })
+        }])
 })();

@@ -11,7 +11,7 @@
             'ngResource'
         ])
 
-        .factory('Customer', function($resource, API_URL){
+        .factory('Customer', ["$resource", "API_URL", function($resource, API_URL){
 
             return $resource(
                 API_URL + 'Customer/:customerId',
@@ -29,9 +29,9 @@
                     }
                 }
             );
-        })
+        }])
 
-        .factory('CustomerImage', function($http, API_URL) {
+        .factory('CustomerImage', ["$http", "API_URL", function($http, API_URL) {
 
             return {
                 upload : function(imageData, customerId) {
@@ -46,5 +46,5 @@
                     );
                 }
             }
-        })
+        }])
 })();

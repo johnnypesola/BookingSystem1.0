@@ -38,7 +38,7 @@
     BookingSystem.constant('OPTIONS_MAX_PEOPLE', 1000);
 
 
-    BookingSystem.config(["$routeProvider", function($routeProvider) {
+    BookingSystem.config(function($routeProvider) {
 
         // Declare basic routes
         $routeProvider.
@@ -205,9 +205,9 @@
             otherwise({
                 templateUrl: 'shared/views/notFound.html'
             });
-    }]);
+    });
 
-    BookingSystem.run(["$rootScope", "$location", "API_IMG_PATH_URL", function($rootScope, $location, API_IMG_PATH_URL) {
+    BookingSystem.run(function($rootScope, $location, API_IMG_PATH_URL) {
 
         // Add values to $rootScope, for access on all pages, even without controllers
         $rootScope.appLocation = $location;
@@ -238,6 +238,6 @@
 
         // Set Moment date lib locale
         moment.locale('sv');
-    }]);
+    });
 
 })();

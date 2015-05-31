@@ -16,13 +16,13 @@
     )
 
     // Routes for startPage
-    .config(function($routeProvider) {
+    .config(["$routeProvider", function($routeProvider) {
 
-    })
+    }])
 
     // Controller
 
-    .controller('BookingShowCtrl', function($scope, $routeParams, $location, $rootScope, Booking){
+    .controller('BookingShowCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Booking", function($scope, $routeParams, $location, $rootScope, Booking){
 
         var that = this;
 
@@ -62,9 +62,9 @@
             $scope.booking = booking;
 
         /* Initialization END */
-    })
+    }])
 
-    .controller('BookingDeleteCtrl', function($scope, $routeParams, $location, $rootScope, Booking, Redirect){
+    .controller('BookingDeleteCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Booking", "Redirect", function($scope, $routeParams, $location, $rootScope, Booking, Redirect){
 
         var that = this;
 
@@ -156,9 +156,9 @@
             $scope.booking = booking;
 
         /* Initialization END */
-    })
+    }])
 
-    .controller('BookingListCtrl', function($scope, Booking, $rootScope, $location){
+    .controller('BookingListCtrl', ["$scope", "Booking", "$rootScope", "$location", function($scope, Booking, $rootScope, $location){
             var that = this;
             var currentDateObj;
 
@@ -266,9 +266,9 @@
                 that.addVarsToScope();
 
         /* Initialization END */
-    })
+    }])
 
-    .controller('BookingListEmptyCtrl', function($scope, Booking, $rootScope, $location){
+    .controller('BookingListEmptyCtrl', ["$scope", "Booking", "$rootScope", "$location", function($scope, Booking, $rootScope, $location){
         var that = this;
         var currentDateObj;
 
@@ -310,9 +310,9 @@
             that.getBookings();
 
         /* Initialization END */
-    })
+    }])
 
-    .controller('BookingCreateCtrl', function($scope, Booking, $rootScope, Customer, BookingType, Redirect){
+    .controller('BookingCreateCtrl', ["$scope", "Booking", "$rootScope", "Customer", "BookingType", "Redirect", function($scope, Booking, $rootScope, Customer, BookingType, Redirect){
         var that = this;
         var currentDateObj;
 
@@ -413,9 +413,9 @@
         /* Initialization END */
 
 
-    })
+    }])
 
-    .controller('BookingEditCtrl', function($scope, Booking, $rootScope, Customer, BookingType, $q, $routeParams){
+    .controller('BookingEditCtrl', ["$scope", "Booking", "$rootScope", "Customer", "BookingType", "$q", "$routeParams", function($scope, Booking, $rootScope, Customer, BookingType, $q, $routeParams){
         var that = this;
         var currentDateObj;
 
@@ -550,9 +550,9 @@
         /* Initialization END */
 
 
-    })
+    }])
 
-    .controller('BookingSearchCtrl', function($scope, Booking, $rootScope){
+    .controller('BookingSearchCtrl', ["$scope", "Booking", "$rootScope", function($scope, Booking, $rootScope){
         var that = this;
         var currentDateObj;
 
@@ -591,5 +591,5 @@
 
         /* Initialization END */
 
-    })
+    }])
 })();

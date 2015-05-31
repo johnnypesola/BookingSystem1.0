@@ -15,12 +15,12 @@
     )
 
     // Routes for startPage
-    .config(function($routeProvider) {
+    .config(["$routeProvider", function($routeProvider) {
 
-    })
+    }])
 
     // Show Controller
-    .controller('ResourceShowCtrl', function($scope, $routeParams, $location, $rootScope, Resource){
+    .controller('ResourceShowCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Resource", function($scope, $routeParams, $location, $rootScope, Resource){
 
         var that = this;
 
@@ -53,10 +53,10 @@
             });
 
         /* Initialization END */
-    })
+    }])
 
     // List Controller
-    .controller('ResourceListCtrl', function($scope, Resource, $rootScope){
+    .controller('ResourceListCtrl', ["$scope", "Resource", "$rootScope", function($scope, Resource, $rootScope){
 
         /* Private methods START */
 
@@ -82,10 +82,10 @@
             });
 
         /* Initialization END */
-    })
+    }])
 
     // Create Controller
-    .controller('ResourceCreateCtrl', function($scope, $routeParams, $location, $rootScope, Resource){
+    .controller('ResourceCreateCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Resource", function($scope, $routeParams, $location, $rootScope, Resource){
 
             var that = this;
 
@@ -149,10 +149,10 @@
         /* Initialization START */
 
         /* Initialization END */
-    })
+    }])
 
     // Edit Controller
-    .controller('ResourceEditCtrl', function($scope, $routeParams, $location, $rootScope, Resource){
+    .controller('ResourceEditCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Resource", function($scope, $routeParams, $location, $rootScope, Resource){
 
             var that = this;
 
@@ -242,10 +242,10 @@
             });
 
         /* Initialization END */
-    })
+    }])
 
     // Delete Controller
-    .controller('ResourceDeleteCtrl', function($scope, $routeParams, Resource, $location, $rootScope){
+    .controller('ResourceDeleteCtrl', ["$scope", "$routeParams", "Resource", "$location", "$rootScope", function($scope, $routeParams, Resource, $location, $rootScope){
 
             var that = this;
 
@@ -333,6 +333,6 @@
             });
 
         /* Initialization END */
-    });
+    }]);
 
 })();

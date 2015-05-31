@@ -11,7 +11,7 @@
             'ngResource'
         ])
 
-        .factory('Booking', function($resource, API_URL){
+        .factory('Booking', ["$resource", "API_URL", function($resource, API_URL){
 
             return $resource(
                 API_URL + 'Booking/:bookingId',
@@ -64,14 +64,14 @@
                         }
                     }
                 });
-        })
+        }])
 
-        .factory('BookingType', function($resource, API_URL){
+        .factory('BookingType', ["$resource", "API_URL", function($resource, API_URL){
 
             return $resource(
                 API_URL + 'BookingType/:bookingTypeId',
                 {bookingId: '@bookingTypeId'}
             );
-        })
+        }])
 
 })();

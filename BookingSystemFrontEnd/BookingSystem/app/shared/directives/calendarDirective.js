@@ -14,7 +14,7 @@
         ])
 
         // Directive specific controllers START
-        .controller('BookingCalendarInternalCtrl', function($scope, $element, $attrs, Booking, LocationBooking, ResourceBooking, $rootScope, $location, $q) {
+        .controller('BookingCalendarInternalCtrl', ["$scope", "$element", "$attrs", "Booking", "LocationBooking", "ResourceBooking", "$rootScope", "$location", "$q", function($scope, $element, $attrs, Booking, LocationBooking, ResourceBooking, $rootScope, $location, $q) {
 
             /* Declare variables START */
             var that = this,
@@ -351,7 +351,7 @@
 
             /* Initialization END */
 
-        })
+        }])
         // Directive specific controllers END
 
         // Directives START
@@ -388,7 +388,7 @@
                         e.preventDefault();
                     });
                 },
-                controller: function($scope, $element, $attrs) {
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
 
                     if($attrs.direction === 'next') {
                         $element.bind('click', function(){
@@ -402,7 +402,7 @@
                             $scope.$digest();
                         });
                     }
-                }
+                }]
             }
         })
         .directive('bookingCalendarDay', function() {
@@ -410,12 +410,12 @@
                 restrict: 'A',
                 replace: false,
                 scope: false,
-                controller: function($scope, $element, $attrs) {
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
 
                     $element.bind('click', function(event) {
                         $scope.changeToDay($element, $attrs, event);
                     });
-                }
+                }]
             }
         });
 })();

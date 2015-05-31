@@ -15,12 +15,12 @@
     )
 
     // Routes for startPage
-    .config(function($routeProvider) {
+    .config(["$routeProvider", function($routeProvider) {
 
-    })
+    }])
 
     // Show Controller
-    .controller('CustomerShowCtrl', function($scope, $routeParams, $location, $rootScope, Customer, PHOTO_MISSING_SRC, API_IMG_PATH_URL){
+    .controller('CustomerShowCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Customer", "PHOTO_MISSING_SRC", "API_IMG_PATH_URL", function($scope, $routeParams, $location, $rootScope, Customer, PHOTO_MISSING_SRC, API_IMG_PATH_URL){
 
         var that = this;
 
@@ -60,10 +60,10 @@
             });
 
         /* Initialization END */
-    })
+    }])
 
     // List Controller
-    .controller('CustomerListCtrl', function($scope, Customer, $rootScope){
+    .controller('CustomerListCtrl', ["$scope", "Customer", "$rootScope", function($scope, Customer, $rootScope){
 
         /* Private methods START */
 
@@ -93,10 +93,10 @@
             $scope.customers = customers;
 
             /* Initialization END */
-    })
+    }])
 
     // Create Controller
-    .controller('CustomerCreateCtrl', function($scope, $routeParams, $location, $rootScope, Customer, Redirect, CustomerImage){
+    .controller('CustomerCreateCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Customer", "Redirect", "CustomerImage", function($scope, $routeParams, $location, $rootScope, Customer, Redirect, CustomerImage){
 
             var that = this;
 
@@ -196,10 +196,10 @@
             $scope.customers = Customer.query();
 
         /* Initialization END */
-    })
+    }])
 
     // Edit Controller
-    .controller('CustomerEditCtrl', function($scope, $routeParams, $location, $rootScope, Customer, CustomerImage){
+    .controller('CustomerEditCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Customer", "CustomerImage", function($scope, $routeParams, $location, $rootScope, Customer, CustomerImage){
 
             var that = this;
 
@@ -337,10 +337,10 @@
             $scope.customer = that.customer;
 
         /* Initialization END */
-    })
+    }])
 
     // Delete Controller
-    .controller('CustomerDeleteCtrl', function($scope, $routeParams, Customer, $location, $rootScope){
+    .controller('CustomerDeleteCtrl', ["$scope", "$routeParams", "Customer", "$location", "$rootScope", function($scope, $routeParams, Customer, $location, $rootScope){
 
             var that = this;
 
@@ -430,9 +430,9 @@
             $scope.customer = customer;
 
         /* Initialization END */
-    })
+    }])
 
-    .controller('CustomerSearchCtrl', function($scope, Customer, $rootScope){
+    .controller('CustomerSearchCtrl', ["$scope", "Customer", "$rootScope", function($scope, Customer, $rootScope){
         var that = this;
         var currentDateObj;
 
@@ -471,6 +471,6 @@
 
         /* Initialization END */
 
-    })
+    }])
 
 })();

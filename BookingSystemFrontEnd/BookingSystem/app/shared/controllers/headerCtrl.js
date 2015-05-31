@@ -9,12 +9,12 @@
     )
 
     // Routes for startPage
-    .config(function($routeProvider) {
+    .config(["$routeProvider", function($routeProvider) {
 
-    })
+    }])
 
     // Header Controller
-    .controller('HeaderCtrl', function($scope, $rootScope, $location){
+    .controller('HeaderCtrl', ["$scope", "$rootScope", "$location", function($scope, $rootScope, $location){
 
             // Declare Menu
             $scope.menus = [
@@ -112,11 +112,11 @@
         /* Initialization START */
 
         /* Initialization END */
-    })
+    }])
 
 
     // Flash Message Controller
-    .controller('FlashMessageCtrl', function($rootScope, $scope){
+    .controller('FlashMessageCtrl', ["$rootScope", "$scope", function($rootScope, $scope){
 
         $scope.hideMessage = function(){
             $scope.messageVisible = false;
@@ -142,7 +142,7 @@
                 $scope.messageVisible = true;
             }
         });
-    });
+    }]);
 })();
 
 

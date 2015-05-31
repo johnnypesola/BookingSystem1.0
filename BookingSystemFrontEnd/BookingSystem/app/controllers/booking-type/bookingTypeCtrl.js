@@ -15,12 +15,12 @@
     )
 
     // Routes for startPage
-    .config(function($routeProvider) {
+    .config(["$routeProvider", function($routeProvider) {
 
-    })
+    }])
 
     // Show Controller
-    .controller('BookingTypeShowCtrl', function($scope, $routeParams, $location, $rootScope, BookingType){
+    .controller('BookingTypeShowCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "BookingType", function($scope, $routeParams, $location, $rootScope, BookingType){
 
         var that = this;
 
@@ -55,10 +55,10 @@
         $scope.bookingType = bookingType;
 
         /* Initialization END */
-    })
+    }])
 
     // List Controller
-    .controller('BookingTypeListCtrl', function($scope, BookingType, $rootScope){
+    .controller('BookingTypeListCtrl', ["$scope", "BookingType", "$rootScope", function($scope, BookingType, $rootScope){
 
         /* Private methods START */
 
@@ -88,10 +88,10 @@
             $scope.bookingTypes = bookingTypes;
 
             /* Initialization END */
-    })
+    }])
 
     // Create Controller
-    .controller('BookingTypeCreateCtrl', function($scope, $routeParams, $location, $rootScope, BookingType, Redirect){
+    .controller('BookingTypeCreateCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "BookingType", "Redirect", function($scope, $routeParams, $location, $rootScope, BookingType, Redirect){
 
             var that = this;
 
@@ -163,10 +163,10 @@
             that.initVariables();
 
         /* Initialization END */
-    })
+    }])
 
     // Edit Controller
-    .controller('BookingTypeEditCtrl', function($scope, $routeParams, $location, $rootScope, BookingType){
+    .controller('BookingTypeEditCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "BookingType", function($scope, $routeParams, $location, $rootScope, BookingType){
 
             var that = this;
 
@@ -257,10 +257,10 @@
             $scope.bookingType = bookingType;
 
         /* Initialization END */
-    })
+    }])
 
     // Delete Controller
-    .controller('BookingTypeDeleteCtrl', function($scope, $routeParams, BookingType, $location, $rootScope){
+    .controller('BookingTypeDeleteCtrl', ["$scope", "$routeParams", "BookingType", "$location", "$rootScope", function($scope, $routeParams, BookingType, $location, $rootScope){
 
             var that = this;
 
@@ -350,6 +350,6 @@
             $scope.bookingType = bookingType;
 
         /* Initialization END */
-    });
+    }]);
 
 })();

@@ -15,12 +15,12 @@
     )
 
     // Routes for startPage
-    .config(function($routeProvider) {
+    .config(["$routeProvider", function($routeProvider) {
 
-    })
+    }])
 
     // Show Controller
-    .controller('FurnituringShowCtrl', function($scope, $routeParams, $location, $rootScope, Furnituring){
+    .controller('FurnituringShowCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Furnituring", function($scope, $routeParams, $location, $rootScope, Furnituring){
 
         var that = this;
 
@@ -55,10 +55,10 @@
         $scope.furnituring = furnituring;
 
         /* Initialization END */
-    })
+    }])
 
     // List Controller
-    .controller('FurnituringListCtrl', function($scope, Furnituring, $rootScope){
+    .controller('FurnituringListCtrl', ["$scope", "Furnituring", "$rootScope", function($scope, Furnituring, $rootScope){
 
         /* Private methods START */
 
@@ -86,10 +86,10 @@
             $scope.furniturings = furniturings;
 
         /* Initialization END */
-    })
+    }])
 
     // Create Controller
-    .controller('FurnituringCreateCtrl', function($scope, $routeParams, $location, $rootScope, Furnituring){
+    .controller('FurnituringCreateCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Furnituring", function($scope, $routeParams, $location, $rootScope, Furnituring){
 
             var that = this;
 
@@ -149,10 +149,10 @@
         /* Initialization START */
 
         /* Initialization END */
-    })
+    }])
 
     // Edit Controller
-    .controller('FurnituringEditCtrl', function($scope, $routeParams, $location, $rootScope, Furnituring){
+    .controller('FurnituringEditCtrl', ["$scope", "$routeParams", "$location", "$rootScope", "Furnituring", function($scope, $routeParams, $location, $rootScope, Furnituring){
 
             var that = this;
 
@@ -240,10 +240,10 @@
             $scope.furnituring = furnituring;
 
         /* Initialization END */
-    })
+    }])
 
     // Delete Controller
-    .controller('FurnituringDeleteCtrl', function($scope, $routeParams, Furnituring, $location, $rootScope){
+    .controller('FurnituringDeleteCtrl', ["$scope", "$routeParams", "Furnituring", "$location", "$rootScope", function($scope, $routeParams, Furnituring, $location, $rootScope){
 
             var that = this;
 
@@ -333,6 +333,6 @@
             $scope.furnituring = furnituring;
 
         /* Initialization END */
-    });
+    }]);
 
 })();

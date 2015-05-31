@@ -11,7 +11,7 @@
             'ngResource'
         ])
 
-        .factory('LocationBooking', function($resource, API_URL){
+        .factory('LocationBooking', ["$resource", "API_URL", function($resource, API_URL){
 
             return $resource(
                 API_URL + 'LocationBooking/:locationBookingId',
@@ -40,5 +40,5 @@
                         }
                     }
                 });
-        })
+        }])
 })();

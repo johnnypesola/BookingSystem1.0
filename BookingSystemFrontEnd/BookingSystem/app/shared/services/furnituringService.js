@@ -11,15 +11,15 @@
             'ngResource'
         ])
 
-        .factory('Furnituring', function($resource, API_URL){
+        .factory('Furnituring', ["$resource", "API_URL", function($resource, API_URL){
 
             return $resource(
                 API_URL + 'Furnituring/:furnituringId',
                 {furnituringId: '@furnituringId'}
             );
-        })
+        }])
 
-        .factory('LocationFurnituring', function($resource, API_URL){
+        .factory('LocationFurnituring', ["$resource", "API_URL", function($resource, API_URL){
 
             return $resource(
                 API_URL + 'LocationFurnituring/:locationId',
@@ -68,5 +68,5 @@
                     }
                 }
             );
-        });
+        }]);
 })();

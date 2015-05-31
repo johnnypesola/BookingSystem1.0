@@ -12,7 +12,7 @@
         ])
 
         // Directive specific controllers START
-        .controller('imageUploaderCtrl', function($scope, $q, $element, $attrs, $rootScope, LocationImage, ImageResize, API_IMG_PATH_URL, PHOTO_MISSING_SRC) {
+        .controller('imageUploaderCtrl', ["$scope", "$q", "$element", "$attrs", "$rootScope", "LocationImage", "ImageResize", "API_IMG_PATH_URL", "PHOTO_MISSING_SRC", function($scope, $q, $element, $attrs, $rootScope, LocationImage, ImageResize, API_IMG_PATH_URL, PHOTO_MISSING_SRC) {
 
             /* Declare variables START */
             var that = this,
@@ -131,10 +131,10 @@
 
             /* Initialization END */
 
-        })
+        }])
         // Directive specific controllers END
 
-        .directive('imageUploader', function ($http) {
+        .directive('imageUploader', ["$http", function ($http) {
             return {
                 restrict: 'E',
                 link: function (scope, elm, attrs)
@@ -149,14 +149,14 @@
                 templateUrl: 'shared/directives/imageUploaderDirective.html',
                 controller: 'imageUploaderCtrl'
             }
-        })
+        }])
 
         .directive('imageUploaderFile', function () {
             return {
                 restrict: 'A',
                 replace: false,
                 scope: false,
-                controller: function($scope, $element, $attrs) {
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
 
                     $element.bind("change", function(event){
                         var file;
@@ -167,7 +167,7 @@
                         // Process file.
                         $scope.readUploadedFile(file);
                     });
-                }
+                }]
             }
         })
 })();
