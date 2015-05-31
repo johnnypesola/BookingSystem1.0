@@ -9,7 +9,6 @@
         'ngRoute',
         'ngResource',
         'bookingSystem.startPage',
-        'bookingSystem.version',
         'bookingSystem.header',
         'bookingSystem.booking',
         'bookingSystem.bookingType',
