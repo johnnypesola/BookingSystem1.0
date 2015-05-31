@@ -15,10 +15,20 @@
 
             return $resource(
                 API_URL + 'Customer/:customerId',
-                {customerId: '@customerId'}
+                {customerId: '@customerId'},
+                {
+                    // Search for customer
+                    querySearch: {
+                        url: API_URL + 'Customer/search/:column',
+                        id: '@id',
+                        method: 'GET',
+                        isArray: true,
+                        params: {
+                            column: '@column'
+                        }
+                    }
+                }
             );
-
-
         })
 
         .factory('CustomerImage', function($http, API_URL) {

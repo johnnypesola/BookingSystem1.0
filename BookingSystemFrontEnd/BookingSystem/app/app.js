@@ -137,6 +137,9 @@
             when('/platser/karta', {
                 templateUrl: 'controllers/location/locationMap.html'
             }).
+            when('/platser/sok', {
+                templateUrl: 'controllers/location/locationSearch.html'
+            }).
 
             // LocationBookings
             when('/lokalbokningar/visa/:locationBookingId', {
@@ -194,6 +197,9 @@
             }).
             when('/kunder/skapa', {
                 templateUrl: 'controllers/customer/customerCreate.html'
+            }).
+            when('/kunder/sok', {
+                templateUrl: 'controllers/customer/customerSearch.html'
             }).
 
             // Page not found

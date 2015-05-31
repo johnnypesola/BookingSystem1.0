@@ -91,6 +91,34 @@ namespace BookingSystem.Controllers
             }
         }
 
+        // GET: api/Location/search/ColumnName?value=hello
+        [Route("api/Location/search/{columnName}")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult Get(string columnName, string value)
+        {
+            SearchContainer searchContainer;
+            try
+            {
+
+                // Construct a search container object
+                searchContainer = new SearchContainer { ColumnName = columnName, SearchValue = value };
+
+                // Get locations
+                IEnumerable<Location> locations = locationService.SearchFor(searchContainer);
+
+                if (locations == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(locations);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
         // POST: api/Location
         [Route("api/Location")]
         [AcceptVerbs("POST")]

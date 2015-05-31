@@ -1,0 +1,94 @@
+<section class="content-container" ng-controller="CustomerSearchCtrl">
+    <h2>
+        Sök efter Lokal/Plats
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
+
+
+    <form name="searchForm">
+
+        <label>Ange ett värde att söka efter
+            <span ng-show="searchForm.searchValue.$error.required" class="green">Var god ange</span>
+            <span ng-show="searchForm.searchValue.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="searchValue" ng-pattern="regExp.textField" ng-model="searchValue" maxlength="50" required>
+
+        <label>Sök igenom</label>
+        <div class="checkbox-radio-container" >
+            <label>
+                <input type="radio" name="search-column" value="CustomerId" ng-model="searchColumn"> Kundnummer
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="Name" ng-model="searchColumn"> Kundnamn
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="Address" ng-model="searchColumn"> Adress
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="PostNumber" ng-model="searchColumn"> Postnummer
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="City" ng-model="searchColumn"> Ort
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="EmailAddress" ng-model="searchColumn"> E-postadress
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="PhoneNumber" ng-model="searchColumn"> Telefonnummer
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="CellPhoneNumber" ng-model="searchColumn"> Mobiltelefonnummer
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="ParentCustomerName" ng-model="searchColumn"> Överordnad kundnamn
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="Notes" ng-model="searchColumn"> Anteckningar
+            </label>
+        </div>
+
+        <div ng-show="noSearchResultsFound">
+            <span class="info bg-dark-purple">Inga kunder hittades för aktuell sökning</span>
+        </div>
+
+
+        <table class="list-table" ng-show="searchResults.length">
+            <tr>
+                <th>Kundnamn</th>
+                <th>Kundnr.</th>
+                <th>Ort</th>
+                <th>Överordnad kund</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="customer in searchResults">
+                <td class="align-left">
+                    {{customer.Name}}
+                </td>
+                <td class="align-left">
+                    {{customer.CustomerId}}
+                </td>
+                <td class="align-left">
+                    {{customer.City}}
+                </td>
+                <td class="align-left"  ng-class="{'empty-string': !customer.ParentCustomerName.length}">
+                    {{customer.ParentCustomerName | emptyString}}
+                </td>
+                <td class="align-right">
+                    <div item-action-buttons="customer.CustomerId"></div>
+                </td>
+            </tr>
+        </table>
+
+        <button ng-click="search()" ng-disabled="!searchForm.$valid">Sök</button>
+        <button back-button>Tillbaka</button>
+    </form>
+
+
+
+</section>
+

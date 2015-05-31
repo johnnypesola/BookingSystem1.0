@@ -27,6 +27,16 @@
                             fromDate: '@fromDate',
                             toDate: '@toDate'
                         }
+                    },
+                    // Search for location
+                    querySearch: {
+                        url: API_URL + 'Location/search/:column',
+                        id: '@id',
+                        method: 'GET',
+                        isArray: true,
+                        params: {
+                            column: '@column'
+                        }
                     }
                 }
             );

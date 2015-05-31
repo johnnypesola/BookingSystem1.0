@@ -552,7 +552,7 @@
 
     })
 
-    .controller('BookingSearchCtrl', function($scope, Booking, $rootScope, $q, $routeParams){
+    .controller('BookingSearchCtrl', function($scope, Booking, $rootScope){
         var that = this;
         var currentDateObj;
 
@@ -590,7 +590,6 @@
             $scope.searchColumn = "Name";
 
         /* Initialization END */
-
 
     })
 })();

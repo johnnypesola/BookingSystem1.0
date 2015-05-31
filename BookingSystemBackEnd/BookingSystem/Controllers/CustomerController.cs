@@ -62,6 +62,34 @@ namespace BookingSystem.Controllers
             }
         }
 
+        // GET: api/Customer/search/ColumnName?value=hello
+        [Route("api/Customer/search/{columnName}")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult Get(string columnName, string value)
+        {
+            SearchContainer searchContainer;
+            try
+            {
+
+                // Construct a search container object
+                searchContainer = new SearchContainer { ColumnName = columnName, SearchValue = value };
+
+                // Get customers
+                IEnumerable<Customer> customers = customerService.SearchFor(searchContainer);
+
+                if (customers == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(customers);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
         // POST: api/Customer
         [Route("api/Customer")]
         [AcceptVerbs("POST")]

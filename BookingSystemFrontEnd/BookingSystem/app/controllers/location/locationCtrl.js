@@ -826,6 +826,47 @@
             });
 
         /* Initialization END */
-    });
+    })
+
+    .controller('LocationSearchCtrl', function($scope, Location, $rootScope){
+        var that = this;
+        var currentDateObj;
+
+        /* Private methods START */
+
+        /* Private methods END */
+
+        /* Public methods START */
+
+        $scope.search = function(){
+
+            $scope.searchResults = Location.querySearch(
+                {
+                    column: $scope.searchColumn,
+                    value: $scope.searchValue
+                }
+            );
+
+            $scope.searchResults.$promise
+
+                .then(function(){
+                    $scope.noSearchResultsFound = !$scope.searchResults.length;
+                })
+
+                .catch(function(response) {
+                    $rootScope.FlashMessage = {
+                        type: 'error',
+                        message: 'Ett oväntat fel uppstod när sökresultaten hämtades. Var god försök igen.'
+                    };
+                })
+        };
+
+        /* Initialization START */
+
+        $scope.searchColumn = "Name";
+
+        /* Initialization END */
+
+    })
 
 })();

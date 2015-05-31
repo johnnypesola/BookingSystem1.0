@@ -1,0 +1,73 @@
+<section class="content-container" ng-controller="LocationSearchCtrl">
+    <h2>
+        Sök efter Lokal/Plats
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+            show-list="true"
+            show-add="true"
+            show-map="true"
+            show-search="true"
+    ></page-header-buttons>
+
+
+    <form name="searchForm">
+
+        <label>Ange ett värde att söka efter
+            <span ng-show="searchForm.searchValue.$error.required" class="green">Var god ange</span>
+            <span ng-show="searchForm.searchValue.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="searchValue" ng-pattern="regExp.textField" ng-model="searchValue" maxlength="50" required>
+
+        <label>Sök igenom</label>
+        <div class="checkbox-radio-container" >
+            <label>
+                <input type="radio" name="search-column" value="Name" ng-model="searchColumn"> Lokalnamn
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="MaxPeople" ng-model="searchColumn"> Max antal personer
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="BookingPricePerHour" ng-model="searchColumn"> Pris per timme
+            </label>
+        </div>
+
+        <div ng-show="noSearchResultsFound">
+            <span class="info bg-dark-purple">Inga lokaler/platser hittades för aktuell sökning</span>
+        </div>
+
+        <table class="list-table"  ng-show="searchResults.length">
+            <tr>
+                <th>Namn</th>
+                <th>Max personer</th>
+                <th>Pris per timme</th>
+                <th>Antal bokningar</th>
+                <th></th>
+            </tr>
+            <tr ng-repeat="location in searchResults">
+                <td class="align-left">
+                    {{location.Name}}
+                </td>
+                <td class="align-right">
+                    {{location.MaxPeople | count}}
+                </td>
+                <td class="align-right">
+                    {{location.BookingPricePerHour | kr}}
+                </td>
+                <td class="align-right">
+                    {{location.TotalBookings | count}}
+                </td>
+                <td>
+                    <div item-action-buttons="location.LocationId" booking-type="lokalbokningar" render-book-icon="true"></div>
+                </td>
+            </tr>
+        </table>
+
+        <button ng-click="search()" ng-disabled="!searchForm.$valid">Sök</button>
+        <button back-button>Tillbaka</button>
+    </form>
+
+
+
+</section>
+

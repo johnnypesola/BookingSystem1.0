@@ -35,6 +35,98 @@ namespace BookingSystem.Models
             }
         }
 
+        public IEnumerable<Customer> SearchFor(SearchContainer searchContainer)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List<Customer> customersReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    customersReturnList = new List<Customer>(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup("appSchema.usp_CustomerList");
+
+                    // Add variable for stored procedure
+                    switch (searchContainer.ColumnName)
+                    {
+                        case "CustomerId":
+                            cmd.Parameters.Add("@CustomerId", SqlDbType.Int).Value = searchContainer.SearchValue;
+                            break;
+                        case "Name":
+                            cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = searchContainer.SearchValue;
+                            break;
+                        case "Address":
+                            cmd.Parameters.Add("@Address", SqlDbType.VarChar, 40).Value = searchContainer.SearchValue;
+                            break;
+                        case "PostNumber":
+                            cmd.Parameters.Add("@PostNumber", SqlDbType.VarChar, 6).Value = searchContainer.SearchValue;
+                            break;
+                        case "City":
+                            cmd.Parameters.Add("@City", SqlDbType.VarChar, 30).Value = searchContainer.SearchValue;
+                            break;
+                        case "EmailAddress":
+                            cmd.Parameters.Add("@EmailAddress", SqlDbType.VarChar, 50).Value = searchContainer.SearchValue;
+                            break;
+                        case "PhoneNumber":
+                            cmd.Parameters.Add("@PhoneNumber", SqlDbType.VarChar, 20).Value = searchContainer.SearchValue;
+                            break;
+                        case "CellPhoneNumber":
+                            cmd.Parameters.Add("@CellPhoneNumber", SqlDbType.VarChar, 20).Value = searchContainer.SearchValue;
+                            break;
+                        case "ParentCustomerName":
+                            cmd.Parameters.Add("@ParentCustomerName", SqlDbType.VarChar, 50).Value = searchContainer.SearchValue;
+                            break;
+                        case "Notes":
+                            cmd.Parameters.Add("@Notes", SqlDbType.VarChar, 200).Value = searchContainer.SearchValue;
+                            break;
+                    }
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Customer object from database values and add to list
+                            customersReturnList.Add(new Customer
+                            {
+                                CustomerId = reader.GetSafeInt32(reader.GetOrdinal("CustomerId")),
+                                Name = reader.GetSafeString(reader.GetOrdinal("Name")),
+                                Address = reader.GetSafeString(reader.GetOrdinal("Address")),
+                                PostNumber = reader.GetSafeString(reader.GetOrdinal("PostNumber")),
+                                City = reader.GetSafeString(reader.GetOrdinal("City")),
+                                EmailAddress = reader.GetSafeString(reader.GetOrdinal("EmailAddress")),
+                                PhoneNumber = reader.GetSafeString(reader.GetOrdinal("PhoneNumber")),
+                                CellPhoneNumber = reader.GetSafeString(reader.GetOrdinal("CellPhoneNumber")),
+                                ParentCustomerId = reader.GetSafeInt32(reader.GetOrdinal("ParentCustomerId")),
+                                ParentCustomerName = reader.GetSafeString(reader.GetOrdinal("ParentCustomerName")),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
+                                Notes = reader.GetSafeString(reader.GetOrdinal("Notes")),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings")),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal("TotalBookingValue")),
+                                ChildCustomers = reader.GetSafeInt32(reader.GetOrdinal("ChildCustomers"))
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    customersReturnList.TrimExcess();
+
+                    // Return list
+                    return customersReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
         public Customer GetCustomerById(int customerId)
         {
             // Create connection object

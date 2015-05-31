@@ -70,6 +70,11 @@ namespace BookingSystem.Models
             return CustomerDAL.GetCustomers();
         }
 
+        public IEnumerable<Customer> SearchFor(SearchContainer searchContainer)
+        {
+            return CustomerDAL.SearchFor(searchContainer);
+        }
+
         public IQueryable<Customer> GetCustomersPageWise(string sortColumns, int maximumRows, int startRowIndex, out int TotalRowCount)
         {
             // Calculate correct startpageIndex

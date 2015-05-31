@@ -61,6 +61,11 @@ namespace BookingSystem.Models
             return LocationDAL.GetLocations();
         }
 
+        public IEnumerable<Location> SearchFor(SearchContainer searchContainer)
+        {
+            return LocationDAL.SearchFor(searchContainer);
+        }
+
         public IEnumerable<Location> GetLocationsFreeForPeriod(DateTime startTime, DateTime endTime)
         {
             return LocationDAL.GetLocationsFreeForPeriod(startTime, endTime);

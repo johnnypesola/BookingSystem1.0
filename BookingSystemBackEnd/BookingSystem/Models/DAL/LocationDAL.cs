@@ -35,6 +35,72 @@ namespace BookingSystem.Models
             }
         }
 
+        public IEnumerable<Location> SearchFor(SearchContainer searchContainer)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List<Location> locationsReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    locationsReturnList = new List<Location>(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup("appSchema.usp_LocationList");
+
+                    // Add variable for stored procedure
+                    switch (searchContainer.ColumnName)
+                    {
+                        case "Name":
+                            cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = searchContainer.SearchValue;
+                            break;
+                        case "MaxPeople":
+                            cmd.Parameters.Add("@MaxPeople", SqlDbType.SmallInt).Value = Int16.Parse(searchContainer.SearchValue);
+                            break;
+                        case "BookingPricePerHour":
+                            cmd.Parameters.Add("@BookingPricePerHour", SqlDbType.Decimal).Value = decimal.Parse(searchContainer.SearchValue);
+                            break;
+                    }
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Location object from database values and add to list
+                            locationsReturnList.Add(new Location
+                            {
+                                LocationId = reader.GetSafeInt32(reader.GetOrdinal("LocationId")),
+                                Name = reader.GetSafeString(reader.GetOrdinal("Name")),
+                                MaxPeople = reader.GetSafeInt16(reader.GetOrdinal("MaxPeople")),
+                                GPSLongitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLongitude")),
+                                GPSLatitude = reader.GetSafeDecimal(reader.GetOrdinal("GPSLatitude")),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
+                                BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings")),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal("TotalBookingValue")),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal("MinutesMarginAfterBooking"))
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    locationsReturnList.TrimExcess();
+
+                    // Return list
+                    return locationsReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
         public Location GetLocationById(int locationId)
         {
             // Create connection object
@@ -119,7 +185,6 @@ namespace BookingSystem.Models
                                 ImageSrc = reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
                                 BookingPricePerHour = reader.GetSafeDecimal(reader.GetOrdinal("BookingPricePerHour")),
                                 TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings"))
-                                
                             });
                         }
                     }
