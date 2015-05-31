@@ -46,12 +46,22 @@
                         method: 'GET',
                         isArray: false
                     },
-
+                    // Get empty bookings
                     queryEmpty: {
                         url: API_URL + 'Booking/empty/info',
                         id: '@id',
                         method: 'GET',
                         isArray: true
+                    },
+                    // Search for booking
+                    querySearch: {
+                        url: API_URL + 'Booking/search/:column',
+                        id: '@id',
+                        method: 'GET',
+                        isArray: true,
+                        params: {
+                            column: '@column'
+                        }
                     }
                 });
         })

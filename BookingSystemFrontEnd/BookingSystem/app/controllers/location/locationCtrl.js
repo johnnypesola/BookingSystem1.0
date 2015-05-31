@@ -295,19 +295,31 @@
                             // Upload image
                             that.uploadImage(response.LocationId)
 
-                            // Image upload successful
-                            .success(function (data) {
+                                // Image upload successful
+                                .success(function (data) {
 
-                                // Display success message
-                                $rootScope.FlashMessage = {
-                                    type: 'success',
-                                    message: 'Platsen "' + $scope.location.Name + '" sparades med ett lyckat resultat'
-                                };
+                                    // Display success message
+                                    $rootScope.FlashMessage = {
+                                        type: 'success',
+                                        message: 'Platsen "' + $scope.location.Name + '" skapades med ett lyckat resultat'
+                                    };
 
-                                // Redirect
-                                history.back();
+                                    // Redirect
+                                    history.back();
 
-                            })
+                                })
+
+                                .error(function(){
+
+                                    $rootScope.FlashMessage = {
+                                        type: 'error',
+                                        message: 'Platsen "' + $scope.customer.Name + '" skapades, men det gick inte att ladda upp och spara den önskade bilden.'
+                                    };
+
+                                    // Redirect
+                                    history.back();
+                                })
+
                         }).catch(function(){
 
                             $rootScope.FlashMessage = {

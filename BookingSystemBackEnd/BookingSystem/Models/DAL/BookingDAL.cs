@@ -94,6 +94,79 @@ namespace BookingSystem.Models
             } // Connection is closed here
         }
 
+        public IEnumerable<Booking> SearchFor(SearchContainer searchContainer)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List<Booking> bookingsReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    bookingsReturnList = new List<Booking>(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup("appSchema.usp_BookingList");
+
+                    // Add variable for stored procedure
+                    switch(searchContainer.ColumnName)
+                    {
+                        case "Name":
+                            cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = searchContainer.SearchValue;
+                            break;
+                        case "NumberOfPeople":
+                            cmd.Parameters.Add("@NumberOfPeople", SqlDbType.SmallInt).Value = Int16.Parse(searchContainer.SearchValue);
+                            break;
+                        case "Notes":
+                            cmd.Parameters.Add("@Notes", SqlDbType.VarChar, 200).Value = searchContainer.SearchValue;
+                            break;
+                        case "CalculatedBookingPrice":
+                            cmd.Parameters.Add("@CalculatedBookingPrice", SqlDbType.Decimal).Value = decimal.Parse(searchContainer.SearchValue);
+                            break;
+                    }
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Booking object from database values and add to list
+                            bookingsReturnList.Add(new Booking
+                            {
+                                BookingId = reader.GetSafeInt32(reader.GetOrdinal("BookingId")),
+                                Name = reader.GetSafeString(reader.GetOrdinal("Name")),
+                                CustomerId = reader.GetSafeInt32(reader.GetOrdinal("CustomerId")),
+                                CustomerName = reader.GetSafeString(reader.GetOrdinal("CustomerName")),
+                                Provisional = reader.GetBoolean(reader.GetOrdinal("Provisional")),
+                                NumberOfPeople = reader.GetSafeInt16(reader.GetOrdinal("NumberOfPeople")),
+                                Discount = reader.GetSafeDecimal(reader.GetOrdinal("Discount")),
+                                CalculatedBookingPrice = reader.GetSafeDecimal(reader.GetOrdinal("CalculatedBookingPrice")),
+                                Notes = reader.GetSafeString(reader.GetOrdinal("Notes")),
+
+                                //CreatedByUserId = reader.GetSafeInt32(reader.GetOrdinal("CreatedByUserId")),
+                                //ModifiedByUserId = reader.GetSafeInt32(reader.GetOrdinal("ModifiedByUserId")),
+                                //ResponsibleUserId = reader.GetSafeInt32(reader.GetOrdinal("ResponsibleUserId"))
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    bookingsReturnList.TrimExcess();
+
+                    // Return list
+                    return bookingsReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+        
+
         public IEnumerable<Booking> GetBookings()
         {
             // Create connection object

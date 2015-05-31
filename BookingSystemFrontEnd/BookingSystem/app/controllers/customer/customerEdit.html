@@ -10,6 +10,10 @@
     ></page-header-buttons>
 
     <form name="customerForm">
+
+        <label>Bild på Kund</label>
+        <image-uploader type="Customer" id="{{customer.CustomerId}}" image-src="customer.ImageSrc" base64-encoded-image="customer.ImageForUpload"></image-uploader>
+
         <label>Kundnummer</label>
         <input type="number" name="customerId" ng-pattern="regExp.textField" ng-model="customer.CustomerId" disabled="disabled">
         <label>Namn

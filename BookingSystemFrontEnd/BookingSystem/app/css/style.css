@@ -642,6 +642,7 @@ section.content-container {
     section.content-container .show-image {
         margin: 20px auto;
         display: block;
+        border-radius: 2px;
     }
 
     section.content-container .show-table {

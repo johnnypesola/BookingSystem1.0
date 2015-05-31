@@ -34,33 +34,32 @@
 
         /* Public methods END */
 
-
         /* Initialization START */
 
-        var booking = Booking.get(
-            {
-                bookingId: $routeParams.bookingId
-            }
-        );
+            var booking = Booking.get(
+                {
+                    bookingId: $routeParams.bookingId
+                }
+            );
 
-        // Success
-        booking.$promise.then(function(){
+            // Success
+            booking.$promise.then(function(){
 
-            $scope.noLocationBookingsFound = !booking.LocationBookings.length;
-        });
+                $scope.noLocationBookingsFound = !booking.LocationBookings.length;
+            });
 
-        // In case bookings cannot be fetched, display an error to user.
-        booking.$promise.catch(function(){
+            // In case bookings cannot be fetched, display an error to user.
+            booking.$promise.catch(function(){
 
-            $rootScope.FlashMessage = {
-                type: 'error',
-                message: 'Bokningstillfället kunde inte hämtas, var god försök igen.'
-            };
+                $rootScope.FlashMessage = {
+                    type: 'error',
+                    message: 'Bokningstillfället kunde inte hämtas, var god försök igen.'
+                };
 
-            $scope.booking = null;
-        });
+                $scope.booking = null;
+            });
 
-        $scope.booking = booking;
+            $scope.booking = booking;
 
         /* Initialization END */
     })
@@ -132,10 +131,8 @@
                     });
             };
 
-            /* Public methods END */
 
         /* Public methods END */
-
 
         /* Initialization START */
 
@@ -260,6 +257,7 @@
                 that.addVarsToScope();
             };
 
+        /* Public methods END */
 
         /* Initialization START */
 
@@ -304,6 +302,8 @@
         /* Private methods END */
 
         /* Public methods START */
+
+        /* Public methods END */
 
         /* Initialization START */
 
@@ -402,6 +402,8 @@
                         }
                     });
             };
+
+        /* Public methods END */
 
         /* Initialization START */
 
@@ -544,6 +546,48 @@
                 that.getOtherDisplayData();
 
             });
+
+        /* Initialization END */
+
+
+    })
+
+    .controller('BookingSearchCtrl', function($scope, Booking, $rootScope, $q, $routeParams){
+        var that = this;
+        var currentDateObj;
+
+        /* Private methods START */
+
+        /* Private methods END */
+
+        /* Public methods START */
+
+            $scope.search = function(){
+
+                $scope.searchResults = Booking.querySearch(
+                    {
+                        column: $scope.searchColumn,
+                        value: $scope.searchValue
+                    }
+                );
+
+                $scope.searchResults.$promise
+
+                    .then(function(){
+                        $scope.noSearchResultsFound = !$scope.searchResults.length;
+                    })
+
+                    .catch(function(response) {
+                        $rootScope.FlashMessage = {
+                            type: 'error',
+                            message: 'Ett oväntat fel uppstod när sökresultaten hämtades. Var god försök igen.'
+                        };
+                    })
+            };
+
+        /* Initialization START */
+
+            $scope.searchColumn = "Name";
 
         /* Initialization END */
 

@@ -388,7 +388,6 @@
                     // If everything went ok
                     .then(function(response){
 
-
                         $rootScope.FlashMessage = {
                             type: 'success',
                             message: 'Lokal/plats-bokningen skapades med ett lyckat resultat'
@@ -418,6 +417,62 @@
                     });
 
                 return promise;
+            };
+
+            that.getLocationsBookingInfo = function(){
+
+                // Check that all dates variables are defined
+                if(
+                    typeof $scope.StartDate !== 'undefined' &&
+                    typeof $scope.StartTime !== 'undefined' &&
+                    typeof $scope.EndDate !== 'undefined' &&
+                    typeof $scope.EndTime !== 'undefined'
+                ){
+
+                    Location.queryFreeForPeriod(
+                        {
+                            fromDate: $scope.StartDate,
+                            fromTime: $scope.StartTime,
+                            toDate: $scope.EndDate,
+                            toTime: $scope.EndTime
+                        }
+                    ).$promise
+
+                        // Success
+                        .then(function(response) {
+
+                            // Add free locations to scop.e
+                            $scope.freeLocations = response;
+
+                            // Replace selectable locations with free locations
+                            $scope.locations = response
+                        })
+
+                        // Could not get free locations
+                        .catch(function(response) {
+
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Ett oväntat fel uppstod när uppgifter om lediga lokaler skulle hämtas'
+                            };
+                        });
+                }
+            };
+
+            that.addDateWatches = function(){
+
+                $scope.$watch('StartDate', function(newValue, oldValue){
+                    that.getLocationsBookingInfo();
+                }, true); //enable deep dirty checking
+                $scope.$watch('StartTime', function(newValue, oldValue){
+                    that.getLocationsBookingInfo();
+                }, true); //enable deep dirty checking
+                $scope.$watch('EndDate', function(newValue, oldValue){
+                    that.getLocationsBookingInfo();
+                }, true); //enable deep dirty checking
+                $scope.$watch('EndTime', function(newValue, oldValue){
+                    that.getLocationsBookingInfo();
+                }, true); //enable deep dirty checking
             };
 
         /* Private methods END */
@@ -477,18 +532,19 @@
         /* Initialization START */
 
             // Get other data used in form
-            that.getOtherDisplayData()
-
-                .then(function(){
-
-
-                });
+            that.getOtherDisplayData();
 
             // Get booking id from route params
             $scope.bookingId = $routeParams.bookingId || 0;
 
             // Get location id from route params
             $scope.locationBooking.LocationId = +$location.search()['lokal-id'];
+
+
+
+            // Add watches to all Date and Time input fields
+
+            that.addDateWatches();
 
         /* Initialization END */
     })

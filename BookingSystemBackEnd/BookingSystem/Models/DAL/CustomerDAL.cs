@@ -72,6 +72,7 @@ namespace BookingSystem.Models
                                 CellPhoneNumber = reader.GetSafeString(reader.GetOrdinal("CellPhoneNumber")),
                                 ParentCustomerId = reader.GetSafeInt32(reader.GetOrdinal("ParentCustomerId")),
                                 ParentCustomerName = reader.GetSafeString(reader.GetOrdinal("ParentCustomerName")),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
                                 Notes = reader.GetSafeString(reader.GetOrdinal("Notes")),
                                 TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings")),
                                 TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal("TotalBookingValue")),
@@ -181,6 +182,7 @@ namespace BookingSystem.Models
                                 CellPhoneNumber = reader.GetSafeString(reader.GetOrdinal("CellPhoneNumber")),
                                 ParentCustomerId = reader.GetSafeInt32(reader.GetOrdinal("ParentCustomerId")),
                                 ParentCustomerName = reader.GetSafeString(reader.GetOrdinal("ParentCustomerName")),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal("ImageSrc")),
                                 Notes = reader.GetSafeString(reader.GetOrdinal("Notes")),
                                 TotalBookings = reader.GetSafeInt32(reader.GetOrdinal("TotalBookings")),
                                 TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal("TotalBookingValue"))
@@ -225,6 +227,7 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add("@PhoneNumber", SqlDbType.VarChar, 20).Value = customer.PhoneNumber;
                     cmd.Parameters.Add("@CellPhoneNumber", SqlDbType.VarChar, 20).Value = customer.CellPhoneNumber;
                     cmd.Parameters.Add("@ParentCustomerId", SqlDbType.Int).Value = customer.ParentCustomerId;
+                    cmd.Parameters.Add("@ImageSrc", SqlDbType.VarChar, 50).Value = customer.ImageSrc;
                     cmd.Parameters.Add("@Notes", SqlDbType.VarChar, 200).Value = customer.Notes;
 
                     // Add out parameter for Stored procedure
@@ -269,6 +272,7 @@ namespace BookingSystem.Models
                     cmd.Parameters.Add("@PhoneNumber", SqlDbType.VarChar, 20).Value = customer.PhoneNumber;
                     cmd.Parameters.Add("@CellPhoneNumber", SqlDbType.VarChar, 20).Value = customer.CellPhoneNumber;
                     cmd.Parameters.Add("@ParentCustomerId", SqlDbType.Int).Value = customer.ParentCustomerId;
+                    cmd.Parameters.Add("@ImageSrc", SqlDbType.VarChar, 50).Value = customer.ImageSrc;
                     cmd.Parameters.Add("@Notes", SqlDbType.VarChar, 200).Value = customer.Notes;
 
                     // Open DB connection

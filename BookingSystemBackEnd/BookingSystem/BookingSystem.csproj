@@ -104,7 +104,6 @@
     </Compile>
     <Compile Include="Interfaces\IBookingService.cs" />
     <Compile Include="Models\BLL\Booking.cs" />
-    <Compile Include="Models\BLL\BookingContainer.cs" />
     <Compile Include="Models\BLL\BookingType.cs" />
     <Compile Include="Models\BLL\CalendarBookingDay.cs" />
     <Compile Include="Models\BLL\Customer.cs" />
@@ -113,6 +112,7 @@
     <Compile Include="Models\BLL\Resource.cs" />
     <Compile Include="Models\BLL\Furnituring.cs" />
     <Compile Include="Models\BLL\Location.cs" />
+    <Compile Include="Models\BLL\SearchContainer.cs" />
     <Compile Include="Models\BookingService.cs" />
     <Compile Include="Models\BookingTypeService.cs" />
     <Compile Include="Models\CustomerService.cs" />
@@ -127,6 +127,7 @@
     <Compile Include="Models\DAL\ResourceDAL.cs" />
     <Compile Include="Models\DAL\SharedDAL.cs" />
     <Compile Include="Models\FurnituringService.cs" />
+    <Compile Include="Models\ImageService.cs" />
     <Compile Include="Models\LocationBookingService.cs" />
     <Compile Include="Models\LocationFurnituringService.cs" />
     <Compile Include="Models\LocationService.cs" />
@@ -145,6 +146,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\upload\img\customer\" />
     <Folder Include="Content\upload\img\location\" />
   </ItemGroup>
   <PropertyGroup>

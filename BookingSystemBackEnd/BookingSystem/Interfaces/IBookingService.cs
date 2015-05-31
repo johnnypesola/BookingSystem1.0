@@ -22,6 +22,8 @@ namespace BookingSystem
 
         int GetEmptyBookingsCount();
 
+        IEnumerable<Booking> SearchFor(SearchContainer searchContainer);
+
         IQueryable<Booking> GetForPeriod(DateTime startTime, DateTime endTime);
 
         IEnumerable<CalendarBookingDay> CheckDaysForPeriod(DateTime startTime, DateTime endTime);

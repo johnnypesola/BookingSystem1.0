@@ -7,12 +7,16 @@ using System.Web.Http;
 using BookingSystem.Models;
 using System.Web.Http.Cors;
 using System.Data;
+using Newtonsoft.Json.Linq;
 
 namespace BookingSystem.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class CustomerController : ApiController
     {
+        // Shared variables
+        const string IMAGE_PATH = "Content/upload/img/customer";
+
         // Set up Service.
         CustomerService customerService = new CustomerService();
 
@@ -122,6 +126,51 @@ namespace BookingSystem.Controllers
             }
 
             return Ok();
+        }
+
+
+        // POST a picture for a customer
+        [Route("api/Customer/image/{CustomerId:int}")]
+        [AcceptVerbs("POST")]
+        [HttpPost]
+        public IHttpActionResult Post(int CustomerId)
+        {
+            string base64string;
+            JObject returnData;
+            ImageService imageService = new ImageService();
+            string UploadImagePath;
+
+            try
+            {
+                // Check that location with specific Id exists
+                Customer customer = customerService.GetCustomer(CustomerId);
+                if (customer == null)
+                {
+                    return NotFound();
+                }
+
+                // Process image data
+                base64string = Request.Content.ReadAsStringAsync().Result;
+
+                // Save image
+                UploadImagePath = imageService.SaveImage(IMAGE_PATH, base64string, CustomerId);
+
+                // Attach path to object
+                customer.ImageSrc = UploadImagePath;
+
+                // Save location
+                customerService.SaveCustomer(customer);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            // Build return JSON object
+            returnData = JObject.Parse(String.Format("{{ 'imgpath' : '{0}/{1}.jpg'}}", IMAGE_PATH, CustomerId));
+
+            // Return path to uploaded image
+            return Ok(returnData);
         }
     }
 }

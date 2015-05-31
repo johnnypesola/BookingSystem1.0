@@ -1,0 +1,79 @@
+<section class="content-container" ng-controller="BookingSearchCtrl">
+    <h2>
+        Sök efter Bokningstillfälle
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
+    <page-header-buttons
+            show-calendar="true"
+            show-list="true"
+            show-add="true"
+            show-search="true"
+    ></page-header-buttons>
+
+
+    <form name="searchForm">
+
+        <label>Ange ett värde att söka efter
+            <span ng-show="searchForm.searchValue.$error.required" class="green">Var god ange</span>
+            <span ng-show="searchForm.searchValue.$error.pattern">Får endast bestå av bokstäver, siffror och tecknen: -_&.,~^@()/%!</span>
+        </label>
+        <input type="text" name="searchValue" ng-pattern="regExp.textField" ng-model="searchValue" maxlength="50" required>
+
+        <label>Sök igenom</label>
+        <div class="checkbox-radio-container" >
+            <label>
+                <input type="radio" name="search-column" value="Name" ng-model="searchColumn"> Bokningsnamn
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="NumberOfPeople" ng-model="searchColumn"> Antal personer
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="Notes" ng-model="searchColumn"> Anteckningar
+            </label>
+            <label>
+                <input type="radio" name="search-column" value="CalculatedBookingPrice" ng-model="searchColumn"> Bokningspris
+            </label>
+        </div>
+
+        <div ng-show="noSearchResultsFound">
+            <span class="info bg-dark-purple">Inga bokningar hittades för aktuell sökning</span>
+        </div>
+
+        <table class="list-table" ng-show="searchResults.length">
+            <tr>
+                <th>Bokningsnamn</th>
+                <th>Starttid</th>
+                <th>Sluttid</th>
+                <th>Preliminär</th>
+                <th>Bokningstyp</th>
+                <th>Kund</th>
+                <th>Personer</th>
+                <th>Pris</th>
+                <th></th>
+            </tr>
+
+            <tr ng-repeat="booking in searchResults">
+                <td class="align-left" ng-class="{'empty-string': !booking.Name.length}">{{booking.Name | emptyString}}</td>
+                <td class="date align-left">{{booking.StartTime | date: 'yyyy-MM-dd \k\l HH:mm' }}</td>
+                <td class="date align-left">{{booking.EndTime | date: 'yyyy-MM-dd \k\l HH:mm'}}</td>
+                <td>{{booking.Provisional | boolean}}</td>
+                <td>{{booking.BookingTypeName}}</td>
+                <td ng-class="{'empty-string': !booking.CustomerName.length}">
+                    <a ng-href="#/kunder/visa/{{booking.CustomerId}}">{{booking.CustomerName}}</a>
+                </td>
+                <td class="align-right">{{booking.NumberOfPeople | count}}</td>
+                <td class="align-right">{{booking.CalculatedBookingPrice | kr}}</td>
+                <td class="align-right">
+                    <div item-action-buttons="booking.BookingId"></div>
+                </td>
+            </tr>
+        </table>
+
+        <button ng-click="search()" ng-disabled="!searchForm.$valid">Sök</button>
+        <button back-button>Tillbaka</button>
+    </form>
+
+
+
+</section>
+

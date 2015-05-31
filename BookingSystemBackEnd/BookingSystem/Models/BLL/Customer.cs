@@ -51,6 +51,10 @@ namespace BookingSystem.Models
         [StringLength(50, ErrorMessage = "ParentCustomerName string length surpassed the limit of 50.")]
         public string ParentCustomerName { get; set; }
 
+        [StringLength(50, ErrorMessage = "ImageSrc must not exceed 50 chars.")]
+        [RegularExpression(ValidationExtensions.IMG_PATH_REGEXP, ErrorMessage = "ImageSrc is invalid")]
+        public string ImageSrc { get; set; }
+
         [StringLength(200, ErrorMessage = "Notes string length surpassed the limit of 200.")]
         [RegularExpression(ValidationExtensions.TEXT_FIELD_REGEXP, ErrorMessage = "Notes string can only contain letters and spaces and the following characters: &_-.,@()/%")]
         public string Notes { get; set; }

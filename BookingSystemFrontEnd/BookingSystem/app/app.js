@@ -48,7 +48,10 @@
                 redirectTo: '/start'
             }).
             when('/start', {
-                templateUrl: 'controllers/start/startCtrl.html'
+                templateUrl: 'controllers/start/start.html'
+            }).
+            when('/information', {
+                templateUrl: 'controllers/start/information.html'
             }).
 
             // Bookings
@@ -76,6 +79,10 @@
             when('/bokningstillfallen/skapa', {
                 templateUrl: 'controllers/booking/bookingCreate.html'
             }).
+            when('/bokningstillfallen/sok', {
+                templateUrl: 'controllers/booking/bookingSearch.html'
+            }).
+
 
             // BookingTypes
             when('/bokningstyper/visa/:bookingTypeId', {

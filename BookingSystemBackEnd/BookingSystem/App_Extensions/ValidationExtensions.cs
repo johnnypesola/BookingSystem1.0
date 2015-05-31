@@ -9,6 +9,8 @@ namespace BookingSystem
     public static class ValidationExtensions
     {
         // Regexp for recurring validation purposes
+        public const string COLUMN_NAME_REGEXP = @"^[0-9a-zA-Z]*$";
+
         public const string TEXT_FIELD_REGEXP = @"^[0-9a-zA-ZåäöÅÄÖé\-_&\.,~\^@()/%\s\!]*$";
 
         public const string IMG_PATH_REGEXP = @"^Content/upload/img/([a-z_\-\s0-9\.]+)+\/([a-z_\-\s0-9\.]+)+\.(gif|png|jpg)$";

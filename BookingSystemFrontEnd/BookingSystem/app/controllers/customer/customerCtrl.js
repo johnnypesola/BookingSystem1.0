@@ -20,7 +20,7 @@
     })
 
     // Show Controller
-    .controller('CustomerShowCtrl', function($scope, $routeParams, $location, $rootScope, Customer){
+    .controller('CustomerShowCtrl', function($scope, $routeParams, $location, $rootScope, Customer, PHOTO_MISSING_SRC, API_IMG_PATH_URL){
 
         var that = this;
 
@@ -36,24 +36,28 @@
 
         /* Initialization START */
 
-        var customer = Customer.get(
+        $scope.customer = Customer.get(
             {
                 customerId: $routeParams.customerId
             }
         );
 
-        // In case customers cannot be fetched, display an error to user.
-        customer.$promise.catch(function(){
+        $scope.customer.$promise.then(function(){
 
-            $rootScope.FlashMessage = {
-                type: 'error',
-                message: 'Kunden kunde inte hämtas, var god försök igen.'
-            };
+                // Add path to imageSrc
+                $scope.customer.ImageSrc = ($scope.customer.ImageSrc === "" ? PHOTO_MISSING_SRC : API_IMG_PATH_URL + $scope.customer.ImageSrc);
+        })
 
-            $scope.customer = null;
-        });
+            // In case customers cannot be fetched, display an error to user.
+            .catch(function(){
 
-        $scope.customer = customer;
+                $rootScope.FlashMessage = {
+                    type: 'error',
+                    message: 'Kunden kunde inte hämtas, var god försök igen.'
+                };
+
+                $scope.customer = null;
+            });
 
         /* Initialization END */
     })
@@ -92,11 +96,20 @@
     })
 
     // Create Controller
-    .controller('CustomerCreateCtrl', function($scope, $routeParams, $location, $rootScope, Customer, Redirect){
+    .controller('CustomerCreateCtrl', function($scope, $routeParams, $location, $rootScope, Customer, Redirect, CustomerImage){
 
             var that = this;
 
         /* Private methods START */
+
+            // Upload image
+            that.uploadImage = function(CustomerId) {
+                var customerImageHttp;
+
+                customerImageHttp = CustomerImage.upload($scope.customer.ImageForUpload, CustomerId);
+
+                return customerImageHttp;
+            };
 
         /* Private methods END */
 
@@ -117,6 +130,7 @@
                         PhoneNumber: $scope.customer.PhoneNumber,
                         CellPhoneNumber: $scope.customer.CellPhoneNumber,
                         ParentCustomerId: $scope.customer.ParentCustomerId,
+                        ImageSrc: $scope.customer.ImageSrc,
                         Notes: $scope.customer.Notes
                     }
                 ).$promise
@@ -124,14 +138,32 @@
                     // If everything went ok
                     .then(function(response){
 
+                        // Upload image
+                        that.uploadImage(response.CustomerId)
 
-                        $rootScope.FlashMessage = {
-                            type: 'success',
-                            message: 'Kunden "' + $scope.customer.Name + '" skapades med ett lyckat resultat'
-                        };
+                            // Image upload successful
+                            .success(function (data) {
 
-                        // Redirect to show booking view
-                        Redirect.to('visa/', response.CustomerId);
+                                // Display success message
+                                $rootScope.FlashMessage = {
+                                    type: 'success',
+                                    message: 'Kunden "' + $scope.customer.Name + '" skapades med ett lyckat resultat'
+                                };
+
+                                // Redirect
+                                history.back();
+                            })
+                            // Image upload failed
+                            .error(function(){
+
+                                $rootScope.FlashMessage = {
+                                    type: 'error',
+                                    message: 'Kunden "' + $scope.customer.Name + '" skapades, men det gick inte att ladda upp och spara den önskade bilden.'
+                                };
+
+                                // Redirect
+                                history.back();
+                            });
 
                     // Something went wrong
                     }).catch(function(response) {
@@ -167,11 +199,32 @@
     })
 
     // Edit Controller
-    .controller('CustomerEditCtrl', function($scope, $routeParams, $location, $rootScope, Customer){
+    .controller('CustomerEditCtrl', function($scope, $routeParams, $location, $rootScope, Customer, CustomerImage){
 
             var that = this;
 
         /* Private methods START */
+
+            that.uploadImage = function(CustomerId) {
+                var customerImageHttp;
+
+                customerImageHttp = CustomerImage.upload($scope.customer.ImageForUpload, CustomerId);
+
+                return customerImageHttp;
+            };
+
+
+            that.saveSuccess = function() {
+
+                // Display success message
+                $rootScope.FlashMessage = {
+                    type: 'success',
+                    message: 'Kunden "' + $scope.customer.Name + '" sparades med ett lyckat resultat'
+                };
+
+                // Redirect
+                history.back();
+            };
 
         /* Private methods END */
 
@@ -192,6 +245,7 @@
                         PhoneNumber: $scope.customer.PhoneNumber,
                         CellPhoneNumber: $scope.customer.CellPhoneNumber,
                         ParentCustomerId: $scope.customer.ParentCustomerId,
+                        ImageSrc: $scope.customer.ImageSrc,
                         Notes: $scope.customer.Notes
                     }
                 ).$promise
@@ -199,12 +253,28 @@
                     // If everything went ok
                     .then(function(response){
 
-                        $rootScope.FlashMessage = {
-                            type: 'success',
-                            message: 'Kunden "' + $scope.customer.Name + '" sparades med ett lyckat resultat'
-                        };
+                        // Upload image
+                        if(typeof $scope.customer.ImageForUpload !== 'undefined'){
 
-                        history.back();
+                            that.uploadImage(response.CustomerId)
+
+                                // Image upload successful
+                                .success(function(){
+                                    that.saveSuccess();
+                                })
+                                // Image upload failed
+                                .error(function () {
+
+                                    $rootScope.FlashMessage = {
+                                        type: 'error',
+                                        message: 'Kunden sparades, men det gick inte att ladda upp och spara den önskade bilden.'
+                                    };
+                                });
+                        }
+                        else {
+
+                            that.saveSuccess();
+                        }
 
                     // Something went wrong
                     }).catch(function(response) {

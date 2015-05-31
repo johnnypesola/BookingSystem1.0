@@ -125,7 +125,6 @@ namespace BookingSystem.Controllers
             {
                 return InternalServerError();
             }
-            
         }
          
         // Get info if there are any bookings for a period
@@ -185,6 +184,36 @@ namespace BookingSystem.Controllers
                 return InternalServerError();
             }
         }
+
+        
+        // GET: api/Booking/search/ColumnName?value=hello
+        [Route("api/Booking/search/{columnName}")]
+        [AcceptVerbs("GET")]
+        public IHttpActionResult Get(string columnName, string value)
+        {
+            SearchContainer searchContainer;
+            try
+            {
+                
+                // Construct a search container object
+                searchContainer = new SearchContainer { ColumnName = columnName, SearchValue = value };
+
+                // Get bookings
+                IEnumerable<Booking> bookings = bookingService.SearchFor(searchContainer);
+
+                if (bookings == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(bookings);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+        
 
         // POST api/Booking
         [Route("api/Booking")]

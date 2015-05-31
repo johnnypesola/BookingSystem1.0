@@ -21,7 +21,16 @@
 
                 {
                     title: "Start",
-                    location: "#/start"
+                    submenus: [
+                        {
+                            title: "Startsidan",
+                            location: "#/start"
+                        },
+                        {
+                            title: "Information",
+                            location: "#/information"
+                        }
+                    ]
                 },
                 {
                     title: "Bokningar",

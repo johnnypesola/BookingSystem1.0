@@ -65,17 +65,18 @@ namespace BookingSystem.Controllers
             }
         }
 
-        // GET: api/Location/5
+        // GET: api/Location/free/2015-01-01/2015-01-02
+        // GET: api/Location/free/2015-01-01/2015-01-02?fromTime=10.00&toTime=10.00
         [Route("api/Location/free/{fromDate:datetime}/{toDate:datetime}")]
         [AcceptVerbs("GET")]
-        public IHttpActionResult Get(string fromDate, string toDate)
+        public IHttpActionResult Get(string fromDate, string toDate, string fromTime = "00:00:00", string toTime = "23:59:59")
         {
             DateTime startTime, endTime;
 
             try
             {
-                startTime = Convert.ToDateTime(fromDate);
-                endTime = Convert.ToDateTime(toDate);
+                startTime = Convert.ToDateTime(String.Format("{0} {1}", fromDate, fromTime));
+                endTime = Convert.ToDateTime(String.Format("{0} {1}", toDate, toTime));
 
                 IEnumerable<Location> locations = locationService.GetLocationsFreeForPeriod(startTime.StartOfDay(), endTime.EndOfDay());
                 if (locations == null)
@@ -177,12 +178,10 @@ namespace BookingSystem.Controllers
         [HttpPost]
         public IHttpActionResult Post(int LocationId)
         {
-            MemoryStream ms;
             string base64string;
-            byte[] bytes;
-            Image image;
-            string UploadImagePath;
             JObject returnData;
+            ImageService imageService = new ImageService();
+            string UploadImagePath;
 
             try
             {
@@ -196,33 +195,13 @@ namespace BookingSystem.Controllers
                 // Process image data
                 base64string = Request.Content.ReadAsStringAsync().Result;
 
-                bytes = Convert.FromBase64String(base64string);
+                // Save image
+                UploadImagePath = imageService.SaveImage(IMAGE_PATH, base64string, LocationId);
 
-                using (ms = new MemoryStream(bytes))
-                {
-                    image = Image.FromStream(ms);
+                // Attach path to object
+                location.ImageSrc = UploadImagePath;
 
-                    // Check image dimensions
-                    if (
-                        image.Width > 400 ||
-                        image.Height > 400 ||
-                        image.Width < 10 ||
-                        image.Height < 10
-                       )
-                    {
-                        throw new Exception("Maximum image dimensions are: Width: 400px and Height: 400px. Minimum image dimensions are: Width: 10px and Height 10px.");
-                    }
-
-                    // Build uploadpath
-                    UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@"~/{0}", IMAGE_PATH));
-
-                    // Save image
-                    image.Save(String.Format("{0}/{1}.jpg", UploadImagePath, LocationId), System.Drawing.Imaging.ImageFormat.Jpeg);
-                }
-
-                // Update location with image path.
-                location.ImageSrc = String.Format("{0}/{1}.jpg", IMAGE_PATH, LocationId);
-
+                // Save location
                 locationService.SaveLocation(location);
             }
             catch (Exception e)
