@@ -33,34 +33,12 @@ describe('module: bookingSystem.header HeaderCtrl', function() {
     describe('HeaderCtrl controller', function(){
         it('should have correct scope variables', inject(function($controller) {
             expect($scope.menus).toBeDefined();
-            expect($scope.selectedSubMenu).toBeDefined();
+
+            expect($scope.menus[0].title).toBeDefined();
+
+            expect($scope.menus[0].title).toEqual("Start");
+
         }));
-
-        it('should have correct scope variables after selectMainMenu()', inject(function($controller) {
-
-            // Run method
-            $scope.selectMainMenu(1);
-
-            // Check method results
-            expect($scope.selectedMainMenu).toEqual(1);
-            expect($scope.activeSubMenus).toEqual($scope.menus[1].submenus);
-        }));
-
-        it('should have correct scope variables after selectSubMenu()', inject(function($controller) {
-
-            // Run method
-            $scope.selectSubMenu(1);
-
-            // Check method results
-            expect($scope.selectedSubMenu).toEqual(1);
-        }));
-
-        /*
-        it('should have correct scope variables after hideMessage() method', inject(function($controller) {
-            console.log($scope);
-            $scope.hideMessage();
-            expect($scope.messageVisible).toEqual(false);
-        }));*/
 
         // Tests END
     });

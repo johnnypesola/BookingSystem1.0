@@ -16,7 +16,6 @@ describe('directive: calendarDirective', function() {
     beforeEach(module('templates'));
 
     // Root variables
-    var BookingCtrl;
     var testCurrentDateObj;
     var $scope;
     var q;
@@ -31,6 +30,9 @@ describe('directive: calendarDirective', function() {
     // Mock booking service module
     beforeEach(function () {
         module(function($provide) {
+
+            $provide.constant('APP_URL', "http://localhost:6796/api/");
+
             $provide.factory('Booking', function($q) {
                 return {
                     get: jasmine.createSpy('get').andCallFake(function () {
@@ -76,7 +78,7 @@ describe('directive: calendarDirective', function() {
         $scope = $rootScope;
 
         // Markup the calendar element
-        var calendarElem = angular.element('<booking-calendar></booking-calendar>');
+        var calendarElem = angular.element('<booking-calendar booking-type="booking"></booking-calendar>');
         // Compile
         calendarElement = $compile(calendarElem)($scope);
 

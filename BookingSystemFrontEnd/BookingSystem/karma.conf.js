@@ -8,13 +8,50 @@ module.exports = function(config){
         'app/bower_components/angular-route/angular-route.js',
         'app/bower_components/angular-mocks/angular-mocks.js',
         'app/bower_components/angular-resource/angular-resource.js',
-        'app/components/**/*.js',
-        //'app/view*/**/*.js',
+
         'karma_test_includes/*.js',
-        'app/shared/**/*.js',
-        'app/controllers/**/*.js',
-        'app/shared/directives/**/*.js',
-        'app/*.js',
+
+        // Main app file
+        'app/app.js',
+
+        'app/shared/controllers/headerCtrl.js',
+
+        'app/shared/directives/calendarDirective.js',
+        'app/shared/directives/commonDirectives.js',
+        'app/shared/directives/imageUploaderDirective.js',
+        'app/shared/directives/menuDirective.js',
+
+        'app/shared/filters/commonFilters.js',
+
+        // Controllers. Manually added to exclude .min files, which doesn't work that well to include in tests.
+        'app/controllers/booking/bookingCtrl.js',
+        'app/controllers/booking-type/bookingTypeCtrl.js',
+        'app/controllers/customer/customerCtrl.js',
+        'app/controllers/furnituring/furnituringCtrl.js',
+        'app/controllers/location/locationCtrl.js',
+        'app/controllers/location-booking/locationBookingCtrl.js',
+        'app/controllers/resource/resourceCtrl.js',
+        'app/controllers/start/startCtrl.js',
+        'app/controllers/start/startCtrl.js',
+
+        // Inlude controller tests
+        'app/controllers/**/*_test.js',
+
+        // Services
+        'app/shared/services/bookingService.js',
+        'app/shared/services/commonServices.js',
+        'app/shared/services/customerService.js',
+        'app/shared/services/furnituringService.js',
+        'app/shared/services/imageResizeService.js',
+        'app/shared/services/locationBookingService.js',
+        'app/shared/services/locationService.js',
+        'app/shared/services/resourceBookingService.js',
+        'app/shared/services/resourceService.js',
+
+        // Include shared tests
+        'app/shared/**/*_test.js',
+
+        // Other
         'app/lib/extensions.js',
         'app/lib/angular-google-maps.min.js',
         'app/lib/lodash.min.js',

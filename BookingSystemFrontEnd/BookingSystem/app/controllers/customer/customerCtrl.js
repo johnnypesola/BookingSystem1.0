@@ -432,6 +432,7 @@
         /* Initialization END */
     }])
 
+    // Search Controller
     .controller('CustomerSearchCtrl', ["$scope", "Customer", "$rootScope", function($scope, Customer, $rootScope){
         var that = this;
         var currentDateObj;
