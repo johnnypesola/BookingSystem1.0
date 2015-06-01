@@ -83,17 +83,19 @@
 
                             // Mark saved furniturings for this locations as selected
                             furniturings.forEach(function(availableFurnituring) {
-                                var match = false;
-                                // If there are any existing location furniturings, mark them as selected
-                                locationFurniturings.forEach(function(locationFurnituring) {
+                                var match = false,
+                                    i;
 
-                                    if (availableFurnituring.FurnituringId == locationFurnituring.FurnituringId) {
+                                // If there are any existing location furniturings, mark them as selected
+                                for (i = 0; i < locationFurniturings.length; i++){
+                                    if (availableFurnituring.FurnituringId == locationFurniturings[i].FurnituringId) {
                                         availableFurnituring.Selected = true;
-                                        availableFurnituring.MaxPeople = locationFurnituring.MaxPeople;
+                                        availableFurnituring.MaxPeople = locationFurniturings[i].MaxPeople;
 
                                         match = true;
+                                        break;
                                     }
-                                });
+                                }
 
                                 if(!match){
                                     availableFurnituring.Selected = false;

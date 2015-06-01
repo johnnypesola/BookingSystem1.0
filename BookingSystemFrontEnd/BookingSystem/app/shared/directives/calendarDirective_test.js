@@ -31,7 +31,7 @@ describe('directive: calendarDirective', function() {
     beforeEach(function () {
         module(function($provide) {
 
-            $provide.constant('APP_URL', "http://localhost:6796/api/");
+            $provide.constant('API_URL', "http://localhost:6796/api/");
 
             $provide.factory('Booking', function($q) {
                 return {
