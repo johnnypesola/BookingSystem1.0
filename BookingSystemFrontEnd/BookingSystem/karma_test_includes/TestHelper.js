@@ -31,6 +31,36 @@
         return returnValue
     };
 
+    TestHelper.fakeHttpResponse = function(dataObj) {
+
+        var returnValue;
+
+        returnValue = dataObj;
+
+        returnValue.success = function(callBack){
+
+            callBack();
+
+            return returnValue;
+        };
+
+        returnValue.then = function(callBack){
+
+            callBack();
+
+            return returnValue;
+        };
+
+        returnValue.error = function(callBack){
+
+            callBack();
+
+            return returnValue;
+        };
+
+        return returnValue;
+    };
+
     // Test fixtures
 
         // Bookings
@@ -39,6 +69,16 @@
         TestHelper.JSON.queryMoreForPeriodBookings = [{"StartTime":"2015-04-01T00:00:00","EndTime":"2015-04-01T00:00:00","Type":"location"}];
         TestHelper.JSON.queryLessForPeriodBookings = [{"StartTime":"2015-01-01T00:00:00","EndTime":"2015-01-01T23:00:00","Type":"resource"},{"StartTime":"2015-01-02T00:00:00","EndTime":"2015-01-02T23:00:00","Type":"resource"},{"StartTime":"2015-04-01T00:00:00","EndTime":"2015-04-01T00:00:00","Type":"location"},{"StartTime":"2015-10-01T00:00:00","EndTime":"2015-10-01T00:00:00","Type":"meal"}];
         TestHelper.JSON.queryDayBookings = [{"BookingId":7,"BookingName":"","CustomerId":1,"NumberOfPeople":10,"Provisional":false,"CustomerName":"Atlas Copco","TypeName":"Whiteboard","Type":"Resource","TypeId":3,"Count":5,"StartTime":"2015-01-01T00:00:00","EndTime":"2015-01-01T23:00:00"}];
+
+        TestHelper.JSON.createBooking = {"BookingId": 0,"Name": "Testbooking","CustomerId": 1,"NumberOfPeople": 10,"Provisional": false,Discount: 0.5,Notes: "Testnotes",
+            CreatedByUserId: 1, //Temporary value, users not implemented
+            ModifiedByUserId: 1, //Temporary value, users not implemented
+            ResponsibleUserId: 1 //Temporary value, users not implemented
+        };
+
+        // BookingType
+        TestHelper.JSON.getBookingType = {"BookingTypeId":0,"Name":"(Ingen särskild)","HasLocation":false,"MinutesMarginBeforeBooking":0,"MinutesMarginAfterBooking":0,"BookingTypeCount":6};
+        TestHelper.JSON.queryBookingType = [{"BookingTypeId":0,"Name":"(Ingen särskild)","HasLocation":false,"MinutesMarginBeforeBooking":0,"MinutesMarginAfterBooking":0,"BookingTypeCount":6},{"BookingTypeId":9,"Name":"Begravning","HasLocation":true,"MinutesMarginBeforeBooking":0,"MinutesMarginAfterBooking":0,"BookingTypeCount":4},{"BookingTypeId":12,"Name":"hej hopp","HasLocation":true,"MinutesMarginBeforeBooking":0,"MinutesMarginAfterBooking":0,"BookingTypeCount":0},{"BookingTypeId":13,"Name":"hej hoppa","HasLocation":true,"MinutesMarginBeforeBooking":0,"MinutesMarginAfterBooking":0,"BookingTypeCount":0},{"BookingTypeId":11,"Name":"Konferensbokning","HasLocation":true,"MinutesMarginBeforeBooking":10,"MinutesMarginAfterBooking":10,"BookingTypeCount":0},{"BookingTypeId":14,"Name":"testbokningstyp","HasLocation":false,"MinutesMarginBeforeBooking":10,"MinutesMarginAfterBooking":20,"BookingTypeCount":0}];
 
         // Furnituring
         TestHelper.JSON.getFurnituring = {"BookingId":7,"Name":"","BookingTypeId":0,"CustomerId":1,"Provisional":false,"NumberOfPeople":10,"Discount":0.00,"Notes":"","CreatedByUserId":0,"ModifiedByUserId":0,"ResponsibleUserId":0,"CustomerName":"Atlas Copco","MaxPeople":0,"CalculatedBookingPrice":1.0,"TotalBookingValue":0.0,"PayMethodId":0};

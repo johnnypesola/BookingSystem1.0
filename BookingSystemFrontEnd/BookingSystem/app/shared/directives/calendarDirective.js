@@ -25,17 +25,17 @@
 
             /* Object methods START */
 
-            that.declareBookingTypeService = function(){
+            that.declareTypeOfBookingService = function(){
 
                 // Find out what type of data to get
                 if(that.bookingType == "booking"){
-                    that.bookingTypeService = Booking;
+                    that.typeOfBookingService = Booking;
                 }
                 else if(that.bookingType == "location-booking"){
-                    that.bookingTypeService = LocationBooking;
+                    that.typeOfBookingService = LocationBooking;
                 }
                 else if(that.bookingType == "resource-booking"){
-                    that.bookingTypeService = ResourceBooking;
+                    that.typeOfBookingService = ResourceBooking;
                 }
             };
 
@@ -169,7 +169,7 @@
                     promise = deferred.promise;
 
                 // Get bookings
-                that.bookingsForMonthArray = that.bookingTypeService.queryLessForPeriod(
+                that.bookingsForMonthArray = that.typeOfBookingService.queryLessForPeriod(
                     {
                         fromDate: moment(that.currentMonthStartDateObj).format('YYYY-MM-DD'),
                         toDate: moment(that.currentMonthEndDateObj).format('YYYY-MM-DD')
@@ -253,7 +253,8 @@
                 var bookings;
 
                 // Fetch data
-                bookings = that.bookingTypeService.queryMoreForPeriod(
+
+                bookings = that.typeOfBookingService.queryMoreForPeriod(
                     {
                         fromDate: moment(that.currentDateObj).format('YYYY-MM-DD'),
                         toDate: moment(that.currentDateObj).format('YYYY-MM-DD')
@@ -342,7 +343,7 @@
 
             /* Initialization START */
 
-                that.declareBookingTypeService();
+                that.declareTypeOfBookingService();
                 that.updateCalendarContent()
                     .then(function(){
 

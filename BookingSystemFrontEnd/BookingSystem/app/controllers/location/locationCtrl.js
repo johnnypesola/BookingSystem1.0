@@ -313,7 +313,7 @@
 
                                     $rootScope.FlashMessage = {
                                         type: 'error',
-                                        message: 'Platsen "' + $scope.customer.Name + '" skapades, men det gick inte att ladda upp och spara den önskade bilden.'
+                                        message: 'Platsen "' + $scope.location.Name + '" skapades, men det gick inte att ladda upp och spara den önskade bilden.'
                                     };
 
                                     // Redirect

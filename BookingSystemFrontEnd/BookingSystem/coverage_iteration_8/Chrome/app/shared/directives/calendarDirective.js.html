@@ -1,0 +1,1305 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for ./app/shared/directives/calendarDirective.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">./app/shared/directives/calendarDirective.js</span></h1>
+    <h2>
+        Statements: <span class="metric">84.67% <small>(116 / 137)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">67.27% <small>(37 / 55)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">82.35% <small>(28 / 34)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">84.67% <small>(116 / 137)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/shared/directives/</a> &#187; calendarDirective.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365
+366
+367
+368
+369
+370
+371
+372
+373
+374
+375
+376
+377
+378
+379
+380
+381
+382
+383
+384
+385
+386
+387
+388
+389
+390
+391
+392
+393
+394
+395
+396
+397
+398
+399
+400
+401
+402
+403
+404
+405
+406
+407
+408
+409
+410
+411
+412
+413
+414
+415
+416
+417
+418
+419
+420
+421</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">300</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">290</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">290</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">290</span>
+<span class="cline-any cline-yes">290</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">290</span>
+<span class="cline-any cline-yes">290</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">290</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1160</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">300</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-yes">50</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">245</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * Created by jopes on 2015-04-16.
+ */
+&nbsp;
+(function(){
+    // Declare module
+    angular.module('bookingSystem.calendarDirective',
+&nbsp;
+        // Dependencies
+        [
+            'bookingSystem.bookingServices',
+            'bookingSystem.locationBookingServices',
+            'bookingSystem.resourceBookingServices'
+        ])
+&nbsp;
+        // Directive specific controllers START
+        .controller('BookingCalendarInternalCtrl', ["$scope", "$element", "$attrs", "Booking", "LocationBooking", "ResourceBooking", "$rootScope", "$location", "$q", function($scope, $element, $attrs, Booking, LocationBooking, ResourceBooking, $rootScope, $location, $q) {
+&nbsp;
+            /* Declare variables START */
+            var that = this,
+                i;
+            that.bookingType = $attrs.bookingType;
+&nbsp;
+            /* Declare variables END */
+&nbsp;
+            /* Object methods START */
+&nbsp;
+            that.declareBookingTypeService = function(){
+&nbsp;
+                // Find out what type of data to get
+                <span class="missing-if-branch" title="else path not taken" >E</span>if(that.bookingType == "booking"){
+                    that.bookingTypeService = Booking;
+                }
+                else <span class="cstat-no" title="statement not covered" >if(that.bookingType == "location-booking"){</span>
+<span class="cstat-no" title="statement not covered" >                    that.bookingTypeService = LocationBooking;</span>
+                }
+                else <span class="cstat-no" title="statement not covered" >if(that.bookingType == "resource-booking"){</span>
+<span class="cstat-no" title="statement not covered" >                    that.bookingTypeService = ResourceBooking;</span>
+                }
+            };
+&nbsp;
+&nbsp;
+            that.updateSelectedDateIfNeeded = function(){
+                if(typeof that.selectedMonth == 'undefined' || typeof that.selectedDay == 'undefined'){
+                    that.selectedMonth = $location.search().manad;
+                    that.selectedDay = $location.search().dag;
+                }
+            };
+&nbsp;
+            that.initDateVariables = function (){
+&nbsp;
+                // Get date strings from url params
+                var yearParam = $location.search().ar;
+                var monthParam = $location.search().manad;
+                var dayParam = $location.search().dag || 1;
+&nbsp;
+                // Convert url params to current date object, with fallback.
+                if(
+                    typeof yearParam !== 'undefined' &amp;&amp;
+                    typeof monthParam !== 'undefined'
+                ) {
+                    that.currentDateObj = moment(
+                        yearParam + "-" +
+                        $BookSysUtil.String.addLeadingZero(monthParam) + "-" +
+                        $BookSysUtil.String.addLeadingZero(dayParam)
+                    ).toDate();
+                }
+                // Could not convert. Set fall back to defaults.
+                else {
+                    that.currentDateObj = new Date();
+                    that.setDefaultUrlParams();
+                }
+&nbsp;
+                // Set a selected date in calendar, if there is none.
+                that.updateSelectedDateIfNeeded();
+&nbsp;
+                // Define a lot of values with currentDateObj as base.
+                that.currentYear = that.currentDateObj.getFullYear();
+                that.currentMonth = that.currentDateObj.getMonth();
+                that.currentMonthName = moment(that.currentDateObj).format('MMMM');
+                that.currentMonthDay = that.currentDateObj.getDate();
+                that.currentMonthDayName = moment(that.currentDateObj).format('dddd');
+                that.currentMonthNumberOfDays = moment(that.currentDateObj).daysInMonth();
+                that.currentMonthStartDateObj = new Date(that.currentYear, that.currentMonth, 1);
+                that.currentMonthEndDateObj = new Date(that.currentYear, that.currentMonth, that.currentMonthNumberOfDays);
+                that.currentMonthStartWeekDay = (that.currentMonthStartDateObj.getDay() === 0 ? <span class="branch-0 cbranch-no" title="branch not covered" >7 </span>: that.currentMonthStartDateObj.getDay());
+                that.currentMonthEndWeekDay = (that.currentMonthEndDateObj.getDay() === 0 ? 7 : that.currentMonthEndDateObj.getDay());
+                that.prevMonthNumberOfDays = new Date(that.currentYear, that.currentMonth, 0).getDate();
+&nbsp;
+                // String to display when bookings are showed.
+                $scope.dateHeaderString = moment(that.currentDateObj).format('dddd, Do MMMM YYYY');
+            };
+&nbsp;
+            // Check if specific day is today.
+            that.isSelectedDay = function(dayNumber) {
+&nbsp;
+                return (+that.selectedMonth === +that.currentMonth+1 &amp;&amp; +that.selectedDay === dayNumber);
+            };
+&nbsp;
+            // Check if a specific day has bookings
+            that.dayHasBookings = function(dayNumber) {
+&nbsp;
+                <span class="missing-if-branch" title="else path not taken" >E</span>if(typeof dayNumber !== 'undefined') {
+&nbsp;
+                    var monthNumber;
+&nbsp;
+                    // Add leading zero if needed
+                    dayNumber = $BookSysUtil.String.addLeadingZero(dayNumber);
+                    monthNumber = $BookSysUtil.String.addLeadingZero(that.currentMonth + 1);
+&nbsp;
+                    // Generate start of day date and end of day date objects.
+                    var startOfDay = moment(that.currentYear + "-" + monthNumber + "-" + dayNumber + " 00:00").toDate();
+                    var endOfDay = moment(that.currentYear + "-" + monthNumber + "-" + dayNumber + " 23:59").toDate();
+&nbsp;
+                    // Loop through bookings for month
+                    return that.bookingsForMonthArray.some(function (element) {
+&nbsp;
+                        // Check if days overlap
+                        return (
+                        element.StartTime &gt;= startOfDay &amp;&amp;
+                        element.StartTime &lt;= endOfDay ||
+&nbsp;
+                        element.EndTime &gt;= startOfDay &amp;&amp;
+                        element.EndTime &lt;= endOfDay ||
+&nbsp;
+                        element.StartTime &lt; startOfDay &amp;&amp;
+                        element.EndTime &gt; endOfDay
+                        );
+                    });
+                }
+            };
+&nbsp;
+            that.prepareCalendarDays = function (){
+                that.calendarDaysArray = [];
+&nbsp;
+                // Add calendar days from previous month
+                for(i = 1; i &lt; that.currentMonthStartWeekDay; i++) {
+<span class="cstat-no" title="statement not covered" >                    that.calendarDaysArray.push(</span>
+                        {
+                            number: that.prevMonthNumberOfDays-(that.currentMonthStartWeekDay-i-1),
+                            cssClassName: 'inactive'
+                        }
+                    );
+                }
+&nbsp;
+                // Add calendar days for current month
+                for(i = 1; i &lt;= that.currentMonthNumberOfDays; i++) {
+                    that.calendarDaysArray.push(
+                        {
+                            number: i,
+                            cssClassName: ( that.isSelectedDay(i) ? 'active' : ( that.dayHasBookings(i) ? <span class="branch-0 cbranch-no" title="branch not covered" >'has-events' </span>: ''))
+                        }
+                    );
+                }
+&nbsp;
+                // Add calendar days for next month
+                for(i = 1; i &lt;= 7-that.currentMonthEndWeekDay; i++) {
+                    that.calendarDaysArray.push(
+                        {
+                            number: i,
+                            cssClassName: 'inactive'
+                        }
+                    );
+                }
+            };
+&nbsp;
+            that.getBookingsForMonth = function() {
+                var deferred = $q.defer(),
+                    promise = deferred.promise;
+&nbsp;
+                // Get bookings
+                that.bookingsForMonthArray = that.bookingTypeService.queryLessForPeriod(
+                    {
+                        fromDate: moment(that.currentMonthStartDateObj).format('YYYY-MM-DD'),
+                        toDate: moment(that.currentMonthEndDateObj).format('YYYY-MM-DD')
+                    }
+                );
+&nbsp;
+                // In case bookings cannot be fetched, display an error to user.
+                that.bookingsForMonthArray.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    $rootScope.FlashMessage = {</span>
+                        type: 'error',
+                        message: 'Bokningarna kunde inte hämtas, var god försök igen.'
+                    };
+                });
+&nbsp;
+                // Convert date strings to date objects
+                that.bookingsForMonthArray.$promise.then(function(){
+&nbsp;
+                    // Resolve promise
+                    deferred.resolve();
+                });
+&nbsp;
+                return promise;
+            };
+&nbsp;
+            // Make public variables accessible in template
+            that.addVarsToScope = function () {
+&nbsp;
+                $scope.datedata = {
+                    currentYear: that.currentYear,
+                    currentMonth: that.currentMonth,
+                    currentMonthName: that.currentMonthName,
+                    currentDayName: that.currentMonthDayName,
+                    currentMonthNumberOfDays: that.currentMonthNumberOfDays,
+                    calendarDays: that.calendarDaysArray
+                };
+&nbsp;
+            };
+&nbsp;
+            that.setDefaultUrlParams = function() {
+&nbsp;
+                // Check if url params are not set.
+                <span class="missing-if-branch" title="else path not taken" >E</span>if(
+                    typeof $location.search().ar === 'undefined' &amp;&amp;
+                    typeof $location.search().manad === 'undefined' &amp;&amp;
+                    typeof $location.search().dag === 'undefined'
+                ) {
+                    // Set default url params
+                    $location.search('ar', moment().format('YYYY'));
+                    $location.search('manad', moment().format('M'));
+                    $location.search('dag', moment().format('D'));
+                }
+            };
+&nbsp;
+            that.updateCalendarContent = function() {
+&nbsp;
+                var deferred = $q.defer(),
+                    promise = deferred.promise;
+&nbsp;
+                that.initDateVariables();
+&nbsp;
+                that.getBookingsForMonth()
+&nbsp;
+                    // Success
+                    .then(function(){
+&nbsp;
+                        $BookSysUtil.Date.convertStringsToDates(that.bookingsForMonthArray);
+&nbsp;
+                        that.prepareCalendarDays();
+                        that.addVarsToScope();
+&nbsp;
+                        // Resolve promise
+                        deferred.resolve();
+                    });
+&nbsp;
+                return promise;
+            };
+&nbsp;
+            that.getDataForDay = function(){
+&nbsp;
+                var bookings;
+&nbsp;
+                // Fetch data
+                bookings = that.bookingTypeService.queryMoreForPeriod(
+                    {
+                        fromDate: moment(that.currentDateObj).format('YYYY-MM-DD'),
+                        toDate: moment(that.currentDateObj).format('YYYY-MM-DD')
+                    }
+                );
+&nbsp;
+                // In case bookings cannot be fetched, display an error to user.
+                bookings.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    $rootScope.FlashMessage = {</span>
+                        type: 'error',
+                        message: 'Bokningarna kunde inte hämtas, var god försök igen.'
+                    };
+                });
+&nbsp;
+                $scope.datedata.bookings = bookings;
+            };
+&nbsp;
+            /* Object methods END */
+&nbsp;
+            /* Scope methods START */
+&nbsp;
+            $scope.changeToPreviousMonth = function(){
+&nbsp;
+                // Year overlap adjustment code
+                <span class="missing-if-branch" title="if path not taken" >I</span>if(that.currentMonth == 0) {
+<span class="cstat-no" title="statement not covered" >                    that.currentMonth = 12;</span>
+<span class="cstat-no" title="statement not covered" >                    that.currentYear -= 1;</span>
+                }
+&nbsp;
+                $location.search('ar', that.currentYear);
+                $location.search('manad', that.currentMonth);
+                $location.search('dag', null);
+&nbsp;
+                that.updateCalendarContent();
+            };
+&nbsp;
+            $scope.changeToNextMonth = function(){
+&nbsp;
+                // Year overlap adjustment code
+                <span class="missing-if-branch" title="if path not taken" >I</span>if(that.currentMonth == 11) {
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    that.currentYear += 1;</span>
+<span class="cstat-no" title="statement not covered" >                    that.currentMonth = -1;</span>
+                }
+&nbsp;
+&nbsp;
+                $location.search('ar', that.currentYear);
+                $location.search('manad', that.currentMonth + 2);
+                $location.search('dag', null);
+&nbsp;
+                that.updateCalendarContent();
+            };
+&nbsp;
+            $scope.changeToDay = function($element, $attrs, event){
+&nbsp;
+                var clickedDayElement = angular.element(event.target);
+&nbsp;
+                // Only apply click events to this months days
+                <span class="missing-if-branch" title="else path not taken" >E</span>if(!clickedDayElement.hasClass('inactive')) {
+&nbsp;
+                    // Change selected date variables
+                    that.currentDateObj = new Date(that.currentYear, that.currentMonth, $attrs.number);
+&nbsp;
+                    // Url day param
+                    $location.search('dag', $attrs.number);
+&nbsp;
+                    that.selectedMonth = $location.search().manad;
+                    that.selectedDay = $location.search().dag;
+&nbsp;
+                    // Prevent url change
+                    event.preventDefault();
+&nbsp;
+                    // Change bound calendar model data
+                    that.initDateVariables();
+                    that.prepareCalendarDays();
+                    that.addVarsToScope();
+&nbsp;
+                    // Get data for day
+                    that.getDataForDay();
+                }
+            };
+&nbsp;
+            /* Scope methods END */
+&nbsp;
+&nbsp;
+            /* Initialization START */
+&nbsp;
+                that.declareBookingTypeService();
+                that.updateCalendarContent()
+                    .then(function(){
+&nbsp;
+                        that.getDataForDay();
+                    });
+&nbsp;
+            /* Initialization END */
+&nbsp;
+        }])
+        // Directive specific controllers END
+&nbsp;
+        // Directives START
+        .directive('bookingCalendar', ['Booking', function(Booking) {
+            return {
+                restrict: 'E',
+                replace: true,
+                templateUrl: function(element, attr){
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if(attr.bookingType == "booking") {
+                        return 'shared/directives/calendarDirectiveBooking.html';
+                    }
+                    else <span class="cstat-no" title="statement not covered" >if (attr.bookingType == "location-booking") {</span>
+<span class="cstat-no" title="statement not covered" >                        return 'shared/directives/calendarDirectiveLocationBooking.html';</span>
+                    }
+                    else <span class="cstat-no" title="statement not covered" >if (attr.bookingType == "resource-booking") {</span>
+<span class="cstat-no" title="statement not covered" >                        return 'shared/directives/calendarDirectiveResourceBooking.html';</span>
+                    }
+                },
+                scope: true,
+                link: function(){
+&nbsp;
+                },
+                controller: 'BookingCalendarInternalCtrl'
+            };
+        }])
+        .directive('changeMonthButton', function() {
+            return {
+                restrict: 'A',
+                replace: false,
+                scope: false,
+                link: function (scope, element, attr) {
+                    // Prevent select element on double click
+                    element.bind("mousedown", <span class="fstat-no" title="function not covered" >function (e) {</span>
+<span class="cstat-no" title="statement not covered" >                        e.preventDefault();</span>
+                    });
+                },
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
+&nbsp;
+                    if($attrs.direction === 'next') {
+                        $element.bind('click', <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >                            $scope.changeToNextMonth();</span>
+<span class="cstat-no" title="statement not covered" >                            $scope.$digest();</span>
+                        });
+                    }
+                    else <span class="missing-if-branch" title="else path not taken" >E</span>if($attrs.direction === 'prev') {
+                        $element.bind('click', <span class="fstat-no" title="function not covered" >function(){</span>
+<span class="cstat-no" title="statement not covered" >                            $scope.changeToPreviousMonth();</span>
+<span class="cstat-no" title="statement not covered" >                            $scope.$digest();</span>
+                        });
+                    }
+                }]
+            }
+        })
+        .directive('bookingCalendarDay', function() {
+            return {
+                restrict: 'A',
+                replace: false,
+                scope: false,
+                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
+&nbsp;
+                    $element.bind('click', <span class="fstat-no" title="function not covered" >function(event) {</span>
+<span class="cstat-no" title="statement not covered" >                        $scope.changeToDay($element, $attrs, event);</span>
+                    });
+                }]
+            }
+        });
+})();</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Jun 04 2015 12:01:12 GMT+0200 (Västeuropa, sommartid)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

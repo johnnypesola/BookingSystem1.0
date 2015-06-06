@@ -45,6 +45,16 @@ describe('module: bookingSystem.customer', function() {
                     })
                 }
             });
+
+            $provide.factory('CustomerImage', function($q) {
+                return {
+                    upload : jasmine.createSpy('upload').andCallFake(function() {
+
+                        // Generate a promise object for mocked return data.
+                        return TestHelper.fakeHttpResponse({});
+                    })
+                }
+            });
         });
     });
 

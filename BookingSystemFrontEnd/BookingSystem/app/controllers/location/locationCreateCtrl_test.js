@@ -22,7 +22,7 @@ describe('module: bookingSystem.location', function() {
 
     // Mock booking service module
     beforeEach(function () {
-        module(function($provide, $httpBackend) {
+        module(function($provide) {
             $provide.factory('Location', function($q) {
                 return {
                     get : jasmine.createSpy('get').andCallFake(function() {
@@ -38,7 +38,7 @@ describe('module: bookingSystem.location', function() {
                     save : jasmine.createSpy('save').andCallFake(function() {
 
                         // Generate a promise object for mocked return data.
-                        return TestHelper.addPromiseToObject({}, $q);
+                        return TestHelper.addPromiseToObject({'LocationId' : 3}, $q);
                     }),
                     delete : jasmine.createSpy('delete').andCallFake(function() {
 
@@ -103,33 +103,32 @@ describe('module: bookingSystem.location', function() {
                 }
             });
 
-            /*
+
             $provide.factory('LocationImage', function($q) {
                 return {
                     upload : jasmine.createSpy('upload').andCallFake(function() {
 
                         // Generate a promise object for mocked return data.
-                        return TestHelper.addPromiseToObject({}, $q);
+                        return TestHelper.fakeHttpResponse({});
                     })
                 }
             });
-            */
+
         });
     });
 
     // Shared testing function. avoid DRY
 
     // Init root test variables
-    beforeEach(inject(function($controller, _Location_, _$location_, $rootScope, $httpBackend) {
+    beforeEach(inject(function($controller, _Location_, _$location_, $rootScope, _$httpBackend_) {
         $location = _$location_;
         $scope = $rootScope;
-        $httpBackend = $httpBackend;
 
         LocationCreateCtrl = $controller('LocationCreateCtrl', {
             $scope: $scope,
             Location: _Location_,
             $rootScope: $rootScope,
-            $httpBackend: $httpBackend
+            $httpBackend: _$httpBackend_
         });
 
     }));
@@ -138,11 +137,11 @@ describe('module: bookingSystem.location', function() {
     // Actual tests
     describe('LocationCreateCtrl controller', function(){
 
-        it('should call history.back() and create a FlashMessage after successful Location creation', inject(function($rootScope, $controller, _Location_, $httpBackend) {
+        it('should call history.back() and create a FlashMessage after successful Location creation', inject(function($rootScope, $controller, _Location_) {
 
             // Expect image upload
             /*
-            $httpBackend.expectPOST('/foo/bar', {
+            $httpBackend.expectPOST('/api/Location/Image', {
                 "user": "testUser",
                 "action": "testAction",
                 "object": {}
@@ -201,7 +200,7 @@ describe('module: bookingSystem.location', function() {
             expect($rootScope.FlashMessage.message).toEqual('Det finns redan en plats som heter "Test". Två platser kan inte heta lika.');
 
             // Check that redirection was NOT called
-            expect(history.back).toHaveBeenCalled();
+            expect(history.back).not.toHaveBeenCalled();
         }));
 
         it('should create a FlashMessage after unsuccessful Location creation', inject(function($rootScope, $controller, _Location_, $q) {
@@ -231,7 +230,7 @@ describe('module: bookingSystem.location', function() {
             expect($rootScope.FlashMessage.message).toEqual('Ett oväntat fel uppstod när platsen skulle sparas');
 
             // Check that redirection was NOT called
-            expect(history.back).toHaveBeenCalled();
+            expect(history.back).not.toHaveBeenCalled();
         }));
 
         // Tests END

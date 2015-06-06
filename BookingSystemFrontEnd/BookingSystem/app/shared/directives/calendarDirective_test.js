@@ -31,8 +31,6 @@ describe('directive: calendarDirective', function() {
     beforeEach(function () {
         module(function($provide) {
 
-            $provide.constant('API_URL', "http://localhost:6796/api/");
-
             $provide.factory('Booking', function($q) {
                 return {
                     get: jasmine.createSpy('get').andCallFake(function () {
@@ -63,6 +61,8 @@ describe('directive: calendarDirective', function() {
                     })
                 }
             });
+
+            $provide.constant('API_URL', "http://localhost:6796/api/");
         });
     });
 
@@ -191,6 +191,9 @@ describe('directive: calendarDirective', function() {
 
     it('should have correct scope values after changeToDay() method', function() {
 
+        // Expect booking type to be of correct type. (given in element attribute)
+        expect(calendarController.bookingType).toEqual("booking");
+
         // Mock event
         var event = $scope.$broadcast("testEvent");
 
@@ -198,11 +201,11 @@ describe('directive: calendarDirective', function() {
         $scope.changeToDay(dayElement, {number: 10}, event);
 
         // Expect bookings to contain right data
-        expect($scope.datedata.bookings).toEqual(TestHelper.JSON.queryDayBookings);
+        expect($scope.datedata.bookings).toEqual(TestHelper.JSON.queryMoreForPeriodBookings);
 
         // Expect certain date variables to be right
         expect(calendarController.currentDateObj).toEqual(new Date(calendarController.currentYear, calendarController.currentMonth, 10));
-        expect(calendarController.selectedMonth).toEqual(calendarController.currentDateObj.getMonth());
+        expect(+calendarController.selectedMonth).toEqual(calendarController.currentDateObj.getMonth()+1);
         expect(calendarController.selectedDay).toEqual(calendarController.currentDateObj.getDate());
     });
 });
