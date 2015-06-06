@@ -130,6 +130,7 @@
             that.getEmptyBookings()
 
                 .then(function() {
+
                     that.getBookingsForToday()
 
                         .then(function(){

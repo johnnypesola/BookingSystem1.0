@@ -104,10 +104,10 @@ describe('directive: calendarDirective', function() {
 
     }));
 
-
+    /*
     var testDateVars = function() {
 
-        /*
+
         expect(calendarController.currentYear).toEqual(testCurrentDateObj.getFullYear());
 
         expect(calendarController.currentMonth).toEqual(testCurrentDateObj.getMonth());
@@ -122,7 +122,7 @@ describe('directive: calendarDirective', function() {
 
         expect(calendarController.currentMonthEndWeekDay).toEqual(calendarController.currentMonthEndDateObj.getDay() === 0 ? 7 : calendarController.currentMonthEndDateObj.getDay());
         expect(calendarController.prevMonthNumberOfDays).toEqual(new Date(calendarController.currentYear, calendarController.currentMonth, 0).getDate());
-        */
+
     };
 
     // Tests START
@@ -140,6 +140,7 @@ describe('directive: calendarDirective', function() {
         testDateVars();
     });
 
+
     it('should have correct (date) variables after changeToPreviousMonth() method', function() {
         $scope.changeToPreviousMonth();
 
@@ -149,6 +150,7 @@ describe('directive: calendarDirective', function() {
         // Test date values
         testDateVars();
     });
+     */
 
     it('should have correct booking-data after getBookingsForMonth()', function(){
 

@@ -268,53 +268,8 @@
         /* Initialization END */
     }])
 
-    .controller('BookingListEmptyCtrl', ["$scope", "Booking", "$rootScope", "$location", function($scope, Booking, $rootScope, $location){
-        var that = this;
-        var currentDateObj;
-
-        /* Private methods START */
-
-            // Get bookings
-            that.getBookings = function(){
-
-                // Store bookings in private variable
-                that.bookings = Booking.queryEmpty();
-
-                // Success
-                that.bookings.$promise.then(function(){
-
-                    $scope.noItemsFound = !that.bookings.length;
-                });
-
-                // In case bookings cannot be fetched, display an error to user.
-                that.bookings.$promise.catch(function(){
-
-                    $rootScope.FlashMessage = {
-                        type: 'error',
-                        message: 'Bokningarna kunde inte hämtas, var god försök igen.'
-                    };
-                });
-
-                // Display bookings to user
-                $scope.bookings = that.bookings;
-            };
-
-        /* Private methods END */
-
-        /* Public methods START */
-
-        /* Public methods END */
-
-        /* Initialization START */
-
-            that.getBookings();
-
-        /* Initialization END */
-    }])
-
     .controller('BookingCreateCtrl', ["$scope", "Booking", "$rootScope", "Customer", "BookingType", "Redirect", function($scope, Booking, $rootScope, Customer, BookingType, Redirect){
         var that = this;
-        var currentDateObj;
 
         /* Private methods START */
 
@@ -417,7 +372,6 @@
 
     .controller('BookingEditCtrl', ["$scope", "Booking", "$rootScope", "Customer", "BookingType", "$q", "$routeParams", function($scope, Booking, $rootScope, Customer, BookingType, $q, $routeParams){
         var that = this;
-        var currentDateObj;
 
         /* Private methods START */
 
@@ -527,7 +481,17 @@
                             };
                         }
 
-                        // If there was a problem with the in-data
+                        // If the entry was not found
+                        else if (response.status == 404) {
+                            $rootScope.FlashMessage = {
+                                type: 'error',
+                                message: 'Bokningstillfället "' + $scope.booking.Name + '" existerar inte längre. Hann kanske någon radera den?'
+                            };
+
+                            history.back();
+                        }
+
+                        // If there was a unknown problem
                         else {
                             $rootScope.FlashMessage = {
                                 type: 'error',
@@ -554,7 +518,6 @@
 
     .controller('BookingSearchCtrl', ["$scope", "Booking", "$rootScope", function($scope, Booking, $rootScope){
         var that = this;
-        var currentDateObj;
 
         /* Private methods START */
 

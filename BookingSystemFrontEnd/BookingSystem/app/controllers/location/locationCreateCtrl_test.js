@@ -139,16 +139,6 @@ describe('module: bookingSystem.location', function() {
 
         it('should call history.back() and create a FlashMessage after successful Location creation', inject(function($rootScope, $controller, _Location_) {
 
-            // Expect image upload
-            /*
-            $httpBackend.expectPOST('/api/Location/Image', {
-                "user": "testUser",
-                "action": "testAction",
-                "object": {}
-            }, function(headers){
-                return headers.Authorization === 'Basic YWxhZGRpbjpvcGVuIHNlc2FtZQ==';
-            }).respond({});
-            */
             // Spy on existing controller method
             spyOn(history, 'back');
 
