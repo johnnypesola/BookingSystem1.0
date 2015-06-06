@@ -125,7 +125,7 @@ describe('module: bookingSystem.startPage', function() {
 
             // Locations check
             expect($scope.locationsFreeForToday).toEqual(TestHelper.JSON.queryLocation);
-            
+
         }));
 
         // Tests END
