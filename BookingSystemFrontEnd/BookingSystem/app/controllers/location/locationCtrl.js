@@ -787,10 +787,10 @@
 
         /* Initialization START */
 
-            var locations = Location.query();
+            that.locations = Location.query();
 
             // In case location cannot be fetched, display an error to user.
-            locations.$promise.catch(function(){
+            that.locations.$promise.catch(function(){
 
                 $rootScope.FlashMessage = {
                     type: 'error',
@@ -800,9 +800,6 @@
 
             // When locations have been fetched
             .then(function(){
-
-                // Add locations to private scope
-                that.locations = locations;
 
                 // Init map variables
                 that.initMapVariables();

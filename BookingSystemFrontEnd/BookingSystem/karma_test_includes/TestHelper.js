@@ -110,3 +110,19 @@
         TestHelper.JSON.getResource = {"ResourceId":4,"Name":"Testresursen","Count":10,"BookingPricePerHour":10.00,"MinutesMarginAfterBooking":0,"WeekEndCount":10,"TotalBookings":0,"TotalBookingValue":0.0};
         TestHelper.JSON.queryResource = [{"ResourceId":4,"Name":"Testresursen","Count":10,"BookingPricePerHour":10.00,"MinutesMarginAfterBooking":0,"WeekEndCount":10,"TotalBookings":0,"TotalBookingValue":0.0},{"ResourceId":5,"Name":"Testresursen5","Count":10,"BookingPricePerHour":10.00,"MinutesMarginAfterBooking":0,"WeekEndCount":10,"TotalBookings":0,"TotalBookingValue":0.0},{"ResourceId":2,"Name":"Vaktmästare","Count":2,"BookingPricePerHour":1000.00,"MinutesMarginAfterBooking":20,"WeekEndCount":0,"TotalBookings":0,"TotalBookingValue":0.0},{"ResourceId":3,"Name":"Whiteboard","Count":10,"BookingPricePerHour":100.00,"MinutesMarginAfterBooking":15,"WeekEndCount":0,"TotalBookings":1,"TotalBookingValue":0.0}];
 
+        // Mock menu
+        TestHelper.JSON.MockedMenu = [
+            {
+                title: "Start",
+                submenus: [
+                    {
+                        title: "Startsidan",
+                        location: "#/start"
+                    }
+                ]
+            },
+            {
+                title: "Kunder",
+                location: "#/kunder/lista"
+            }
+        ];

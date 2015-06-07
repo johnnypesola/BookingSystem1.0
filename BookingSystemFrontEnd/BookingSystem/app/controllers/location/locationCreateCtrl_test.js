@@ -13,7 +13,7 @@ describe('module: bookingSystem.location', function() {
     beforeEach(module('uiGmapgoogle-maps'));
 
     // Root variables
-    var LocationListCtrl, LocationCreateCtrl, LocationEditCtrl;
+    var LocationListCtrl, LocationCreateCtrl;
     var testCurrentDateObj;
     var $scope;
     var $location;
@@ -221,6 +221,44 @@ describe('module: bookingSystem.location', function() {
 
             // Check that redirection was NOT called
             expect(history.back).not.toHaveBeenCalled();
+        }));
+
+        it('should contain correct map variables moveMarkerOnClick() method', inject(function($rootScope, $controller, _Location_, Redirect, $routeParams) {
+
+            var args = [];
+
+            // Mock route parameter variable
+            $routeParams.locationId = 4;
+
+            $scope.$digest();
+
+            // Exec preparing methods
+            LocationCreateCtrl.initMapVariables();
+
+            // Construct arguments for moveMarkerOnClick method
+            args[0] = {
+                latLng :
+                {
+                    lat: function(){return 57},
+                    lng: function(){return 12}
+                }
+            };
+
+            // Exec tested method
+            LocationCreateCtrl.moveMarkerOnClick('not important', 'not important', args);
+
+            $scope.$digest();
+
+            // Assert new values
+            expect($scope.location.GPSLatitude).toEqual(57);
+            expect($scope.location.GPSLongitude).toEqual(12);
+
+            expect($scope.markers[0].coords).toEqual(
+                {
+                    latitude: 57,
+                    longitude: 12
+                }
+            );
         }));
 
         // Tests END

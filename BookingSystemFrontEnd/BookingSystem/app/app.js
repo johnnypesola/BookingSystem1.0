@@ -39,7 +39,7 @@
 
 
     BookingSystem.config(["$routeProvider", function($routeProvider) {
-
+        
         // Declare basic routes
         $routeProvider.
             // Startpage

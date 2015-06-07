@@ -15,7 +15,7 @@
         // Dependencies
         [])
 
-        .directive('pageHeaderButtons', ["$route", "$routeParams", "$location", function($route, $routeParams, $location) {
+        .directive('pageHeaderButtons', ["$location", function($location) {
             return {
                 restrict: 'E',
                 replace: true,
@@ -28,6 +28,12 @@
                     showSearch: '=showSearch'
                 },
                 controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
+
+                    var that = this;
+
+                    that.testmethod = function(){};
+
+                    $scope.anotherTest = function(){};
 
                     /* Initialization START */
 
