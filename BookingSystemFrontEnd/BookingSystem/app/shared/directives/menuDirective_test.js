@@ -2,7 +2,7 @@
  * Created by jopes on 2015-04-26.
  */
 
-describe('directive: commonDirectives', function() {
+describe('directive: menuDirective', function() {
 
     // Load app
     beforeEach(module('bookingSystem'));

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html lang="en" ng-app="bookingSystem" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html lang="en" ng-app="bookingSystem" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html lang="en" ng-app="bookingSystem" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html lang="en" ng-app="bookingSystem" class="no-js"> <!--<![endif]-->
+<!--[if lt IE 7]>      <html lang="en" data-ng-app="bookingSystem" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" data-ng-app="bookingSystem" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" data-ng-app="bookingSystem" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en" data-ng-app="bookingSystem" class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,88 +11,83 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="bower_components/html5-boilerplate/css/normalize.css">
         <link rel="stylesheet" href="bower_components/html5-boilerplate/css/main.css">
-        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="css/style.min.css">
         <link rel="icon" type="image/png" href="img/icons/favicon32.png" sizes="32x32">
         <script src="bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js"></script>
 
         <link href='http://fonts.googleapis.com/css?family=Oxygen' rel='stylesheet' type='text/css'>
     </head>
-    <body ng-cloak>
+    <body data-ng-cloak>
 
       <!--[if lt IE 7]>
           <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
 
-      <header ng-controller="HeaderCtrl">
+      <header data-ng-controller="HeaderCtrl">
 
           <div class="back-color-container">
               <h1>Bokningssystemet</h1>
 
               <a class="header-button-user" href=""></a>
 
-              <nav class="main-menu">
+              <div class="main-menu">
                   <main-menu
                       menu-items="menus"
                       page-flaps="pageFlaps"
                   ></main-menu>
-              </nav>
+              </div>
           </div>
 
-          <pre style="text-align: left">{{selectedMainMenu | json}}</pre>
-
-          <section class="flash-message-container" ng-controller="FlashMessageCtrl" ng-show="messageVisible">
+          <div class="flash-message-container" data-ng-controller="FlashMessageCtrl" data-ng-show="messageVisible">
               <div class="{{messageClass}}">
                   {{messageText}}
-                  <a href="" ng-click="hideMessage()">&#215;</a>
+                  <a href="" data-ng-click="hideMessage()">&#215;</a>
               </div>
-          </section>
+          </div>
 
           <nav class="flap-container">
               <ul>
-                  <li ng-repeat="flap in pageFlaps" ng-class="{active: flap.isFlapActive}">
-                      <a href="{{flap.location}}">{{flap.title}}</a>
+                  <li data-ng-repeat="flap in pageFlaps" data-ng-class="{active: flap.isFlapActive}">
+                      <a data-ng-href="{{flap.location}}">{{flap.title}}</a>
                   </li>
               </ul>
           </nav>
 
       </header>
 
-      <section class="main-content-container" ng-view>
+      <section class="main-content-container" data-ng-view>
 
       </section>
 
 
-
-      <!-- <div>Angular seed app: v<span app-version></span></div> -->
-
       <!-- In production use:
       <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
       -->
-        <script src="bower_components/angular/angular.js"></script>
-        <script src="bower_components/angular-route/angular-route.js"></script>
-        <script src="bower_components/angular-resource/angular-resource.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script>
+        <script src="bower_components/angular-route/angular-route.min.js"></script>
+        <script src="bower_components/angular-resource/angular-resource.min.js"></script>
 
         <!-- Start view -->
-        <script src="controllers/start/startCtrl.js"></script>
+        <script src="controllers/start/startCtrl.min.js"></script>
 
         <!-- Booking -->
-        <script src="controllers/booking/bookingCtrl.js"></script>
-        <script src="shared/services/bookingService.js"></script>
+        <script src="controllers/booking/bookingCtrl.min.js"></script>
+        <script src="shared/services/bookingService.min.js"></script>
 
         <!-- BookingType -->
-        <script src="controllers/booking-type/bookingTypeCtrl.js"></script>
+        <script src="controllers/booking-type/bookingTypeCtrl.min.js"></script>
 
         <!-- Furnituring -->
-        <script src="controllers/furnituring/furnituringCtrl.js"></script>
-        <script src="shared/services/furnituringService.js"></script>
+        <script src="controllers/furnituring/furnituringCtrl.min.js"></script>
+        <script src="shared/services/furnituringService.min.js"></script>
 
         <!-- Location -->
-        <script src="controllers/location/locationCtrl.js"></script>
-        <script src="shared/services/locationService.js"></script>
+        <script src="controllers/location/locationCtrl.min.js"></script>
+        <script src="shared/services/locationService.min.js"></script>
 
         <!-- LocationBooking -->
-        <script src="controllers/location-booking/locationBookingCtrl.js"></script>
-        <script src="shared/services/locationBookingService.js"></script>
+        <script src="controllers/location-booking/locationBookingCtrl.min.js"></script>
+        <script src="shared/services/locationBookingService.min.js"></script>
 
         <!-- Resource -->
         <script src="controllers/resource/resourceCtrl.min.js"></script>
@@ -103,17 +98,17 @@
         <script src="shared/services/resourceBookingService.min.js"></script>
 
         <!-- Customer -->
-        <script src="controllers/customer/customerCtrl.js"></script>
-        <script src="shared/services/customerService.js"></script>
+        <script src="controllers/customer/customerCtrl.min.js"></script>
+        <script src="shared/services/customerService.min.js"></script>
 
         <!-- Shared -->
-        <script src="shared/filters/commonFilters.js"></script>
-        <script src="shared/directives/commonDirectives.js"></script>
-        <script src="shared/directives/calendarDirective.js"></script>
-        <script src="shared/directives/imageUploaderDirective.js"></script>
-        <script src="shared/controllers/headerCtrl.js"></script>
-        <script src="shared/services/commonServices.js"></script>
-        <script src="shared/directives/menuDirective.js"></script>
+        <script src="shared/filters/commonFilters.min.js"></script>
+        <script src="shared/directives/commonDirectives.min.js"></script>
+        <script src="shared/directives/calendarDirective.min.js"></script>
+        <script src="shared/directives/imageUploaderDirective.min.js"></script>
+        <script src="shared/controllers/headerCtrl.min.js"></script>
+        <script src="shared/services/commonServices.min.js"></script>
+        <script src="shared/directives/menuDirective.min.js"></script>
 
         <script src="shared/services/imageResizeService.js"></script>
 
@@ -126,7 +121,7 @@
         <script src="lib/moment-with-locales.min.js"></script>
 
         <!-- Other -->
-        <script src="lib/extensions.js"></script>
+        <script src="lib/extensions.min.js"></script>
 
         <!-- Main app -->
         <script src="app.min.js"></script>

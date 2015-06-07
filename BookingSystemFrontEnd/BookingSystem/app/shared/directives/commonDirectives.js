@@ -109,11 +109,11 @@
 
                             if(scope.model > scope.maxPeopleOptions){
                                 scope.isErrorVisible = true;
-                                ctrl.$setValidity('dateTimeOutOfRange', false);
+                                ctrl.$setValidity('maxPeopleOutOfRange', false);
                             }
                             else {
                                 scope.isErrorVisible = false;
-                                ctrl.$setValidity('dateTimeOutOfRange', true);
+                                ctrl.$setValidity('maxPeopleOutOfRange', true);
                             }
                         });
 
@@ -121,21 +121,18 @@
 
                             if(scope.model > scope.maxPeopleOptions){
                                 scope.isErrorVisible = true;
-                                ctrl.$setValidity('dateTimeOutOfRange', false);
+                                ctrl.$setValidity('maxPeopleOutOfRange', false);
                             }
                             else {
                                 scope.isErrorVisible = false;
-                                ctrl.$setValidity('dateTimeOutOfRange', true);
+                                ctrl.$setValidity('maxPeopleOutOfRange', true);
                             }
                         });
 
                         that.generateOptions();
 
                     /* Initialization END */
-                },
-                controller: ["$scope", "$element", "$attrs", function($scope, $element, $attrs) {
-
-                }]
+                }
             };
         }])
 
@@ -195,7 +192,7 @@
             };
         }])
 
-        .directive('itemActionButtons', ["$route", "$routeParams", "$location", function($route, $routeParams, $location) {
+        .directive('itemActionButtons', ["$location", function($location) {
             return {
                 restrict: 'A',
                 replace: true,
@@ -227,6 +224,7 @@
                             $scope.renderDeleteIcon = $scope.renderDeleteIcon || true;
                             $scope.renderEditIcon = $scope.renderDeleteIcon || true;
                             $scope.renderShowIcon = $scope.renderDeleteIcon || true;
+                            $scope.renderBookIcon = $scope.renderBookIcon || false;
                         };
 
                         that.bindEvents = function(){
@@ -312,7 +310,7 @@
             }
         })
 
-        .directive('addToContentButton', ["$route", "$routeParams", "$location", function($route, $routeParams, $location) {
+        .directive('addToContentButton', ["$location", function($location) {
             return {
                 restrict: 'A',
                 replace: true,

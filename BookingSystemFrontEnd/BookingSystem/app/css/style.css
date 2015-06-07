@@ -202,27 +202,27 @@ header {
         background-color: #AAAAAA;
     }
 
-    header nav.main-menu {
+    header div.main-menu {
         display: inline-block;
         color: #FFFFFF;
         margin: 0;
     }
 
-        header nav.main-menu ul {
+        header div.main-menu ul {
             margin: 0 0 0 0;
             padding: 0;
             display: block;
             /*border-left: 1px solid #263145;*/
             /*border-left: 1px solid #666666;*/
         }
-            header nav.main-menu ul li {
+            header div.main-menu ul li {
                 display: inline-block;
                 border-radius: 2px;
                 margin: 0 2px;
                 position: relative;
             }
 
-            header nav.main-menu ul li a {
+            header div.main-menu ul li a {
                 text-decoration: none;
                 color: #FFFFFF;
                 display: inline-block;
@@ -234,29 +234,29 @@ header {
                 background-position: right 7px top 14px;
             }
 
-                header nav.main-menu ul li a.no-sub-menus {
+                header div.main-menu ul li a.no-sub-menus {
                     background: none;
                     padding-right: 10px;
                 }
 
-            header nav.main-menu ul li.active {
+            header div.main-menu ul li.active {
                 background-color: #FFFFFF;
                 text-shadow: none;
             }
 
-            header nav.main-menu ul li a:hover  {
+            header div.main-menu ul li a:hover  {
                 cursor: pointer;
                 background-color: #FFFFFF;
                 color: #F08362 !important;
                 border-radius: 4px;
             }
 
-            header nav.main-menu ul li.active a {
+            header div.main-menu ul li.active a {
                 color: #73A0B5;
             }
 
 
-            header nav.main-menu ul.overlay-sub-menu {
+            header div.main-menu ul.overlay-sub-menu {
                 padding: 5px 10px 0 5px;
                 position: absolute;
                 background: #FFFFFF;
@@ -274,13 +274,13 @@ header {
                 box-shadow:         0 14px 14px 0 rgba(50, 50, 50, 0.3);
             }
 
-                header nav.main-menu ul.overlay-sub-menu li {
+                header div.main-menu ul.overlay-sub-menu li {
                     display: block;
                     text-align: left;
                     border-top: 1px solid #EEEEEE;
                 }
 
-                header nav.main-menu ul.overlay-sub-menu li a {
+                header div.main-menu ul.overlay-sub-menu li a {
                     color: #666666;
                     padding: 10px 11px 10px 5px;
                     background: none;
@@ -349,11 +349,11 @@ header {
                         z-index: 1;
                     }
 
-section.flash-message-container {
+    div.flash-message-container {
 
-}
+    }
 
-    section.flash-message-container a {
+        div.flash-message-container a {
         border-radius: 2px;
         background: rgba(255,255,255,0.5);
         text-decoration: none;
@@ -365,11 +365,11 @@ section.flash-message-container {
         text-shadow: none;
     }
 
-        section.flash-message-container a:hover {
+        div.flash-message-container a:hover {
             background: #FFD77F;
         }
 
-    section.flash-message-container div {
+    div.flash-message-container div {
         position: relative;
 
         padding: 10px 40px 10px 10px;
@@ -379,15 +379,15 @@ section.flash-message-container {
         color: #FFFFFF;
     }
 
-    section.flash-message-container div.error {
+    div.flash-message-container div.error {
         background: #F08362;
     }
 
-    section.flash-message-container div.success {
+    div.flash-message-container div.success {
         background: #5BA87A;
     }
 
-    section.flash-message-container div.warning {
+    div.flash-message-container div.warning {
         background: #F7BC6D;
     }
 
@@ -424,8 +424,6 @@ section.content-container {
         padding: 0;
         color: #73A0B5;
         line-height: 34px;
-        /*color: #E9A642;*/
-        /*border-bottom: 1px solid #EEEEEE;*/
     }
 
     section.content-container .small-container {
@@ -438,7 +436,6 @@ section.content-container {
         font-size: 14px;
         background: #FFFFFF;
         padding: 10px;
-        /*width: 400px;*/
 
         border-radius: 2px;
 
@@ -746,8 +743,6 @@ section.content-container {
     section.content-container .calendar-container,
     section.content-container .list-container {
         position: relative;
-        /*border: 1px solid #E0E0E0;*/
-        /*float: left;*/
         text-align: center;
     }
 
