@@ -124,7 +124,7 @@ describe('module: bookingSystem.location', function() {
 
             // Check that FlashMessage exists
             expect($rootScope.FlashMessage.message).toEqual('Platsen kan inte raderas eftersom det finns' +
-            ' en lokalbokning eller en lokalplats som refererar till platsen');
+            ' en lokalbokning eller en annan lokal/plats som refererar till platsen');
 
             // Check that redirection was NOT called
             expect(history.back).toHaveBeenCalled();

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Controllers\FurnituringController.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using BookingSystem.Models;
+using System.Web.Http.Cors;
+using System.Data;
+
+namespace BookingSystem.Controllers
+{
+    [EnableCors(origins: &quot;*&quot;, headers: &quot;*&quot;, methods: &quot;*&quot;)]
+    public class FurnituringController : ApiController
+    {
+        // Set up Service.
+        FurnituringService furnituringService = new FurnituringService();  
+
+        // GET: api/Furnituring
+        [Route(&quot;api/Furnituring&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get()
+        {
+            try
+            {
+                IEnumerable&lt;Furnituring&gt; furniturings = furnituringService.GetFurniturings();
+
+                if (furniturings == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(furniturings);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // GET: api/Furnituring/5
+        [Route(&quot;api/Furnituring/{FurnituringId:int}&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get(int FurnituringId)
+        {
+            try
+            {
+                Furnituring furnituring = furnituringService.GetFurnituring(FurnituringId);
+                if (furnituring == null)
+                {
+                    return NotFound();
+                }
+                return Ok(furnituring);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+            
+        }
+
+        // POST: api/Furnituring
+        [Route(&quot;api/Furnituring&quot;)]
+        [AcceptVerbs(&quot;POST&quot;)]
+        public IHttpActionResult Post(Furnituring furnituring)
+        {
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Try to save furnituring
+            try
+            {
+                furnituringService.SaveFurnituring(furnituring);
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DuplicateNameException)
+            {
+                return Conflict();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            // Respond that the booking was created and redirect
+            return Ok(furnituring); //CreatedAtRoute(&quot;DefaultApi&quot;, new { id = furnituring.FurnituringId }, furnituring);
+        }
+
+        // DELETE: api/Furnituring/5
+        [Route(&quot;api/Furnituring/{FurnituringId:int}&quot;)]
+        [AcceptVerbs(&quot;DELETE&quot;)]
+        public IHttpActionResult Delete(int FurnituringId)
+        {
+            try
+            {
+                furnituringService.FurnituringDelete(FurnituringId);
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[30,21,30,39,0],[35,13,35,18,0],[37,17,37,46,0],[51,21,51,39,0],[55,13,55,18,0],[57,17,57,46,0],[70,17,70,47,0],[78,13,78,51,0],[80,17,80,35,0],[86,13,86,48,0],[88,17,88,54,0],[90,13,90,18,0],[92,17,92,46,0],[108,13,108,36,0],[110,17,110,37,0],[112,13,112,51,0],[114,17,114,35,0],[120,13,120,18,0],[122,17,122,46,0],[26,17,26,94,1],[28,17,28,42,1],[33,17,33,41,1],[39,9,39,10,1],[48,17,48,92,1],[49,17,49,41,1],[53,17,53,40,1],[60,9,60,10,1],[68,13,68,37,1],[76,17,76,65,1],[82,13,82,43,1],[84,17,84,35,1],[96,13,96,36,1],[97,9,97,10,1],[106,17,106,69,1],[116,13,116,48,1],[118,17,118,54,1],[125,13,125,25,1],[126,9,126,10,1],[17,9,17,74,1]]);
+    </script>
+  </body>
+</html>

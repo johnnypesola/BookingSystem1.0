@@ -737,7 +737,7 @@ section.content-container {
 
     section.content-container .list-table td.date {
         font-size: 11px;
-        width: 55px;
+        width: 58px;
     }
 
     section.content-container .calendar-container,
@@ -871,7 +871,7 @@ section.content-container {
 
     section.content-container .page-header-icons-container {
         position: absolute;
-        top: 12px;
+        top: 15px;
         right: 15px;
 
         border-radius: 5px;

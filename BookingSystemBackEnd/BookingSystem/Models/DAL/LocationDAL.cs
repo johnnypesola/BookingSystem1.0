@@ -27,8 +27,12 @@ namespace BookingSystem.Models
                     // Try to delete location from database.
                     cmd.ExecuteNonQuery();
                 }
-                catch
+                catch (Exception exception)
                 {
+                    if (exception.Message == "Foreign key references exists")
+                    {
+                        throw new ApprovedException(exception.Message);
+                    }
                     // Throw exception
                     throw new ApplicationException(DAL_ERROR_MSG);
                 }

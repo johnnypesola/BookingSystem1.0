@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\BookingService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class BookingService : IBookingService
+    {
+
+        // Fields
+        private BookingDAL _bookingDAL;
+        private SharedDAL _sharedDAL;
+
+        // Properties
+        private BookingDAL BookingDAL
+        {
+            get
+            {
+                return _bookingDAL ?? (_bookingDAL = new BookingDAL());
+            }
+        }
+        private SharedDAL SharedDAL
+        {
+            get
+            {
+                return _sharedDAL ?? (_sharedDAL = new SharedDAL());
+            }
+        }
+
+        // Methods
+        public void Delete(Booking booking)
+        {
+            Delete(booking.BookingId);
+        }
+
+        public void Delete(int bookingId)
+        {
+            if (bookingId &lt; 0)
+            {
+                throw new ApplicationException(&quot;Ogiltigt boknings-id p&#229;tr&#228;ffades vid borttagning.&quot;);
+            }
+
+            // Check that the booking exists before deletion
+            Booking booking = BookingDAL.GetBookingById(bookingId);
+
+            // If there is no booking
+            if (booking == null)
+            {
+                throw new ApplicationException(&quot;Bokningen &#228;r redan borttagen.&quot;);
+            }
+
+            // Delete booking
+            BookingDAL.DeleteBooking(bookingId);
+
+        }
+
+        public Booking Get(int bookingId)
+        {
+            if (bookingId &lt; 0)
+            {
+                throw new ApplicationException(&quot;Ogiltigt boknings-ID p&#229;tr&#228;ffades vid h&#228;mtning.&quot;);
+            }
+
+            return BookingDAL.GetBookingById(bookingId);
+        }
+
+        public IEnumerable&lt;Booking&gt; Get()
+        {
+            return BookingDAL.GetBookings();
+        }
+
+        public IQueryable&lt;Booking&gt; GetForPeriod(DateTime startTime, DateTime endTime)
+        {
+            return BookingDAL.GetBookingsForPeriod(startTime, endTime).AsQueryable();
+        }
+
+        public IEnumerable&lt;Booking&gt; GetEmpty()
+        {
+            return BookingDAL.GetEmptyBookings();
+        }
+
+        public int GetEmptyBookingsCount()
+        {
+            return BookingDAL.GetEmptyBookingsCount();
+        }
+
+        public IEnumerable&lt;Booking&gt; SearchFor(SearchContainer searchContainer)
+        {
+            return BookingDAL.SearchFor(searchContainer);
+        }
+
+        public IEnumerable&lt;CalendarBookingDay&gt; CheckDaysForPeriod(DateTime startTime, DateTime endTime)
+        {
+            return SharedDAL.CheckDayBookingsForPeriod(startTime, endTime, &quot;booking&quot;);
+        }
+
+        public IQueryable&lt;Booking&gt; GetPageWise(string sortColumns, int maximumRows, int startRowIndex)
+        {
+            // Calculate correct startpageIndex
+            int startPageIndex = (startRowIndex / maximumRows) + 1;
+
+            // Sort columns
+            string sortColumnNames = (sortColumns != null ? sortColumns.Split(&#39;,&#39;)[0] : &quot;&quot;);
+
+            // Get bookings from DAL
+            return BookingDAL.GetBookingsPageWise(sortColumnNames, maximumRows, startPageIndex).AsQueryable();
+        }
+
+        public void Save(Booking booking)
+        {
+            // Preparare validation return data
+            ICollection&lt;ValidationResult&gt; validationResults;
+
+            // Try to validate given data
+            if (booking.Validate(out validationResults))
+            {
+                // If a new booking should be created
+                if (booking.BookingId == 0)
+                {
+                    BookingDAL.InsertBooking(booking);
+                }
+                // Existing booking should be updated
+                else
+                {
+                    // Check that the booking exists before update
+                    if (BookingDAL.GetBookingById(booking.BookingId) == null)
+                    {
+                        throw new ApplicationException(&quot;Bokningen som skulle uppdateras &#228;r tyv&#228;rr borttagen.&quot;);
+                    }
+
+                    // Update booking
+                    BookingDAL.UpdateBooking(booking);
+                }
+            }
+            // Validation failed
+            else
+            {
+                // Create exception
+                ApplicationException exception = new ApplicationException(&quot;Bokningsobjektet inneh&#246;ll felaktiga v&#228;rden. Var god f&#246;rs&#246;k igen.&quot;);
+
+                // Add validation data to exception.
+                exception.Data.Add(&quot;ValidationResults&quot;, validationResults);
+
+                throw exception;
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[35,13,35,39,0],[36,9,36,10,0],[42,17,42,101,0],[51,17,51,81,0],[63,17,63,98,0],[71,13,71,45,0],[81,13,81,50,0],[102,13,102,68,0],[105,13,105,93,0],[108,13,108,111,0],[130,25,130,112,0],[141,17,141,143,0],[144,17,144,76,0],[146,17,146,33,0],[21,17,21,72,1],[28,17,28,69,1],[40,13,40,31,1],[46,13,46,68,1],[49,13,49,33,1],[55,13,55,49,1],[57,9,57,10,1],[61,13,61,31,1],[66,13,66,57,1],[76,13,76,86,1],[86,13,86,55,1],[91,13,91,58,1],[96,13,96,87,1],[117,13,117,57,1],[120,17,120,44,1],[122,21,122,55,1],[128,21,128,78,1],[134,21,134,55,1]]);
+    </script>
+  </body>
+</html>

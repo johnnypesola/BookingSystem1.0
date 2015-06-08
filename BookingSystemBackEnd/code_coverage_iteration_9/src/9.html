@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Controllers\BookingTypeController.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using BookingSystem.Models;
+using System.Web.Http.Cors;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Web;
+using Newtonsoft.Json.Linq;
+
+namespace BookingSystem.Controllers
+{
+    [EnableCors(origins: &quot;*&quot;, headers: &quot;*&quot;, methods: &quot;*&quot;)]
+    public class BookingTypeController : ApiController
+    {
+
+        // Set up Service.
+        BookingTypeService bookingTypeService = new BookingTypeService();
+
+        // GET: api/BookingType
+        [Route(&quot;api/BookingType&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get()
+        {
+            try
+            {
+                IEnumerable&lt;BookingType&gt; bookingTypes = bookingTypeService.GetBookingTypes();
+
+                if (bookingTypes == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(bookingTypes);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // GET: api/BookingType/5
+        [Route(&quot;api/BookingType/{BookingTypeId:int}&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get(int BookingTypeId)
+        {
+            try
+            {
+                BookingType bookingType = bookingTypeService.GetBookingType(BookingTypeId);
+                if (bookingType == null)
+                {
+                    return NotFound();
+                }
+                return Ok(bookingType);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // POST: api/BookingType
+        [Route(&quot;api/BookingType&quot;)]
+        [AcceptVerbs(&quot;POST&quot;)]
+        public IHttpActionResult Post(BookingType bookingType)
+        {
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Try to save bookingType
+            try
+            {
+                bookingTypeService.SaveBookingType(bookingType);
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DuplicateNameException)
+            {
+                return Conflict();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            // Respond that the booking was created and redirect
+            return Ok(bookingType); //CreatedAtRoute(&quot;DefaultApi&quot;, new { id = bookingType.BookingTypeId }, bookingType);
+        }
+
+        // DELETE: api/BookingType/5
+        [Route(&quot;api/BookingType/{BookingTypeId:int}&quot;)]
+        [AcceptVerbs(&quot;DELETE&quot;)]
+        public IHttpActionResult Delete(int BookingTypeId)
+        {
+            try
+            {
+                // Delete info from database
+                bookingTypeService.BookingTypeDelete(BookingTypeId);
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            return Ok();
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[35,21,35,39,0],[40,13,40,18,0],[42,17,42,46,0],[56,21,56,39,0],[60,13,60,18,0],[62,17,62,46,0],[74,17,74,47,0],[82,13,82,51,0],[84,17,84,35,0],[90,13,90,48,0],[92,17,92,54,0],[94,13,94,18,0],[96,17,96,46,0],[113,13,113,36,0],[115,17,115,37,0],[117,13,117,51,0],[119,17,119,35,0],[125,13,125,18,0],[127,17,127,46,0],[31,17,31,94,1],[33,17,33,42,1],[38,17,38,41,1],[44,9,44,10,1],[53,17,53,92,1],[54,17,54,41,1],[58,17,58,40,1],[64,9,64,10,1],[72,13,72,37,1],[80,17,80,65,1],[86,13,86,43,1],[88,17,88,35,1],[100,13,100,36,1],[101,9,101,10,1],[111,17,111,69,1],[121,13,121,48,1],[123,17,123,54,1],[130,13,130,25,1],[131,9,131,10,1],[22,9,22,74,1]]);
+    </script>
+  </body>
+</html>

@@ -222,8 +222,8 @@
                         that.initVariables = function(){
 
                             $scope.renderDeleteIcon = $scope.renderDeleteIcon || true;
-                            $scope.renderEditIcon = $scope.renderDeleteIcon || true;
-                            $scope.renderShowIcon = $scope.renderDeleteIcon || true;
+                            $scope.renderEditIcon = $scope.renderEditIcon || true;
+                            $scope.renderShowIcon = $scope.renderShowIcon || true;
                             $scope.renderBookIcon = $scope.renderBookIcon || false;
                         };
 

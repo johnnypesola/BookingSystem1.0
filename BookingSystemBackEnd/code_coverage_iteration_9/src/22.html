@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\DAL\BookingTypeDAL.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class BookingTypeDAL : DALBase
+    {
+        public void DeleteBookingType(int BookingTypeId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_BookingTypeDelete&quot;);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@BookingTypeId&quot;, SqlDbType.Int).Value = BookingTypeId;
+
+                    // Try to delete BookingType from database.
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    if (exception.Message == &quot;Foreign key references exists&quot;)
+                    {
+                        throw new ApprovedException(exception.Message);
+                    }
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public BookingType GetBookingTypeById(int BookingTypeId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_BookingTypeList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@BookingTypeId&quot;, SqlDbType.Int).Value = BookingTypeId;
+
+                    // Open connection to database
+                    connection.Open();
+
+                    // Try to read response from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if there is any return data to read
+                        if (reader.Read())
+                        {
+                            // Create new BookingType object from database values and return a reference
+                            return new BookingType
+                            {
+                                BookingTypeId = reader.GetSafeInt16(reader.GetOrdinal(&quot;BookingTypeId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                HasLocation = reader.GetSafeBoolean(reader.GetOrdinal(&quot;HasLocation&quot;)),
+                                MinutesMarginBeforeBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginBeforeBooking&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;)),
+
+                                BookingTypeCount = reader.GetSafeInt32(reader.GetOrdinal(&quot;BookingTypeCount&quot;))
+                            };
+                        }
+                    }
+
+                    return null;
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            } // Connection is closed here
+        }
+
+        public IEnumerable&lt;BookingType&gt; GetBookingTypes()
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;BookingType&gt; BookingTypesReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    BookingTypesReturnList = new List&lt;BookingType&gt;(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_BookingTypeList&quot;);
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new BookingType object from database values and add to list
+                            BookingTypesReturnList.Add(new BookingType
+                            {
+                                BookingTypeId = reader.GetSafeInt16(reader.GetOrdinal(&quot;BookingTypeId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                HasLocation = reader.GetSafeBoolean(reader.GetOrdinal(&quot;HasLocation&quot;)),
+                                MinutesMarginBeforeBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginBeforeBooking&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;)),
+
+                                BookingTypeCount = reader.GetSafeInt32(reader.GetOrdinal(&quot;BookingTypeCount&quot;))
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    BookingTypesReturnList.TrimExcess();
+
+                    // Return list
+                    return BookingTypesReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public IEnumerable&lt;BookingType&gt; GetBookingTypesPageWise(string sortColumn, int pageSize, int pageIndex, out int totalRowCount)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;BookingType&gt; bookingTypesReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    bookingTypesReturnList = new List&lt;BookingType&gt;(pageSize);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_BookingTypeList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@SortOrder&quot;, SqlDbType.VarChar, 25).Value = sortColumn;
+                    cmd.Parameters.Add(&quot;@PageIndex&quot;, SqlDbType.Int).Value = pageIndex;
+                    cmd.Parameters.Add(&quot;@PageSize&quot;, SqlDbType.Int).Value = pageSize;
+                    cmd.Parameters.Add(&quot;@TotalRowCount&quot;, SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new BookingType object from database values and add to list
+                            bookingTypesReturnList.Add(new BookingType
+                            {
+                                BookingTypeId = reader.GetSafeInt16(reader.GetOrdinal(&quot;BookingTypeId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                HasLocation = reader.GetSafeBoolean(reader.GetOrdinal(&quot;HasLocation&quot;)),
+                                MinutesMarginBeforeBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginBeforeBooking&quot;)),
+                                MinutesMarginAfterBooking = reader.GetSafeInt16(reader.GetOrdinal(&quot;MinutesMarginAfterBooking&quot;)),
+
+                                BookingTypeCount = reader.GetSafeInt32(reader.GetOrdinal(&quot;BookingTypeCount&quot;))
+                            });
+                        }
+                    }
+
+                    // Get total row count
+                    totalRowCount = Convert.ToInt32(cmd.Parameters[&quot;@TotalRowCount&quot;].Value);
+
+                    // Remove unused list rows, free memory.
+                    bookingTypesReturnList.TrimExcess();
+
+                    // Return list
+                    return bookingTypesReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void InsertBookingType(BookingType BookingType)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_BookingTypeCreate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = BookingType.Name;
+                    cmd.Parameters.Add(&quot;@HasLocation&quot;, SqlDbType.Bit).Value = BookingType.HasLocation;
+                    cmd.Parameters.Add(&quot;@MinutesMarginBeforeBooking&quot;, SqlDbType.SmallInt).Value = BookingType.MinutesMarginBeforeBooking;
+                    cmd.Parameters.Add(&quot;@MinutesMarginAfterBooking&quot;, SqlDbType.SmallInt).Value = BookingType.MinutesMarginAfterBooking;
+
+                    // Add out parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@InsertId&quot;, SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+
+                    // Place database insert id into BookingType object.
+                    BookingType.BookingTypeId = (int)cmd.Parameters[&quot;@InsertId&quot;].Value;
+                }
+                catch (Exception exception)
+                {
+                    if (exception.Message == &quot;There is already a bookingtype with the given name.&quot;)
+                    {
+                        throw new DuplicateNameException(exception.Message);
+                    }
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void UpdateBookingType(BookingType BookingType)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_BookingTypeUpdate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@BookingTypeId&quot;, SqlDbType.SmallInt).Value = BookingType.BookingTypeId;
+                    cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = BookingType.Name;
+                    cmd.Parameters.Add(&quot;@HasLocation&quot;, SqlDbType.Bit).Value = BookingType.HasLocation;
+                    cmd.Parameters.Add(&quot;@MinutesMarginBeforeBooking&quot;, SqlDbType.SmallInt).Value = BookingType.MinutesMarginBeforeBooking;
+                    cmd.Parameters.Add(&quot;@MinutesMarginAfterBooking&quot;, SqlDbType.SmallInt).Value = BookingType.MinutesMarginAfterBooking;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+                }
+                catch (Exception exception)
+                {
+                    if (exception.Message == &quot;There is already a bookingtype with the given name.&quot;)
+                    {
+                        throw new DuplicateNameException(exception.Message);
+                    }
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[37,21,37,67,0],[80,21,80,33,0],[82,17,82,22,0],[85,21,85,67,0],[132,17,132,22,0],[134,21,134,67,0],[142,13,142,18,0],[150,21,150,78,0],[153,21,153,100,0],[156,21,156,96,0],[157,21,157,87,0],[158,21,158,85,0],[159,21,159,111,0],[162,21,162,39,0],[165,28,165,70,0],[171,29,180,32,0],[168,25,168,46,0],[185,21,185,93,0],[188,21,188,57,0],[191,21,191,51,0],[193,17,193,22,0],[195,21,195,67,0],[198,9,198,10,0],[237,21,237,67,0],[267,17,267,44,0],[269,21,269,100,0],[271,25,271,77,0],[274,21,274,67,0],[15,13,15,18,1],[22,21,22,73,1],[25,21,25,95,1],[28,21,28,43,1],[30,17,30,44,1],[32,21,32,78,1],[34,25,34,72,1],[40,9,40,10,1],[45,13,45,18,1],[52,21,52,100,1],[55,21,55,95,1],[58,21,58,39,1],[61,28,61,70,1],[64,25,64,43,1],[67,29,76,31,1],[88,9,88,10,1],[93,13,93,18,1],[101,21,101,72,1],[104,21,104,71,1],[107,28,107,70,1],[113,29,122,32,1],[110,25,110,46,1],[127,21,127,57,1],[130,21,130,51,1],[137,9,137,10,1],[203,13,203,18,1],[210,21,210,102,1],[213,21,213,97,1],[214,21,214,103,1],[215,21,215,138,1],[216,21,216,136,1],[219,21,219,106,1],[222,21,222,39,1],[225,21,225,43,1],[228,21,228,88,1],[230,17,230,44,1],[232,21,232,100,1],[234,25,234,77,1],[240,9,240,10,1],[245,13,245,18,1],[252,21,252,102,1],[255,21,255,112,1],[256,21,256,97,1],[257,21,257,103,1],[258,21,258,138,1],[259,21,259,136,1],[262,21,262,39,1],[265,21,265,43,1],[277,9,277,10,1]]);
+    </script>
+  </body>
+</html>

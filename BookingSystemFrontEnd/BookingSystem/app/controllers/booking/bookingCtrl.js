@@ -555,4 +555,48 @@
         /* Initialization END */
 
     }])
+
+    .controller('BookingListEmptyCtrl', ["$scope", "Booking", "$rootScope", "$location", function($scope, Booking, $rootScope, $location){
+        var that = this;
+        var currentDateObj;
+
+        /* Private methods START */
+
+        // Get bookings
+        that.getBookings = function(){
+
+            // Store bookings in private variable
+            that.bookings = Booking.queryEmpty();
+
+            // Success
+            that.bookings.$promise.then(function(){
+
+                $scope.noItemsFound = !that.bookings.length;
+            });
+
+            // In case bookings cannot be fetched, display an error to user.
+            that.bookings.$promise.catch(function(){
+
+                $rootScope.FlashMessage = {
+                    type: 'error',
+                    message: 'Bokningarna kunde inte hämtas, var god försök igen.'
+                };
+            });
+
+            // Display bookings to user
+            $scope.bookings = that.bookings;
+        };
+
+        /* Private methods END */
+
+        /* Public methods START */
+
+        /* Public methods END */
+
+        /* Initialization START */
+
+        that.getBookings();
+
+        /* Initialization END */
+    }])
 })();

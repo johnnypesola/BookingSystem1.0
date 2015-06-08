@@ -111,6 +111,19 @@
                 return customerImageHttp;
             };
 
+            // Display success message
+            that.saveSuccess = function() {
+
+                // Display success message
+                $rootScope.FlashMessage = {
+                    type: 'success',
+                    message: 'Kunden "' + $scope.customer.Name + '" sparades med ett lyckat resultat'
+                };
+
+                // Redirect
+                history.back();
+            };
+
         /* Private methods END */
 
         /* Public methods START */
@@ -138,32 +151,31 @@
                     // If everything went ok
                     .then(function(response){
 
-                        // Upload image
-                        that.uploadImage(response.CustomerId)
+                        if(typeof $scope.customer.ImageForUpload !== 'undefined') {
 
-                            // Image upload successful
-                            .success(function (data) {
+                            // Upload image
+                            that.uploadImage(response.CustomerId)
 
-                                // Display success message
-                                $rootScope.FlashMessage = {
-                                    type: 'success',
-                                    message: 'Kunden "' + $scope.customer.Name + '" skapades med ett lyckat resultat'
-                                };
+                                // Image upload successful
+                                .success(function (data) {
 
-                                // Redirect
-                                history.back();
-                            })
-                            // Image upload failed
-                            .error(function(){
+                                    that.saveSuccess();
+                                })
+                                // Image upload failed
+                                .error(function () {
 
-                                $rootScope.FlashMessage = {
-                                    type: 'error',
-                                    message: 'Kunden "' + $scope.customer.Name + '" skapades, men det gick inte att ladda upp och spara den önskade bilden.'
-                                };
+                                    $rootScope.FlashMessage = {
+                                        type: 'error',
+                                        message: 'Kunden "' + $scope.customer.Name + '" skapades, men det gick inte att ladda upp och spara den önskade bilden.'
+                                    };
 
-                                // Redirect
-                                history.back();
-                            });
+                                    // Redirect
+                                    history.back();
+                                });
+
+                        } else {
+                            that.saveSuccess();
+                        }
 
                     // Something went wrong
                     }).catch(function(response) {

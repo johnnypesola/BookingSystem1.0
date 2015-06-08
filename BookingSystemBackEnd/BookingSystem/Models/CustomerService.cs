@@ -28,7 +28,7 @@ namespace BookingSystem.Models
         {
             if(customerId < 0)
             {
-                throw new ApplicationException("Ogiltigt kund-id påträffades vid borttagning.");
+                throw new FormatException();
             }
 
             // Check that the customer exists before deletion
@@ -37,17 +37,12 @@ namespace BookingSystem.Models
             // If there is no customer
             if (customer == null)
             {
-                throw new ApplicationException("Kunden är redan borttagen.");
+                throw new DataBaseEntryNotFoundException();
             }
-            // If there are bookings using this customer
-            else if (customer.TotalBookings > 0)
+            // If there are bookings using this customer or If there are child-customers to this customer
+            else if (customer.TotalBookings > 0 || customer.ChildCustomers > 0)
             {
-                throw new ApplicationException(String.Format("Det går inte att ta ta bort kunden '{0}' eftersom det finns bokningar kopplade till den.", customer.Name));
-            }
-            // If there are child-customers to this customer
-            else if (customer.ChildCustomers > 0)
-            {
-                throw new ApplicationException(String.Format("Det går inte att ta ta bort kunden '{0}' eftersom det finns andra kunder som ingår i denna kund.", customer.Name));
+                throw new ApprovedException("Foreign key references exists");
             }
 
             // Delete customer

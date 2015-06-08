@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\LocationBookingService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class LocationBookingService
+    {
+        // Fields
+        private LocationBookingDAL _locationBookingDAL;
+        private SharedDAL _sharedDAL;
+
+        // Properties
+        private LocationBookingDAL LocationBookingDAL
+        {
+            get
+            {
+                return _locationBookingDAL ?? (_locationBookingDAL = new LocationBookingDAL());
+            }
+        }
+        private SharedDAL SharedDAL
+        {
+            get
+            {
+                return _sharedDAL ?? (_sharedDAL = new SharedDAL());
+            }
+        }
+
+        public IEnumerable&lt;CalendarBookingDay&gt; CheckDayBookingsForPeriod(DateTime startTime, DateTime endTime)
+        {
+            return SharedDAL.CheckDayBookingsForPeriod(startTime, endTime, &quot;location&quot;);
+        }
+
+        public IQueryable&lt;LocationBooking&gt; GetForPeriod(DateTime startTime, DateTime endTime)
+        {
+            return LocationBookingDAL.GetLocationBookingsForPeriod(startTime, endTime).AsQueryable();
+        }
+
+        public void SaveLocationBooking(LocationBooking locationBooking)
+        {
+            // Preparare validation return data
+            ICollection&lt;ValidationResult&gt; validationResults;
+
+            // Try to validate given data
+            if (locationBooking.Validate(out validationResults))
+            {
+                // If a new booking should be created
+                if (locationBooking.LocationBookingId == 0)
+                {
+                    LocationBookingDAL.InsertLocationBooking(locationBooking);
+                }
+                // Existing booking should be updated
+                else
+                {
+                    // Check that the booking exists before update
+                    if (LocationBookingDAL.GetLocationBookingById(locationBooking.LocationBookingId) == null)
+                    {
+                        throw new ApplicationException(&quot;The location booking that was to be updated does not exist anymore.&quot;);
+                    }
+
+                    // Update booking
+                    LocationBookingDAL.UpdateLocationBooking(locationBooking);
+                }
+            }
+            // Validation failed
+            else
+            {
+                // Create exception
+                ApplicationException exception = new ApplicationException(&quot;The location booking contained invalid values.&quot;);
+
+                // Add validation data to exception.
+                exception.Data.Add(&quot;ValidationResults&quot;, validationResults);
+
+                throw exception;
+            }
+        }
+
+        public LocationBooking GetLocationBooking(int LocationBookingId)
+        {
+            if (LocationBookingId &lt; 0)
+            {
+                throw new ApplicationException(&quot;Invalid LocationBookingId&quot;);
+            }
+
+            return LocationBookingDAL.GetLocationBookingById(LocationBookingId);
+        }
+
+        public IEnumerable&lt;LocationBooking&gt; GetLocationBookings(int? BookingId = null)
+        {
+            return LocationBookingDAL.GetLocationBookings(BookingId);
+        }
+
+        public void LocationBookingDelete(int LocationBookingId)
+        {
+            if (LocationBookingId &lt; 0)
+            {
+                throw new FormatException(&quot;Invalid LocationBookingId&quot;);
+            }
+
+            // Check that the Location exists before deletion
+            LocationBooking LocationBooking = LocationBookingDAL.GetLocationBookingById(LocationBookingId);
+
+            // If there is no Location
+            if (LocationBooking == null)
+            {
+                throw new DataBaseEntryNotFoundException(&quot;The Location booking does not exist&quot;);
+            }
+
+            // Delete Location
+            LocationBookingDAL.DeleteLocationBooking(LocationBookingId);
+        }
+    }
+
+    /*
+     *                 // Check that the location is not allready booked/busy.
+                if (BookingDAL.IsLocationBooked(booking))
+                {
+                    throw new ApplicationException(&quot;Lokalen &#228;r tyv&#228;rr redan bokad under denna tillf&#228;lle.&quot;);
+                }
+     */
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[60,25,60,127,0],[71,17,71,125,0],[74,17,74,76,0],[76,17,76,33,0],[84,17,84,77,0],[99,17,99,72,0],[108,17,108,97,0],[20,17,20,96,1],[27,17,27,69,1],[33,13,33,88,1],[38,13,38,102,1],[47,13,47,65,1],[50,17,50,60,1],[52,21,52,79,1],[58,21,58,110,1],[64,21,64,79,1],[82,13,82,39,1],[87,13,87,81,1],[92,13,92,70,1],[97,13,97,39,1],[103,13,103,108,1],[106,13,106,41,1],[112,13,112,73,1],[113,9,113,10,1]]);
+    </script>
+  </body>
+</html>

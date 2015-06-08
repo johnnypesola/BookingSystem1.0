@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\DAL\CustomerDAL.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class CustomerDAL : DALBase
+    {
+        public void DeleteCustomer(int customerId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerDelete&quot;);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@CustomerId&quot;, SqlDbType.Int).Value = customerId;
+
+                    // Try to delete customer from database.
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public IEnumerable&lt;Customer&gt; SearchFor(SearchContainer searchContainer)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;Customer&gt; customersReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    customersReturnList = new List&lt;Customer&gt;(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerList&quot;);
+
+                    // Add variable for stored procedure
+                    switch (searchContainer.ColumnName)
+                    {
+                        case &quot;CustomerId&quot;:
+                            cmd.Parameters.Add(&quot;@CustomerId&quot;, SqlDbType.Int).Value = searchContainer.SearchValue;
+                            break;
+                        case &quot;Name&quot;:
+                            cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = searchContainer.SearchValue;
+                            break;
+                        case &quot;Address&quot;:
+                            cmd.Parameters.Add(&quot;@Address&quot;, SqlDbType.VarChar, 40).Value = searchContainer.SearchValue;
+                            break;
+                        case &quot;PostNumber&quot;:
+                            cmd.Parameters.Add(&quot;@PostNumber&quot;, SqlDbType.VarChar, 6).Value = searchContainer.SearchValue;
+                            break;
+                        case &quot;City&quot;:
+                            cmd.Parameters.Add(&quot;@City&quot;, SqlDbType.VarChar, 30).Value = searchContainer.SearchValue;
+                            break;
+                        case &quot;EmailAddress&quot;:
+                            cmd.Parameters.Add(&quot;@EmailAddress&quot;, SqlDbType.VarChar, 50).Value = searchContainer.SearchValue;
+                            break;
+                        case &quot;PhoneNumber&quot;:
+                            cmd.Parameters.Add(&quot;@PhoneNumber&quot;, SqlDbType.VarChar, 20).Value = searchContainer.SearchValue;
+                            break;
+                        case &quot;CellPhoneNumber&quot;:
+                            cmd.Parameters.Add(&quot;@CellPhoneNumber&quot;, SqlDbType.VarChar, 20).Value = searchContainer.SearchValue;
+                            break;
+                        case &quot;ParentCustomerName&quot;:
+                            cmd.Parameters.Add(&quot;@ParentCustomerName&quot;, SqlDbType.VarChar, 50).Value = searchContainer.SearchValue;
+                            break;
+                        case &quot;Notes&quot;:
+                            cmd.Parameters.Add(&quot;@Notes&quot;, SqlDbType.VarChar, 200).Value = searchContainer.SearchValue;
+                            break;
+                    }
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Customer object from database values and add to list
+                            customersReturnList.Add(new Customer
+                            {
+                                CustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;CustomerId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                Address = reader.GetSafeString(reader.GetOrdinal(&quot;Address&quot;)),
+                                PostNumber = reader.GetSafeString(reader.GetOrdinal(&quot;PostNumber&quot;)),
+                                City = reader.GetSafeString(reader.GetOrdinal(&quot;City&quot;)),
+                                EmailAddress = reader.GetSafeString(reader.GetOrdinal(&quot;EmailAddress&quot;)),
+                                PhoneNumber = reader.GetSafeString(reader.GetOrdinal(&quot;PhoneNumber&quot;)),
+                                CellPhoneNumber = reader.GetSafeString(reader.GetOrdinal(&quot;CellPhoneNumber&quot;)),
+                                ParentCustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;ParentCustomerId&quot;)),
+                                ParentCustomerName = reader.GetSafeString(reader.GetOrdinal(&quot;ParentCustomerName&quot;)),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal(&quot;ImageSrc&quot;)),
+                                Notes = reader.GetSafeString(reader.GetOrdinal(&quot;Notes&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;)),
+                                ChildCustomers = reader.GetSafeInt32(reader.GetOrdinal(&quot;ChildCustomers&quot;))
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    customersReturnList.TrimExcess();
+
+                    // Return list
+                    return customersReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public Customer GetCustomerById(int customerId)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@CustomerId&quot;, SqlDbType.Int).Value = customerId;
+
+                    // Open connection to database
+                    connection.Open();
+
+                    // Try to read response from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Check if there is any return data to read
+                        if (reader.Read())
+                        {
+                            // Create new Customer object from database values and return a reference
+                            return new Customer
+                            {
+                                CustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;CustomerId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                Address = reader.GetSafeString(reader.GetOrdinal(&quot;Address&quot;)),
+                                PostNumber = reader.GetSafeString(reader.GetOrdinal(&quot;PostNumber&quot;)),
+                                City = reader.GetSafeString(reader.GetOrdinal(&quot;City&quot;)),
+                                EmailAddress = reader.GetSafeString(reader.GetOrdinal(&quot;EmailAddress&quot;)),
+                                PhoneNumber = reader.GetSafeString(reader.GetOrdinal(&quot;PhoneNumber&quot;)),
+                                CellPhoneNumber = reader.GetSafeString(reader.GetOrdinal(&quot;CellPhoneNumber&quot;)),
+                                ParentCustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;ParentCustomerId&quot;)),
+                                ParentCustomerName = reader.GetSafeString(reader.GetOrdinal(&quot;ParentCustomerName&quot;)),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal(&quot;ImageSrc&quot;)),
+                                Notes = reader.GetSafeString(reader.GetOrdinal(&quot;Notes&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;)),
+                                ChildCustomers = reader.GetSafeInt32(reader.GetOrdinal(&quot;ChildCustomers&quot;))
+                            };
+                        }
+                    }
+
+                    return null;
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            } // Connection is closed here
+        }
+
+        public IEnumerable&lt;Customer&gt; GetCustomers()
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;Customer&gt; customersReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    customersReturnList = new List&lt;Customer&gt;(50);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerListSimple&quot;);
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Customer object from database values and add to list
+                            customersReturnList.Add(new Customer
+                            {
+                                CustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;CustomerId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                City = reader.GetSafeString(reader.GetOrdinal(&quot;City&quot;)),
+                                ParentCustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;ParentCustomerId&quot;)),
+                                ParentCustomerName = reader.GetSafeString(reader.GetOrdinal(&quot;ParentCustomerName&quot;))
+                            });
+                        }
+                    }
+
+                    // Remove unused list rows, free memory.
+                    customersReturnList.TrimExcess();
+
+                    // Return list
+                    return customersReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public IEnumerable&lt;Customer&gt; GetCustomersPageWise(string sortColumn, int pageSize, int pageIndex, out int totalRowCount)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    List&lt;Customer&gt; customersReturnList;
+                    SqlCommand cmd;
+
+                    // Create list object
+                    customersReturnList = new List&lt;Customer&gt;(pageSize);
+
+                    // Connect to database and execute given stored procedure
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerList&quot;, DALOptions.closedConnection);
+
+                    // Add parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@SortOrder&quot;, SqlDbType.VarChar, 25).Value = sortColumn; 
+                    cmd.Parameters.Add(&quot;@PageIndex&quot;, SqlDbType.Int).Value = pageIndex;
+                    cmd.Parameters.Add(&quot;@PageSize&quot;, SqlDbType.Int).Value = pageSize;
+                    cmd.Parameters.Add(&quot;@TotalRowCount&quot;, SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Get all data from stored procedure
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                         // Get all data rows
+                        while (reader.Read())
+                        {
+                            // Create new Customer object from database values and add to list
+                            customersReturnList.Add(new Customer
+                            {
+                                CustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;CustomerId&quot;)),
+                                Name = reader.GetSafeString(reader.GetOrdinal(&quot;Name&quot;)),
+                                Address = reader.GetSafeString(reader.GetOrdinal(&quot;Address&quot;)),
+                                PostNumber = reader.GetSafeString(reader.GetOrdinal(&quot;PostNumber&quot;)),
+                                City = reader.GetSafeString(reader.GetOrdinal(&quot;City&quot;)),
+                                EmailAddress = reader.GetSafeString(reader.GetOrdinal(&quot;EmailAddress&quot;)),
+                                PhoneNumber = reader.GetSafeString(reader.GetOrdinal(&quot;PhoneNumber&quot;)),
+                                CellPhoneNumber = reader.GetSafeString(reader.GetOrdinal(&quot;CellPhoneNumber&quot;)),
+                                ParentCustomerId = reader.GetSafeInt32(reader.GetOrdinal(&quot;ParentCustomerId&quot;)),
+                                ParentCustomerName = reader.GetSafeString(reader.GetOrdinal(&quot;ParentCustomerName&quot;)),
+                                ImageSrc = reader.GetSafeString(reader.GetOrdinal(&quot;ImageSrc&quot;)),
+                                Notes = reader.GetSafeString(reader.GetOrdinal(&quot;Notes&quot;)),
+                                TotalBookings = reader.GetSafeInt32(reader.GetOrdinal(&quot;TotalBookings&quot;)),
+                                TotalBookingValue = reader.GetSafeDecimal(reader.GetOrdinal(&quot;TotalBookingValue&quot;))
+                            });
+                        }
+                    }
+
+                    // Get total row count
+                    totalRowCount = Convert.ToInt32(cmd.Parameters[&quot;@TotalRowCount&quot;].Value);
+
+                    // Remove unused list rows, free memory.
+                    customersReturnList.TrimExcess();
+
+                    // Return list
+                    return customersReturnList;
+                }
+                catch
+                {
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void InsertCustomer(Customer customer)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerCreate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = customer.Name;
+                    cmd.Parameters.Add(&quot;@Address&quot;, SqlDbType.VarChar, 40).Value = customer.Address;
+                    cmd.Parameters.Add(&quot;@PostNumber&quot;, SqlDbType.VarChar, 6).Value = customer.PostNumber;
+                    cmd.Parameters.Add(&quot;@City&quot;, SqlDbType.VarChar, 30).Value = customer.City;
+                    cmd.Parameters.Add(&quot;@EmailAddress&quot;, SqlDbType.VarChar, 50).Value = customer.EmailAddress;
+                    cmd.Parameters.Add(&quot;@PhoneNumber&quot;, SqlDbType.VarChar, 20).Value = customer.PhoneNumber;
+                    cmd.Parameters.Add(&quot;@CellPhoneNumber&quot;, SqlDbType.VarChar, 20).Value = customer.CellPhoneNumber;
+                    cmd.Parameters.Add(&quot;@ParentCustomerId&quot;, SqlDbType.Int).Value = customer.ParentCustomerId;
+                    cmd.Parameters.Add(&quot;@ImageSrc&quot;, SqlDbType.VarChar, 50).Value = customer.ImageSrc;
+                    cmd.Parameters.Add(&quot;@Notes&quot;, SqlDbType.VarChar, 200).Value = customer.Notes;
+
+                    // Add out parameter for Stored procedure
+                    cmd.Parameters.Add(&quot;@InsertId&quot;, SqlDbType.Int).Direction = ParameterDirection.Output;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+
+                    // Place database insert id into customer object.
+                    customer.CustomerId = (int)cmd.Parameters[&quot;@InsertId&quot;].Value;
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+
+        public void UpdateCustomer(Customer customer)
+        {
+            // Create connection object
+            using (this.CreateConnection())
+            {
+                try
+                {
+                    SqlCommand cmd;
+
+                    // Connect to database
+                    cmd = this.Setup(&quot;appSchema.usp_CustomerUpdate&quot;, DALOptions.closedConnection);
+
+                    // Add in parameters for Stored procedure
+                    cmd.Parameters.Add(&quot;@CustomerId&quot;, SqlDbType.Int).Value = customer.CustomerId;
+                    cmd.Parameters.Add(&quot;@Name&quot;, SqlDbType.VarChar, 50).Value = customer.Name;
+                    cmd.Parameters.Add(&quot;@Address&quot;, SqlDbType.VarChar, 40).Value = customer.Address;
+                    cmd.Parameters.Add(&quot;@PostNumber&quot;, SqlDbType.VarChar, 6).Value = customer.PostNumber;
+                    cmd.Parameters.Add(&quot;@City&quot;, SqlDbType.VarChar, 30).Value = customer.City;
+                    cmd.Parameters.Add(&quot;@EmailAddress&quot;, SqlDbType.VarChar, 50).Value = customer.EmailAddress;
+                    cmd.Parameters.Add(&quot;@PhoneNumber&quot;, SqlDbType.VarChar, 20).Value = customer.PhoneNumber;
+                    cmd.Parameters.Add(&quot;@CellPhoneNumber&quot;, SqlDbType.VarChar, 20).Value = customer.CellPhoneNumber;
+                    cmd.Parameters.Add(&quot;@ParentCustomerId&quot;, SqlDbType.Int).Value = customer.ParentCustomerId;
+                    cmd.Parameters.Add(&quot;@ImageSrc&quot;, SqlDbType.VarChar, 50).Value = customer.ImageSrc;
+                    cmd.Parameters.Add(&quot;@Notes&quot;, SqlDbType.VarChar, 200).Value = customer.Notes;
+
+                    // Open DB connection
+                    connection.Open();
+
+                    // Execute insert to database
+                    cmd.ExecuteNonQuery();
+                }
+                catch
+                {
+                    // Throw exception
+                    throw new ApplicationException(DAL_ERROR_MSG);
+                }
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[30,17,30,22,0],[33,21,33,67,0],[123,17,123,22,0],[125,21,125,67,0],[176,21,176,33,0],[178,17,178,22,0],[181,21,181,67,0],[226,17,226,22,0],[228,21,228,67,0],[236,13,236,18,0],[244,21,244,72,0],[247,21,247,97,0],[250,21,250,96,0],[251,21,251,87,0],[252,21,252,85,0],[253,21,253,111,0],[256,21,256,39,0],[259,28,259,70,0],[265,29,281,32,0],[262,25,262,46,0],[286,21,286,93,0],[289,21,289,54,0],[292,21,292,48,0],[294,17,294,22,0],[296,21,296,67,0],[299,9,299,10,0],[337,17,337,22,0],[340,21,340,67,0],[376,17,376,22,0],[379,21,379,67,0],[15,13,15,18,1],[22,21,22,70,1],[25,21,25,89,1],[28,21,28,43,1],[36,9,36,10,1],[41,13,41,18,1],[49,21,49,66,1],[52,21,52,68,1],[55,21,55,56,1],[58,29,58,114,1],[59,29,59,35,1],[61,29,61,116,1],[62,29,62,35,1],[64,29,64,119,1],[65,29,65,35,1],[67,29,67,121,1],[68,29,68,35,1],[70,29,70,116,1],[71,29,71,35,1],[73,29,73,124,1],[74,29,74,35,1],[76,29,76,123,1],[77,29,77,35,1],[79,29,79,127,1],[80,29,80,35,1],[82,29,82,130,1],[83,29,83,35,1],[85,29,85,118,1],[90,28,90,70,1],[96,29,113,32,1],[93,25,93,46,1],[118,21,118,54,1],[121,21,121,48,1],[128,9,128,10,1],[133,13,133,18,1],[140,21,140,97,1],[143,21,143,89,1],[146,21,146,39,1],[149,28,149,70,1],[152,25,152,43,1],[155,29,172,31,1],[184,9,184,10,1],[189,13,189,18,1],[197,21,197,66,1],[200,21,200,74,1],[203,28,203,70,1],[209,29,216,32,1],[206,25,206,46,1],[221,21,221,54,1],[224,21,224,48,1],[231,9,231,10,1],[304,13,304,18,1],[311,21,311,99,1],[314,21,314,94,1],[315,21,315,100,1],[316,21,316,105,1],[317,21,317,94,1],[318,21,318,110,1],[319,21,319,108,1],[320,21,320,116,1],[321,21,321,110,1],[322,21,322,102,1],[323,21,323,97,1],[326,21,326,106,1],[329,21,329,39,1],[332,21,332,43,1],[335,21,335,82,1],[343,9,343,10,1],[348,13,348,18,1],[355,21,355,99,1],[358,21,358,98,1],[359,21,359,94,1],[360,21,360,100,1],[361,21,361,105,1],[362,21,362,94,1],[363,21,363,110,1],[364,21,364,108,1],[365,21,365,116,1],[366,21,366,110,1],[367,21,367,102,1],[368,21,368,97,1],[371,21,371,39,1],[374,21,374,43,1],[382,9,382,10,1]]);
+    </script>
+  </body>
+</html>

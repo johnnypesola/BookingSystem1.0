@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Models\BookingTypeService.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace BookingSystem.Models
+{
+    public class BookingTypeService
+    {
+        // Fields
+        private BookingTypeDAL _bookingTypeDAL;
+
+        // Properties
+        private BookingTypeDAL BookingTypeDAL
+        {
+            get
+            {
+                return _bookingTypeDAL ?? (_bookingTypeDAL = new BookingTypeDAL());
+            }
+        }
+
+        // Methods
+        public void BookingTypeDelete(BookingType BookingType)
+        {
+            BookingTypeDelete(BookingType.BookingTypeId);
+        }
+
+        public void BookingTypeDelete(int BookingTypeId)
+        {
+            if (BookingTypeId &lt; 0)
+            {
+                throw new FormatException(&quot;Invalid BookingTypeId&quot;);
+            }
+
+            // Check that the BookingType exists before deletion
+            BookingType BookingType = BookingTypeDAL.GetBookingTypeById(BookingTypeId);
+
+            // If there is no BookingType
+            if (BookingType == null)
+            {
+                throw new DataBaseEntryNotFoundException(&quot;BookingType does not exist&quot;);
+            }
+
+            // Delete BookingType
+            BookingTypeDAL.DeleteBookingType(BookingTypeId);
+
+        }
+
+        public BookingType GetBookingType(int BookingTypeId)
+        {
+            if (BookingTypeId &lt; 0)
+            {
+                throw new ApplicationException(&quot;Invalid BookingTypeId&quot;);
+            }
+
+            return BookingTypeDAL.GetBookingTypeById(BookingTypeId);
+        }
+
+        public IEnumerable&lt;BookingType&gt; GetBookingTypes()
+        {
+            return BookingTypeDAL.GetBookingTypes();
+        }
+
+        public IEnumerable&lt;BookingType&gt; GetPageWise(string sortColumn, int pageSize, int pageIndex, out int totalRowCount)
+        {
+            return BookingTypeDAL.GetBookingTypesPageWise(sortColumn, pageSize, pageIndex, out totalRowCount);
+        }
+
+        public void SaveBookingType(BookingType BookingType)
+        {
+            // Preparare validation return data
+            ICollection&lt;ValidationResult&gt; validationResults;
+
+            // Try to validate given data
+            if (BookingType.Validate(out validationResults))
+            {
+                // If a new BookingType should be created
+                if (BookingType.BookingTypeId == 0)
+                {
+                    BookingTypeDAL.InsertBookingType(BookingType);
+                }
+                // Existing BookingType should be updated
+                else
+                {
+                    // Check that the BookingType exists before update
+                    if (BookingTypeDAL.GetBookingTypeById(BookingType.BookingTypeId) == null)
+                    {
+                        throw new DataBaseEntryNotFoundException();
+                    }
+
+                    // Update BookingType
+                    BookingTypeDAL.UpdateBookingType(BookingType);
+                }
+            }
+            // Validation failed
+            else
+            {
+                // Create exception
+                ApplicationException exception = new ApplicationException(&quot;BookingType object contained invalid values.&quot;);
+
+                // Add validation data to exception.
+                exception.Data.Add(&quot;ValidationResults&quot;, validationResults);
+
+                throw exception;
+            }
+        }
+    }
+}
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[26,13,26,58,0],[27,9,27,10,0],[33,17,33,68,0],[42,17,42,88,0],[54,17,54,73,0],[67,13,67,111,0],[89,25,89,68,0],[100,17,100,123,0],[103,17,103,76,0],[105,17,105,33,0],[19,17,19,84,1],[31,13,31,35,1],[37,13,37,88,1],[40,13,40,37,1],[46,13,46,61,1],[48,9,48,10,1],[52,13,52,35,1],[57,13,57,69,1],[62,13,62,53,1],[76,13,76,61,1],[79,17,79,52,1],[81,21,81,67,1],[87,21,87,94,1],[93,21,93,67,1]]);
+    </script>
+  </body>
+</html>

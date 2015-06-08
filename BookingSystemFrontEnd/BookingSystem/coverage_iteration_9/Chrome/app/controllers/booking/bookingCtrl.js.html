@@ -12,13 +12,13 @@
     </style>
 </head>
 <body>
-<div class="header high">
+<div class="header medium">
     <h1>Code coverage report for <span class="entity">./app/controllers/booking/bookingCtrl.js</span></h1>
     <h2>
-        Statements: <span class="metric">83.87% <small>(104 / 124)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">77.61% <small>(104 / 134)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Branches: <span class="metric">95.65% <small>(22 / 23)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">73.81% <small>(31 / 42)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">83.87% <small>(104 / 124)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">67.39% <small>(31 / 46)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">77.61% <small>(104 / 134)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/controllers/booking/</a> &#187; bookingCtrl.js</div>
@@ -582,7 +582,51 @@
 555
 556
 557
-558</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+558
+559
+560
+561
+562
+563
+564
+565
+566
+567
+568
+569
+570
+571
+572
+573
+574
+575
+576
+577
+578
+579
+580
+581
+582
+583
+584
+585
+586
+587
+588
+589
+590
+591
+592
+593
+594
+595
+596
+597
+598
+599
+600
+601
+602</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1136,6 +1180,50 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1696,12 +1784,56 @@
         /* Initialization END */
 &nbsp;
     }])
+&nbsp;
+    .controller('BookingListEmptyCtrl', ["$scope", "Booking", "$rootScope", "$location", <span class="fstat-no" title="function not covered" >function($scope, Booking, $rootScope, $location){</span>
+<span class="cstat-no" title="statement not covered" >        var that = this;</span>
+<span class="cstat-no" title="statement not covered" >        var currentDateObj;</span>
+&nbsp;
+        /* Private methods START */
+&nbsp;
+        // Get bookings
+<span class="cstat-no" title="statement not covered" >        that.getBookings = <span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+            // Store bookings in private variable
+<span class="cstat-no" title="statement not covered" >            that.bookings = Booking.queryEmpty();</span>
+&nbsp;
+            // Success
+<span class="cstat-no" title="statement not covered" >            that.bookings.$promise.then(<span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $scope.noItemsFound = !that.bookings.length;</span>
+            });
+&nbsp;
+            // In case bookings cannot be fetched, display an error to user.
+<span class="cstat-no" title="statement not covered" >            that.bookings.$promise.catch(<span class="fstat-no" title="function not covered" >function(){</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                $rootScope.FlashMessage = {</span>
+                    type: 'error',
+                    message: 'Bokningarna kunde inte hämtas, var god försök igen.'
+                };
+            });
+&nbsp;
+            // Display bookings to user
+<span class="cstat-no" title="statement not covered" >            $scope.bookings = that.bookings;</span>
+        };
+&nbsp;
+        /* Private methods END */
+&nbsp;
+        /* Public methods START */
+&nbsp;
+        /* Public methods END */
+&nbsp;
+        /* Initialization START */
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        that.getBookings();</span>
+&nbsp;
+        /* Initialization END */
+    }])
 })();</pre></td></tr>
 </table></pre>
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 08 2015 01:03:43 GMT+0200 (Västeuropa, sommartid)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 08 2015 03:04:39 GMT+0200 (Västeuropa, sommartid)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

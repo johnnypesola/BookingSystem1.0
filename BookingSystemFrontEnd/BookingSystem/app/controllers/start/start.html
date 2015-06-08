@@ -1,5 +1,8 @@
 <section class="content-container" ng-controller="StartCtrl">
-    <h2>Välkommen till bokningssystemet</h2>
+    <h2>
+        Välkommen till bokningssystemet
+        <img data-loading class="data-pre-loader" ng-show="showPreLoader" src="img/preloader_cogs.gif">
+    </h2>
 
     <div ng-show="emptyBookings.count">
         <span class="info info bg-light-blue">Det finns {{emptyBookings.count | count}} tomma bokningstillfällen. <a href="#/bokningstillfallen/tomma">Visa</a></span>

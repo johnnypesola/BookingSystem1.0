@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>c:\Users\jopes\Documents\GitHub\1dv430\jp222px-project\BookingSystemBackEnd\BookingSystem\Controllers\LocationController.cs</title>
+    <script type="text/javascript" src="../js/dotcover.sourceview.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/dotcover.report.css" />
+  </head>
+  <body>
+    <pre id="content" class="source-code">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using BookingSystem.Models;
+using System.Web.Http.Cors;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Web;
+using Newtonsoft.Json.Linq;
+
+namespace BookingSystem.Controllers
+{
+    [EnableCors(origins: &quot;*&quot;, headers: &quot;*&quot;, methods: &quot;*&quot;)]
+    public class LocationController : ApiController
+    {
+        // Shared variables
+        const string IMAGE_PATH = &quot;Content/upload/img/location&quot;;
+
+        // Set up Service.
+        LocationService locationService = new LocationService();
+
+        // GET: api/Location
+        [Route(&quot;api/Location&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get()
+        {
+            try
+            {
+                IEnumerable&lt;Location&gt; locations = locationService.GetLocations();
+
+                if (locations == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(locations);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // GET: api/Location/5
+        [Route(&quot;api/Location/{LocationId:int}&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get(int LocationId)
+        {
+            try
+            {
+                Location location = locationService.GetLocation(LocationId);
+                if (location == null)
+                {
+                    return NotFound();
+                }
+                return Ok(location);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // GET: api/Location/free/2015-01-01/2015-01-02
+        // GET: api/Location/free/2015-01-01/2015-01-02?fromTime=10.00&amp;toTime=10.00
+        [Route(&quot;api/Location/free/{fromDate:datetime}/{toDate:datetime}&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get(string fromDate, string toDate, string fromTime = &quot;00:00:00&quot;, string toTime = &quot;23:59:59&quot;)
+        {
+            DateTime startTime, endTime;
+
+            try
+            {
+                startTime = Convert.ToDateTime(String.Format(&quot;{0} {1}&quot;, fromDate, fromTime));
+                endTime = Convert.ToDateTime(String.Format(&quot;{0} {1}&quot;, toDate, toTime));
+
+                IEnumerable&lt;Location&gt; locations = locationService.GetLocationsFreeForPeriod(startTime.StartOfDay(), endTime.EndOfDay());
+                if (locations == null)
+                {
+                    return NotFound();
+                }
+                return Ok(locations);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // GET: api/Location/search/ColumnName?value=hello
+        [Route(&quot;api/Location/search/{columnName}&quot;)]
+        [AcceptVerbs(&quot;GET&quot;)]
+        public IHttpActionResult Get(string columnName, string value)
+        {
+            SearchContainer searchContainer;
+            try
+            {
+
+                // Construct a search container object
+                searchContainer = new SearchContainer { ColumnName = columnName, SearchValue = value };
+
+                // Get locations
+                IEnumerable&lt;Location&gt; locations = locationService.SearchFor(searchContainer);
+
+                if (locations == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(locations);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+        }
+
+        // POST: api/Location
+        [Route(&quot;api/Location&quot;)]
+        [AcceptVerbs(&quot;POST&quot;)]
+        public IHttpActionResult Post(Location location)
+        {
+            // Check for bad values, done by the data annotations in the model class.
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            // Try to save location
+            try
+            {
+                locationService.SaveLocation(location);
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (DuplicateNameException)
+            {
+                return Conflict();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
+
+            // Respond that the booking was created and redirect
+            return Ok(location);
+        }
+
+        // DELETE: api/Location/5
+        [Route(&quot;api/Location/{LocationId:int}&quot;)]
+        [AcceptVerbs(&quot;DELETE&quot;)]
+        public IHttpActionResult Delete(int LocationId)
+        {
+            string UploadImagePath, imageLocation;
+
+            try
+            {
+                // Delete info from database
+                locationService.LocationDelete(LocationId);
+                
+                // Get uploadpath
+                UploadImagePath = HttpContext.Current.Server.MapPath(String.Format(@&quot;~/{0}&quot;, IMAGE_PATH));
+
+                // Build full image path
+                imageLocation = String.Format(&quot;{0}/{1}.jpg&quot;, UploadImagePath, LocationId);
+
+                // Remove uploaded file if it exists
+                if(File.Exists(@imageLocation))
+                {
+                    File.Delete(@imageLocation);
+                }
+            }
+            catch (FormatException)
+            {
+                return BadRequest();
+            }
+            catch (DataBaseEntryNotFoundException)
+            {
+                return NotFound();
+            }
+            catch (ApprovedException exception)
+            {
+                return BadRequest(exception.Message);
+            }
+            catch
+            {
+                return InternalServerError();
+            }            
+
+            return Ok();
+        }
+
+        // POST a picture for a location
+        [Route(&quot;api/Location/image/{LocationId:int}&quot;)]
+        [AcceptVerbs(&quot;POST&quot;)]
+        [HttpPost]
+        public IHttpActionResult Post(int LocationId)
+        {
+            string base64string;
+            JObject returnData;
+            ImageService imageService = new ImageService();
+            string UploadImagePath;
+
+            try
+            {
+                // Check that location with specific Id exists
+                Location location = locationService.GetLocation(LocationId);
+                if (location == null)
+                {
+                    return NotFound();
+                }
+
+                // Process image data
+                base64string = Request.Content.ReadAsStringAsync().Result;
+
+                // Save image
+                UploadImagePath = imageService.SaveImage(IMAGE_PATH, base64string, LocationId);
+
+                // Attach path to object
+                location.ImageSrc = UploadImagePath;
+
+                // Save location
+                locationService.SaveLocation(location);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+
+            // Build return JSON object
+            returnData = JObject.Parse(String.Format(&quot;{{ &#39;imgpath&#39; : &#39;{0}/{1}.jpg&#39;}}&quot;, IMAGE_PATH, LocationId));
+
+            // Return path to uploaded image
+            return Ok(returnData);
+        }
+    }
+}
+
+    </pre>
+    <script type="text/javascript">
+      highlightRanges([[37,21,37,39,0],[42,13,42,18,0],[44,17,44,46,0],[58,21,58,39,0],[62,13,62,18,0],[64,17,64,46,0],[84,21,84,39,0],[88,13,88,18,0],[90,17,90,46,0],[111,21,111,39,0],[116,13,116,18,0],[118,17,118,46,0],[130,17,130,47,0],[138,13,138,51,0],[140,17,140,35,0],[142,13,142,43,0],[144,17,144,35,0],[146,13,146,48,0],[148,17,148,54,0],[150,13,150,18,0],[152,17,152,46,0],[157,9,157,10,0],[183,13,183,36,0],[185,17,185,37,0],[187,13,187,51,0],[189,17,189,35,0],[191,13,191,48,0],[193,17,193,54,0],[220,21,220,39,0],[235,13,235,32,0],[237,17,237,46,0],[245,9,245,10,0],[33,17,33,82,1],[35,17,35,39,1],[40,17,40,38,1],[46,9,46,10,1],[55,17,55,77,1],[56,17,56,38,1],[60,17,60,37,1],[66,9,66,10,1],[78,17,78,94,1],[79,17,79,88,1],[81,17,81,137,1],[82,17,82,39,1],[86,17,86,38,1],[92,9,92,10,1],[104,17,104,104,1],[107,17,107,94,1],[109,17,109,39,1],[114,17,114,38,1],[120,9,120,10,1],[128,13,128,37,1],[136,17,136,56,1],[156,13,156,33,1],[169,17,169,60,1],[172,17,172,107,1],[175,17,175,91,1],[178,17,178,48,1],[180,21,180,49,1],[195,13,195,18,1],[197,17,197,46,1],[200,13,200,25,1],[201,9,201,10,1],[211,13,211,60,1],[217,17,217,77,1],[218,17,218,38,1],[224,17,224,75,1],[227,17,227,96,1],[230,17,230,53,1],[233,17,233,56,1],[241,13,241,113,1],[244,13,244,35,1],[24,9,24,65,1]]);
+    </script>
+  </body>
+</html>

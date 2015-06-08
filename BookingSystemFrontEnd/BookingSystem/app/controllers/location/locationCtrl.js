@@ -262,6 +262,19 @@
                 return locationImageHttp;
             };
 
+            // Save success message
+            that.saveSuccess = function() {
+
+                // Display success message
+                $rootScope.FlashMessage = {
+                    type: 'success',
+                    message: 'Platsen "' + $scope.location.Name + '" sparades med ett lyckat resultat'
+                };
+
+                // Redirect
+                history.back();
+            };
+
 
         /* Private methods END */
 
@@ -292,33 +305,31 @@
 
                         .then(function() {
 
-                            // Upload image
-                            that.uploadImage(response.LocationId)
+                            if(typeof $scope.location.ImageForUpload !== 'undefined') {
 
-                                // Image upload successful
-                                .success(function (data) {
+                                // Upload image
+                                that.uploadImage(response.LocationId)
 
-                                    // Display success message
-                                    $rootScope.FlashMessage = {
-                                        type: 'success',
-                                        message: 'Platsen "' + $scope.location.Name + '" skapades med ett lyckat resultat'
-                                    };
+                                    // Image upload successful
+                                    .success(function (data) {
 
-                                    // Redirect
-                                    history.back();
+                                        that.saveSuccess();
+                                    })
 
-                                })
+                                    .error(function () {
 
-                                .error(function(){
+                                        $rootScope.FlashMessage = {
+                                            type: 'error',
+                                            message: 'Platsen "' + $scope.location.Name + '" skapades, men det gick inte att ladda upp och spara den önskade bilden.'
+                                        };
 
-                                    $rootScope.FlashMessage = {
-                                        type: 'error',
-                                        message: 'Platsen "' + $scope.location.Name + '" skapades, men det gick inte att ladda upp och spara den önskade bilden.'
-                                    };
+                                        // Redirect
+                                        history.back();
+                                    })
+                            } else {
+                                that.saveSuccess();
+                            }
 
-                                    // Redirect
-                                    history.back();
-                                })
 
                         }).catch(function(){
 
@@ -681,7 +692,7 @@
                             $rootScope.FlashMessage = {
                                 type: 'error',
                                 message:    'Platsen kan inte raderas eftersom det finns' +
-                                            ' en lokalbokning eller en lokalplats som refererar till platsen'
+                                            ' en lokalbokning eller en annan lokal/plats som refererar till platsen'
                             };
                         }
 

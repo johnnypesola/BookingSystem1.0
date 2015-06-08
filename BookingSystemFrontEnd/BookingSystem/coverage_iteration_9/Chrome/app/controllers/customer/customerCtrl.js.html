@@ -15,10 +15,10 @@
 <div class="header medium">
     <h1>Code coverage report for <span class="entity">./app/controllers/customer/customerCtrl.js</span></h1>
     <h2>
-        Statements: <span class="metric">69.14% <small>(56 / 81)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Branches: <span class="metric">88% <small>(22 / 25)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Functions: <span class="metric">59.38% <small>(19 / 32)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
-        Lines: <span class="metric">69.14% <small>(56 / 81)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Statements: <span class="metric">62.35% <small>(53 / 85)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">85.19% <small>(23 / 27)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">51.52% <small>(17 / 33)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">62.35% <small>(53 / 85)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
         Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
     </h2>
     <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">./app/controllers/customer/</a> &#187; customerCtrl.js</div>
@@ -501,7 +501,19 @@
 474
 475
 476
-477</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+477
+478
+479
+480
+481
+482
+483
+484
+485
+486
+487
+488
+489</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -607,9 +619,22 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">3</span>
-<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -641,27 +666,26 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -1082,12 +1106,25 @@
         /* Private methods START */
 &nbsp;
             // Upload image
-            that.uploadImage = function(CustomerId) {
-                var customerImageHttp;
+            that.uploadImage = <span class="fstat-no" title="function not covered" >function(CustomerId) {</span>
+<span class="cstat-no" title="statement not covered" >                var customerImageHttp;</span>
 &nbsp;
-                customerImageHttp = CustomerImage.upload($scope.customer.ImageForUpload, CustomerId);
+<span class="cstat-no" title="statement not covered" >                customerImageHttp = CustomerImage.upload($scope.customer.ImageForUpload, CustomerId);</span>
 &nbsp;
-                return customerImageHttp;
+<span class="cstat-no" title="statement not covered" >                return customerImageHttp;</span>
+            };
+&nbsp;
+            // Display success message
+            that.saveSuccess = function() {
+&nbsp;
+                // Display success message
+                $rootScope.FlashMessage = {
+                    type: 'success',
+                    message: 'Kunden "' + $scope.customer.Name + '" sparades med ett lyckat resultat'
+                };
+&nbsp;
+                // Redirect
+                history.back();
             };
 &nbsp;
         /* Private methods END */
@@ -1117,32 +1154,31 @@
                     // If everything went ok
                     .then(function(response){
 &nbsp;
-                        // Upload image
-                        that.uploadImage(response.CustomerId)
+                        <span class="missing-if-branch" title="if path not taken" >I</span>if(typeof $scope.customer.ImageForUpload !== 'undefined') {
 &nbsp;
-                            // Image upload successful
-                            .success(function (data) {
+                            // Upload image
+<span class="cstat-no" title="statement not covered" >                            that.uploadImage(response.CustomerId)</span>
 &nbsp;
-                                // Display success message
-                                $rootScope.FlashMessage = {
-                                    type: 'success',
-                                    message: 'Kunden "' + $scope.customer.Name + '" skapades med ett lyckat resultat'
-                                };
+                                // Image upload successful
+                                .success(<span class="fstat-no" title="function not covered" >function (data) {</span>
 &nbsp;
-                                // Redirect
-                                history.back();
-                            })
-                            // Image upload failed
-                            .error(function(){
+<span class="cstat-no" title="statement not covered" >                                    that.saveSuccess();</span>
+                                })
+                                // Image upload failed
+                                .error(<span class="fstat-no" title="function not covered" >function () {</span>
 &nbsp;
-                                $rootScope.FlashMessage = {
-                                    type: 'error',
-                                    message: 'Kunden "' + $scope.customer.Name + '" skapades, men det gick inte att ladda upp och spara den önskade bilden.'
-                                };
+<span class="cstat-no" title="statement not covered" >                                    $rootScope.FlashMessage = {</span>
+                                        type: 'error',
+                                        message: 'Kunden "' + $scope.customer.Name + '" skapades, men det gick inte att ladda upp och spara den önskade bilden.'
+                                    };
 &nbsp;
-                                // Redirect
-                                history.back();
-                            });
+                                    // Redirect
+<span class="cstat-no" title="statement not covered" >                                    history.back();</span>
+                                });
+&nbsp;
+                        } else {
+                            that.saveSuccess();
+                        }
 &nbsp;
                     // Something went wrong
                     }).catch(function(response) {
@@ -1458,7 +1494,7 @@
 
 </div>
 <div class="footer">
-    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 08 2015 01:03:43 GMT+0200 (Västeuropa, sommartid)</div>
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Mon Jun 08 2015 03:04:39 GMT+0200 (Västeuropa, sommartid)</div>
 </div>
 <script src="../../../prettify.js"></script>
 <script>

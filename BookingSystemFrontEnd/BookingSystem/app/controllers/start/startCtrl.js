@@ -20,7 +20,7 @@
     }])
 
     // Controller
-    .controller('StartCtrl', ["$scope", "Booking", "$q", "Location", function($scope, Booking, $q, Location){
+    .controller('StartCtrl', ["$rootScope", "$scope", "Booking", "$q", "Location", function($rootScope, $scope, Booking, $q, Location){
 
             var that = this;
 
