@@ -9,4 +9,4 @@ The system itself contains a frontend written in AngularJS (v1.2.28) and a backe
    
 More specific documentation is available in the [wiki](https://github.com/johnnypesola/BookingSystem1.0/wiki/) in Swedish
    
-// Johnny Pesola
+/ Johnny
